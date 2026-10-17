@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>小暖陪诊 · 项目规划评审包（八周版 v3.0）</title>
+<style>
+:root{
+  --bg:#0e1622; --panel:#152131; --panel2:#1b2942; --line:#26374f;
+  --txt:#e8eef7; --dim:#93a7c2; --accent:#ff8a3d; --ok:#34d399; --warn:#fbbf24; --danger:#f87171;
+  --blue:#60a5fa; --purple:#a78bfa; --mono:ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:14px;line-height:1.65;padding:0 0 60px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+header{background:linear-gradient(180deg,#182740,#111b2a);border-bottom:1px solid var(--line);
+  padding:26px 0 22px;margin-bottom:26px}
+h1{font-size:23px;letter-spacing:-.01em;margin-bottom:6px}
+.sub{color:var(--dim);font-size:12.5px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--panel2);
+  border:1px solid var(--line);color:var(--dim)}
+.chip.hot{background:#3a2a1c;border-color:#6b4520;color:var(--accent)}
+.chip.ok{background:#16311f;border-color:#245c39;color:var(--ok)}
+h2{font-size:16px;margin:34px 0 12px;padding-left:11px;border-left:4px solid var(--accent)}
+h2 .en{font-size:11px;color:var(--dim);font-weight:400;margin-left:8px;font-family:var(--mono)}
+h3{font-size:13.5px;margin:20px 0 8px;color:#cfe0f5}
+p{color:#c9d8ec;margin-bottom:9px}
+ul,ol{padding-left:21px;margin-bottom:10px;color:#c9d8ec}
+li{margin-bottom:5px}
+table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#182741;color:var(--dim);font-weight:700;font-size:11.5px;white-space:nowrap}
+tbody tr:nth-child(even){background:#121d2c}
+code{font-family:var(--mono);font-size:11.5px;background:#0a121d;padding:1.5px 6px;border-radius:5px;color:#9fd3ff}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin:12px 0}
+.card.warn{background:#2a1f18;border-color:#6b4520}
+.card.ok{background:#13261d;border-color:#245c39}
+.card.danger{background:#2a1a1c;border-color:#6b2f36}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:11px;margin:12px 0}
+.kpi{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .v{font-size:20px;font-weight:800;color:var(--accent);font-family:var(--mono);line-height:1.2}
+.kpi .l{font-size:11.5px;color:var(--dim);margin-top:3px}
+/* 时间线 */
+.tl{position:relative;padding-left:26px;margin:16px 0}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.wk{position:relative;padding:11px 0 11px 0;border-bottom:1px dashed #1f2f47}
+.wk:last-child{border-bottom:none}
+.wk::before{content:"";position:absolute;left:-24px;top:17px;width:11px;height:11px;border-radius:50%;
+  background:var(--panel2);border:2px solid var(--line)}
+.wk.ms::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,138,61,.18)}
+.wk .wh{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;margin-bottom:4px}
+.wk .wn{font-family:var(--mono);font-weight:800;color:var(--accent);font-size:13px}
+.wk .wt{font-weight:700;font-size:13.5px}
+.wk .wm{font-size:10.5px;padding:1.5px 8px;border-radius:20px;background:#3a2a1c;color:var(--accent);
+  border:1px solid #6b4520;font-weight:700}
+.wk .wb{font-size:12px;color:#b7c8de}
+.wk .owner{font-family:var(--mono);font-size:10.5px;color:var(--blue);margin-left:4px}
+.tag{display:inline-block;font-size:10.5px;padding:1.5px 7px;border-radius:5px;font-weight:700;margin-right:4px}
+.tag.req{background:#1e3a5f;color:#8ec5ff}
+.tag.cond{background:#3d3116;color:var(--warn)}
+.tag.no{background:#3c1f22;color:#ff9f9f}
+.note{font-size:12px;color:var(--dim);border-left:2px solid var(--line);padding-left:11px;margin:10px 0}
+footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim)}
+a{color:var(--blue)}
+@media print{body{background:#fff;color:#000}.card,.kpi,table{background:#fff}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>小暖陪诊 · 项目规划评审包</h1>
+    <div class="sub">面向就医困难人群的陪诊服务系统 · 六人团队 · 八周工期</div>
+    <div class="meta">
+      <span class="chip hot">v3.0 八周版</span>
+      <span class="chip">工期 8 周（W1–W8）</span>
+      <span class="chip ok">状态：待全组评审</span>
+      <span class="chip">口径基准：00-项目工期与范围基线</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="card warn">
+  <h3 style="margin-top:0">评审须知</h3>
+  <ol>
+    <li><b>评审对象</b>：本页面 + <code>medpal-plan-v2/</code> 下 00、01、02、10、11、12、13、14、15、16 共 10 份文档。</li>
+    <li><b>评审重点</b>：① 八周范围是否可完成 ② 每周任务量与周末工时是否匹配 ③ 角色分工是否均衡 ④ 里程碑验收标准是否过严或过松 ⑤ 有无遗漏的必须交付项。</li>
+    <li><b>提交方式</b>：在项目群内以「文档编号 + 章节 + 意见」格式提出；或提 GitHub Issue 并标注 <code>review</code> 标签。</li>
+    <li><b>截止时间</b>：项目启动会前一个晚上 22:00。逾期未提视为无异议。</li>
+    <li><b>裁决</b>：T1 汇总意见，逐条标注「采纳 / 部分采纳 / 不采纳并说明理由」，形成评审纪要后冻结为执行基线。</li>
+  </ol>
+</div>
+
+<h2>一、工期改动的直接影响<span class="en">IMPACT OF 8-WEEK COMPRESSION</span></h2>
+
+<div class="grid">
+  <div class="kpi"><div class="v">8 周</div><div class="l">项目周期（原 24 周）</div></div>
+  <div class="kpi"><div class="v">192–384</div><div class="l">总人时（6 人 × 4–8h × 8 周）</div></div>
+  <div class="kpi"><div class="v">1/3</div><div class="l">可用工时相对原计划</div></div>
+  <div class="kpi"><div class="v">12 / 6 / 6</div><div class="l">必须交付 / 条件交付 / 明确不做</div></div>
+</div>
+
+<table>
+  <thead><tr><th>原 24 周内容</th><th>八周处置</th><th>依据</th></tr></thead>
+  <tbody>
+    <tr><td>领域层（状态机 / 规划引擎 / 话术 / 红线）</td><td><b>保留</b>，压缩至 W2–W3</td><td>系统内核，删则项目不成立</td></tr>
+    <tr><td>四端前端</td><td><b>保留</b>，W2 搭骨架、W6 成型</td><td>「一内核四通道」是核心论点</td></tr>
+    <tr><td>真 ASR / TTS / OCR</td><td><b>保留</b>，集中在 W5</td><td>演示可信度依赖真实识别</td></tr>
+    <tr><td>树莓派整机 + ESP32 按键 + 3D 外壳</td><td><b>降级为条件交付 C3 / C4</b></td><td>采购与调试不可控，且不承担主演示</td></tr>
+    <tr><td>LLM + RAG 对话</td><td><b>降级为条件交付 C1</b></td><td>模板话术已可覆盖 90% 场景</td></tr>
+    <tr><td>知识图谱分诊</td><td><b>降级为条件交付 C2</b></td><td>成员 A 模块可直接接，但非主链路</td></tr>
+    <tr><td>医保报销解释器</td><td><b>降级为条件交付 C5</b></td><td>加分项，不影响主线闭环</td></tr>
+    <tr><td>微信小程序上架</td><td><b>删除</b></td><td>需企业主体与审核周期</td></tr>
+    <tr><td>L6–L8 测试层（硬件在环 / 人工探索 / 性能）</td><td><b>降级</b>为条件项</td><td>L1–L4 是红线与硬门槛，优先保障</td></tr>
+  </tbody>
+</table>
+
+<div class="card danger">
+  <b>核心取舍</b>：八周内<b>不降低质量门槛</b>，只压缩范围。红线指标（禁用词 0、剂量错误 0、领域层覆盖率 100%）与硬门槛（测试 ≥ 240、评测集 ≥ 200）维持不变。
+</div>
+
+<h2>二、八周时间线<span class="en">WEEKLY SCHEDULE</span></h2>
+
+<div class="note">固定时段：周六 19:00–22:00 集成联调验收 · 周日 19:00–22:00 开发评审周报。有效投入每人每周 4–8 小时。</div>
+
+<div class="tl">
+  <div class="wk">
+    <div class="wh"><span class="wn">W1</span><span class="wt">立项与契约冻结</span><span class="owner">T1 主导</span></div>
+    <div class="wb">建仓库与分支保护 · CI 骨架 · 会话协议 v0.1 冻结 · 领域模型最小可用字段集冻结 · 四端工程骨架 · AI 选型与账号 · 演示载体方案 · 术语表 · 全员完成 3 门 GitHub Skills</div>
+    <div class="wb" style="color:var(--dim);margin-top:4px">出口条件：协议与模型冻结；CI 可执行；全员可克隆并跑通测试</div>
+  </div>
+  <div class="wk ms">
+    <div class="wh"><span class="wn">W2</span><span class="wt">领域内核与四端骨架</span><span class="wm">M1</span><span class="owner">T1 瓶颈</span></div>
+    <div class="wb">状态机 + 事件总线 + 记忆库接口 · 话术模板引擎 + 红线校验器 v0.1 · 设备端骨架 · 用户端骨架 · 家属端骨架 · 工作台骨架 · 测试框架落地 · 统一请求层 · 互备演练①</div>
+    <div class="wb" style="color:var(--ok);margin-top:4px">M1：四端骨架可启动｜领域层覆盖率 100%｜测试 ≥ 40｜CI 全绿</div>
+  </div>
+  <div class="wk">
+    <div class="wh"><span class="wn">W3</span><span class="wt">主线打通（假适配器）</span><span class="owner">T5 瓶颈</span></div>
+    <div class="wb">五个假适配器 · 会话编排器 · 设备端会话客户端 · 状态机补全 · 检查规划引擎 · 设备端无障碍 · 用户端主流程 · 工作台多患者 · 红线校验接入 CI · AI 代码审计会①</div>
+  </div>
+  <div class="wk ms">
+    <div class="wh"><span class="wn">W4</span><span class="wt">主线集成</span><span class="wm">M2</span><span class="owner">全员瓶颈</span></div>
+    <div class="wb">9 节点全通联调 · 家属端推送与时间轴 · 工作台校对与双签 · 识单流程 · E2E ≥ 8 条 · 演示载体验证 · <b>范围冻结评审</b></div>
+    <div class="wb" style="color:var(--ok);margin-top:4px">M2：9 节点闭环｜视障零点击｜听障旁白静音｜测试 ≥ 120｜全流程录像</div>
+  </div>
+  <div class="wk">
+    <div class="wh"><span class="wn">W5</span><span class="wt">真实 AI 接入</span><span class="owner">T5 瓶颈</span></div>
+    <div class="wb">真 ASR（命中率 ≥ 80%）· 音频链路优化 · 真 TTS（主观 ≥ 4/5）· 降级链验证 · 真 OCR + <b>剂量字段专项（错误 = 0）</b>· 评测集 ≥ 120 · 夜间 CI · 互备演练② · AI 代码审计会②</div>
+    <div class="note" style="border-color:var(--warn)">纪律：本周最多替换 2 个假适配器，每换一个即执行完整回归</div>
+  </div>
+  <div class="wk ms">
+    <div class="wh"><span class="wn">W6</span><span class="wt">四端成型与演示定型</span><span class="wm">M3</span><span class="owner">T3/T4 瓶颈</span></div>
+    <div class="wb">用户端无障碍完善 · 家属端隐私开关 · 工作台升级工单 · 医保解释器（若 C5）· 图谱分诊（若 C2）· 演示载体双机定型 · 无障碍专项走查 · 可用性测试脚本 · 测试 ≥ 180</div>
+    <div class="wb" style="color:var(--ok);margin-top:4px">M3：真语音可用｜真识单可用｜四端有真实数据流｜双机就绪｜P95 &lt; 800ms</div>
+  </div>
+  <div class="wk">
+    <div class="wh"><span class="wn">W7</span><span class="wt">用户测试与缺陷清扫</span><span class="owner">T6 瓶颈</span></div>
+    <div class="wb">可用性测试 ≥ 10 人 · 定量指标采集 · P0 清零 / P1 ≤ 2 · 安全与隐私走查 · 无障碍盲测 · 演示脚本与排练① · PPT 与视频初稿 · AI 代码审计会③ · 测试 ≥ 220</div>
+  </div>
+  <div class="wk ms">
+    <div class="wh"><span class="wn">W8</span><span class="wt">最终验收与答辩</span><span class="wm">M4</span><span class="owner">T1 瓶颈</span></div>
+    <div class="wb">缺陷冻结 · 排练②与应急预案 · 文档包收口 · 测试 ≥ 240 / 评测集 ≥ 200 · 最终验收演示 · 答辩 · 项目总结</div>
+    <div class="wb" style="color:var(--ok);margin-top:4px">M4：平板全程无人工干预｜可用性 ≥ 10 人｜ADR ≥ 13 篇｜6 人可独立讲解架构</div>
+  </div>
+</div>
+
+<h2>三、六人角色与权责<span class="en">ROLES & AUTHORITY</span></h2>
+
+<table>
+  <thead><tr><th>代号</th><th>角色</th><th>核心职责</th><th>否决权</th></tr></thead>
+  <tbody>
+    <tr><td><b>T1</b></td><td>项目经理 / 架构师 / 领域工程</td><td>领域层、接口契约、架构决策、进度管理、对外沟通</td><td>—（范围与选型最终裁决权）</td></tr>
+    <tr><td><b>T2</b></td><td>设备端与嵌入式</td><td>设备端前端、演示载体、固件与按键、硬件集成</td><td>交互可用性（与 T5 共有）</td></tr>
+    <tr><td><b>T3</b></td><td>用户端与家属端前端</td><td>用户端、家属端 H5、推送模板、视觉规范</td><td>—</td></tr>
+    <tr><td><b>T4</b></td><td>陪诊师工作台与中后台</td><td>工作台、置信度校对、交接双签、运营后台</td><td>工作台并发可用性</td></tr>
+    <tr><td><b>T5</b></td><td>AI 集成与无障碍</td><td>七类适配器、音频链路、识单置信度、无障碍验收</td><td>无障碍达标性（与 T2 共有）</td></tr>
+    <tr><td><b>T6</b></td><td>质量保证</td><td>测试体系、CI/CD、缺陷管理、发布验收、测试报告</td><td><b>合并否决权（对全员生效，含 T1）</b></td></tr>
+  </tbody>
+</table>
+
+<h3>瓶颈周与缓解措施</h3>
+<table>
+  <thead><tr><th>周次</th><th>并行度</th><th>瓶颈</th><th>缓解措施</th></tr></thead>
+  <tbody>
+    <tr><td>W1</td><td>高</td><td>T1</td><td>T1 只做契约不做实现；其余三人并行搭脚手架</td></tr>
+    <tr><td>W2</td><td>中</td><td>T1</td><td>领域层先交付接口签名 + 假实现，各端按接口并行</td></tr>
+    <tr><td>W3</td><td>高</td><td>T5</td><td>五个假适配器拆分，T6 同步写夹具</td></tr>
+    <tr><td>W4</td><td>极高</td><td>全员</td><td>合并窗口固定周六 19:00–21:00，T6 现场值守</td></tr>
+    <tr><td>W5</td><td>高</td><td>T5</td><td>换一个验一个，回滚预案先行</td></tr>
+    <tr><td>W6</td><td>极高</td><td>T3 / T4</td><td>四端分两条线并行；载体 W5 末即定</td></tr>
+    <tr><td>W7</td><td>中</td><td>T6</td><td>测试脚本 W6 完成，W7 只执行与修复</td></tr>
+    <tr><td>W8</td><td>高</td><td>T1</td><td>PPT 与视频 W7 已启动</td></tr>
+  </tbody>
+</table>
+
+<h2>四、范围冻结清单<span class="en">SCOPE</span></h2>
+
+<h3>必须交付（12 项，不可删减）</h3>
+<table>
+  <thead><tr><th>#</th><th>交付项</th><th>责任人</th><th>完成周次</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><span class="tag req">必交</span>陪诊状态机（9 节点 + 兜底子状态机）</td><td>T1</td><td>W4</td></tr>
+    <tr><td>2</td><td><span class="tag req">必交</span>话术模板引擎 + 红线校验器（禁用词 0）</td><td>T1</td><td>W3</td></tr>
+    <tr><td>3</td><td><span class="tag req">必交</span>检查规划引擎（约束打分 + 理由输出）</td><td>T1</td><td>W3</td></tr>
+    <tr><td>4</td><td><span class="tag req">必交</span>会话协议 + 会话编排器</td><td>T1</td><td>W3</td></tr>
+    <tr><td>5</td><td><span class="tag req">必交</span>设备端（浏览器形态，平板/笔记本可跑）</td><td>T2</td><td>W6</td></tr>
+    <tr><td>6</td><td><span class="tag req">必交</span>用户端（老人版 / 标准版）</td><td>T3</td><td>W6</td></tr>
+    <tr><td>7</td><td><span class="tag req">必交</span>家属端（推送 + 时间轴 + 隐私开关）</td><td>T3</td><td>W6</td></tr>
+    <tr><td>8</td><td><span class="tag req">必交</span>陪诊师工作台（队列 + 置信度校对 + 双签）</td><td>T4</td><td>W6</td></tr>
+    <tr><td>9</td><td><span class="tag req">必交</span>真实 ASR / TTS / OCR 三类适配器</td><td>T5</td><td>W5</td></tr>
+    <tr><td>10</td><td><span class="tag req">必交</span>无障碍三通道（视障零点击 / 听障替我说 / 老人大字）</td><td>T5 + T2</td><td>W6</td></tr>
+    <tr><td>11</td><td><span class="tag req">必交</span>CI 流水线 + 测试 L1–L4</td><td>T6</td><td>W4</td></tr>
+    <tr><td>12</td><td><span class="tag req">必交</span>演示脚本、PPT、可用性测试报告</td><td>T1 + T6</td><td>W8</td></tr>
+  </tbody>
+</table>
+
+<h3>条件交付（6 项，须 T1 书面批准）</h3>
+<table>
+  <thead><tr><th>编号</th><th>交付项</th><th>触发条件</th></tr></thead>
+  <tbody>
+    <tr><td>C1</td><td><span class="tag cond">条件</span>LLM + RAG 对话（医院知识库）</td><td>W4 结束时 M2 提前完成</td></tr>
+    <tr><td>C2</td><td><span class="tag cond">条件</span>知识图谱分诊（成员 A 模块接入）</td><td>W3 结束时后端空余算力</td></tr>
+    <tr><td>C3</td><td><span class="tag cond">条件</span>ESP32 物理按键 + 震动马达</td><td>硬件 W1 下单且 W6 前到货</td></tr>
+    <tr><td>C4</td><td><span class="tag cond">条件</span>树莓派 Kiosk 整机</td><td>平板方案已在 W6 验证通过</td></tr>
+    <tr><td>C5</td><td><span class="tag cond">条件</span>医保报销解释器</td><td>W5 结束时前端无阻塞</td></tr>
+    <tr><td>C6</td><td><span class="tag cond">条件</span>3D 打印外壳</td><td>不占用软件组工时</td></tr>
+  </tbody>
+</table>
+
+<h3>明确不做（6 项）</h3>
+<p>
+<span class="tag no">排除</span>微信小程序上架（需企业主体）
+<span class="tag no">排除</span>医院 HIS 对接（无授权）
+<span class="tag no">排除</span>多医院覆盖
+<span class="tag no">排除</span>端侧大模型（硬件不足）
+<span class="tag no">排除</span>后台运营数据分析
+<span class="tag no">排除</span>自研 PCB / 注塑外壳
+</p>
+
+<h2>五、质量门槛（不因工期压缩而降低）<span class="en">QUALITY GATES</span></h2>
+
+<table>
+  <thead><tr><th>指标</th><th>阈值</th><th>性质</th><th>检查周次</th></tr></thead>
+  <tbody>
+    <tr><td>禁用词出现次数</td><td><b>= 0</b></td><td>红线</td><td>每周</td></tr>
+    <tr><td>OCR 剂量字段错误数</td><td><b>= 0</b></td><td>红线</td><td>W5 起每周</td></tr>
+    <tr><td>领域层单元测试覆盖率</td><td><b>100%</b></td><td>红线</td><td>每周</td></tr>
+    <tr><td>新增代码覆盖率</td><td>≥ 80%</td><td>硬门槛</td><td>每次 PR</td></tr>
+    <tr><td>测试用例总数</td><td>W2 ≥ 40；W4 ≥ 120；W6 ≥ 180；W8 ≥ 240</td><td>硬门槛</td><td>每周</td></tr>
+    <tr><td>端到端用例</td><td>W4 ≥ 8；W8 ≥ 15</td><td>硬门槛</td><td>W4、W8</td></tr>
+    <tr><td>AI 评测集</td><td>W6 ≥ 120；W8 ≥ 200</td><td>硬门槛</td><td>W6、W8</td></tr>
+    <tr><td>P0 缺陷闭环</td><td>里程碑前清零</td><td>硬门槛</td><td>每个里程碑</td></tr>
+    <tr><td>视障通道零点击</td><td>全流程可完成</td><td>硬门槛</td><td>W4、W6</td></tr>
+    <tr><td>听障通道旁白静音</td><td>出声次数 = 0</td><td>硬门槛</td><td>W4、W6</td></tr>
+    <tr><td>核心接口 P95 延迟</td><td>&lt; 800 ms</td><td>硬门槛</td><td>W6</td></tr>
+  </tbody>
+</table>
+
+<div class="card ok">
+  <b>可减量与不可减量</b>：可减量的是 L6 硬件在环、L7 人工探索、L8 性能压测（降级为条件项）；<b>不可减量</b>的是红线指标与 L1–L4 自动化测试。
+</div>
+
+<h2>六、风险登记与延期规则<span class="en">RISK REGISTER</span></h2>
+
+<table>
+  <thead><tr><th>编号</th><th>风险</th><th>概率</th><th>影响</th><th>应对</th></tr></thead>
+  <tbody>
+    <tr><td>RK-01</td><td>八周工期导致范围失控</td><td>高</td><td>高</td><td>W4 范围冻结；放弃全部条件交付项</td></tr>
+    <tr><td>RK-02</td><td>真实 AI 接入超期</td><td>中</td><td>高</td><td>未接入项回退假实现，保留演示效果</td></tr>
+    <tr><td>RK-03</td><td>四端集成冲突集中爆发</td><td>高</td><td>中</td><td>合并窗口固定，T6 现场值守</td></tr>
+    <tr><td>RK-04</td><td>演示载体不稳定</td><td>中</td><td>高</td><td>双机备份（平板 + 笔记本）</td></tr>
+    <tr><td>RK-05</td><td>成员连续两周未完成计划</td><td>中</td><td>高</td><td>一对一沟通 + 任务降级为条件交付</td></tr>
+    <tr><td>RK-06</td><td>数据合规问题</td><td>低</td><td>极高</td><td>Secret Scanning + pre-commit 拦截</td></tr>
+    <tr><td>RK-07</td><td>可用性测试招募不足</td><td>中</td><td>中</td><td>校内招募 + 亲属 + 线上远程</td></tr>
+    <tr><td>RK-08</td><td>文档与评审滞后于开发</td><td>高</td><td>中</td><td>文档随 PR 提交；T1 每周检查</td></tr>
+    <tr><td>RK-09</td><td>关键成员单点故障</td><td>中</td><td>高</td><td>互备演练 W2、W5</td></tr>
+    <tr><td>RK-10</td><td>演示版本与正式系统内核不一致</td><td>中</td><td>高</td><td>内核函数同源并配套单测（ADR-013）</td></tr>
+  </tbody>
+</table>
+
+<h3>延期应对规则（预先约定，避免临时慌乱）</h3>
+<table>
+  <thead><tr><th>条件</th><th>应对措施</th></tr></thead>
+  <tbody>
+    <tr><td>W2 未达成 M1</td><td>暂缓 C2、C5；四端骨架降级为仅设备端 + 工作台</td></tr>
+    <tr><td>W4 未达成 M2</td><td>启用范围冻结；放弃 C1–C6；工作台降级为只读列表</td></tr>
+    <tr><td>W6 未达成 M3</td><td>未接入 AI 回退假实现；可用性测试缩减至 6 人</td></tr>
+    <tr><td>W7 缺陷未清零</td><td>只修 P0；P1 记入已知问题清单，答辩时主动说明</td></tr>
+  </tbody>
+</table>
+
+<h2>七、协作平台与工具链<span class="en">PLATFORM & TOOLCHAIN</span></h2>
+
+<h3>GitHub Skills 学习路径</h3>
+<table>
+  <thead><tr><th>层级</th><th>练习</th><th>负责角色</th><th>安排</th></tr></thead>
+  <tbody>
+    <tr><td>必做</td><td><code>skills/review-pull-requests</code> · <code>skills/resolve-merge-conflicts</code> · <code>skills/communicate-using-markdown</code></td><td>全员</td><td>W1，每人约 1.5 小时</td></tr>
+    <tr><td>强烈建议</td><td><code>skills/test-with-actions</code> · <code>skills/hello-github-actions</code> · <code>skills/introduction-to-secret-scanning</code> · <code>skills/ship-with-quality</code></td><td>T6</td><td>W2–W3</td></tr>
+    <tr><td>选做</td><td><code>skills/introduction-to-codeql</code> · <code>skills/integrate-mcp-with-copilot</code> · <code>skills/copilot-code-review</code> · <code>skills/github-pages</code> · <code>skills/secure-code-game</code></td><td>按需</td><td>不占计划工时</td></tr>
+  </tbody>
+</table>
+
+<h3>MCP 服务器选型</h3>
+<table>
+  <thead><tr><th>优先级</th><th>服务器</th><th>解决的问题</th><th>使用者</th></tr></thead>
+  <tbody>
+    <tr><td>一（W1）</td><td><code>microsoft/playwright-mcp</code> ★38.3k</td><td>浏览器自动化、截图、无障碍断言 —— 改完页面即可自动截图留证</td><td>T6 / T2 / T3</td></tr>
+    <tr><td>一（W1）</td><td><code>github/github-mcp-server</code> ★33.7k</td><td>直接读写 Issue / PR / 代码搜索</td><td>全员</td></tr>
+    <tr><td>一（W1）</td><td><code>modelcontextprotocol/servers</code> ★91.3k</td><td>官方参考：文件读写、git 历史、HTTP 抓取</td><td>全员</td></tr>
+    <tr><td>二（W2–W3）</td><td><code>upstash/context7</code> ★63.2k</td><td>拉取 Django 5 / Vue 3 / Playwright 最新文档，减少过时 API</td><td>T1 / T3</td></tr>
+    <tr><td>二（W2–W3）</td><td><code>ChromeDevTools/chrome-devtools-mcp</code> ★53.7k</td><td>性能、网络、控制台错误定位</td><td>T2 / T5</td></tr>
+    <tr><td>二（W2–W3）</td><td><code>oraios/serena</code> ★30.3k</td><td>语义检索与符号级重构</td><td>T1</td></tr>
+    <tr><td>条件</td><td><code>GLips/Figma-Context-MCP</code> ★16.0k</td><td>设计稿转代码（仅当 T3 用 Figma）</td><td>T3</td></tr>
+  </tbody>
+</table>
+<div class="note">星标与更新时间来自 GitHub API 查询（2026-10-17）。MCP 服务器提供的能力不改变质量纪律：其产出仍须经测试与人工评审；医疗数据与 API Key 不得开放给任何第三方工具链。</div>
+
+<h2>八、待评审决策点<span class="en">DECISION ITEMS</span></h2>
+
+<div class="card">
+  <table style="margin-bottom:0">
+    <thead><tr><th>编号</th><th>待决事项</th><th>默认方案</th><th>决策人</th></tr></thead>
+    <tbody>
+      <tr><td>P-01</td><td>演示载体是平板还是笔记本为主</td><td>平板为主、笔记本备份</td><td>T2</td></tr>
+      <tr><td>P-02</td><td>是否采购树莓派与 ESP32（C3/C4）</td><td>采购，但仅作加分项</td><td>T1 + T2</td></tr>
+      <tr><td>P-03</td><td>ASR / TTS / OCR 供应商</td><td>沿用现有 DashScope 账号</td><td>T5</td></tr>
+      <tr><td>P-04</td><td>家属端是否做小程序版本</td><td>不做，仅 H5 + 测试号</td><td>T3</td></tr>
+      <tr><td>P-05</td><td>成员 A 的知识图谱模块是否接入（C2）</td><td>W3 结束时评估</td><td>T1</td></tr>
+      <tr><td>P-06</td><td>仓库是否公开</td><td>私有</td><td>T1</td></tr>
+      <tr><td>P-07</td><td>是否启用 GitHub Pages 发布评审材料</td><td>启用，W6</td><td>T3</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>九、评审意见回填<span class="en">REVIEW FORM</span></h2>
+<p>请在项目群内按以下格式提交；也可直接复制本节内容填写后发群。</p>
+<table>
+  <thead><tr><th>评审人</th><th>文档/章节</th><th>意见类型</th><th>具体意见</th><th>建议修改</th></tr></thead>
+  <tbody>
+    <tr><td>&nbsp;</td><td>&nbsp;</td><td>范围 / 工期 / 分工 / 质量 / 其他</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  </tbody>
+</table>
+
+<footer>
+  <b>小暖陪诊 · 项目规划评审包 v3.0（八周版）</b><br>
+  口径基准：<code>00-项目工期与范围基线</code>｜完整文档：<code>medpal-plan-v2/</code>（共 11 份）｜演示程序：<code>medpal-demo/v4.html</code><br>
+  文档效力：文档之间口径冲突时，以 00 号基线文件为准；基线与 14 号实施计划冲突时，以 00 号为准。
+</footer>
+
+</div>
+</body>
+</html>

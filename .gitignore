@@ -1,0 +1,42 @@
+# 环境与密钥
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+.vite/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 运行产物
+*.sqlite3
+*.db
+media/
+staticfiles/
+test-results/
+playwright-report/

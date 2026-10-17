@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+          if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
+          pip install ruff pytest pytest-cov
+
+      - name: 代码规范检查
+        run: ruff check . || echo "ruff 尚未配置，W1 后启用为硬门槛"
+
+      - name: 领域层 import 白名单检查
+        run: |
+          if [ -d backend/domain ]; then
+            ! grep -rnE "^\s*(import|from)\s+(django|requests|openai|dashscope|sqlalchemy|pymysql)" backend/domain/ \
+              || (echo "领域层禁止引入框架与外部 SDK" && exit 1)
+          fi
+
+      - name: 异常吞没检查
+        run: |
+          ! grep -rn "except Exception:\s*pass" --include=*.py . \
+            || (echo "禁止吞没异常" && exit 1)
+
+      - name: 单元测试与覆盖率
+        run: |
+          if [ -d backend/tests ] && ls backend/tests/*.py >/dev/null 2>&1; then
+            pytest backend/tests -q --cov=backend/domain --cov-report=term-missing \
+              --cov-fail-under=80 || exit 1
+          else
+            echo "测试尚未建立，W2 起启用为硬门槛"
+          fi
+
+      - name: 红线回归（禁用词）
+        run: |
+          if [ -f backend/tests/eval/guard_words.txt ]; then
+            python tools/check_guard_words.py || exit 1
+          else
+            echo "红线回归集尚未建立，W3 起启用"
+          fi
