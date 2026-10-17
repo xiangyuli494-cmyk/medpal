@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一图看懂 · 小暖陪诊到底要做什么</title>
+<style>
+:root{--bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
+--accent:#ff8a3d;--ok:#34d399;--warn:#fbbf24;--danger:#f87171;--blue:#60a5fa;--purple:#a78bfa;
+--mono:ui-monospace,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+font-size:14px;line-height:1.65;padding:0 0 60px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+header{background:linear-gradient(180deg,#182740,#111b2a);border-bottom:1px solid var(--line);padding:30px 0 26px;margin-bottom:8px}
+h1{font-size:25px;letter-spacing:-.01em;margin-bottom:8px}
+.sub{color:var(--dim);font-size:13px}
+h2{font-size:17px;margin:36px 0 14px;padding-left:11px;border-left:4px solid var(--accent)}
+h3{font-size:14px;margin:20px 0 9px;color:#cfe0f5}
+p{margin-bottom:10px;color:#c9d8ec}
+table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#182741;color:var(--dim);font-weight:700;font-size:11.5px}
+tbody tr:nth-child(even){background:#121d2c}
+code{font-family:var(--mono);font-size:11.5px;background:#0a121d;padding:1.5px 6px;border-radius:5px;color:#9fd3ff}
+
+/* 结论条 */
+.verdict{background:linear-gradient(120deg,#2a1c12,#1b2942);border:1px solid #6b4520;border-radius:16px;
+padding:22px 24px;margin:22px 0 8px}
+.verdict .big{font-size:22px;font-weight:800;line-height:1.5;margin-bottom:8px}
+.verdict .big b{color:var(--accent)}
+.verdict .note{font-size:13px;color:#c6d5e8}
+.verdict .note s{color:#7f93ad}
+
+/* 全景图 */
+.map{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;margin:14px 0}
+.tier-label{font-size:10.5px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-bottom:10px;
+display:flex;align-items:center;gap:8px}
+.tier-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.channels{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px}
+.ch{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 15px;position:relative}
+.ch.must{border-color:#2c5a3c}
+.ch.opt{border-color:#6b4520;border-style:dashed}
+.ch .cico{font-size:22px;margin-bottom:6px;display:block}
+.ch .cname{font-weight:800;font-size:14.5px;margin-bottom:3px}
+.ch .cwhat{font-size:11.5px;color:var(--dim);line-height:1.5;margin-bottom:9px}
+.ch .ctech{font-size:10.5px;font-family:var(--mono);color:#8ec5ff;background:#0e1a2b;
+border-radius:6px;padding:3px 7px;display:inline-block;margin-bottom:7px}
+.ch .cmeta{font-size:10.5px;color:#8fa3bf;display:flex;justify-content:space-between;gap:6px;
+border-top:1px dashed #243550;padding-top:7px}
+.ch .cmeta b{color:var(--accent);font-family:var(--mono)}
+.badge{position:absolute;top:11px;right:12px;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:20px}
+.badge.m{background:#16311f;color:var(--ok);border:1px solid #245c39}
+.badge.o{background:#3d3116;color:var(--warn);border:1px solid #6b4520}
+.arrow{text-align:center;color:#3d5679;font-size:18px;margin:12px 0 8px;line-height:1}
+.backend{background:linear-gradient(135deg,#1d2b42,#16233a);border:1px solid #34537a;border-radius:13px;
+padding:16px 18px}
+.backend .bt{font-weight:800;font-size:14.5px;margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-top:10px}
+.part{background:#0f1c2e;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:11.5px}
+.part b{display:block;color:#cfe0f5;font-size:12px;margin-bottom:2px}
+.part span{color:var(--dim);font-size:10.5px}
+
+/* 澄清卡 */
+.clarify{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:13px;margin:14px 0}
+.cl{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
+.cl .q{font-size:13.5px;font-weight:700;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start}
+.cl .q .x{color:var(--danger);flex-shrink:0}
+.cl .a{font-size:12.5px;color:#c9d8ec;line-height:1.7}
+.cl .a b{color:var(--ok)}
+.cl .a code{font-size:11px}
+
+/* 表格强调 */
+.tag{display:inline-block;font-size:10.5px;padding:1.5px 7px;border-radius:5px;font-weight:700;white-space:nowrap}
+.tag.m{background:#16311f;color:var(--ok)}
+.tag.o{background:#3d3116;color:var(--warn)}
+.tag.n{background:#3c1f22;color:#ff9f9f}
+.tag.w{background:#1e3a5f;color:#8ec5ff}
+ul,ol{padding-left:20px;margin-bottom:12px;color:#c9d8ec}
+li{margin-bottom:6px}
+.warnbox{background:#2a1a1c;border:1px solid #6b2f36;border-radius:11px;padding:14px 16px;margin:14px 0}
+.warnbox b{color:#ff9f9f}
+.okbox{background:#14261d;border:1px solid #245c39;border-radius:11px;padding:14px 16px;margin:14px 0}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>一图看懂 · 小暖陪诊到底要做什么</h1>
+    <div class="sub">面向就医困难人群的陪诊服务系统 · 六人团队 · 8 周 · 口径依据 <code>00-项目工期与范围基线</code></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="verdict">
+  <div class="big">你们<b>不是</b>要做 4 个产品。<br>是 <b>1 个后端</b> + <b>4 个网页</b> + <b>1 个可选硬件</b>。</div>
+  <div class="note">
+    所谓「设备端」「用户端」「家属端」「工作台」，全部是<b>浏览器里跑的网页</b>，共用同一个后端。<br>
+    <s>嵌入式系统</s> → 本期只是一个可选按键器 &nbsp;·&nbsp; <s>小程序</s> → 本期不做 &nbsp;·&nbsp; <s>原生 App</s> → 本期不做
+  </div>
+</div>
+
+<h2>一、系统全景（5 个块，一目了然）</h2>
+
+<div class="map">
+  <div class="tier-label">通道层 · 4 个网页</div>
+  <div class="channels">
+
+    <div class="ch must">
+      <span class="badge m">必交</span>
+      <span class="cico">📟</span>
+      <div class="cname">设备端</div>
+      <div class="cwhat">老人 / 视障 / 听障三种模式。全屏大字、语音优先、实体按键</div>
+      <div class="ctech">Vue3 + Vite</div>
+      <div class="cmeta"><span>跑在平板/笔记本全屏</span><b>T2 · W2→W6</b></div>
+    </div>
+
+    <div class="ch must">
+      <span class="badge m">必交</span>
+      <span class="cico">📱</span>
+      <div class="cname">用户端</div>
+      <div class="cwhat">会用手机的人自己看：登录、陪诊单、进度、报告</div>
+      <div class="ctech">uni-app → H5</div>
+      <div class="cmeta"><span>手机浏览器打开</span><b>T3 · W2→W6</b></div>
+    </div>
+
+    <div class="ch must">
+      <span class="badge m">必交</span>
+      <span class="cico">👨‍👩‍👧</span>
+      <div class="cname">家属端</div>
+      <div class="cwhat">微信推送 + 时间轴 + 隐私开关。人不在场怎么放心</div>
+      <div class="ctech">Vue3 + Vant</div>
+      <div class="cmeta"><span>微信里点开 H5</span><b>T3 · W2→W6</b></div>
+    </div>
+
+    <div class="ch must">
+      <span class="badge m">必交</span>
+      <span class="cico">👩‍⚕️</span>
+      <div class="cname">陪诊师工作台</div>
+      <div class="cwhat">同时管 3 个老人：队列、置信度校对、交接双签</div>
+      <div class="ctech">Vue3 + Element Plus</div>
+      <div class="cmeta"><span>电脑浏览器</span><b>T4 · W2→W6</b></div>
+    </div>
+  </div>
+
+  <div class="arrow">▼　全部调用同一套接口　▼</div>
+
+  <div class="backend">
+    <div class="bt">🗄️ 后端服务（1 个）<span style="font-size:11px;color:var(--dim);font-weight:400">— 六个人里有三个人主要在写这一层</span></div>
+    <div class="parts">
+      <div class="part"><b>领域层（内核）</b><span>状态机 · 规划引擎 · 话术模板 · 红线校验</span></div>
+      <div class="part"><b>接口层</b><span>REST API + WebSocket 会话流</span></div>
+      <div class="part"><b>能力适配层</b><span>ASR · TTS · OCR · LLM · 推送</span></div>
+      <div class="part"><b>数据层</b><span>SQLite（开发）/ MySQL（部署）</span></div>
+    </div>
+    <div style="margin-top:11px;font-size:11.5px;color:var(--dim)">
+      技术栈：<code>Python 3.12</code> <code>Django 5 + DRF</code> <code>Django Channels</code> &nbsp;|&nbsp;
+      负责人：<span style="color:var(--accent)">T1 领域层 · T5 AI 适配器 · T1 接口</span> &nbsp;|&nbsp; 周次：<span style="color:var(--accent)">W1→W6</span>
+    </div>
+  </div>
+
+  <div class="arrow">▲　可选硬件挂在这里，不改变上面任何一块　▲</div>
+
+  <div class="ch opt" style="margin-top:6px">
+    <span class="badge o">条件交付</span>
+    <span class="cico">🔌</span>
+    <div class="cname">物理按键器（C3 / C4）</div>
+    <div class="cwhat">ESP32 一颗按键 + 一个震动马达。按一下 = 网页收到"按下"事件；震动 = 网页发一个指令。
+      屏幕和逻辑全都在上面那个「设备端网页」里，硬件<b>只负责按和震</b></div>
+    <div class="ctech">ESP32-C3 · MicroPython</div>
+    <div class="cmeta"><span>硬件 W1 下单，W6 前到货才做</span><b>T2 · W6</b></div>
+  </div>
+</div>
+
+<h2>二、三个「你以为要分开做、其实是一套」的地方</h2>
+
+<div class="clarify">
+  <div class="cl">
+    <div class="q"><span class="x">✕</span><span>「设备端要做嵌入式系统 / 写 Linux 驱动 / 上 LVGL？」</span></div>
+    <div class="a">
+      <b>不用。</b>设备端就是<b>一个全屏网页</b>（Chromium kiosk 模式）。<br>
+      平板开机 → 自动打开网页 → 全屏 → 就是"设备"。<br>
+      树莓派只是换了个能装外壳的载体，跑的是同一个网页。
+    </div>
+  </div>
+
+  <div class="cl">
+    <div class="q"><span class="x">✕</span><span>「用户端要发 App Store / 做原生 Android？」</span></div>
+    <div class="a">
+      <b>不用。</b>用 uni-app 写一份代码，<b>编译成 H5</b> 就能在手机浏览器打开。<br>
+      原生打包、上架审核全部不做——8 周没有这个时间。
+    </div>
+  </div>
+
+  <div class="cl">
+    <div class="q"><span class="x">✕</span><span>「还要做微信小程序？」</span></div>
+    <div class="a">
+      <b>本期不做。</b>小程序上架需要企业主体和审核周期，学生团队过不了。<br>
+      家属端改用<b>微信测试号 + H5 链接</b>，演示时用 mock 推送面板。<br>
+      基线里这是明确排除项。
+    </div>
+  </div>
+</div>
+
+<h2>三、逐块对照表：做什么 · 用什么做 · 谁做 · 第几周</h2>
+
+<table>
+  <thead><tr><th>块</th><th>形态</th><th>技术</th><th>责任人</th><th>周次</th><th>性质</th></tr></thead>
+  <tbody>
+    <tr><td><b>领域内核</b></td><td>纯 Python 库（无框架）</td><td><code>Python</code></td><td>T1</td><td>W2 – W4</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td><b>后端接口</b></td><td>REST + WebSocket</td><td><code>Django 5</code> <code>DRF</code> <code>Channels</code></td><td>T1</td><td>W3 – W4</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td><b>设备端网页</b></td><td>全屏网页</td><td><code>Vue3</code> <code>Vite</code></td><td>T2</td><td>W2 – W6</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td><b>用户端</b></td><td>H5 网页</td><td><code>uni-app</code> <code>Vue3</code></td><td>T3</td><td>W2 – W6</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td><b>家属端</b></td><td>H5 网页 + 推送</td><td><code>Vue3</code> <code>Vant</code></td><td>T3</td><td>W4 – W6</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td><b>陪诊师工作台</b></td><td>PC 网页</td><td><code>Vue3</code> <code>Element Plus</code></td><td>T4</td><td>W2 – W6</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td><b>AI 适配器</b></td><td>服务端调用</td><td>DashScope ASR/TTS/OCR</td><td>T5</td><td>W5</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td><b>测试与 CI</b></td><td>流水线 + 测试集</td><td><code>pytest</code> <code>Playwright</code> <code>GitHub Actions</code></td><td>T6</td><td>W1 – W8</td><td><span class="tag m">必交</span></td></tr>
+    <tr><td>物理按键器</td><td>一颗按键 + 马达</td><td>ESP32-C3 · MicroPython</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C3</span></td></tr>
+    <tr><td>树莓派整机</td><td>树莓派 + 外壳</td><td>Raspberry Pi OS + Chromium</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C4</span></td></tr>
+    <tr><td>医保解释器</td><td>后端模块</td><td><code>Python</code> 模板</td><td>T1</td><td>W6</td><td><span class="tag o">条件 C5</span></td></tr>
+    <tr><td>知识图谱分诊</td><td>后端模块</td><td>复用成员 A 模块</td><td>T5</td><td>W6</td><td><span class="tag o">条件 C2</span></td></tr>
+    <tr><td>微信小程序</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="tag n">不做</span></td></tr>
+    <tr><td>原生 App</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="tag n">不做</span></td></tr>
+  </tbody>
+</table>
+
+<h2>四、明确不做的清单（把话说死，省掉纠结）</h2>
+
+<div class="warnbox">
+  <p><b>以下六项已从范围中排除，不要在讨论里反复出现：</b></p>
+  <ol style="margin-bottom:0">
+    <li><b>微信小程序上架</b> —— 需企业主体与审核周期，改 H5 + 测试号</li>
+    <li><b>原生 App（Android / iOS）</b> —— 用 H5 替代</li>
+    <li><b>嵌入式驱动 / LVGL 界面 / 自研 PCB</b> —— 设备端是网页，硬件只做按键与震动</li>
+    <li><b>医院 HIS 系统对接</b> —— 拿不到授权</li>
+    <li><b>多医院覆盖</b> —— 只做一个场景做深</li>
+    <li><b>端侧大模型</b> —— 平板跑不动，全部走服务端 API</li>
+  </ol>
+</div>
+
+<h2>五、需要买的东西（只有这一小部分可选）</h2>
+
+<table>
+  <thead><tr><th>物品</th><th>数量</th><th>用途</th><th>必要性</th></tr></thead>
+  <tbody>
+    <tr><td>平板（可复用现有的）</td><td>1</td><td>跑设备端网页，主演示载体</td><td><span class="tag m">必须</span></td></tr>
+    <tr><td>笔记本（成员自带）</td><td>2</td><td>开发 + 演示备份机</td><td><span class="tag m">必须</span></td></tr>
+    <tr><td>ESP32-C3 开发板</td><td>2</td><td>物理按键（C3）</td><td><span class="tag o">可选</span></td></tr>
+    <tr><td>震动马达 + 杜邦线</td><td>2 套</td><td>震动反馈（C3）</td><td><span class="tag o">可选</span></td></tr>
+    <tr><td>树莓派 Zero 2W + 4 寸屏</td><td>1 套</td><td>整机（C4）</td><td><span class="tag o">可选</span></td></tr>
+    <tr><td>3D 打印外壳</td><td>1</td><td>外观（C6）</td><td><span class="tag o">可选</span></td></tr>
+  </tbody>
+</table>
+
+<div class="okbox">
+  <b>关键判断</b>：平板方案就是最终演示方案。只要平板能跑通，项目就能验收。
+  树莓派和 ESP32 是<b>锦上添花</b>——到货就做，不到货不影响答辩。
+</div>
+
+<h2>六、8 周之后，每个人手上有什么</h2>
+
+<table>
+  <thead><tr><th>人</th><th>交付物</th></tr></thead>
+  <tbody>
+    <tr><td><b>T1</b></td><td>领域层代码（状态机 / 规划引擎 / 话术模板 / 红线校验）· 接口文档 · 14 篇 ADR</td></tr>
+    <tr><td><b>T2</b></td><td>设备端网页（三模式）· 平板演示包 · 可选：按键器固件</td></tr>
+    <tr><td><b>T3</b></td><td>用户端 H5 · 家属端 H5 · 推送模板 · 视觉规范</td></tr>
+    <tr><td><b>T4</b></td><td>陪诊师工作台（队列 / 校对 / 双签 / 升级 四屏）</td></tr>
+    <tr><td><b>T5</b></td><td>ASR/TTS/OCR 适配器 · 无障碍验收标准 · AI 评测集 200 条</td></tr>
+    <tr><td><b>T6</b></td><td>CI 流水线 · 240 条自动化测试 · 周报与验收报告 · 可用性测试报告</td></tr>
+  </tbody>
+</table>
+
+<div class="verdict" style="margin-top:26px">
+  <div class="big" style="font-size:18px">记这一句就够了：<br>
+  <b>一个后端，四个网页，硬件可选。</b></div>
+  <div class="note">
+    四个网页共用一套接口、一套状态、一个陪诊单（Episode）。<br>
+    所以"改一次流程，四端同时生效"——这也是答辩最值钱的一句话。
+  </div>
+</div>
+
+<footer>
+  口径依据：<code>medpal-plan-v2/00-项目工期与范围基线.md</code>（3.1 必须交付 12 项 · 3.2 条件交付 6 项 · 3.3 明确不做 6 项）<br>
+  详细任务分解见 <code>medpal-plan-v2/14-项目实施计划.md</code> 第 5 章周级实施计划
+</footer>
+
+</div>
+</body>
+</html>
