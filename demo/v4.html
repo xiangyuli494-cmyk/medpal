@@ -131,6 +131,35 @@ body.stage .mid-head{max-width:440px}
 }
 body.stage .stage-badge{display:block}
 
+/* ====================== 巡演旁白条 ====================== */
+.tour-bar{
+  position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);
+  z-index:460;display:flex;align-items:center;gap:14px;
+  background:rgba(16,26,42,.97);border:1px solid rgba(255,138,61,.42);
+  border-radius:14px;padding:12px 16px;max-width:min(920px,92vw);
+  box-shadow:0 18px 48px rgba(0,0,0,.6);transition:transform .34s cubic-bezier(.22,.61,.36,1);
+}
+.tour-bar.show{transform:translate(-50%,0)}
+.tour-bar .tb-n{
+  flex-shrink:0;font-family:var(--mono);font-size:11px;color:var(--accent);
+  background:var(--accent-soft);border:1px solid #6b4520;border-radius:8px;padding:5px 10px;font-weight:700;
+}
+.tour-bar .tb-t{flex:1;font-size:13.5px;line-height:1.6;color:#dfe9f5}
+.tour-bar .tb-x{
+  flex-shrink:0;font-size:11.5px;color:var(--console-dim);border:1px solid var(--console-line);
+  border-radius:8px;padding:5px 11px;background:transparent;
+}
+.tour-bar .tb-x:hover{background:var(--console-panel2);color:var(--txt)}
+
+/* 首次进入引导 */
+.guide{
+  position:absolute;left:50%;top:54px;transform:translateX(-50%);z-index:120;
+  background:rgba(255,138,61,.96);color:#2a1608;font-size:11.5px;font-weight:700;
+  padding:7px 15px;border-radius:20px;box-shadow:0 8px 22px rgba(0,0,0,.35);
+  animation:guideIn .4s ease;white-space:nowrap;
+}
+@keyframes guideIn{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
 /* 屏幕切换过渡 */
 .dev-body.anim{animation:screenIn .34s cubic-bezier(.22,.61,.36,1)}
 @keyframes screenIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
@@ -570,7 +599,7 @@ body.stage .stage-badge{display:block}
 
     <div class="sec-title">⑤ 演示</div>
     <div class="screen-grid">
-      <button class="screen-btn" id="btnAuto">▶ 自动播放</button>
+      <button class="screen-btn" id="btnAuto">▶ 一键巡演（9 步）</button>
       <button class="screen-btn" id="btnReset">↺ 重置全过程</button>
     </div>
   </div>
@@ -2244,6 +2273,7 @@ function run(head, arg){
       audit(arg === 'resend' ? 'ok' : '', t[arg] || arg);
       toastConsole(t[arg] || '已处理'); break;
     }
+    case 'tour': if (arg === 'stop') tourStop(); break;
     default: break;
   }
 }
@@ -2321,12 +2351,8 @@ $('#btnTts').onclick = () => {
   if (!TTS.enabled && 'speechSynthesis' in window) speechSynthesis.cancel();
 };
 $('#btnAuto').onclick = () => {
-  if (S.auto) { clearInterval(S.auto); S.auto = null; $('#btnAuto').textContent = '▶ 自动播放'; return; }
-  $('#btnAuto').textContent = '⏸ 停止';
-  S.auto = setInterval(() => {
-    const ss = screens(); const i = ss.indexOf(effectiveScreen());
-    S.screen = ss[(i + 1) % ss.length]; render();
-  }, 2600);
+  if (tourIdx >= 0) { tourStop(); toastConsole('巡演已结束'); }
+  else { closeCover(); tourStart(); toastConsole('一键巡演开始：← → 手动切换，Esc 结束'); }
 };
 $('#btnReset').onclick = () => {
   S.visited = {}; S.audit = []; S.metrics = { llmCalls:0, blocked:0, tplHits:0, tl:0 };
@@ -2340,7 +2366,14 @@ $('#btnReset').onclick = () => {
 /* ---------- 封面与放映模式 ---------- */
 function openCover(){ $('#cover').classList.remove('hide'); }
 function closeCover(){ $('#cover').classList.add('hide'); }
-$('#coverEnter').onclick = () => closeCover();
+$('#coverEnter').onclick = () => {
+  closeCover();
+  const g = document.createElement('div');
+  g.className = 'guide';
+  g.textContent = '左侧切通道 → 中间看设备 → 右侧看这句话怎么生成的';
+  const mid = document.querySelector('.col-mid');
+  if (mid) { mid.style.position = 'relative'; mid.appendChild(g); setTimeout(() => g.remove(), 5200); }
+};
 $('#coverScript').onclick = () => { closeCover(); $('#modalBox').innerHTML = MODAL.script; $('#modal').classList.add('show'); };
 
 function toggleStage(){
@@ -2364,9 +2397,72 @@ renderDevice = function(){
   b.classList.add('anim');
 };
 
+
+/* ==========================================================================
+   一键巡演：按答辩脚本串起 9 个场景，自动切通道并旁白
+   ========================================================================== */
+const TOUR = [
+  { p:'elder',  s:'arrive',  say:'这是一台放在医院大厅的设备。第一件事不是问诊，是问清「您是谁、今天做什么」。' },
+  { p:'blind',  s:'nav_step',say:'同一个人、同一份状态，只换渲染层 —— 界面直接变成语音，一屏都不用点。' },
+  { p:'elder',  s:'recall',  say:'复述校验不是「我说完了」，而是「您听懂了」。这是全流程唯一的闭环。' },
+  { p:'elder',  s:'plan',    say:'五项检查怎么排？空腹优先、憋尿往后、固定预约不动，输出的不只是顺序，还有理由。' },
+  { p:'adult',  s:'ocr',     say:'识单认不准怎么办：0.5g 和 5g 差十倍，系统标出来问，绝不自动纠错。' },
+  { p:'deaf',   s:'speakforme', say:'听障通道下旁白永不出声，只有「替我说」出声 —— 因为那句话是放给医生听的。' },
+  { p:'fail',   s:'fail_guard', say:'LLM 想写「没事的，不用去医院」，被红线校验器拦下并回退模板。我们不演示顺利，演示不猜。' },
+  { p:'staff',  s:'staff_handover', say:'签字是 AI 禁入区。系统只提醒该签了、记录签过了，永不代签。' },
+  { p:'family', s:'family_voice', say:'您一个人来，但没有一件事是您一个人扛的。' }
+];
+let tourIdx = -1, tourTimer = null;
+
+function tourBar(){
+  let el = $('#tourBar');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'tourBar'; el.className = 'tour-bar';
+    el.innerHTML = '<div class="tb-n"><span id="tourStep">1</span> / ' + TOUR.length + '</div>'
+      + '<div class="tb-t" id="tourSay"></div>'
+      + '<button class="tb-x" data-cmd="tour:stop">结束巡演</button>';
+    document.body.appendChild(el);
+  }
+  return el;
+}
+function tourShow(i){
+  const st = TOUR[i];
+  S.persona = st.p; S.screen = st.s;
+  render();
+  const bar = tourBar();
+  bar.classList.add('show');
+  $('#tourStep').textContent = String(i + 1);
+  $('#tourSay').textContent = st.say;
+  TTS.speak(st.say);
+  audit('', '巡演第 ' + (i + 1) + ' 步：' + st.p + '/' + st.s);
+}
+function tourStart(){
+  tourIdx = 0; tourShow(0);
+  clearInterval(tourTimer);
+  tourTimer = setInterval(() => {
+    tourIdx++;
+    if (tourIdx >= TOUR.length) { tourStop(); return; }
+    tourShow(tourIdx);
+  }, 9000);
+}
+function tourStop(){
+  clearInterval(tourTimer); tourTimer = null; tourIdx = -1;
+  const bar = $('#tourBar'); if (bar) bar.classList.remove('show');
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  audit('ok', '巡演结束');
+}
+document.addEventListener('keydown', e => {
+  if (tourIdx < 0) return;
+  if (e.key === 'ArrowRight' && tourIdx < TOUR.length - 1) { tourIdx++; tourShow(tourIdx); }
+  if (e.key === 'ArrowLeft'  && tourIdx > 0) { tourIdx--; tourShow(tourIdx); }
+  if (e.key === 'Escape') tourStop();
+});
+
 /* ---------- 启动 ---------- */
 if (/skip|stage/.test(location.hash)) closeCover();
 if (/stage/.test(location.hash)) document.body.classList.add('stage');
+const AUTO_TOUR = /tour/.test(location.hash);
 
 /* 深链：支持 #p=blind&s=nav_step 直接定位到任一通道与屏幕（演示与验收用） */
 (function applyDeepLink(){
@@ -2381,6 +2477,7 @@ if (/stage/.test(location.hash)) document.body.classList.add('stage');
 audit('ok', '设备开机，自检通过，本地缓存无残留');
 audit('', 'beacon 触发点「门诊大厅」→ 自动播报当前位置与今日行程');
 render();
+if (AUTO_TOUR) setTimeout(tourStart, 400);
 </script>
 </body>
 </html>
