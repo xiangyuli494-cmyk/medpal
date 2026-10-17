@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>小暖陪诊 · 最终交付说明</title>
+<style>
+:root{
+  --bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
+  --accent:#ff8a3d;--ok:#34d399;--warn:#fbbf24;--danger:#f87171;--blue:#60a5fa;--purple:#a78bfa;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:14px;line-height:1.7;padding:0 0 70px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* 封面 */
+.hero{
+  background:
+    radial-gradient(760px 420px at 18% -12%, rgba(255,138,61,.17), transparent 60%),
+    radial-gradient(620px 380px at 92% 8%, rgba(96,165,250,.12), transparent 62%),
+    linear-gradient(168deg,#131f31,#0d1622 62%);
+  border-bottom:1px solid var(--line);padding:52px 0 44px;margin-bottom:10px;
+}
+.hero .tag{display:inline-block;font-size:11px;letter-spacing:.16em;color:var(--accent);
+  border:1px solid #6b4520;background:rgba(255,138,61,.09);border-radius:20px;padding:4px 13px;margin-bottom:18px}
+.hero h1{font-size:clamp(27px,3.6vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:14px}
+.hero h1 b{color:var(--accent)}
+.hero .lead{font-size:15px;color:#bccddf;max-width:660px;margin-bottom:26px}
+.stats{display:flex;flex-wrap:wrap;gap:11px}
+.st{background:rgba(27,41,66,.75);border:1px solid rgba(74,104,146,.5);border-radius:13px;
+  padding:13px 20px;min-width:118px;backdrop-filter:blur(6px)}
+.st .v{font-size:23px;font-weight:800;font-family:var(--mono);color:var(--accent);line-height:1.15}
+.st .l{font-size:11px;color:#8fa3bf;margin-top:2px}
+
+/* 章节 */
+h2{font-size:18px;margin:40px 0 6px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.4}
+h2 .num{color:var(--dim);font-family:var(--mono);font-size:13px;font-weight:400;margin-right:7px}
+.chap-note{font-size:12px;color:var(--dim);margin:0 0 16px 12px}
+h3{font-size:14px;margin:24px 0 10px;color:#cfe0f5;display:flex;align-items:center;gap:8px}
+h3::after{content:"";flex:1;height:1px;background:var(--line)}
+p{color:#c9d8ec;margin-bottom:10px}
+ul,ol{padding-left:21px;margin-bottom:12px;color:#c9d8ec}
+li{margin-bottom:5px}
+code{font-family:var(--mono);font-size:11.5px;background:#0a121d;padding:1.5px 6px;border-radius:5px;color:#9fd3ff}
+
+/* 表格 */
+table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#182741;color:var(--dim);font-weight:700;font-size:11.5px;white-space:nowrap}
+tbody tr:nth-child(even){background:#121d2c}
+td.k{font-weight:700;color:#dfe9f5;white-space:nowrap}
+td.n{font-family:var(--mono);font-size:11.5px;color:var(--dim);white-space:nowrap}
+.tag{display:inline-block;font-size:10.5px;padding:1.5px 7px;border-radius:5px;font-weight:700;white-space:nowrap}
+.tag.m{background:#16311f;color:var(--ok)}
+.tag.o{background:#3d3116;color:var(--warn)}
+.tag.n{background:#3c1f22;color:#ff9f9f}
+.tag.w{background:#1e3a5f;color:#8ec5ff}
+
+/* 卡片组 */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:12px;margin:14px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
+.card h4{font-size:13px;margin-bottom:9px;color:#cfe0f5;display:flex;align-items:center;gap:7px}
+.card .row{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:4px 0;
+  border-bottom:1px dashed #1f2f47}
+.card .row:last-child{border-bottom:none}
+.card .row span:first-child{color:var(--dim)}
+.card .row span:last-child{font-family:var(--mono);color:#9fd3ff;font-size:11.5px}
+
+.box{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px;margin:14px 0}
+.box.ok{background:#13261d;border-color:#245c39}
+.box.warn{background:#2a1f18;border-color:#6b4520}
+.box.danger{background:#2a1a1c;border-color:#6b2f36}
+.box.money{background:#2a1f18;border-color:#6b4520}
+.box b{color:#dfe9f5}
+.box.ok b{color:var(--ok)}
+.box.warn b{color:var(--warn)}
+.box.danger b{color:#ff9f9f}
+.box ol,.box ul{margin-bottom:0}
+
+/* 阶段时间线 */
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.stg{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:13px 14px;position:relative}
+.stg.ms{border-color:#6b4520;background:#2a1f18}
+.stg .w{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:800;margin-bottom:4px}
+.stg .t{font-size:13px;font-weight:700;margin-bottom:5px}
+.stg .d{font-size:11px;color:var(--dim);line-height:1.55}
+.stg .m{position:absolute;top:11px;right:12px;font-size:9.5px;font-weight:800;color:var(--accent);
+  background:#3a2a1c;border:1px solid #6b4520;border-radius:20px;padding:1px 7px}
+
+/* 使用指南 */
+.users{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:14px 0}
+.us{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 19px}
+.us .uh{font-size:13.5px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.us ol{margin-bottom:0;font-size:12.5px;padding-left:19px}
+.us li{margin-bottom:6px}
+
+/* 页脚 */
+footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim);line-height:1.9}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .hero{background:#fff;border-bottom:2px solid #000}
+  .hero h1,.hero .lead,.st .v,.st .l{color:#000}
+  .card,.box,.stg,.us,table{background:#fff;border-color:#999}
+  th{background:#eee;color:#000}
+  h2{border-left-color:#000}
+  code{background:#f2f2f2;color:#000}
+  a{color:#000;text-decoration:underline}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="tag">FINAL DELIVERY · 最终交付说明</div>
+    <h1>小暖陪诊<br><b>让「一个人看病」从不可承受，变成可承受</b></h1>
+    <div class="lead">
+      面向就医困难人群的陪诊服务系统。六人团队，8 周工期，交付 1 个后端内核、4 个前端通道、1 套工程规范与 1 个可现场演示的融合版 Demo。
+    </div>
+    <div class="stats">
+      <div class="st"><div class="v">8</div><div class="l">周交付周期</div></div>
+      <div class="st"><div class="v">4</div><div class="l">前端通道</div></div>
+      <div class="st"><div class="v">9</div><div class="l">状态节点闭环</div></div>
+      <div class="st"><div class="v">13</div><div class="l">规划文档</div></div>
+      <div class="st"><div class="v">240</div><div class="l">目标测试用例</div></div>
+      <div class="st"><div class="v">0</div><div class="l">越界话术放行</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<h2><span class="num">01</span>交付总览</h2>
+<div class="chap-note">全部产物共 5 类，其中 4 类为本次新建，1 类为沿用素材。</div>
+
+<table>
+  <thead><tr><th>类别</th><th>产物</th><th>位置</th><th>规模</th><th>用途</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="k">演示程序</td>
+      <td><code>v4.html</code></td>
+      <td class="n">medpal-demo/</td>
+      <td class="n">148 KB / 2472 行</td>
+      <td>答辩主推。单文件零依赖，离线可跑</td>
+    </tr>
+    <tr>
+      <td class="k">规划文档集</td>
+      <td>00 / 01 / 02 / 10 – 16 共 11 份 + 2 份 HTML</td>
+      <td class="n">medpal-plan-v2/</td>
+      <td class="n">13 个文件 / 380 KB</td>
+      <td>基线、组织、技术、规范、计划、质量、工具链</td>
+    </tr>
+    <tr>
+      <td class="k">截图素材</td>
+      <td>8 张关键界面</td>
+      <td class="n">medpal-demo/shots-final/</td>
+      <td class="n">2.2 MB</td>
+      <td>1680×1050，可直接进 PPT</td>
+    </tr>
+    <tr>
+      <td class="k">代码仓库</td>
+      <td>Git 仓库（5 次提交）</td>
+      <td class="n">medpal/</td>
+      <td class="n">40 个文件</td>
+      <td>CI 骨架、模板、协议、脚本、文档副本</td>
+    </tr>
+    <tr>
+      <td class="k">沿用素材</td>
+      <td>四份成员原始原型</td>
+      <td class="n">member-demos/ · medpal-demo/</td>
+      <td class="n">—</td>
+      <td>融合依据；不属于本次产出</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>规划文档明细</h3>
+
+<table>
+  <thead><tr><th>编号</th><th>文档</th><th>核心内容</th><th>主要读者</th></tr></thead>
+  <tbody>
+    <tr><td class="n">00</td><td class="k">项目工期与范围基线</td><td><b>口径基准，效力最高</b>：周任务包制、8 周范围、质量门槛、编号规则</td><td>全员</td></tr>
+    <tr><td class="n">01</td><td class="k">演示原型评估与融合方案</td><td>四份成员原型的评估结论、融合原则与来源对照</td><td>全员</td></tr>
+    <tr><td class="n">02</td><td class="k">系统设计规格说明书</td><td>演示版规格、三栏架构、对话管线、AI 边界、无障碍契约</td><td>全员</td></tr>
+    <tr><td class="n">10</td><td class="k">项目组织与职责矩阵</td><td>T1–T6 角色、RACI 矩阵、权限与制衡、职责边界、会议机制</td><td>全员</td></tr>
+    <tr><td class="n">11</td><td class="k">技术方案与接口契约</td><td>技术选型、ADR-001–014、接口冻结、会话协议 v0.1、依赖清单</td><td>T1 / T5 主读</td></tr>
+    <tr><td class="n">12</td><td class="k">开发规范与测试规范</td><td>编码规范、八层测试体系、质量门禁 G1–G7、失效模式</td><td>T6 主读</td></tr>
+    <tr><td class="n">13</td><td class="k">配置管理与汇报机制</td><td>仓库与分支模型、配置项清单、汇报体系 R1–R6、度量指标</td><td>全员 / T6 重点</td></tr>
+    <tr><td class="n">14</td><td class="k">项目实施计划</td><td><b>W1–W8 逐周任务</b>、M1–M4 验收标准、风险台账、四份汇报模板</td><td>全员</td></tr>
+    <tr><td class="n">15</td><td class="k">质量保证与风险管理</td><td>31 项量化质量目标、缺陷分级、RK-01–12 风险、变更控制</td><td>全员 / T6 重点</td></tr>
+    <tr><td class="n">16</td><td class="k">工具链与协作平台配置指南</td><td>GitHub Skills 学习路径、MCP 服务器选型、仓库初始化</td><td>T6 主读</td></tr>
+    <tr><td class="n">—</td><td class="k">文档评审包.html</td><td><b>发群评审用</b>：一页看全 + 评审意见回填表</td><td>全员</td></tr>
+    <tr><td class="n">—</td><td class="k">一图看懂-要做什么.html</td><td><b>范围澄清用</b>：1 后端 + 4 网页 + 1 可选硬件</td><td>全员</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">02</span>技术栈</h2>
+<div class="chap-note">项目实际动手写的技术。已明确排除项见第 05 节。</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>🐍 后端</h4>
+    <div class="row"><span>语言</span><span>Python 3.12</span></div>
+    <div class="row"><span>框架</span><span>Django 5 + DRF</span></div>
+    <div class="row"><span>实时通道</span><span>Channels + WebSocket</span></div>
+    <div class="row"><span>数据库</span><span>SQLite → MySQL 8</span></div>
+    <div class="row"><span>缓存/会话</span><span>Redis</span></div>
+    <div class="row"><span>接口文档</span><span>drf-spectacular</span></div>
+    <div class="row"><span>领域层</span><span>纯 Python 零依赖</span></div>
+  </div>
+
+  <div class="card">
+    <h4>🎨 前端（4 个网页）</h4>
+    <div class="row"><span>设备端</span><span>Vue 3 + Vite</span></div>
+    <div class="row"><span>用户端</span><span>uni-app → H5</span></div>
+    <div class="row"><span>家属端</span><span>Vue 3 + Vant</span></div>
+    <div class="row"><span>陪诊师台</span><span>Vue 3 + Element Plus</span></div>
+    <div class="row"><span>状态管理</span><span>pinia</span></div>
+    <div class="row"><span>请求层</span><span>axios 统一封装</span></div>
+    <div class="row"><span>设备载体</span><span>Chromium Kiosk</span></div>
+  </div>
+
+  <div class="card">
+    <h4>🤖 AI 能力</h4>
+    <div class="row"><span>大模型</span><span>DashScope qwen</span></div>
+    <div class="row"><span>语音识别</span><span>qwen3-asr-flash</span></div>
+    <div class="row"><span>语音合成</span><span>qwen3-tts-flash</span></div>
+    <div class="row"><span>识单</span><span>多模态模型</span></div>
+    <div class="row"><span>知识图谱</span><span>Neo4j（条件 C2）</span></div>
+    <div class="row"><span>设计原则</span><span>适配器封装可替换</span></div>
+    <div class="row"><span>话术管线</span><span>模板 → LLM → 红线</span></div>
+  </div>
+
+  <div class="card">
+    <h4>🧪 工程与测试</h4>
+    <div class="row"><span>单元/集成</span><span>pytest + cov</span></div>
+    <div class="row"><span>契约测试</span><span>schemathesis</span></div>
+    <div class="row"><span>端到端</span><span>Playwright</span></div>
+    <div class="row"><span>无障碍</span><span>axe-core</span></div>
+    <div class="row"><span>前端单测</span><span>Vitest</span></div>
+    <div class="row"><span>性能</span><span>Locust</span></div>
+    <div class="row"><span>CI</span><span>GitHub Actions</span></div>
+  </div>
+</div>
+
+<div class="box">
+  <b>硬件（条件交付，不影响验收）</b>：树莓派 Zero 2W + 4 寸屏 + Chromium Kiosk + ESP32-C3（MicroPython）。
+  主演示载体是<b>平板浏览器</b>，硬件仅作加分项，只负责按键与震动。
+</div>
+
+<h2><span class="num">03</span>八周实施计划</h2>
+<div class="chap-note">排期以周为最小单位。工时不设统一时段，按周任务包交付。</div>
+
+<div class="stages">
+  <div class="stg"><div class="w">W1</div><div class="t">立项与契约冻结</div>
+    <div class="d">仓库 / CI / 会话协议 / 领域模型 / 术语表</div></div>
+  <div class="stg ms"><span class="m">M1</span><div class="w">W2</div><div class="t">领域内核与四端骨架</div>
+    <div class="d">状态机 / 话术引擎 / 四端脚手架 / 测试 ≥ 40</div></div>
+  <div class="stg"><div class="w">W3</div><div class="t">主线打通</div>
+    <div class="d">五个假适配器 / 编排器 / 规划引擎 / 无障碍</div></div>
+  <div class="stg ms"><span class="m">M2</span><div class="w">W4</div><div class="t">主线集成</div>
+    <div class="d">9 节点全通 / E2E ≥ 8 / 范围冻结 / 测试 ≥ 120</div></div>
+  <div class="stg"><div class="w">W5</div><div class="t">真实 AI 接入</div>
+    <div class="d">真 ASR/TTS/OCR / 剂量零错误 / 评测集 ≥ 120</div></div>
+  <div class="stg ms"><span class="m">M3</span><div class="w">W6</div><div class="t">四端成型</div>
+    <div class="d">双机演示包 / 无障碍走查 / 测试 ≥ 180</div></div>
+  <div class="stg"><div class="w">W7</div><div class="t">用户测试</div>
+    <div class="d">10 人可用性测试 / 安全走查 / 排练</div></div>
+  <div class="stg ms"><span class="m">M4</span><div class="w">W8</div><div class="t">验收答辩</div>
+    <div class="d">缺陷冻结 / 文档收口 / 测试 ≥ 240</div></div>
+</div>
+
+<h2><span class="num">04</span>六人分工</h2>
+
+<table>
+  <thead><tr><th>代号</th><th>角色</th><th>核心交付物</th><th>否决权</th></tr></thead>
+  <tbody>
+    <tr><td class="k">T1</td><td>项目经理 / 架构师 / 领域工程</td><td>领域层、接口契约、14 篇 ADR、进度管理</td><td>—</td></tr>
+    <tr><td class="k">T2</td><td>设备端与嵌入式</td><td>设备端三模式网页、演示载体、可选固件</td><td>交互可用性（与 T5 共有）</td></tr>
+    <tr><td class="k">T3</td><td>用户端与家属端前端</td><td>用户端 H5、家属端 H5、推送模板、视觉规范</td><td>—</td></tr>
+    <tr><td class="k">T4</td><td>陪诊师工作台与中后台</td><td>工作台四屏：队列 / 校对 / 双签 / 升级</td><td>工作台并发可用性</td></tr>
+    <tr><td class="k">T5</td><td>AI 集成与无障碍</td><td>七类适配器、无障碍验收标准、评测集 200 条</td><td>无障碍达标性（与 T2 共有）</td></tr>
+    <tr><td class="k">T6</td><td>质量保证</td><td>CI 流水线、240 条测试、全部测试报告</td><td><b>合并否决权（对全员生效，含 T1）</b></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">05</span>质量红线与不做清单</h2>
+
+<div class="grid">
+  <div class="box danger" style="margin:0">
+    <b>三条强制性约束（不得放宽）</b>
+    <ol>
+      <li>医学相关表述须以医生原话为来源，不得表述为系统判断</li>
+      <li>识别不确定时须标记并求证，不得推断，<b>剂量字段尤须遵守</b></li>
+      <li>重要医疗材料须电子化留存并完成交接双签</li>
+    </ol>
+  </div>
+  <div class="box ok" style="margin:0">
+    <b>不可突破的质量门槛</b>
+    <ul>
+      <li>禁用词出现次数 <b>= 0</b></li>
+      <li>OCR 剂量字段错误数 <b>= 0</b></li>
+      <li>领域层单元测试覆盖率 <b>= 100%</b></li>
+      <li>测试用例总数：W2 ≥ 40 → W8 ≥ 240</li>
+      <li>AI 评测集：W6 ≥ 120 → W8 ≥ 200</li>
+    </ul>
+  </div>
+</div>
+
+<div class="box warn">
+  <b>明确不做的六项（已从范围排除）</b>
+  <ol>
+    <li>微信小程序上架 —— 需企业主体与审核周期，改用 H5 + 测试号</li>
+    <li>原生 App（Android / iOS）—— 用 H5 替代</li>
+    <li>嵌入式驱动 / LVGL 界面 / 自研 PCB —— 设备端是网页，硬件只做按键与震动</li>
+    <li>医院 HIS 系统对接 —— 无法获得授权</li>
+    <li>多医院覆盖 —— 只做一个场景做深</li>
+    <li>端侧大模型 —— 平板跑不动，全部走服务端 API</li>
+  </ol>
+</div>
+
+<h2><span class="num">06</span>使用指南</h2>
+
+<div class="users">
+  <div class="us">
+    <div class="uh">🎓 评委 / 老师</div>
+    <ol>
+      <li>打开 <code>v4.html</code>，点「进入演示」→「▶ 一键巡演」</li>
+      <li>9 步自动串讲，含证据链与故障注入</li>
+      <li>要问细节时按 <code>F</code> 进放映模式，或直接点左栏切屏</li>
+      <li>配套材料：<code>文档评审包.html</code></li>
+    </ol>
+  </div>
+
+  <div class="us">
+    <div class="uh">👥 组员 / 评审</div>
+    <ol>
+      <li>先读 <code>00-项目工期与范围基线.md</code>（口径基准）</li>
+      <li>再读 <code>14-项目实施计划.md</code> 第 5 章（你自己的周任务）</li>
+      <li>看 <code>10-项目组织与职责矩阵.md</code>（你的权责与备份人）</li>
+      <li>评审意见填 <code>文档评审包.html</code> 末尾回填表</li>
+    </ol>
+  </div>
+
+  <div class="us">
+    <div class="uh">🛠️ 新人接手</div>
+    <ol>
+      <li><code>11</code> 号 → 技术栈与接口契约</li>
+      <li><code>12</code> 号 → 编码规范与测试体系</li>
+      <li><code>13</code> 号 → 分支模型与汇报机制</li>
+      <li><code>16</code> 号 → GitHub Skills 与 MCP 配置</li>
+    </ol>
+  </div>
+</div>
+
+<h2><span class="num">07</span>交付状态与待办</h2>
+
+<table>
+  <thead><tr><th>项</th><th>状态</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>演示程序</td><td><span class="tag m">已完成</span></td><td>语法校验通过；32 视图 / 32 屏幕定义完整；渲染零错误</td></tr>
+    <tr><td>规划文档集</td><td><span class="tag m">已完成</span></td><td>13 份；跨文档口径一致性已审计</td></tr>
+    <tr><td>截图素材</td><td><span class="tag m">已完成</span></td><td>8 张，1680×1050</td></tr>
+    <tr><td>代码仓库</td><td><span class="tag m">已完成</span></td><td>初始化并提交 5 次；CI 骨架、PR / Issue 模板、红线检查脚本就绪</td></tr>
+    <tr><td>推送 GitHub</td><td><span class="tag n">待执行</span></td><td>需本机授权一次，见下方命令</td></tr>
+    <tr><td>规划文档评审</td><td><span class="tag o">待进行</span></td><td>发群评审，截止项目启动会前</td></tr>
+  </tbody>
+</table>
+
+<div class="box">
+  <b>推送 GitHub 的三条命令</b>
+  <pre style="margin:10px 0 0;font-family:var(--mono);font-size:12px;color:#9fd3ff;line-height:1.9;overflow-x:auto"><code style="display:block;background:#0a121d;padding:13px 15px;border-radius:9px">cd E:\deepseek-data\medpal
+git remote add origin https://github.com/xiangyuli494-cmyk/medpal.git
+git push -u origin main</code></pre>
+</div>
+
+<footer>
+  <b>小暖陪诊 · 最终交付说明</b>　|　编制：项目经理（T1）　|　口径依据：<code>00-项目工期与范围基线.md</code><br>
+  文档效力：文档之间口径冲突时，以 00 号基线为准；基线与 14 号实施计划冲突时，以 00 号为准。<br>
+  合规声明：仓库内不得存放真实患者数据、真实身份证号或真实医疗单据原图；所有测试数据须为脱敏或自建样例。
+</footer>
+
+</div>
+</body>
+</html>
