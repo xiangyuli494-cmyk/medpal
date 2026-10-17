@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>开工前技术准备清单 · 小暖陪诊</title>
+<style>
+:root{
+  --bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
+  --accent:#ff8a3d;--ok:#34d399;--warn:#fbbf24;--danger:#f87171;--blue:#60a5fa;--purple:#a78bfa;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:14px;line-height:1.7;padding:0 0 70px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+.hero{background:radial-gradient(720px 400px at 20% -10%,rgba(255,138,61,.16),transparent 60%),
+  linear-gradient(168deg,#131f31,#0d1622 64%);border-bottom:1px solid var(--line);padding:44px 0 38px}
+.hero .tag{display:inline-block;font-size:11px;letter-spacing:.15em;color:var(--accent);
+  border:1px solid #6b4520;background:rgba(255,138,61,.09);border-radius:20px;padding:4px 13px;margin-bottom:16px}
+.hero h1{font-size:clamp(25px,3.2vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.28;margin-bottom:12px}
+.hero .lead{font-size:14px;color:#bccddf;max-width:680px}
+.hero .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;font-size:11.5px;color:var(--dim)}
+.hero .meta span{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:3px 12px}
+
+h2{font-size:18px;margin:40px 0 6px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.4}
+h2 .num{color:var(--dim);font-family:var(--mono);font-size:13px;font-weight:400;margin-right:7px}
+.note{font-size:12px;color:var(--dim);margin:0 0 16px 12px;line-height:1.65}
+h3{font-size:14.5px;margin:26px 0 10px;color:#cfe0f5;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h3::after{content:"";flex:1;height:1px;background:var(--line);min-width:20px}
+h3 .who{font-size:11px;font-weight:700;color:var(--accent);background:#3a2a1c;border:1px solid #6b4520;
+  border-radius:6px;padding:2px 8px;font-family:var(--mono)}
+
+table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#182741;color:var(--dim);font-weight:700;font-size:11.5px;white-space:nowrap}
+tbody tr:nth-child(even){background:#121d2c}
+code{font-family:var(--mono);font-size:11.5px;background:#0a121d;padding:1.5px 6px;border-radius:5px;color:#9fd3ff}
+
+/* 等级标记 */
+.lv{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:5px;white-space:nowrap}
+.lv.a{background:#3c1f22;color:#ff9f9f;border:1px solid #6b2f36}
+.lv.b{background:#3d3116;color:var(--warn);border:1px solid #6b4520}
+.lv.c{background:#1e3a5f;color:#8ec5ff;border:1px solid #2c5a8c}
+
+/* 复选框 */
+.chk{width:16px;height:16px;accent-color:#ff8a3d;cursor:pointer;vertical-align:-2px;margin-right:7px}
+tr.done td{opacity:.5}
+tr.done td .t{text-decoration:line-through}
+
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin:14px 0}
+.box.ok{background:#13261d;border-color:#245c39}
+.box.warn{background:#2a1f18;border-color:#6b4520}
+.box.danger{background:#2a1a1c;border-color:#6b2f36}
+.box b{color:#dfe9f5}
+.box.ok b{color:var(--ok)}
+.box.warn b{color:var(--warn)}
+.box.danger b{color:#ff9f9f}
+.box ul,.box ol{margin-bottom:0}
+ul,ol{padding-left:21px;margin-bottom:12px;color:#c9d8ec}
+li{margin-bottom:5px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:14px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.card h4{font-size:13px;margin-bottom:9px;color:#cfe0f5}
+.card .row{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:4px 0;border-bottom:1px dashed #1f2f47}
+.card .row:last-child{border-bottom:none}
+.card .row span:first-child{color:var(--dim)}
+.card .row span:last-child{font-family:var(--mono);color:#9fd3ff;font-size:11.5px}
+
+/* 进度条 */
+.prog{position:sticky;top:0;z-index:50;background:rgba(15,24,38,.96);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px);padding:9px 0;margin-bottom:4px}
+.prog .in{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:14px;font-size:12px}
+.prog .bar{flex:1;height:7px;background:#1f2f47;border-radius:5px;overflow:hidden}
+.prog .fill{height:100%;width:0;background:linear-gradient(90deg,#ff8a3d,#f0a04b);
+  border-radius:5px;transition:width .25s}
+.prog .num{font-family:var(--mono);color:var(--accent);font-weight:700;white-space:nowrap}
+.prog button{font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:7px;
+  padding:3px 10px;background:transparent;cursor:pointer;white-space:nowrap}
+.prog button:hover{color:var(--txt);background:var(--panel2)}
+
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim);line-height:1.9}
+
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt}
+  .hero{background:#fff;border-bottom:2px solid #000}
+  .hero h1,.hero .lead,.hero .meta span{color:#000}
+  .prog{display:none}
+  table,.card,.box{background:#fff;border-color:#999}
+  th{background:#eee;color:#000}
+  code{background:#f2f2f2;color:#000}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="tag">PRE-PROJECT · 开工前技术准备</div>
+    <h1>开工前需要掌握的技术</h1>
+    <div class="lead">
+      8 周工期，每人每周只有 4 – 8 小时。这份清单只列<b>最小必要集</b>：不会就卡住的东西必须提前会，
+      其余一律边做边查。实测预算每人 <b>8 – 12 小时</b>，建议在项目启动会前一周内完成。
+    </div>
+    <div class="meta">
+      <span>口径依据：00 号基线 · 11 号技术方案</span>
+      <span>勾选状态自动保存在本机</span>
+      <span>共 54 项自查</span>
+    </div>
+  </div>
+</div>
+
+<div class="prog">
+  <div class="in">
+    <span class="num" id="pgnum">0 / 0</span>
+    <div class="bar"><div class="fill" id="pgfill"></div></div>
+    <button id="pgclear">清空</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<h2><span class="num">01</span>优先级定义</h2>
+<div class="note">先看这张表，决定每一项要花多少时间。</div>
+
+<table>
+  <thead><tr><th>等级</th><th>含义</th><th>时间投入</th><th>判定标准</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="lv a">A 必须会</span></td>
+      <td>W1 – W2 立刻要用，不会就直接卡住</td>
+      <td>开工前必须完成</td>
+      <td>能独立写出最小可运行示例，无需旁人指导</td>
+    </tr>
+    <tr>
+      <td><span class="lv b">B 边做边学</span></td>
+      <td>W3 – W5 会用到</td>
+      <td>开工前只需知道概念与查法</td>
+      <td>知道它解决什么问题、文档在哪、遇到时能查</td>
+    </tr>
+    <tr>
+      <td><span class="lv c">C 用时再查</span></td>
+      <td>特定条件下才触发</td>
+      <td>不投入，需要时当天学</td>
+      <td>知道存在这项技术即可</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box warn">
+  <b>一条重要提醒</b>：不要系统性学完任何一个框架。Vue 官方教程 30 多节、Django 官方教程 7 部分，
+  全学完要 30 小时以上，八周项目负担不起。<b>按本清单的 A 级条目学最小子集，其余遇到再查。</b>
+</div>
+
+<h2><span class="num">02</span>全员共同要求</h2>
+<div class="note">六个人都要过，预计每人 4 小时。</div>
+
+<div class="chk-group">
+<table>
+  <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
+  <tbody>
+    <tr data-id="c1"><td><input type="checkbox" class="chk"></td><td class="t"><b>Git 分支与提交</b><br><code>clone / branch / add / commit / push / pull --rebase</code></td><td><span class="lv a">A</span></td><td>能在自己的分支上提交并在 GitHub 发起 PR</td><td>40 min</td></tr>
+    <tr data-id="c2"><td><input type="checkbox" class="chk"></td><td class="t"><b>Git 冲突解决</b><br><code>merge conflict</code> 的标记含义与解决流程</td><td><span class="lv a">A</span></td><td>能独立解决一次真实冲突</td><td>30 min</td></tr>
+    <tr data-id="c3"><td><input type="checkbox" class="chk"></td><td class="t"><b>Pull Request 流程</b><br>提 PR、看 CI 结果、按评论修改、合并</td><td><span class="lv a">A</span></td><td>独立走完一次 PR 全流程</td><td>30 min</td></tr>
+    <tr data-id="c4"><td><input type="checkbox" class="chk"></td><td class="t"><b>Markdown 写作</b><br>标题、表格、代码块、列表</td><td><span class="lv a">A</span></td><td>能写出符合项目规范的周报与文档</td><td>20 min</td></tr>
+    <tr data-id="c5"><td><input type="checkbox" class="chk"></td><td class="t"><b>跑通测试命令</b><br>在仓库里执行 <code>make test</code></td><td><span class="lv a">A</span></td><td>本地能跑通并看懂失败信息</td><td>30 min</td></tr>
+    <tr data-id="c6"><td><input type="checkbox" class="chk"></td><td class="t"><b>业务理解：陪诊全流程</b><br>读 02 号规格说明书 + 把 <code>v4.html</code> 完整点一遍</td><td><span class="lv a">A</span></td><td>能说出 9 个状态节点的顺序与各端职责</td><td>60 min</td></tr>
+    <tr data-id="c7"><td><input type="checkbox" class="chk"></td><td class="t"><b>合规红线</b><br>三条强制约束、禁用词表、AI 禁入区</td><td><span class="lv a">A</span></td><td>能背出三条约束并解释为什么</td><td>30 min</td></tr>
+    <tr data-id="c8"><td><input type="checkbox" class="chk"></td><td class="t"><b>看板与 Issue 使用</b><br>GitHub Projects 四列、Issue 标签</td><td><span class="lv b">B</span></td><td>会给自己认领的 Issue 改状态</td><td>20 min</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2><span class="num">03</span>按角色要求</h2>
+<div class="note">只做自己那一行。他人部分不必学，但要知道对方在干什么。</div>
+
+<h3><span class="who">T1</span>架构与领域工程 <span style="font-size:11px;color:var(--dim);font-weight:400">约 12 小时</span></h3>
+<table>
+  <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
+  <tbody>
+    <tr data-id="t1a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Python 类型与数据类</b><br><code>dataclass</code> <code>typing</code> <code>Enum</code> <code>Protocol</code></td><td><span class="lv a">A</span></td><td>能定义带类型标注的领域实体与状态枚举</td><td>120 min</td></tr>
+    <tr data-id="t1b"><td><input type="checkbox" class="chk"></td><td class="t"><b>pytest 基础</b><br><code>fixture</code> <code>parametrize</code> <code>raises</code> 覆盖率</td><td><span class="lv a">A</span></td><td>能给纯函数写参数化测试并跑出覆盖率</td><td>120 min</td></tr>
+    <tr data-id="t1c"><td><input type="checkbox" class="chk"></td><td class="t"><b>Django 最小应用</b><br>项目结构、URL 路由、视图、迁移</td><td><span class="lv a">A</span></td><td>能起一个返回 JSON 的接口</td><td>180 min</td></tr>
+    <tr data-id="t1d"><td><input type="checkbox" class="chk"></td><td class="t"><b>DRF 序列化与视图</b><br><code>Serializer</code> <code>APIView</code> 权限</td><td><span class="lv a">A</span></td><td>能写增查两个接口并加鉴权</td><td>120 min</td></tr>
+    <tr data-id="t1e"><td><input type="checkbox" class="chk"></td><td class="t"><b>状态机设计思路</b><br>状态表、转移表、禁止转移校验</td><td><span class="lv a">A</span></td><td>能画出 9 节点状态图并实现转移校验</td><td>90 min</td></tr>
+    <tr data-id="t1f"><td><input type="checkbox" class="chk"></td><td class="t"><b>OpenAPI 规范</b><br>paths / schema / 版本号</td><td><span class="lv b">B</span></td><td>能读懂自己生成的 openapi.yaml</td><td>60 min</td></tr>
+    <tr data-id="t1g"><td><input type="checkbox" class="chk"></td><td class="t"><b>Django Channels</b><br>ASGI、consumer、group</td><td><span class="lv b">B</span></td><td>知道 WebSocket 如何接到 Django</td><td>90 min</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="who">T2</span>设备端与嵌入式 <span style="font-size:11px;color:var(--dim);font-weight:400">约 10 小时</span></h3>
+<table>
+  <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
+  <tbody>
+    <tr data-id="t2a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vue 3 Composition API</b><br><code>script setup</code> <code>ref</code> <code>computed</code> <code>watch</code> 生命周期</td><td><span class="lv a">A</span></td><td>能写一个含状态切换的页面</td><td>180 min</td></tr>
+    <tr data-id="t2b"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vite 工程</b><br><code>npm create vite</code> 启动、构建、环境变量</td><td><span class="lv a">A</span></td><td>能起本地开发服务并打包</td><td>60 min</td></tr>
+    <tr data-id="t2c"><td><input type="checkbox" class="chk"></td><td class="t"><b>录音与浏览器 API</b><br><code>getUserMedia</code> <code>MediaRecorder</code> 权限</td><td><span class="lv a">A</span></td><td>能在页面里录到一段音频</td><td>120 min</td></tr>
+    <tr data-id="t2d"><td><input type="checkbox" class="chk"></td><td class="t"><b>WebSocket 客户端</b><br>连接、重连、二进制帧</td><td><span class="lv a">A</span></td><td>能收发消息并处理断线重连</td><td>90 min</td></tr>
+    <tr data-id="t2e"><td><input type="checkbox" class="chk"></td><td class="t"><b>Chromium kiosk 启动</b><br><code>--kiosk</code> <code>--app</code> <code>--no-first-run</code></td><td><span class="lv a">A</span></td><td>能让网页全屏无地址栏启动</td><td>45 min</td></tr>
+    <tr data-id="t2f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Web Speech API</b><br><code>speechSynthesis</code> 中文音色</td><td><span class="lv b">B</span></td><td>知道如何降级到纯字幕</td><td>45 min</td></tr>
+    <tr data-id="t2g"><td><input type="checkbox" class="chk"></td><td class="t"><b>触觉反馈</b><br><code>navigator.vibrate</code></td><td><span class="lv b">B</span></td><td>能触发短震与长震</td><td>20 min</td></tr>
+    <tr data-id="t2h"><td><input type="checkbox" class="chk"></td><td class="t"><b>树莓派基础</b><br>系统烧录、SSH、systemd</td><td><span class="lv c">C</span></td><td>仅在 C4 触发时需要</td><td>—</td></tr>
+    <tr data-id="t2i"><td><input type="checkbox" class="chk"></td><td class="t"><b>ESP32 MicroPython</b><br>引脚、串口、蓝牙</td><td><span class="lv c">C</span></td><td>仅在 C3 触发时需要</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="who">T3</span>用户端与家属端 <span style="font-size:11px;color:var(--dim);font-weight:400">约 10 小时</span></h3>
+<table>
+  <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
+  <tbody>
+    <tr data-id="t3a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vue 3 Composition API</b><br><code>script setup</code> 响应式与组件拆分</td><td><span class="lv a">A</span></td><td>能拆出可复用组件并传 props</td><td>180 min</td></tr>
+    <tr data-id="t3b"><td><input type="checkbox" class="chk"></td><td class="t"><b>uni-app 页面配置</b><br><code>pages.json</code> <code>manifest.json</code> 条件编译</td><td><span class="lv a">A</span></td><td>能新增页面并编译出 H5</td><td>120 min</td></tr>
+    <tr data-id="t3c"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vant 组件库</b><br>Cell、Button、Dialog、Toast</td><td><span class="lv a">A</span></td><td>能搭出一个家属端信息流页面</td><td>90 min</td></tr>
+    <tr data-id="t3d"><td><input type="checkbox" class="chk"></td><td class="t"><b>移动端适配</b><br>viewport、rem / vw、安全区</td><td><span class="lv a">A</span></td><td>能在手机浏览器里显示正常</td><td>60 min</td></tr>
+    <tr data-id="t3e"><td><input type="checkbox" class="chk"></td><td class="t"><b>axios 统一请求层</b><br>拦截器、错误处理、环境变量</td><td><span class="lv a">A</span></td><td>能做出一层可复用的 api 封装</td><td>60 min</td></tr>
+    <tr data-id="t3f"><td><input type="checkbox" class="chk"></td><td class="t"><b>微信订阅消息（测试号）</b><br>模板消息概念、跳转 H5</td><td><span class="lv b">B</span></td><td>知道本期用 mock 面板替代</td><td>45 min</td></tr>
+    <tr data-id="t3g"><td><input type="checkbox" class="chk"></td><td class="t"><b>小程序上架流程</b></td><td><span class="lv c">C</span></td><td>本期不做，仅了解为何不做</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="who">T4</span>陪诊师工作台 <span style="font-size:11px;color:var(--dim);font-weight:400">约 8 小时</span></h3>
+<table>
+  <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
+  <tbody>
+    <tr data-id="t4a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vue 3 Composition API</b></td><td><span class="lv a">A</span></td><td>能写出带列表与详情切换的页面</td><td>150 min</td></tr>
+    <tr data-id="t4b"><td><input type="checkbox" class="chk"></td><td class="t"><b>Element Plus 表格与表单</b><br><code>el-table</code> <code>el-form</code> 校验</td><td><span class="lv a">A</span></td><td>能做出可编辑的校对表格</td><td>120 min</td></tr>
+    <tr data-id="t4c"><td><input type="checkbox" class="chk"></td><td class="t"><b>多任务并发界面</b><br>队列、看板、Tab 切换</td><td><span class="lv a">A</span></td><td>能做出 3 患者并行的队列视图</td><td>90 min</td></tr>
+    <tr data-id="t4d"><td><input type="checkbox" class="chk"></td><td class="t"><b>pinia 状态管理</b><br>store 定义与使用</td><td><span class="lv a">A</span></td><td>能把当前选中患者放进 store</td><td>60 min</td></tr>
+    <tr data-id="t4e"><td><input type="checkbox" class="chk"></td><td class="t"><b>签名与留痕交互</b><br>时间戳、二次确认、原文对比</td><td><span class="lv b">B</span></td><td>知道双签界面怎么设计</td><td>45 min</td></tr>
+    <tr data-id="t4f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Django Admin 后台</b></td><td><span class="lv c">C</span></td><td>运营后台先用它兜底</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="who">T5</span>AI 集成与无障碍 <span style="font-size:11px;color:var(--dim);font-weight:400">约 11 小时</span></h3>
+<table>
+  <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
+  <tbody>
+    <tr data-id="t5a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Python 异步</b><br><code>async/await</code> <code>asyncio</code> 超时处理</td><td><span class="lv a">A</span></td><td>能写带超时与重试的异步调用</td><td>120 min</td></tr>
+    <tr data-id="t5b"><td><input type="checkbox" class="chk"></td><td class="t"><b>HTTP API 调用</b><br><code>httpx</code> 请求、鉴权头、错误码</td><td><span class="lv a">A</span></td><td>能调通一个第三方接口并处理失败</td><td>90 min</td></tr>
+    <tr data-id="t5c"><td><input type="checkbox" class="chk"></td><td class="t"><b>音频基础</b><br>采样率、位深、声道、重采样、分片</td><td><span class="lv a">A</span></td><td>能解释 16k/16bit/mono 是什么</td><td>90 min</td></tr>
+    <tr data-id="t5d"><td><input type="checkbox" class="chk"></td><td class="t"><b>DashScope 调用</b><br>qwen / asr / tts 三种接口</td><td><span class="lv a">A</span></td><td>能各跑通一次并打印结果</td><td>120 min</td></tr>
+    <tr data-id="t5e"><td><input type="checkbox" class="chk"></td><td class="t"><b>假适配器模式</b><br>接口 + Fake 实现 + 故障注入</td><td><span class="lv a">A</span></td><td>能为同一接口写出真/假两份实现</td><td>90 min</td></tr>
+    <tr data-id="t5f"><td><input type="checkbox" class="chk"></td><td class="t"><b>评测集设计</b><br>用例、期望、阈值、回归</td><td><span class="lv a">A</span></td><td>能设计 20 条 ASR 或 OCR 用例</td><td>90 min</td></tr>
+    <tr data-id="t5g"><td><input type="checkbox" class="chk"></td><td class="t"><b>无障碍基础</b><br>WCAG 对比度、触控区、键盘可达</td><td><span class="lv a">A</span></td><td>能说出 4.5:1 与 48dp 的含义</td><td>60 min</td></tr>
+    <tr data-id="t5h"><td><input type="checkbox" class="chk"></td><td class="t"><b>OCR 版面分析概念</b><br>字段定位、置信度来源</td><td><span class="lv b">B</span></td><td>知道为什么剂量字段不能自动纠错</td><td>45 min</td></tr>
+    <tr data-id="t5i"><td><input type="checkbox" class="chk"></td><td class="t"><b>Neo4j / Cypher</b></td><td><span class="lv c">C</span></td><td>仅 C2 触发时需要</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="who">T6</span>质量保证 <span style="font-size:11px;color:var(--dim);font-weight:400">约 12 小时</span></h3>
+<table>
+  <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
+  <tbody>
+    <tr data-id="t6a"><td><input type="checkbox" class="chk"></td><td class="t"><b>pytest 进阶</b><br><code>fixture</code> 作用域、<code>monkeypatch</code>、<code>tmp_path</code></td><td><span class="lv a">A</span></td><td>能为适配器写带 mock 的测试</td><td>150 min</td></tr>
+    <tr data-id="t6b"><td><input type="checkbox" class="chk"></td><td class="t"><b>覆盖率与门槛</b><br><code>pytest-cov</code> <code>--cov-fail-under</code></td><td><span class="lv a">A</span></td><td>能配置覆盖率不达标即失败</td><td>60 min</td></tr>
+    <tr data-id="t6c"><td><input type="checkbox" class="chk"></td><td class="t"><b>Playwright</b><br>定位器、断言、等待、trace</td><td><span class="lv a">A</span></td><td>能写一条端到端用例并回放 trace</td><td>150 min</td></tr>
+    <tr data-id="t6d"><td><input type="checkbox" class="chk"></td><td class="t"><b>GitHub Actions</b><br>workflow 语法、job、step、缓存</td><td><span class="lv a">A</span></td><td>能写出含 3 个步骤的 CI 并跑通</td><td>120 min</td></tr>
+    <tr data-id="t6e"><td><input type="checkbox" class="chk"></td><td class="t"><b>契约测试概念</b><br>schemathesis 按 OpenAPI 生成用例</td><td><span class="lv a">A</span></td><td>能用一份 openapi.yaml 跑出用例</td><td>90 min</td></tr>
+    <tr data-id="t6f"><td><input type="checkbox" class="chk"></td><td class="t"><b>缺陷分级与报告</b><br>P0–P3 定义、台账字段</td><td><span class="lv a">A</span></td><td>能按 15 号文件格式写周报</td><td>60 min</td></tr>
+    <tr data-id="t6g"><td><input type="checkbox" class="chk"></td><td class="t"><b>axe-core 无障碍检测</b><br>接入 Playwright</td><td><span class="lv b">B</span></td><td>能跑出 critical 问题清单</td><td>60 min</td></tr>
+    <tr data-id="t6h"><td><input type="checkbox" class="chk"></td><td class="t"><b>Locust 压测</b></td><td><span class="lv b">B</span></td><td>能写一个简单并发场景</td><td>60 min</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">04</span>环境安装清单</h2>
+<div class="note">开工前每台机器都要装好并验证通过，W1 计划会当场核验。</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>🔧 必备（全员）</h4>
+    <div class="row"><span>Git</span><span>git --version</span></div>
+    <div class="row"><span>VS Code</span><span>code --version</span></div>
+    <div class="row"><span>Chrome / Edge</span><span>任一现代浏览器</span></div>
+    <div class="row"><span>Markdown 预览</span><span>VS Code 内置</span></div>
+  </div>
+
+  <div class="card">
+    <h4>🐍 Python 组（T1 T5 T6）</h4>
+    <div class="row"><span>Python</span><span>3.12.x</span></div>
+    <div class="row"><span>venv</span><span>python -m venv</span></div>
+    <div class="row"><span>依赖</span><span>pip install -r</span></div>
+    <div class="row"><span>验证</span><span>pytest --version</span></div>
+  </div>
+
+  <div class="card">
+    <h4>🟩 前端组（T2 T3 T4）</h4>
+    <div class="row"><span>Node.js</span><span>20 LTS 或以上</span></div>
+    <div class="row"><span>包管理</span><span>pnpm 或 npm</span></div>
+    <div class="row"><span>验证</span><span>node -v / pnpm -v</span></div>
+    <div class="row"><span>开发</span><span>pnpm dev 能起服务</span></div>
+  </div>
+
+  <div class="card">
+    <h4>🧪 测试组（T6 重点）</h4>
+    <div class="row"><span>Playwright</span><span>playwright install</span></div>
+    <div class="row"><span>浏览器内核</span><span>chromium</span></div>
+    <div class="row"><span>验证</span><span>playwright --version</span></div>
+  </div>
+</div>
+
+<div class="box ok">
+  <b>可选（不到货不影响）</b>：MySQL 8、Redis、微信开发者工具、树莓派、ESP32。
+  本地开发默认用 SQLite + 假适配器，<b>不依赖任何外部服务也能跑通全部测试</b>。
+</div>
+
+<h2><span class="num">05</span>不建议花时间学的</h2>
+<div class="note">这些技术看起来相关，但本期用不上或性价比极低，学了是浪费。</div>
+
+<div class="box danger">
+  <b>以下六项明确不要学</b>
+  <ol>
+    <li><b>Docker / Kubernetes</b> —— 本期部署到一台服务器，直接装环境即可</li>
+    <li><b>Neo4j Cypher / 图数据库运维</b> —— 知识图谱是条件交付 C2，且由成员 A 的模块提供</li>
+    <li><b>Milvus / 向量检索 / RAG 原理</b> —— LLM+RAG 是条件交付 C1，不在主链路</li>
+    <li><b>Vue 官方教程全 30 节</b> —— 只学 Composition API 与组件，其余现查</li>
+    <li><b>Django 源码 / 中间件机制</b> —— 会用视图和 ORM 就够</li>
+    <li><b>微信小程序开发</b> —— 本期不做（需企业主体）</li>
+  </ol>
+</div>
+
+<h2><span class="num">06</span>开工验收方式</h2>
+<div class="note">不设笔试。W1 周计划会上每人 5 分钟当场演示。</div>
+
+<table>
+  <thead><tr><th>人</th><th>当场演示什么</th><th>判定</th></tr></thead>
+  <tbody>
+    <tr><td class="t"><b>全员</b></td><td>克隆仓库 → 切分支 → 改一行 → 提 PR → CI 跑过</td><td>全流程走通</td></tr>
+    <tr><td class="t"><b>T1</b></td><td>用 dataclass 定义 Episode 实体 + 写一个 pytest 并跑出覆盖率</td><td>测试通过且覆盖率有数值</td></tr>
+    <tr><td class="t"><b>T2</b></td><td>起一个 Vite 页面，按钮点击切换两种状态，并录到一段音频</td><td>页面可交互、录音有输出</td></tr>
+    <tr><td class="t"><b>T3</b></td><td>uni-app 新建一页并编译出 H5，手机浏览器能打开</td><td>H5 链接可访问</td></tr>
+    <tr><td class="t"><b>T4</b></td><td>Element Plus 做一个可编辑表格，改完能提交</td><td>表格可增删改</td></tr>
+    <tr><td class="t"><b>T5</b></td><td>调通一次 DashScope 接口，并写出同一个接口的 Fake 版本</td><td>真/假两份都可运行</td></tr>
+    <tr><td class="t"><b>T6</b></td><td>写一个含 3 步的 Actions workflow 并跑绿，或一条 Playwright 用例</td><td>CI 绿 或 用例通过</td></tr>
+  </tbody>
+</table>
+
+<div class="box warn">
+  <b>未通过怎么办</b>：不延期开工。该成员在 W1 内补齐，由备份人临时接手其 W1 任务（互备矩阵见 10 号文件 7.2 节）。
+  这是"每个人都是单点故障"这条纪律的第一次实操。
+</div>
+
+<h2><span class="num">07</span>学习预算汇总</h2>
+
+<table>
+  <thead><tr><th>角色</th><th>A 级项</th><th>B 级项</th><th>预估总学时</th><th>建议安排</th></tr></thead>
+  <tbody>
+    <tr><td class="t">全员共同</td><td>7 项</td><td>1 项</td><td><b>约 4 小时</b></td><td>启动会前一周</td></tr>
+    <tr><td class="t">T1</td><td>5 项</td><td>2 项</td><td><b>约 12 小时</b></td><td>提前 2 周开始</td></tr>
+    <tr><td class="t">T2</td><td>5 项</td><td>2 项</td><td><b>约 10 小时</b></td><td>提前 2 周开始</td></tr>
+    <tr><td class="t">T3</td><td>5 项</td><td>1 项</td><td><b>约 10 小时</b></td><td>提前 2 周开始</td></tr>
+    <tr><td class="t">T4</td><td>4 项</td><td>1 项</td><td><b>约 8 小时</b></td><td>提前 1.5 周开始</td></tr>
+    <tr><td class="t">T5</td><td>7 项</td><td>1 项</td><td><b>约 11 小时</b></td><td>提前 2 周开始</td></tr>
+    <tr><td class="t">T6</td><td>6 项</td><td>2 项</td><td><b>约 12 小时</b></td><td>提前 2 周开始</td></tr>
+  </tbody>
+</table>
+
+<div class="box ok">
+  <b>关键判断</b>：所有人加共同项后，<b>单人上限 16 小时</b>。按每周课余 4 小时算，
+  提前 4 周开始准备即可从容完成；提前 2 周则每周需投入 8 小时。<b>这是唯一需要"提前开工"的部分</b>，
+  正式项目周期仍是 8 周（W1–W8）。
+</div>
+
+<footer>
+  <b>开工前技术准备清单</b>　|　编制：项目经理（T1）　|　口径依据：<code>00-项目工期与范围基线.md</code> · <code>11-技术方案与接口契约.md</code><br>
+  勾选状态保存在本机浏览器，不对外上传。换设备或清缓存后需重新勾选。<br>
+  本清单与 12 号文件（开发规范与测试规范）、16 号文件（工具链配置指南）配套使用。
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var KEY = 'medpal-prep-checklist-v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.chk'));
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { state = {}; }
+
+  function rowOf(cb){ return cb.closest('tr'); }
+
+  function paint(){
+    var done = 0;
+    boxes.forEach(function(cb){
+      if (cb.checked) { done++; rowOf(cb).classList.add('done'); }
+      else { rowOf(cb).classList.remove('done'); }
+    });
+    var total = boxes.length;
+    document.getElementById('pgnum').textContent = done + ' / ' + total;
+    document.getElementById('pgfill').style.width = (total ? (done / total * 100) : 0) + '%';
+  }
+
+  boxes.forEach(function(cb){
+    var id = rowOf(cb) && rowOf(cb).dataset.id;
+    cb.dataset.key = id || '';
+    if (id && state[id]) cb.checked = true;
+    cb.addEventListener('change', function(){
+      if (cb.dataset.key) state[cb.dataset.key] = cb.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      paint();
+    });
+  });
+
+  var clear = document.getElementById('pgclear');
+  if (clear) clear.addEventListener('click', function(){
+    boxes.forEach(function(cb){ cb.checked = false; if (cb.dataset.key) state[cb.dataset.key] = false; });
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    paint();
+  });
+
+  paint();
+})();
+</script>
+</body>
+</html>
