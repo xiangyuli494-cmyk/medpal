@@ -8,7 +8,7 @@
 
 ### 开发环境
 
-- **Python**：3.12（与 CI 一致；本机 `medpal312` 当前为 3.12.15）
+- **Python**：3.12
 
 ```bash
 conda create -n medpal312 python=3.12
