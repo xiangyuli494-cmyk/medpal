@@ -1,0 +1,322 @@
+[
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-d89a",
+  "title": "主任医师",
+  "date": "2026-02-11",
+  "total": 35,
+  "remaining": 18
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-fa63",
+  "title": "主任医师",
+  "date": "2026-02-09",
+  "total": 35,
+  "remaining": 18
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-3f31",
+  "title": "副主任医师",
+  "date": "2026-02-12",
+  "total": 35,
+  "remaining": 14
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-e001",
+  "title": "副主任医师",
+  "date": "2026-02-13",
+  "total": 35,
+  "remaining": 14
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-e001",
+  "title": "副主任医师",
+  "date": "2026-02-14",
+  "total": 40,
+  "remaining": 14
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-7156",
+  "title": "主任医师",
+  "date": "2026-02-13",
+  "total": 40,
+  "remaining": 18
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-0ca8",
+  "title": "副主任医师",
+  "date": "2026-02-10",
+  "total": 40,
+  "remaining": 14
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-6440",
+  "title": "副主任医师",
+  "date": "2026-02-11",
+  "total": 40,
+  "remaining": 14
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-db78",
+  "title": "主治医师",
+  "date": "2026-02-09",
+  "total": 35,
+  "remaining": 11
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-383f",
+  "title": "主治医师",
+  "date": "2026-02-10",
+  "total": 40,
+  "remaining": 11
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-971b",
+  "title": "主任医师",
+  "date": "2026-02-10",
+  "total": 40,
+  "remaining": 18
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-8c43",
+  "title": "主任医师",
+  "date": "2026-02-12",
+  "total": 40,
+  "remaining": 18
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-a214",
+  "title": "主任医师",
+  "date": "2026-02-09",
+  "total": 35,
+  "remaining": 18
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-4633",
+  "title": "副主任医师",
+  "date": "2026-02-13",
+  "total": 40,
+  "remaining": 14
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-e4f6",
+  "title": "副主任医师",
+  "date": "2026-02-09",
+  "total": 40,
+  "remaining": 14
+ },
+ {
+  "dept": "肿瘤科",
+  "doctor": "医生-2f74",
+  "title": "副主任医师",
+  "date": "2026-02-11",
+  "total": 35,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-4ebd",
+  "title": "主任医师",
+  "date": "2026-02-12",
+  "total": 50,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-f586",
+  "title": "主任医师",
+  "date": "2026-02-10",
+  "total": 60,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-f586",
+  "title": "主任医师",
+  "date": "2026-02-11",
+  "total": 60,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-294f",
+  "title": "主治医师",
+  "date": "2026-02-13",
+  "total": 30,
+  "remaining": 11
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-5005",
+  "title": "副主任医师",
+  "date": "2026-02-09",
+  "total": 40,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-5005",
+  "title": "副主任医师",
+  "date": "2026-02-09",
+  "total": 60,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-5005",
+  "title": "副主任医师",
+  "date": "2026-02-13",
+  "total": 40,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-b449",
+  "title": "主治医师",
+  "date": "2026-02-10",
+  "total": 30,
+  "remaining": 11
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-4116",
+  "title": "主治医师",
+  "date": "2026-02-12",
+  "total": 30,
+  "remaining": 11
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-18e1",
+  "title": "主治医师",
+  "date": "2026-02-12",
+  "total": 40,
+  "remaining": 11
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-de18",
+  "title": "副主任医师",
+  "date": "2026-02-14",
+  "total": 50,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-a0bf",
+  "title": "主任医师",
+  "date": "2026-02-10",
+  "total": 60,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-a0bf",
+  "title": "主任医师",
+  "date": "2026-02-11",
+  "total": 35,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-a0bf",
+  "title": "主任医师",
+  "date": "2026-02-13",
+  "total": 60,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-a0bf",
+  "title": "主任医师",
+  "date": "2026-02-15",
+  "total": 45,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-e2a1",
+  "title": "主治医师",
+  "date": "2026-02-13",
+  "total": 30,
+  "remaining": 11
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-2502",
+  "title": "主任医师",
+  "date": "2026-02-09",
+  "total": 50,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-2502",
+  "title": "主任医师",
+  "date": "2026-02-10",
+  "total": 60,
+  "remaining": 18
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-77bb",
+  "title": "副主任医师",
+  "date": "2026-02-09",
+  "total": 50,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-77bb",
+  "title": "副主任医师",
+  "date": "2026-02-12",
+  "total": 30,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-77bb",
+  "title": "副主任医师",
+  "date": "2026-02-14",
+  "total": 50,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-de18",
+  "title": "副主任医师",
+  "date": "2026-02-11",
+  "total": 50,
+  "remaining": 14
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-6167",
+  "title": "主治医师",
+  "date": "2026-02-09",
+  "total": 80,
+  "remaining": 11
+ },
+ {
+  "dept": "外科",
+  "doctor": "医生-21c9",
+  "title": "主任医师",
+  "date": "2026-02-10",
+  "total": 35,
+  "remaining": 18
+ }
+]

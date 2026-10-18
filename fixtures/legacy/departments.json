@@ -1,0 +1,134 @@
+[
+ {
+  "name": "内科",
+  "schedule_rows": 326
+ },
+ {
+  "name": "外科",
+  "schedule_rows": 204
+ },
+ {
+  "name": "口腔科",
+  "schedule_rows": 185
+ },
+ {
+  "name": "儿科",
+  "schedule_rows": 174
+ },
+ {
+  "name": "妇产科",
+  "schedule_rows": 127
+ },
+ {
+  "name": "眼科",
+  "schedule_rows": 105
+ },
+ {
+  "name": "生殖健康与不孕专科",
+  "schedule_rows": 78
+ },
+ {
+  "name": "麻醉科",
+  "schedule_rows": 63
+ },
+ {
+  "name": "耳鼻喉科",
+  "schedule_rows": 49
+ },
+ {
+  "name": "康复科",
+  "schedule_rows": 47
+ },
+ {
+  "name": "皮肤性病科",
+  "schedule_rows": 47
+ },
+ {
+  "name": "骨科",
+  "schedule_rows": 45
+ },
+ {
+  "name": "中医科",
+  "schedule_rows": 35
+ },
+ {
+  "name": "全科医疗门诊",
+  "schedule_rows": 33
+ },
+ {
+  "name": "肿瘤科",
+  "schedule_rows": 32
+ },
+ {
+  "name": "泌尿外科",
+  "schedule_rows": 31
+ },
+ {
+  "name": "医学美容中心",
+  "schedule_rows": 25
+ },
+ {
+  "name": "特需门诊(含儿科专业)",
+  "schedule_rows": 25
+ },
+ {
+  "name": "心理卫生专科门诊",
+  "schedule_rows": 23
+ },
+ {
+  "name": "感染科",
+  "schedule_rows": 19
+ },
+ {
+  "name": "体重管理中心",
+  "schedule_rows": 18
+ },
+ {
+  "name": "疼痛科",
+  "schedule_rows": 17
+ },
+ {
+  "name": "健康管理门诊",
+  "schedule_rows": 17
+ },
+ {
+  "name": "心理咨询与心理治疗",
+  "schedule_rows": 16
+ },
+ {
+  "name": "多学科门诊",
+  "schedule_rows": 16
+ },
+ {
+  "name": "核医学科",
+  "schedule_rows": 13
+ },
+ {
+  "name": "小儿外科",
+  "schedule_rows": 11
+ },
+ {
+  "name": "药学门诊",
+  "schedule_rows": 8
+ },
+ {
+  "name": "放射医学科",
+  "schedule_rows": 7
+ },
+ {
+  "name": "营养科",
+  "schedule_rows": 4
+ },
+ {
+  "name": "超声医学科",
+  "schedule_rows": 3
+ },
+ {
+  "name": "肺结节专家门诊",
+  "schedule_rows": 2
+ },
+ {
+  "name": "病理科",
+  "schedule_rows": 1
+ }
+]

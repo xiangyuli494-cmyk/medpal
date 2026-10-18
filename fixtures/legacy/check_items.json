@@ -1,0 +1,5946 @@
+[
+ {
+  "id": 1059,
+  "category": "其他专科检查",
+  "item_code": "6649",
+  "item_name": "同视机检查（含复视、斜视度、眼外肌功能检查、调节/集合测定）",
+  "body_part": null,
+  "location": "门诊三楼眼科诊断区"
+ },
+ {
+  "id": 1061,
+  "category": "超声检查",
+  "item_code": "A336",
+  "item_name": "眼科B超",
+  "body_part": "眼部",
+  "location": "门诊三楼眼科三通道"
+ },
+ {
+  "id": 1062,
+  "category": "其他专科检查",
+  "item_code": "B549",
+  "item_name": "儿童眼病筛查",
+  "body_part": null,
+  "location": "门诊三楼眼科诊断区"
+ },
+ {
+  "id": 1063,
+  "category": "其他专科检查",
+  "item_code": "C136",
+  "item_name": "三面镜检查",
+  "body_part": null,
+  "location": "门诊三楼眼科三通道"
+ },
+ {
+  "id": 1064,
+  "category": "其他专科检查",
+  "item_code": "C137",
+  "item_name": "同视机九方位检查（含复视、三棱镜、斜视度、眼外肌功能检查、调节/集合测定）",
+  "body_part": null,
+  "location": "门诊三楼眼科诊断区"
+ },
+ {
+  "id": 1065,
+  "category": "其他专科检查",
+  "item_code": "C703",
+  "item_name": "干眼检查",
+  "body_part": null,
+  "location": "门诊三楼眼科诊断区"
+ },
+ {
+  "id": 1066,
+  "category": "其他专科检查",
+  "item_code": "D051",
+  "item_name": "双目视力筛查（眼位照相+斜视度测定+视网膜视力检查）",
+  "body_part": null,
+  "location": "门诊一楼儿科诊断区"
+ },
+ {
+  "id": 1073,
+  "category": "内窥镜",
+  "item_code": "F633",
+  "item_name": "14碳呼气试验",
+  "body_part": "头颅",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1074,
+  "category": "内窥镜",
+  "item_code": "G811",
+  "item_name": "13碳尿素呼气试验",
+  "body_part": "常规",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1075,
+  "category": "内窥镜",
+  "item_code": "G811",
+  "item_name": "13碳尿素呼气试验",
+  "body_part": "常规",
+  "location": "门诊一楼A区101儿科门诊"
+ },
+ {
+  "id": 1076,
+  "category": "病理检查",
+  "item_code": "H097",
+  "item_name": "尸检病理诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1077,
+  "category": "病理检查",
+  "item_code": "H098",
+  "item_name": "尸检病理诊断（传染病和特异性感染病尸体加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1078,
+  "category": "病理检查",
+  "item_code": "H099",
+  "item_name": "儿童及胎儿尸检病理诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1079,
+  "category": "病理检查",
+  "item_code": "H100",
+  "item_name": "尸体化学防腐处理",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1080,
+  "category": "病理检查",
+  "item_code": "H101",
+  "item_name": "超过两张每增加一张加收",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1081,
+  "category": "病理检查",
+  "item_code": "H102",
+  "item_name": "体液细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1082,
+  "category": "病理检查",
+  "item_code": "H103",
+  "item_name": "体液细胞学检查与诊断（需塑料包埋的标本加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1083,
+  "category": "病理检查",
+  "item_code": "H104",
+  "item_name": "体液细胞学检查与诊断（胸水）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1085,
+  "category": "病理检查",
+  "item_code": "H106",
+  "item_name": "体液细胞学检查与诊断（心包液）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1090,
+  "category": "病理检查",
+  "item_code": "H111",
+  "item_name": "体液细胞学检查与诊断（龈沟液）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1091,
+  "category": "病理检查",
+  "item_code": "H112",
+  "item_name": "拉网细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1092,
+  "category": "病理检查",
+  "item_code": "H113",
+  "item_name": "细针穿刺细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1093,
+  "category": "病理检查",
+  "item_code": "H114",
+  "item_name": "脱落细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1094,
+  "category": "病理检查",
+  "item_code": "H115",
+  "item_name": "脱落细胞学检查与诊断（子宫内膜）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1095,
+  "category": "病理检查",
+  "item_code": "H116",
+  "item_name": "脱落细胞学检查与诊断（宫颈）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1096,
+  "category": "病理检查",
+  "item_code": "H117",
+  "item_name": "脱落细胞学检查与诊断（阴道）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1097,
+  "category": "病理检查",
+  "item_code": "H118",
+  "item_name": "脱落细胞学检查与诊断（痰）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1098,
+  "category": "病理检查",
+  "item_code": "H119",
+  "item_name": "脱落细胞学检查与诊断（乳腺溢液）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1099,
+  "category": "病理检查",
+  "item_code": "H120",
+  "item_name": "脱落细胞学检查与诊断（窥镜刷片）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1100,
+  "category": "病理检查",
+  "item_code": "H121",
+  "item_name": "脱落细胞学检查与诊断（其他脱落细胞）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1101,
+  "category": "病理检查",
+  "item_code": "H122",
+  "item_name": "细胞学计数",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1102,
+  "category": "病理检查",
+  "item_code": "H123",
+  "item_name": "细胞学计数（支气管灌洗液）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1103,
+  "category": "病理检查",
+  "item_code": "H124",
+  "item_name": "细胞学计数（脑脊液）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1104,
+  "category": "病理检查",
+  "item_code": "H125",
+  "item_name": "穿刺组织活检检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1105,
+  "category": "病理检查",
+  "item_code": "H126",
+  "item_name": "穿刺组织活检检查与诊断（肾）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1106,
+  "category": "病理检查",
+  "item_code": "H127",
+  "item_name": "穿刺组织活检检查与诊断（乳腺）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1107,
+  "category": "病理检查",
+  "item_code": "H128",
+  "item_name": "穿刺组织活检检查与诊断（体表肿块）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1108,
+  "category": "病理检查",
+  "item_code": "H129",
+  "item_name": "内镜组织活检检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1109,
+  "category": "病理检查",
+  "item_code": "H130",
+  "item_name": "内镜组织活检检查与诊断（以两个蜡块为基价，超过两个每增加一个加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1110,
+  "category": "病理检查",
+  "item_code": "H131",
+  "item_name": "局部切除组织活检检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1111,
+  "category": "病理检查",
+  "item_code": "H132",
+  "item_name": "局部切除组织活检检查与诊断（以两个蜡块为基价，超过两个每增加一个加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1112,
+  "category": "病理检查",
+  "item_code": "H133",
+  "item_name": "局部切除组织活检检查与诊断(切除组织)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1113,
+  "category": "病理检查",
+  "item_code": "H134",
+  "item_name": "局部切除组织活检检查与诊断(咬取组织)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1114,
+  "category": "病理检查",
+  "item_code": "H135",
+  "item_name": "局部切除组织活检检查与诊断(切除肿块部分组织)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1115,
+  "category": "病理检查",
+  "item_code": "H136",
+  "item_name": "骨髓组织活检检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1116,
+  "category": "病理检查",
+  "item_code": "H137",
+  "item_name": "手术标本检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1117,
+  "category": "病理检查",
+  "item_code": "H138",
+  "item_name": "手术标本检查与诊断（以两个蜡块为基价，超过两个每增加一个加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1119,
+  "category": "病理检查",
+  "item_code": "H140",
+  "item_name": "截肢标本病理检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1120,
+  "category": "病理检查",
+  "item_code": "H141",
+  "item_name": "截肢标本病理检查与诊断(上肢截肢标本)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1121,
+  "category": "病理检查",
+  "item_code": "H142",
+  "item_name": "截肢标本病理检查与诊断(下肢截肢标本)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1122,
+  "category": "病理检查",
+  "item_code": "H143",
+  "item_name": "牙齿及骨骼磨片诊断（不脱钙）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1123,
+  "category": "病理检查",
+  "item_code": "H144",
+  "item_name": "牙齿及骨骼磨片诊断（脱钙）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1124,
+  "category": "病理检查",
+  "item_code": "H145",
+  "item_name": "颌骨样本及牙体牙周样本诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1125,
+  "category": "病理检查",
+  "item_code": "H146",
+  "item_name": "颌骨样本及牙体牙周样本诊断（以两个蜡块为基价，超过两个每增加一个加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1126,
+  "category": "病理检查",
+  "item_code": "H147",
+  "item_name": "颌骨样本及牙体牙周样本诊断（不脱钙直接切片标本加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1127,
+  "category": "病理检查",
+  "item_code": "H148",
+  "item_name": "全器官大切片检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1128,
+  "category": "病理检查",
+  "item_code": "H149",
+  "item_name": "特异性感染标本加收",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1129,
+  "category": "病理检查",
+  "item_code": "H150",
+  "item_name": "冰冻切片检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1130,
+  "category": "病理检查",
+  "item_code": "H151",
+  "item_name": "快速石蜡切片检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1131,
+  "category": "病理检查",
+  "item_code": "H152",
+  "item_name": "快速石蜡切片检查与诊断（快速细胞病理诊断）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1132,
+  "category": "病理检查",
+  "item_code": "H153",
+  "item_name": "特殊染色及酶组织化学染色诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1133,
+  "category": "病理检查",
+  "item_code": "H154",
+  "item_name": "免疫组织化学染色诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1134,
+  "category": "病理检查",
+  "item_code": "H155",
+  "item_name": "免疫荧光染色诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1135,
+  "category": "病理检查",
+  "item_code": "H156",
+  "item_name": "全自动快速免疫组织化学染色诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1136,
+  "category": "病理检查",
+  "item_code": "H157",
+  "item_name": "程序性死亡受体-配体1（PD-L1）蛋白伴随诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1139,
+  "category": "病理检查",
+  "item_code": "H161",
+  "item_name": "原位杂交技术",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1140,
+  "category": "病理检查",
+  "item_code": "H162",
+  "item_name": "印迹杂交技术",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1141,
+  "category": "病理检查",
+  "item_code": "H163",
+  "item_name": "印迹杂交技术（Southern）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1142,
+  "category": "病理检查",
+  "item_code": "H164",
+  "item_name": "印迹杂交技术（Northern）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1143,
+  "category": "病理检查",
+  "item_code": "H165",
+  "item_name": "印迹杂交技术（Western）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1144,
+  "category": "病理检查",
+  "item_code": "H166",
+  "item_name": "脱氧核糖核酸（DNA）测序",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1145,
+  "category": "病理检查",
+  "item_code": "H167",
+  "item_name": "荧光原位杂交（FISH）检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1146,
+  "category": "病理检查",
+  "item_code": "H168",
+  "item_name": "病理体视学检查与图象分析",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1147,
+  "category": "病理检查",
+  "item_code": "H169",
+  "item_name": "病理体视学检查与图象分析（流式细胞仪）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1148,
+  "category": "病理检查",
+  "item_code": "H170",
+  "item_name": "病理体视学检查与图象分析（显微分光光度技术）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1149,
+  "category": "病理检查",
+  "item_code": "H171",
+  "item_name": "宫颈细胞学计算机辅助诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1150,
+  "category": "病理检查",
+  "item_code": "H172",
+  "item_name": "膜式病变细胞采集术",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1151,
+  "category": "病理检查",
+  "item_code": "H173",
+  "item_name": "液基薄层细胞制片术",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1152,
+  "category": "病理检查",
+  "item_code": "H174",
+  "item_name": "液基薄层细胞制片术（液基细胞学超薄片技术加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1153,
+  "category": "病理检查",
+  "item_code": "H175",
+  "item_name": "液基薄层细胞制片术（液基细胞学薄片技术）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1154,
+  "category": "病理检查",
+  "item_code": "H176",
+  "item_name": "病理大体标本摄影",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1155,
+  "category": "病理检查",
+  "item_code": "H177",
+  "item_name": "显微摄影术",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1156,
+  "category": "病理检查",
+  "item_code": "H178",
+  "item_name": "疑难病理会诊",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1157,
+  "category": "病理检查",
+  "item_code": "H179",
+  "item_name": "普通病理会诊",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1158,
+  "category": "病理检查",
+  "item_code": "H180",
+  "item_name": "远程病理会诊",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1159,
+  "category": "病理检查",
+  "item_code": "H181",
+  "item_name": "远程病理会诊（超过2张每增加1张加收）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1160,
+  "category": "病理检查",
+  "item_code": "H182",
+  "item_name": "肿瘤细胞化疗药物敏感试验（ATP-TCA）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1161,
+  "category": "电位图",
+  "item_code": "H184",
+  "item_name": "脑电图",
+  "body_part": "头颅",
+  "location": "门诊三楼B区314"
+ },
+ {
+  "id": 1162,
+  "category": "电位图",
+  "item_code": "H192",
+  "item_name": "脑地形图",
+  "body_part": "头颅",
+  "location": "门诊三楼B区314"
+ },
+ {
+  "id": 1164,
+  "category": "电位图",
+  "item_code": "H196",
+  "item_name": "脑电图录象监测",
+  "body_part": "头颅",
+  "location": "第三住 院大楼7楼睡眠监测中控室"
+ },
+ {
+  "id": 1165,
+  "category": "电位图",
+  "item_code": "H198",
+  "item_name": "神经传导速度测定",
+  "body_part": null,
+  "location": "门诊三楼B区314"
+ },
+ {
+  "id": 1166,
+  "category": "电位图",
+  "item_code": "H198",
+  "item_name": "神经传导速度测定",
+  "body_part": null,
+  "location": "门诊二层246或247"
+ },
+ {
+  "id": 1168,
+  "category": "电位图",
+  "item_code": "H200",
+  "item_name": "神经电图",
+  "body_part": null,
+  "location": "门诊二层246或247"
+ },
+ {
+  "id": 1169,
+  "category": "电位图",
+  "item_code": "H230",
+  "item_name": "肌电图",
+  "body_part": null,
+  "location": "门诊三楼B区314"
+ },
+ {
+  "id": 1170,
+  "category": "电位图",
+  "item_code": "H230",
+  "item_name": "肌电图",
+  "body_part": null,
+  "location": "康复医学病区(紫荆 楼2楼)"
+ },
+ {
+  "id": 1171,
+  "category": "电位图",
+  "item_code": "H230",
+  "item_name": "肌电图",
+  "body_part": null,
+  "location": "骨与关节康复中心(AB栋家属区一楼)"
+ },
+ {
+  "id": 1173,
+  "category": "其他专科检查",
+  "item_code": "H315",
+  "item_name": "普通视力检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1182,
+  "category": "其他专科检查",
+  "item_code": "H324",
+  "item_name": "视野检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1186,
+  "category": "其他专科检查",
+  "item_code": "H328",
+  "item_name": "验光",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1191,
+  "category": "其他专科检查",
+  "item_code": "H336",
+  "item_name": "主导眼检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1193,
+  "category": "其他专科检查",
+  "item_code": "H338",
+  "item_name": "复视检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1194,
+  "category": "其他专科检查",
+  "item_code": "H339",
+  "item_name": "斜视度测定",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1195,
+  "category": "其他专科检查",
+  "item_code": "H340",
+  "item_name": "三棱镜检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1198,
+  "category": "其他专科检查",
+  "item_code": "H343",
+  "item_name": "调节/集合测定",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1200,
+  "category": "其他专科检查",
+  "item_code": "H345",
+  "item_name": "双眼视觉检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1206,
+  "category": "其他专科检查",
+  "item_code": "H351",
+  "item_name": "对比敏感度检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1211,
+  "category": "其他专科检查",
+  "item_code": "H356",
+  "item_name": "眼象差检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1212,
+  "category": "其他专科检查",
+  "item_code": "H357",
+  "item_name": "眼压检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1219,
+  "category": "其他专科检查",
+  "item_code": "H364",
+  "item_name": "眼球突出度测量",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1222,
+  "category": "其他专科检查",
+  "item_code": "H367",
+  "item_name": "青光眼视网膜神经纤维层计算机图象分析",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1223,
+  "category": "其他专科检查",
+  "item_code": "H368",
+  "item_name": "青光眼视网膜神经纤维层计算机图象分析(增加定量分析另计价)",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1226,
+  "category": "其他专科检查",
+  "item_code": "H371",
+  "item_name": "泪膜破裂时间测定",
+  "body_part": "常规",
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1227,
+  "category": "其他专科检查",
+  "item_code": "H372",
+  "item_name": "泪液分泌功能测定",
+  "body_part": "常规",
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1228,
+  "category": "其他专科检查",
+  "item_code": "H373",
+  "item_name": "泪道冲洗",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1233,
+  "category": "其他专科检查",
+  "item_code": "H378",
+  "item_name": "角膜荧光素染色检查",
+  "body_part": "常规",
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1234,
+  "category": "其他专科检查",
+  "item_code": "H379",
+  "item_name": "角膜曲率测量",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1235,
+  "category": "其他专科检查",
+  "item_code": "H380",
+  "item_name": "角膜地形图检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1236,
+  "category": "其他专科检查",
+  "item_code": "H381",
+  "item_name": "角膜内皮镜检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1237,
+  "category": "其他专科检查",
+  "item_code": "H382",
+  "item_name": "角膜内皮镜检查（录象记录按比例加收）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1238,
+  "category": "其他专科检查",
+  "item_code": "H383",
+  "item_name": "角膜厚度检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1243,
+  "category": "其他专科检查",
+  "item_code": "H388",
+  "item_name": "人工晶体度数测量",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1244,
+  "category": "其他专科检查",
+  "item_code": "H389",
+  "item_name": "前房深度测量",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1245,
+  "category": "其他专科检查",
+  "item_code": "H390",
+  "item_name": "前房深度测量（裂隙灯法(测量周边前房及轴部前房)）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1248,
+  "category": "其他专科检查",
+  "item_code": "H393",
+  "item_name": "裂隙灯检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1249,
+  "category": "其他专科检查",
+  "item_code": "H394",
+  "item_name": "裂隙灯下眼底检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1250,
+  "category": "其他专科检查",
+  "item_code": "H395",
+  "item_name": "裂隙灯下眼底检查（前置镜）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1251,
+  "category": "其他专科检查",
+  "item_code": "H396",
+  "item_name": "裂隙灯下眼底检查（三面镜）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1253,
+  "category": "其他专科检查",
+  "item_code": "H398",
+  "item_name": "裂隙灯下房角镜检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1254,
+  "category": "其他专科检查",
+  "item_code": "H399",
+  "item_name": "眼位照相",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1255,
+  "category": "其他专科检查",
+  "item_code": "H400",
+  "item_name": "眼前段照相",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1256,
+  "category": "其他专科检查",
+  "item_code": "H401",
+  "item_name": "眼底照相",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1257,
+  "category": "其他专科检查",
+  "item_code": "H402",
+  "item_name": "眼底血管造影",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1258,
+  "category": "其他专科检查",
+  "item_code": "H403",
+  "item_name": "眼底血管造影（眼底荧光血管造影(FFA)）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1261,
+  "category": "其他专科检查",
+  "item_code": "H406",
+  "item_name": "眼底检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1264,
+  "category": "其他专科检查",
+  "item_code": "H409",
+  "item_name": "扫描激光眼底检查（SLO）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1271,
+  "category": "其他专科检查",
+  "item_code": "H416",
+  "item_name": "临界融合频率检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1272,
+  "category": "其他专科检查",
+  "item_code": "H417",
+  "item_name": "超声生物显微镜检查（UBM）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1273,
+  "category": "其他专科检查",
+  "item_code": "H418",
+  "item_name": "光学相干断层成相（OCT）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1279,
+  "category": "其他专科检查",
+  "item_code": "H424",
+  "item_name": "视诱发电位（VEP）",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1280,
+  "category": "其他专科检查",
+  "item_code": "H425",
+  "item_name": "眼外肌功能检查",
+  "body_part": "常规",
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1281,
+  "category": "其他专科检查",
+  "item_code": "H426",
+  "item_name": "眼肌力检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1286,
+  "category": "其他专科检查",
+  "item_code": "H431",
+  "item_name": "眼活体组织检查",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1292,
+  "category": "其他专科检查",
+  "item_code": "H490",
+  "item_name": "听性脑干反应",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 358"
+ },
+ {
+  "id": 1293,
+  "category": "其他专科检查",
+  "item_code": "H491",
+  "item_name": "纯音听阈测定",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1297,
+  "category": "其他专科检查",
+  "item_code": "H495",
+  "item_name": "双耳交替响度平衡试验",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1300,
+  "category": "其他专科检查",
+  "item_code": "H498",
+  "item_name": "言语测听",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1301,
+  "category": "其他专科检查",
+  "item_code": "H499",
+  "item_name": "声导抗测听",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1302,
+  "category": "其他专科检查",
+  "item_code": "H500",
+  "item_name": "声导抗测听（鼓室图）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1303,
+  "category": "其他专科检查",
+  "item_code": "H501",
+  "item_name": "声导抗测听（镫骨肌反射试验）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1305,
+  "category": "其他专科检查",
+  "item_code": "H503",
+  "item_name": "镫骨肌反射衰减试验",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1306,
+  "category": "其他专科检查",
+  "item_code": "H504",
+  "item_name": "咽鼓管压力测定",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1308,
+  "category": "其他专科检查",
+  "item_code": "H506",
+  "item_name": "耳声发射检查",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1311,
+  "category": "其他专科检查",
+  "item_code": "H509",
+  "item_name": "耳声发射检查(畸变产物耳声发射)",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1312,
+  "category": "其他专科检查",
+  "item_code": "H510",
+  "item_name": "稳态听觉诱发反应",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1317,
+  "category": "其他专科检查",
+  "item_code": "H515",
+  "item_name": "眼震电图",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1318,
+  "category": "其他专科检查",
+  "item_code": "H516",
+  "item_name": "眼震电图（温度试验）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1319,
+  "category": "其他专科检查",
+  "item_code": "H517",
+  "item_name": "眼震电图（自发眼震）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1320,
+  "category": "其他专科检查",
+  "item_code": "H518",
+  "item_name": "平衡试验",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1321,
+  "category": "其他专科检查",
+  "item_code": "H519",
+  "item_name": "平衡试验（平板试验）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1322,
+  "category": "其他专科检查",
+  "item_code": "H520",
+  "item_name": "平衡试验（平衡台试验）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1323,
+  "category": "其他专科检查",
+  "item_code": "H521",
+  "item_name": "平衡试验（视动试验）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1324,
+  "category": "其他专科检查",
+  "item_code": "H522",
+  "item_name": "平衡试验（旋转试验）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1325,
+  "category": "其他专科检查",
+  "item_code": "H523",
+  "item_name": "平衡试验（甘油试验）",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 356"
+ },
+ {
+  "id": 1328,
+  "category": "其他专科检查",
+  "item_code": "H526",
+  "item_name": "听力筛选试验",
+  "body_part": "常规",
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1329,
+  "category": "其他专科检查",
+  "item_code": "H527",
+  "item_name": "耳鸣检查",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 357"
+ },
+ {
+  "id": 1332,
+  "category": "其他专科检查",
+  "item_code": "H530",
+  "item_name": "助听器选配试验",
+  "body_part": null,
+  "location": "门诊三楼A区五通道 350"
+ },
+ {
+  "id": 1342,
+  "category": "其他专科检查",
+  "item_code": "H540",
+  "item_name": "耳纤维内镜检查（视频耳内镜检查）",
+  "body_part": null,
+  "location": "门诊三楼B区B309"
+ },
+ {
+  "id": 1343,
+  "category": "其他专科检查",
+  "item_code": "H541",
+  "item_name": "硬性耳内镜检查",
+  "body_part": null,
+  "location": "门诊三楼B区B309"
+ },
+ {
+  "id": 1344,
+  "category": "其他专科检查",
+  "item_code": "H542",
+  "item_name": "电耳镜检查",
+  "body_part": null,
+  "location": "门诊三楼A区六通道"
+ },
+ {
+  "id": 1349,
+  "category": "其他专科检查",
+  "item_code": "H547",
+  "item_name": "上鼓室冲洗术",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1350,
+  "category": "其他专科检查",
+  "item_code": "H548",
+  "item_name": "鼓膜穿刺术",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1351,
+  "category": "其他专科检查",
+  "item_code": "H549",
+  "item_name": "耵聍冲洗",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1352,
+  "category": "其他专科检查",
+  "item_code": "H550",
+  "item_name": "耵聍冲洗（耳道冲洗）",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1354,
+  "category": "其他专科检查",
+  "item_code": "H552",
+  "item_name": "波氏法咽鼓管吹张",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1355,
+  "category": "其他专科检查",
+  "item_code": "H553",
+  "item_name": "导管法咽鼓管吹张",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1360,
+  "category": "其他专科检查",
+  "item_code": "H558",
+  "item_name": "耳神经阻滞",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1361,
+  "category": "其他专科检查",
+  "item_code": "H559",
+  "item_name": "耳廓假性囊肿穿刺压迫治疗",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1368,
+  "category": "其他专科检查",
+  "item_code": "H566",
+  "item_name": "鼻内镜检查",
+  "body_part": "鼻部",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1369,
+  "category": "其他专科检查",
+  "item_code": "H566",
+  "item_name": "鼻内镜检查",
+  "body_part": "鼻部",
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1370,
+  "category": "其他专科检查",
+  "item_code": "H567",
+  "item_name": "鼻内镜检查（视频镜加收）",
+  "body_part": "鼻部",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1371,
+  "category": "其他专科检查",
+  "item_code": "H567",
+  "item_name": "鼻内镜检查（视频镜加收）",
+  "body_part": "鼻部",
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1372,
+  "category": "其他专科检查",
+  "item_code": "H570",
+  "item_name": "鼻内镜手术后检查处理",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 363"
+ },
+ {
+  "id": 1376,
+  "category": "其他专科检查",
+  "item_code": "H574",
+  "item_name": "鼻阻力测定",
+  "body_part": "鼻部",
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1383,
+  "category": "其他专科检查",
+  "item_code": "H581",
+  "item_name": "鼻窦冲洗",
+  "body_part": "鼻部",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1384,
+  "category": "其他专科检查",
+  "item_code": "H582",
+  "item_name": "鼻咽部活检术",
+  "body_part": "鼻部",
+  "location": "门诊三楼B区B309"
+ },
+ {
+  "id": 1389,
+  "category": "其他专科检查",
+  "item_code": "H587",
+  "item_name": "鼻负压置换治疗",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1390,
+  "category": "其他专科检查",
+  "item_code": "H588",
+  "item_name": "脱敏治疗",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1392,
+  "category": "其他专科检查",
+  "item_code": "H590",
+  "item_name": "前鼻孔填塞",
+  "body_part": null,
+  "location": "门诊三楼B区B309"
+ },
+ {
+  "id": 1393,
+  "category": "其他专科检查",
+  "item_code": "H591",
+  "item_name": "后鼻孔填塞",
+  "body_part": "鼻部",
+  "location": "门诊三楼B区B309"
+ },
+ {
+  "id": 1401,
+  "category": "其他专科检查",
+  "item_code": "H600",
+  "item_name": "鼻部等离子治疗",
+  "body_part": "鼻部",
+  "location": "门诊三楼B区B309"
+ },
+ {
+  "id": 1403,
+  "category": "其他专科检查",
+  "item_code": "H602",
+  "item_name": "喉频谱仪检查",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 363"
+ },
+ {
+  "id": 1405,
+  "category": "其他专科检查",
+  "item_code": "H604",
+  "item_name": "计算机嗓音疾病评估",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 363"
+ },
+ {
+  "id": 1407,
+  "category": "其他专科检查",
+  "item_code": "H606",
+  "item_name": "纤维鼻咽镜检查",
+  "body_part": null,
+  "location": "门诊三楼耳鼻喉科"
+ },
+ {
+  "id": 1409,
+  "category": "其他专科检查",
+  "item_code": "H608",
+  "item_name": "硬性鼻咽镜检查",
+  "body_part": "鼻部",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1410,
+  "category": "其他专科检查",
+  "item_code": "H609",
+  "item_name": "纤维喉镜检查",
+  "body_part": "喉部",
+  "location": "门诊三楼A区六通道 364"
+ },
+ {
+  "id": 1411,
+  "category": "其他专科检查",
+  "item_code": "H610",
+  "item_name": "纤维喉镜检查（电子镜加收）",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 364"
+ },
+ {
+  "id": 1412,
+  "category": "其他专科检查",
+  "item_code": "H611",
+  "item_name": "喉动态镜检查",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 363"
+ },
+ {
+  "id": 1413,
+  "category": "其他专科检查",
+  "item_code": "H612",
+  "item_name": "直达喉镜检查",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 363"
+ },
+ {
+  "id": 1418,
+  "category": "其他专科检查",
+  "item_code": "H617",
+  "item_name": "喉上神经封闭术",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 363"
+ },
+ {
+  "id": 1454,
+  "category": "其他专科检查",
+  "item_code": "I182",
+  "item_name": "运动心肺功能检查",
+  "body_part": null,
+  "location": "健康管理中心3楼305"
+ },
+ {
+  "id": 1467,
+  "category": "其他专科检查",
+  "item_code": "I196",
+  "item_name": "支气管舒张试验",
+  "body_part": null,
+  "location": "二楼B1区"
+ },
+ {
+  "id": 1468,
+  "category": "其他专科检查",
+  "item_code": "I197",
+  "item_name": "一氧化氮呼气测定",
+  "body_part": null,
+  "location": "门诊二楼肺功能室(B203)"
+ },
+ {
+  "id": 1469,
+  "category": "其他专科检查",
+  "item_code": "I197",
+  "item_name": "一氧化氮呼气测定",
+  "body_part": null,
+  "location": "二 楼B1区"
+ },
+ {
+  "id": 1474,
+  "category": "其他专科检查",
+  "item_code": "I203",
+  "item_name": "血气分析",
+  "body_part": "常规",
+  "location": "门诊二楼检验科(急诊和夜间除外)"
+ },
+ {
+  "id": 1479,
+  "category": "其他专科检查",
+  "item_code": "I213",
+  "item_name": "睡眠呼吸监测",
+  "body_part": null,
+  "location": "第三住 院大楼7楼护士站"
+ },
+ {
+  "id": 1480,
+  "category": "其他专科检查",
+  "item_code": "I214",
+  "item_name": "睡眠呼吸监测过筛试验",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 361"
+ },
+ {
+  "id": 1485,
+  "category": "其他专科检查",
+  "item_code": "I223",
+  "item_name": "纤维支气管镜检查",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1503,
+  "category": "其他专科检查",
+  "item_code": "I272",
+  "item_name": "动态心电图",
+  "body_part": null,
+  "location": "第一住院大楼17楼心 血管内科"
+ },
+ {
+  "id": 1504,
+  "category": "其他专科检查",
+  "item_code": "I272",
+  "item_name": "动态心电图",
+  "body_part": null,
+  "location": "门诊三楼B区315"
+ },
+ {
+  "id": 1505,
+  "category": "其他专科检查",
+  "item_code": "I272",
+  "item_name": "动态心电图",
+  "body_part": null,
+  "location": "第一住院大楼18楼"
+ },
+ {
+  "id": 1506,
+  "category": "电位图",
+  "item_code": "I273",
+  "item_name": "频谱心电图",
+  "body_part": null,
+  "location": "门诊三楼B区315"
+ },
+ {
+  "id": 1507,
+  "category": "电位图",
+  "item_code": "I273",
+  "item_name": "频谱心电图",
+  "body_part": null,
+  "location": "门诊三楼（A2区)心电图"
+ },
+ {
+  "id": 1508,
+  "category": "其他专科检查",
+  "item_code": "I290",
+  "item_name": "心率变异性分析",
+  "body_part": null,
+  "location": "第一住院大楼17楼心 血管内科"
+ },
+ {
+  "id": 1509,
+  "category": "其他专科检查",
+  "item_code": "I290",
+  "item_name": "心率变异性分析",
+  "body_part": null,
+  "location": "门诊三楼B区315"
+ },
+ {
+  "id": 1510,
+  "category": "其他专科检查",
+  "item_code": "I290",
+  "item_name": "心率变异性分析",
+  "body_part": null,
+  "location": "第一住院大楼18楼老 年综合科"
+ },
+ {
+  "id": 1511,
+  "category": "检查项目",
+  "item_code": "I297",
+  "item_name": "动态血压监测",
+  "body_part": null,
+  "location": "第一住院大楼17楼心血管内科住院部"
+ },
+ {
+  "id": 1512,
+  "category": "其他专科检查",
+  "item_code": "I307",
+  "item_name": "动脉硬化指数测定",
+  "body_part": null,
+  "location": "门诊二层246或247"
+ },
+ {
+  "id": 1526,
+  "category": "内窥镜",
+  "item_code": "I456",
+  "item_name": "超声胃镜检查术",
+  "body_part": "胃肠",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1527,
+  "category": "内窥镜",
+  "item_code": "I484",
+  "item_name": "胶囊内镜检查",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1532,
+  "category": "超声检查",
+  "item_code": "I541",
+  "item_name": "超声诊断仪肝纤维化无创诊断",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1533,
+  "category": "内窥镜",
+  "item_code": "I542",
+  "item_name": "经电子内镜消化道异物取出术",
+  "body_part": "消化道",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1554,
+  "category": "超声检查",
+  "item_code": "I709",
+  "item_name": "胎盘成熟度检测",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1555,
+  "category": "其他专科检查",
+  "item_code": "M598",
+  "item_name": "人体成份分析",
+  "body_part": null,
+  "location": "门诊二层246或247"
+ },
+ {
+  "id": 1556,
+  "category": "其他专科检查",
+  "item_code": "M598",
+  "item_name": "人体成份分析",
+  "body_part": null,
+  "location": "健康管理中心3楼305"
+ },
+ {
+  "id": 1557,
+  "category": "病理检查",
+  "item_code": "M938",
+  "item_name": "全自动H&E染色技术诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1558,
+  "category": "病理检查",
+  "item_code": "M940",
+  "item_name": "ALK蛋白伴随诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1559,
+  "category": "其他专科检查",
+  "item_code": "N000",
+  "item_name": "视觉质量分析",
+  "body_part": null,
+  "location": "门诊三楼A区眼科检查区"
+ },
+ {
+  "id": 1561,
+  "category": "内窥镜",
+  "item_code": "N011",
+  "item_name": "内镜色素检查",
+  "body_part": null,
+  "location": "门诊三楼A区六通道 364"
+ },
+ {
+  "id": 1562,
+  "category": "内窥镜",
+  "item_code": "N011",
+  "item_name": "内镜色素检查",
+  "body_part": null,
+  "location": "门诊四楼A区七通道476"
+ },
+ {
+  "id": 1564,
+  "category": "内窥镜",
+  "item_code": "N014",
+  "item_name": "经电子胃镜超声微探头检查",
+  "body_part": "胃肠",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1565,
+  "category": "内窥镜",
+  "item_code": "N016",
+  "item_name": "超声结肠镜检查",
+  "body_part": "结肠",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1566,
+  "category": "超声检查",
+  "item_code": "N207",
+  "item_name": "经阴道胎儿及宫颈管评估(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1567,
+  "category": "超声检查",
+  "item_code": "N207",
+  "item_name": "经阴道胎儿及宫颈管评估(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1568,
+  "category": "超声检查",
+  "item_code": "N222",
+  "item_name": "彩超引导下腹腔肿物穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1569,
+  "category": "超声检查",
+  "item_code": "N222",
+  "item_name": "彩超引导下腹腔肿物穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1570,
+  "category": "超声检查",
+  "item_code": "N227",
+  "item_name": "彩超引导下胰腺穿刺术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1571,
+  "category": "超声检查",
+  "item_code": "N227",
+  "item_name": "彩超引导下胰腺穿刺术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1572,
+  "category": "超声检查",
+  "item_code": "N231",
+  "item_name": "彩超引导下腹膜穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1573,
+  "category": "超声检查",
+  "item_code": "N231",
+  "item_name": "彩超引导下腹膜穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1574,
+  "category": "超声检查",
+  "item_code": "N235",
+  "item_name": "盆底三维超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1575,
+  "category": "超声检查",
+  "item_code": "N235",
+  "item_name": "盆底三维超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1576,
+  "category": "超声检查",
+  "item_code": "N242",
+  "item_name": "彩超引导下肝脏肿块穿刺活检术(每一个肿块)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1577,
+  "category": "超声检查",
+  "item_code": "N242",
+  "item_name": "彩超引导下肝脏肿块穿刺活检术(每一个肿块)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1578,
+  "category": "超声检查",
+  "item_code": "N246",
+  "item_name": "(经阴道)腔内彩色多普勒超声检查(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1579,
+  "category": "超声检查",
+  "item_code": "N246",
+  "item_name": "(经阴道)腔内彩色多普勒超声检查(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1580,
+  "category": "超声检查",
+  "item_code": "N251",
+  "item_name": "(经直肠)腔内彩色多普勒超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1581,
+  "category": "超声检查",
+  "item_code": "N251",
+  "item_name": "(经直肠)腔内彩色多普勒超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1582,
+  "category": "超声检查",
+  "item_code": "N260",
+  "item_name": "经阴道子宫内膜及动脉彩超(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1583,
+  "category": "超声检查",
+  "item_code": "N260",
+  "item_name": "经阴道子宫内膜及动脉彩超(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1584,
+  "category": "超声检查",
+  "item_code": "N269",
+  "item_name": "盆腔彩超(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1585,
+  "category": "超声检查",
+  "item_code": "N269",
+  "item_name": "盆腔彩超(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1586,
+  "category": "超声检查",
+  "item_code": "N296",
+  "item_name": "实时剪切波弹性成像(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1587,
+  "category": "超声检查",
+  "item_code": "N296",
+  "item_name": "实时剪切波弹性成像(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1588,
+  "category": "超声检查",
+  "item_code": "N300",
+  "item_name": "子宫动脉彩超(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1589,
+  "category": "超声检查",
+  "item_code": "N300",
+  "item_name": "子宫动脉彩超(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1590,
+  "category": "超声检查",
+  "item_code": "N303",
+  "item_name": "子宫及附件三维彩超(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1591,
+  "category": "超声检查",
+  "item_code": "N303",
+  "item_name": "子宫及附件三维彩超(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1592,
+  "category": "超声检查",
+  "item_code": "N304",
+  "item_name": "胎儿四维彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1593,
+  "category": "超声检查",
+  "item_code": "N304",
+  "item_name": "胎儿四维彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1594,
+  "category": "超声检查",
+  "item_code": "N310",
+  "item_name": "胎儿常规及生长指标评估彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1595,
+  "category": "超声检查",
+  "item_code": "N310",
+  "item_name": "胎儿常规及生长指标评估彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1596,
+  "category": "超声检查",
+  "item_code": "N328",
+  "item_name": "经直肠三维超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1597,
+  "category": "超声检查",
+  "item_code": "N328",
+  "item_name": "经直肠三维超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1598,
+  "category": "超声检查",
+  "item_code": "N335",
+  "item_name": "(妇科)彩色多普勒超声常规检查(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1599,
+  "category": "超声检查",
+  "item_code": "N335",
+  "item_name": "(妇科)彩色多普勒超声常规检查(门诊)",
+  "body_part": "子宫、附件",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1600,
+  "category": "超声检查",
+  "item_code": "N371",
+  "item_name": "胎儿大脑中动脉及脐动脉评估(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1601,
+  "category": "超声检查",
+  "item_code": "N371",
+  "item_name": "胎儿大脑中动脉及脐动脉评估(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1602,
+  "category": "超声检查",
+  "item_code": "N375",
+  "item_name": "女性泌尿系(含双肾、输尿管、膀胱)(门诊)",
+  "body_part": "膀胱",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1603,
+  "category": "超声检查",
+  "item_code": "N375",
+  "item_name": "女性泌尿系(含双肾、输尿管、膀胱)(门诊)",
+  "body_part": "膀胱",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1604,
+  "category": "超声检查",
+  "item_code": "N391",
+  "item_name": "男性泌尿系(含双肾、输尿管、膀胱、前列腺)(门诊)",
+  "body_part": "泌尿系",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1605,
+  "category": "超声检查",
+  "item_code": "N391",
+  "item_name": "男性泌尿系(含双肾、输尿管、膀胱、前列腺)(门诊)",
+  "body_part": "泌尿系",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1606,
+  "category": "超声检查",
+  "item_code": "N392",
+  "item_name": "腹腔积液定位彩超检查(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1607,
+  "category": "超声检查",
+  "item_code": "N392",
+  "item_name": "腹腔积液定位彩超检查(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1608,
+  "category": "超声检查",
+  "item_code": "N393",
+  "item_name": "腹腔系统(肠系膜、间隙、腹膜后等)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1609,
+  "category": "超声检查",
+  "item_code": "N393",
+  "item_name": "腹腔系统(肠系膜、间隙、腹膜后等)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1610,
+  "category": "超声检查",
+  "item_code": "N394",
+  "item_name": "膀胱残余尿量测定(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1611,
+  "category": "超声检查",
+  "item_code": "N394",
+  "item_name": "膀胱残余尿量测定(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1612,
+  "category": "超声检查",
+  "item_code": "N396",
+  "item_name": "肺部超声(门诊)",
+  "body_part": "肺部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1613,
+  "category": "超声检查",
+  "item_code": "N396",
+  "item_name": "肺部超声(门诊)",
+  "body_part": "肺部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1614,
+  "category": "超声检查",
+  "item_code": "N400",
+  "item_name": "胃食道返流超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1615,
+  "category": "超声检查",
+  "item_code": "N400",
+  "item_name": "胃食道返流超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1616,
+  "category": "超声检查",
+  "item_code": "N401",
+  "item_name": "胃肠道(阑尾、急腹症、外伤等)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1617,
+  "category": "超声检查",
+  "item_code": "N401",
+  "item_name": "胃肠道(阑尾、急腹症、外伤等)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1618,
+  "category": "超声检查",
+  "item_code": "N402",
+  "item_name": "胸腔积液定位彩超检查(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1619,
+  "category": "超声检查",
+  "item_code": "N402",
+  "item_name": "胸腔积液定位彩超检查(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1620,
+  "category": "超声检查",
+  "item_code": "N403",
+  "item_name": "肾上腺彩色超声检查(门诊)",
+  "body_part": "肾上腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1621,
+  "category": "超声检查",
+  "item_code": "N403",
+  "item_name": "肾上腺彩色超声检查(门诊)",
+  "body_part": "肾上腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1622,
+  "category": "超声检查",
+  "item_code": "N404",
+  "item_name": "上腹部(含肝、胆、胰、脾、双肾)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1623,
+  "category": "超声检查",
+  "item_code": "N404",
+  "item_name": "上腹部(含肝、胆、胰、脾、双肾)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1624,
+  "category": "超声检查",
+  "item_code": "N405",
+  "item_name": "上腹部+胆囊功能测定(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1625,
+  "category": "超声检查",
+  "item_code": "N405",
+  "item_name": "上腹部+胆囊功能测定(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1626,
+  "category": "超声检查",
+  "item_code": "N406",
+  "item_name": "幽门超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1627,
+  "category": "超声检查",
+  "item_code": "N406",
+  "item_name": "幽门超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1628,
+  "category": "超声检查",
+  "item_code": "N407",
+  "item_name": "阴茎海绵体超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1629,
+  "category": "超声检查",
+  "item_code": "N407",
+  "item_name": "阴茎海绵体超声检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1630,
+  "category": "超声检查",
+  "item_code": "N408",
+  "item_name": "阴囊、双侧睾丸、附睾彩超检查(门诊)",
+  "body_part": "睾丸",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1631,
+  "category": "超声检查",
+  "item_code": "N408",
+  "item_name": "阴囊、双侧睾丸、附睾彩超检查(门诊)",
+  "body_part": "睾丸",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1632,
+  "category": "超声检查",
+  "item_code": "N409",
+  "item_name": "自动乳腺全容积成像系统超声检查(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1633,
+  "category": "超声检查",
+  "item_code": "N409",
+  "item_name": "自动乳腺全容积成像系统超声检查(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1634,
+  "category": "超声检查",
+  "item_code": "N412",
+  "item_name": "乳腺及其引流区淋巴结彩超检查(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1635,
+  "category": "超声检查",
+  "item_code": "N412",
+  "item_name": "乳腺及其引流区淋巴结彩超检查(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1636,
+  "category": "超声检查",
+  "item_code": "N414",
+  "item_name": "乳腺包块体表彩色超声波定位(标记)(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1637,
+  "category": "超声检查",
+  "item_code": "N414",
+  "item_name": "乳腺包块体表彩色超声波定位(标记)(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1638,
+  "category": "超声检查",
+  "item_code": "N415",
+  "item_name": "腹壁疝(内容物)彩超检查(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1639,
+  "category": "超声检查",
+  "item_code": "N415",
+  "item_name": "腹壁疝(内容物)彩超检查(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1640,
+  "category": "超声检查",
+  "item_code": "N417",
+  "item_name": "颅内段血管彩色多普勒检查(小儿颅病变检查)(门诊)",
+  "body_part": "头颅",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1641,
+  "category": "超声检查",
+  "item_code": "N417",
+  "item_name": "颅内段血管彩色多普勒检查(小儿颅病变检查)(门诊)",
+  "body_part": "头颅",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1642,
+  "category": "超声检查",
+  "item_code": "N418",
+  "item_name": "甲状腺及颈部淋巴结彩超检查(门诊)",
+  "body_part": "甲状腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1643,
+  "category": "超声检查",
+  "item_code": "N418",
+  "item_name": "甲状腺及颈部淋巴结彩超检查(门诊)",
+  "body_part": "甲状腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1644,
+  "category": "超声检查",
+  "item_code": "N420",
+  "item_name": "双眼及附属器彩超检查(门诊)",
+  "body_part": "眼部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1645,
+  "category": "超声检查",
+  "item_code": "N420",
+  "item_name": "双眼及附属器彩超检查(门诊)",
+  "body_part": "眼部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1646,
+  "category": "超声检查",
+  "item_code": "N421",
+  "item_name": "双涎腺及颈部淋巴结彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1647,
+  "category": "超声检查",
+  "item_code": "N421",
+  "item_name": "双涎腺及颈部淋巴结彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1648,
+  "category": "超声检查",
+  "item_code": "N422",
+  "item_name": "体表及四肢浅表包块彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1649,
+  "category": "超声检查",
+  "item_code": "N423",
+  "item_name": "锁骨上下区彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1650,
+  "category": "超声检查",
+  "item_code": "N423",
+  "item_name": "锁骨上下区彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1651,
+  "category": "超声检查",
+  "item_code": "N425",
+  "item_name": "双手关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1652,
+  "category": "超声检查",
+  "item_code": "N425",
+  "item_name": "双手关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1653,
+  "category": "超声检查",
+  "item_code": "N427",
+  "item_name": "左手关节彩超检查(门诊)",
+  "body_part": "左手",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1654,
+  "category": "超声检查",
+  "item_code": "N427",
+  "item_name": "左手关节彩超检查(门诊)",
+  "body_part": "左手",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1655,
+  "category": "超声检查",
+  "item_code": "N428",
+  "item_name": "右手关节彩超检查(门诊)",
+  "body_part": "右手",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1656,
+  "category": "超声检查",
+  "item_code": "N428",
+  "item_name": "右手关节彩超检查(门诊)",
+  "body_part": "右手",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1657,
+  "category": "超声检查",
+  "item_code": "N430",
+  "item_name": "双腕关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1658,
+  "category": "超声检查",
+  "item_code": "N430",
+  "item_name": "双腕关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1659,
+  "category": "超声检查",
+  "item_code": "N431",
+  "item_name": "左腕关节彩超检查(门诊)",
+  "body_part": "左腕关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1660,
+  "category": "超声检查",
+  "item_code": "N431",
+  "item_name": "左腕关节彩超检查(门诊)",
+  "body_part": "左腕关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1661,
+  "category": "超声检查",
+  "item_code": "N432",
+  "item_name": "右腕关节彩超检查(门诊)",
+  "body_part": "右腕关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1662,
+  "category": "超声检查",
+  "item_code": "N432",
+  "item_name": "右腕关节彩超检查(门诊)",
+  "body_part": "右腕关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1663,
+  "category": "超声检查",
+  "item_code": "N434",
+  "item_name": "双肘关节彩超检查(门诊)",
+  "body_part": "双肘",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1664,
+  "category": "超声检查",
+  "item_code": "N434",
+  "item_name": "双肘关节彩超检查(门诊)",
+  "body_part": "双肘",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1665,
+  "category": "超声检查",
+  "item_code": "N435",
+  "item_name": "左肘关节彩超检查(门诊)",
+  "body_part": "左肘关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1666,
+  "category": "超声检查",
+  "item_code": "N435",
+  "item_name": "左肘关节彩超检查(门诊)",
+  "body_part": "左肘关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1667,
+  "category": "超声检查",
+  "item_code": "N436",
+  "item_name": "右肘关节彩超检查(门诊)",
+  "body_part": "右肘关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1668,
+  "category": "超声检查",
+  "item_code": "N436",
+  "item_name": "右肘关节彩超检查(门诊)",
+  "body_part": "右肘关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1669,
+  "category": "超声检查",
+  "item_code": "N437",
+  "item_name": "双肩关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1670,
+  "category": "超声检查",
+  "item_code": "N437",
+  "item_name": "双肩关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1671,
+  "category": "超声检查",
+  "item_code": "N438",
+  "item_name": "左肩关节彩超检查(门诊)",
+  "body_part": "左肩",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1672,
+  "category": "超声检查",
+  "item_code": "N438",
+  "item_name": "左肩关节彩超检查(门诊)",
+  "body_part": "左肩",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1673,
+  "category": "超声检查",
+  "item_code": "N439",
+  "item_name": "右肩关节彩超检查(门诊)",
+  "body_part": "右肩",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1674,
+  "category": "超声检查",
+  "item_code": "N439",
+  "item_name": "右肩关节彩超检查(门诊)",
+  "body_part": "右肩",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1675,
+  "category": "超声检查",
+  "item_code": "N440",
+  "item_name": "双膝关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1676,
+  "category": "超声检查",
+  "item_code": "N440",
+  "item_name": "双膝关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1677,
+  "category": "超声检查",
+  "item_code": "N441",
+  "item_name": "左膝关节彩超检查(门诊)",
+  "body_part": "左膝关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1678,
+  "category": "超声检查",
+  "item_code": "N441",
+  "item_name": "左膝关节彩超检查(门诊)",
+  "body_part": "左膝关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1679,
+  "category": "超声检查",
+  "item_code": "N442",
+  "item_name": "右膝关节彩超检查(门诊)",
+  "body_part": "右膝关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1680,
+  "category": "超声检查",
+  "item_code": "N442",
+  "item_name": "右膝关节彩超检查(门诊)",
+  "body_part": "右膝关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1681,
+  "category": "超声检查",
+  "item_code": "N443",
+  "item_name": "双踝关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1682,
+  "category": "超声检查",
+  "item_code": "N443",
+  "item_name": "双踝关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1683,
+  "category": "超声检查",
+  "item_code": "N444",
+  "item_name": "左踝关节彩超检查(门诊)",
+  "body_part": "左踝关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1684,
+  "category": "超声检查",
+  "item_code": "N444",
+  "item_name": "左踝关节彩超检查(门诊)",
+  "body_part": "左踝关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1685,
+  "category": "超声检查",
+  "item_code": "N445",
+  "item_name": "右踝关节彩超检查(门诊)",
+  "body_part": "右踝关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1686,
+  "category": "超声检查",
+  "item_code": "N445",
+  "item_name": "右踝关节彩超检查(门诊)",
+  "body_part": "右踝关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1687,
+  "category": "超声检查",
+  "item_code": "N446",
+  "item_name": "双足关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1688,
+  "category": "超声检查",
+  "item_code": "N446",
+  "item_name": "双足关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1689,
+  "category": "超声检查",
+  "item_code": "N447",
+  "item_name": "左足关节彩超检查(门诊)",
+  "body_part": "左足",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1690,
+  "category": "超声检查",
+  "item_code": "N447",
+  "item_name": "左足关节彩超检查(门诊)",
+  "body_part": "左足",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1691,
+  "category": "超声检查",
+  "item_code": "N448",
+  "item_name": "右足关节彩超检查(门诊)",
+  "body_part": "右足",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1692,
+  "category": "超声检查",
+  "item_code": "N448",
+  "item_name": "右足关节彩超检查(门诊)",
+  "body_part": "右足",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1693,
+  "category": "超声检查",
+  "item_code": "N449",
+  "item_name": "双髋关节彩超检查(门诊)",
+  "body_part": "全髋",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1694,
+  "category": "超声检查",
+  "item_code": "N449",
+  "item_name": "双髋关节彩超检查(门诊)",
+  "body_part": "全髋",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1695,
+  "category": "超声检查",
+  "item_code": "N450",
+  "item_name": "左髋关节彩超检查(门诊)",
+  "body_part": "左髋关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1696,
+  "category": "超声检查",
+  "item_code": "N450",
+  "item_name": "左髋关节彩超检查(门诊)",
+  "body_part": "左髋关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1697,
+  "category": "超声检查",
+  "item_code": "N451",
+  "item_name": "右髋关节彩超检查(门诊)",
+  "body_part": "右髋关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1698,
+  "category": "超声检查",
+  "item_code": "N451",
+  "item_name": "右髋关节彩超检查(门诊)",
+  "body_part": "右髋关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1699,
+  "category": "超声检查",
+  "item_code": "N452",
+  "item_name": "双胸锁关节彩超检查(门诊)",
+  "body_part": "胸锁关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1700,
+  "category": "超声检查",
+  "item_code": "N452",
+  "item_name": "双胸锁关节彩超检查(门诊)",
+  "body_part": "胸锁关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1701,
+  "category": "超声检查",
+  "item_code": "N453",
+  "item_name": "左胸锁关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1702,
+  "category": "超声检查",
+  "item_code": "N453",
+  "item_name": "左胸锁关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1703,
+  "category": "超声检查",
+  "item_code": "N454",
+  "item_name": "右胸锁关节彩超检查(门诊)",
+  "body_part": "胸锁关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1704,
+  "category": "超声检查",
+  "item_code": "N454",
+  "item_name": "右胸锁关节彩超检查(门诊)",
+  "body_part": "胸锁关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1705,
+  "category": "超声检查",
+  "item_code": "N455",
+  "item_name": "关节囊、韧带、肌腱(每一部位)彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1706,
+  "category": "超声检查",
+  "item_code": "N455",
+  "item_name": "关节囊、韧带、肌腱(每一部位)彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1707,
+  "category": "超声检查",
+  "item_code": "N456",
+  "item_name": "骶髂关节彩超检查(门诊)",
+  "body_part": "骶髂关节",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1708,
+  "category": "超声检查",
+  "item_code": "N456",
+  "item_name": "骶髂关节彩超检查(门诊)",
+  "body_part": "骶髂关节",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1709,
+  "category": "超声检查",
+  "item_code": "N457",
+  "item_name": "下颌关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1710,
+  "category": "超声检查",
+  "item_code": "N457",
+  "item_name": "下颌关节彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1711,
+  "category": "超声检查",
+  "item_code": "N459",
+  "item_name": "胎儿心脏超声(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1712,
+  "category": "超声检查",
+  "item_code": "N459",
+  "item_name": "胎儿心脏超声(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1713,
+  "category": "超声检查",
+  "item_code": "N460",
+  "item_name": "颈静脉血管彩色多普勒超声(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1714,
+  "category": "超声检查",
+  "item_code": "N460",
+  "item_name": "颈静脉血管彩色多普勒超声(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1715,
+  "category": "超声检查",
+  "item_code": "N461",
+  "item_name": "颈部血管彩色多普勒超声(门诊)",
+  "body_part": "颈椎",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1716,
+  "category": "超声检查",
+  "item_code": "N461",
+  "item_name": "颈部血管彩色多普勒超声(门诊)",
+  "body_part": "颈椎",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1717,
+  "category": "超声检查",
+  "item_code": "N462",
+  "item_name": "经颅多普勒彩超(门诊)",
+  "body_part": "头颅",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1718,
+  "category": "超声检查",
+  "item_code": "N462",
+  "item_name": "经颅多普勒彩超(门诊)",
+  "body_part": "头颅",
+  "location": "三江门诊二楼一诊区22室"
+ },
+ {
+  "id": 1719,
+  "category": "超声检查",
+  "item_code": "N463",
+  "item_name": "心包彩超(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1720,
+  "category": "超声检查",
+  "item_code": "N463",
+  "item_name": "心包彩超(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1721,
+  "category": "超声检查",
+  "item_code": "N464",
+  "item_name": "彩超左肾静脉“胡桃夹”综合症检查(门诊)",
+  "body_part": "双肾",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1722,
+  "category": "超声检查",
+  "item_code": "N464",
+  "item_name": "彩超左肾静脉“胡桃夹”综合症检查(门诊)",
+  "body_part": "双肾",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1723,
+  "category": "超声检查",
+  "item_code": "N465",
+  "item_name": "腹部大血管彩色多普勒超声(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1724,
+  "category": "超声检查",
+  "item_code": "N465",
+  "item_name": "腹部大血管彩色多普勒超声(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1725,
+  "category": "超声检查",
+  "item_code": "N466",
+  "item_name": "门静脉系彩色多普勒超声(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1726,
+  "category": "超声检查",
+  "item_code": "N466",
+  "item_name": "门静脉系彩色多普勒超声(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1727,
+  "category": "超声检查",
+  "item_code": "N467",
+  "item_name": "双肾及肾血管彩色多普勒超声(门诊)",
+  "body_part": "双肾",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1728,
+  "category": "超声检查",
+  "item_code": "N467",
+  "item_name": "双肾及肾血管彩色多普勒超声(门诊)",
+  "body_part": "双肾",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1729,
+  "category": "超声检查",
+  "item_code": "N468",
+  "item_name": "双下肢动、静脉血管彩超(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1730,
+  "category": "超声检查",
+  "item_code": "N468",
+  "item_name": "双下肢动、静脉血管彩超(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1731,
+  "category": "超声检查",
+  "item_code": "N469",
+  "item_name": "双上肢动、静脉血管彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1732,
+  "category": "超声检查",
+  "item_code": "N469",
+  "item_name": "双上肢动、静脉血管彩超检查(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1733,
+  "category": "超声检查",
+  "item_code": "N470",
+  "item_name": "双上肢桡动脉、头静脉、肱动脉、贵要静脉血管彩超(造瘘)(门诊)",
+  "body_part": "双上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1734,
+  "category": "超声检查",
+  "item_code": "N470",
+  "item_name": "双上肢桡动脉、头静脉、肱动脉、贵要静脉血管彩超(造瘘)(门诊)",
+  "body_part": "双上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1735,
+  "category": "超声检查",
+  "item_code": "N471",
+  "item_name": "双上肢桡动脉、头静脉血管彩超检查（造瘘）(门诊)",
+  "body_part": "双上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1736,
+  "category": "超声检查",
+  "item_code": "N471",
+  "item_name": "双上肢桡动脉、头静脉血管彩超检查（造瘘）(门诊)",
+  "body_part": "双上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1737,
+  "category": "超声检查",
+  "item_code": "N472",
+  "item_name": "双侧下肢动脉血管(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1738,
+  "category": "超声检查",
+  "item_code": "N472",
+  "item_name": "双侧下肢动脉血管(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1739,
+  "category": "超声检查",
+  "item_code": "N473",
+  "item_name": "双侧下肢静脉血管(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1740,
+  "category": "超声检查",
+  "item_code": "N473",
+  "item_name": "双侧下肢静脉血管(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1741,
+  "category": "超声检查",
+  "item_code": "N474",
+  "item_name": "右上肢桡动脉、头静脉、肱动脉、贵要静脉血管彩超检查(造瘘)(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1742,
+  "category": "超声检查",
+  "item_code": "N474",
+  "item_name": "右上肢桡动脉、头静脉、肱动脉、贵要静脉血管彩超检查(造瘘)(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1743,
+  "category": "超声检查",
+  "item_code": "N475",
+  "item_name": "右上肢桡动脉、头静脉血管彩超检查(造瘘)(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1744,
+  "category": "超声检查",
+  "item_code": "N475",
+  "item_name": "右上肢桡动脉、头静脉血管彩超检查(造瘘)(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1745,
+  "category": "超声检查",
+  "item_code": "N476",
+  "item_name": "右上肢动脉血管彩超检查(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1746,
+  "category": "超声检查",
+  "item_code": "N476",
+  "item_name": "右上肢动脉血管彩超检查(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1747,
+  "category": "超声检查",
+  "item_code": "N477",
+  "item_name": "右上肢动、静脉血管彩超检查(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1748,
+  "category": "超声检查",
+  "item_code": "N477",
+  "item_name": "右上肢动、静脉血管彩超检查(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1749,
+  "category": "超声检查",
+  "item_code": "N478",
+  "item_name": "右上肢静脉血管彩超检查(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1750,
+  "category": "超声检查",
+  "item_code": "N478",
+  "item_name": "右上肢静脉血管彩超检查(门诊)",
+  "body_part": "右上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1751,
+  "category": "超声检查",
+  "item_code": "N479",
+  "item_name": "右下肢动、静脉血管彩超检查(门诊)",
+  "body_part": "右下肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1752,
+  "category": "超声检查",
+  "item_code": "N479",
+  "item_name": "右下肢动、静脉血管彩超检查(门诊)",
+  "body_part": "右下肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1753,
+  "category": "超声检查",
+  "item_code": "N480",
+  "item_name": "右下肢动脉血管彩超检查(门诊)",
+  "body_part": "右下肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1754,
+  "category": "超声检查",
+  "item_code": "N480",
+  "item_name": "右下肢动脉血管彩超检查(门诊)",
+  "body_part": "右下肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1755,
+  "category": "超声检查",
+  "item_code": "N481",
+  "item_name": "右下肢静脉血管彩超检查(门诊)",
+  "body_part": "右下肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1756,
+  "category": "超声检查",
+  "item_code": "N481",
+  "item_name": "右下肢静脉血管彩超检查(门诊)",
+  "body_part": "右下肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1757,
+  "category": "超声检查",
+  "item_code": "N525",
+  "item_name": "左上肢动、静脉血管彩超检查(门诊)",
+  "body_part": "左上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1758,
+  "category": "超声检查",
+  "item_code": "N525",
+  "item_name": "左上肢动、静脉血管彩超检查(门诊)",
+  "body_part": "左上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1759,
+  "category": "超声检查",
+  "item_code": "N526",
+  "item_name": "彩超引导下脾脏包块穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1760,
+  "category": "超声检查",
+  "item_code": "N526",
+  "item_name": "彩超引导下脾脏包块穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1761,
+  "category": "超声检查",
+  "item_code": "N527",
+  "item_name": "左上肢动脉血管彩超检查(门诊)",
+  "body_part": "左上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1762,
+  "category": "超声检查",
+  "item_code": "N527",
+  "item_name": "左上肢动脉血管彩超检查(门诊)",
+  "body_part": "左上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1763,
+  "category": "超声检查",
+  "item_code": "N531",
+  "item_name": "左上肢静脉血管彩超检查(门诊)",
+  "body_part": "左上肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1764,
+  "category": "超声检查",
+  "item_code": "N531",
+  "item_name": "左上肢静脉血管彩超检查(门诊)",
+  "body_part": "左上肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1765,
+  "category": "超声检查",
+  "item_code": "N532",
+  "item_name": "彩超引导下肾穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1766,
+  "category": "超声检查",
+  "item_code": "N532",
+  "item_name": "彩超引导下肾穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1767,
+  "category": "超声检查",
+  "item_code": "N533",
+  "item_name": "左下肢动、静脉血管彩超检查(门诊)",
+  "body_part": "左下肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1768,
+  "category": "超声检查",
+  "item_code": "N533",
+  "item_name": "左下肢动、静脉血管彩超检查(门诊)",
+  "body_part": "左下肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1769,
+  "category": "超声检查",
+  "item_code": "N534",
+  "item_name": "左下肢动脉血管彩超检查(门诊)",
+  "body_part": "左下肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1770,
+  "category": "超声检查",
+  "item_code": "N534",
+  "item_name": "左下肢动脉血管彩超检查(门诊)",
+  "body_part": "左下肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1771,
+  "category": "超声检查",
+  "item_code": "N535",
+  "item_name": "彩超引导下经直肠前列腺穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1772,
+  "category": "超声检查",
+  "item_code": "N535",
+  "item_name": "彩超引导下经直肠前列腺穿刺活检术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1773,
+  "category": "超声检查",
+  "item_code": "N536",
+  "item_name": "左下肢静脉血管彩超检查(门诊)",
+  "body_part": "左下肢",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1774,
+  "category": "超声检查",
+  "item_code": "N536",
+  "item_name": "左下肢静脉血管彩超检查(门诊)",
+  "body_part": "左下肢",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1775,
+  "category": "超声检查",
+  "item_code": "N537",
+  "item_name": "彩超引导下经皮穿刺肺活检术(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1776,
+  "category": "超声检查",
+  "item_code": "N537",
+  "item_name": "彩超引导下经皮穿刺肺活检术(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1777,
+  "category": "超声检查",
+  "item_code": "N538",
+  "item_name": "超声造影(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1778,
+  "category": "超声检查",
+  "item_code": "N538",
+  "item_name": "超声造影(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1779,
+  "category": "超声检查",
+  "item_code": "N541",
+  "item_name": "彩超引导下外周骨骼肿块穿刺活检(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1780,
+  "category": "超声检查",
+  "item_code": "N541",
+  "item_name": "彩超引导下外周骨骼肿块穿刺活检(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1781,
+  "category": "超声检查",
+  "item_code": "N543",
+  "item_name": "彩超引导下颈部淋巴结穿刺活检(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1782,
+  "category": "超声检查",
+  "item_code": "N543",
+  "item_name": "彩超引导下颈部淋巴结穿刺活检(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1783,
+  "category": "超声检查",
+  "item_code": "N545",
+  "item_name": "彩超引导下甲状腺穿刺活检术(门诊)",
+  "body_part": "甲状腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1784,
+  "category": "超声检查",
+  "item_code": "N545",
+  "item_name": "彩超引导下甲状腺穿刺活检术(门诊)",
+  "body_part": "甲状腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1785,
+  "category": "超声检查",
+  "item_code": "N546",
+  "item_name": "彩超引导下乳腺肿块穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1786,
+  "category": "超声检查",
+  "item_code": "N546",
+  "item_name": "彩超引导下乳腺肿块穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1787,
+  "category": "超声检查",
+  "item_code": "N548",
+  "item_name": "彩超引导下浅表肿物穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1788,
+  "category": "超声检查",
+  "item_code": "N548",
+  "item_name": "彩超引导下浅表肿物穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1789,
+  "category": "超声检查",
+  "item_code": "N550",
+  "item_name": "彩超引导下腹股沟淋巴结穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1790,
+  "category": "超声检查",
+  "item_code": "N550",
+  "item_name": "彩超引导下腹股沟淋巴结穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1791,
+  "category": "超声检查",
+  "item_code": "N551",
+  "item_name": "彩超引导下腋下肿块穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1792,
+  "category": "超声检查",
+  "item_code": "N551",
+  "item_name": "彩超引导下腋下肿块穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1794,
+  "category": "超声检查",
+  "item_code": "N557",
+  "item_name": "彩超引导下锁骨上下区淋巴结穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1795,
+  "category": "超声检查",
+  "item_code": "N557",
+  "item_name": "彩超引导下锁骨上下区淋巴结穿刺活检术(每一个肿块)(门诊)",
+  "body_part": "浅表部位",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1796,
+  "category": "超声检查",
+  "item_code": "N566",
+  "item_name": "彩超引导下腹腔脓肿穿刺抽液术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1797,
+  "category": "超声检查",
+  "item_code": "N566",
+  "item_name": "彩超引导下腹腔脓肿穿刺抽液术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1798,
+  "category": "超声检查",
+  "item_code": "N568",
+  "item_name": "彩超引导下肝脏脓肿穿刺抽液术(每一个肿块)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1799,
+  "category": "超声检查",
+  "item_code": "N568",
+  "item_name": "彩超引导下肝脏脓肿穿刺抽液术(每一个肿块)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1800,
+  "category": "超声检查",
+  "item_code": "N571",
+  "item_name": "彩超引导下肝脏囊肿穿刺抽液术(每一个囊肿)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1801,
+  "category": "超声检查",
+  "item_code": "N571",
+  "item_name": "彩超引导下肝脏囊肿穿刺抽液术(每一个囊肿)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1802,
+  "category": "超声检查",
+  "item_code": "N572",
+  "item_name": "彩超引导下盆腔脓肿(盆腔液性包块)穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1803,
+  "category": "超声检查",
+  "item_code": "N572",
+  "item_name": "彩超引导下盆腔脓肿(盆腔液性包块)穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1804,
+  "category": "超声检查",
+  "item_code": "N573",
+  "item_name": "彩超引导下输卵管积液穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1805,
+  "category": "超声检查",
+  "item_code": "N573",
+  "item_name": "彩超引导下输卵管积液穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1806,
+  "category": "超声检查",
+  "item_code": "N574",
+  "item_name": "彩超引导下卵巢囊肿穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1807,
+  "category": "超声检查",
+  "item_code": "N574",
+  "item_name": "彩超引导下卵巢囊肿穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1808,
+  "category": "超声检查",
+  "item_code": "N577",
+  "item_name": "彩超引导下经阴道卵巢囊肿穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1809,
+  "category": "超声检查",
+  "item_code": "N577",
+  "item_name": "彩超引导下经阴道卵巢囊肿穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1810,
+  "category": "超声检查",
+  "item_code": "N580",
+  "item_name": "彩超引导下经阴道巧克力囊肿穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1811,
+  "category": "超声检查",
+  "item_code": "N580",
+  "item_name": "彩超引导下经阴道巧克力囊肿穿刺抽液术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1812,
+  "category": "超声检查",
+  "item_code": "N582",
+  "item_name": "彩超引导下胸腔积液穿刺抽液术(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1813,
+  "category": "超声检查",
+  "item_code": "N582",
+  "item_name": "彩超引导下胸腔积液穿刺抽液术(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1814,
+  "category": "超声检查",
+  "item_code": "N585",
+  "item_name": "彩超引导下膈下及腹腔积液穿刺置管引流术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1815,
+  "category": "超声检查",
+  "item_code": "N585",
+  "item_name": "彩超引导下膈下及腹腔积液穿刺置管引流术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1816,
+  "category": "超声检查",
+  "item_code": "N589",
+  "item_name": "彩超引导下肝脏脓肿置管引流术(每一个肿块)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1817,
+  "category": "超声检查",
+  "item_code": "N589",
+  "item_name": "彩超引导下肝脏脓肿置管引流术(每一个肿块)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1818,
+  "category": "超声检查",
+  "item_code": "N593",
+  "item_name": "彩超引导下肝脏囊肿置管引流术(每一个囊肿)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1819,
+  "category": "超声检查",
+  "item_code": "N593",
+  "item_name": "彩超引导下肝脏囊肿置管引流术(每一个囊肿)(门诊)",
+  "body_part": "腹部",
+  "location": "三江门诊二楼一诊区22室"
+ },
+ {
+  "id": 1820,
+  "category": "超声检查",
+  "item_code": "N595",
+  "item_name": "彩超引导下经皮肝穿胆道引流术(PTCD)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1821,
+  "category": "超声检查",
+  "item_code": "N595",
+  "item_name": "彩超引导下经皮肝穿胆道引流术(PTCD)(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1822,
+  "category": "超声检查",
+  "item_code": "N599",
+  "item_name": "彩超引导下肾穿刺造瘘(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1823,
+  "category": "超声检查",
+  "item_code": "N599",
+  "item_name": "彩超引导下肾穿刺造瘘(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1824,
+  "category": "超声检查",
+  "item_code": "N600",
+  "item_name": "彩超引导下引流管冲洗术(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1825,
+  "category": "超声检查",
+  "item_code": "N600",
+  "item_name": "彩超引导下引流管冲洗术(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1826,
+  "category": "超声检查",
+  "item_code": "N604",
+  "item_name": "彩超引导下引流管置换术(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1827,
+  "category": "超声检查",
+  "item_code": "N604",
+  "item_name": "彩超引导下引流管置换术(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1828,
+  "category": "超声检查",
+  "item_code": "N608",
+  "item_name": "彩超引导下盆腔脓肿(盆腔液性包块)穿刺置管术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1829,
+  "category": "超声检查",
+  "item_code": "N608",
+  "item_name": "彩超引导下盆腔脓肿(盆腔液性包块)穿刺置管术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1830,
+  "category": "超声检查",
+  "item_code": "N610",
+  "item_name": "彩超引导下输卵管积液穿刺置管术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1831,
+  "category": "超声检查",
+  "item_code": "N610",
+  "item_name": "彩超引导下输卵管积液穿刺置管术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1832,
+  "category": "超声检查",
+  "item_code": "N615",
+  "item_name": "彩超引导下卵巢囊肿(巧克力囊肿)穿刺置管术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1833,
+  "category": "超声检查",
+  "item_code": "N615",
+  "item_name": "彩超引导下卵巢囊肿(巧克力囊肿)穿刺置管术(门诊)",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1834,
+  "category": "超声检查",
+  "item_code": "N620",
+  "item_name": "彩超引导下胸腔积液穿刺置管术(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1835,
+  "category": "超声检查",
+  "item_code": "N620",
+  "item_name": "彩超引导下胸腔积液穿刺置管术(门诊)",
+  "body_part": "胸部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1836,
+  "category": "超声检查",
+  "item_code": "N631",
+  "item_name": "彩超引导下肾囊肿硬化治疗术",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1837,
+  "category": "超声检查",
+  "item_code": "N631",
+  "item_name": "彩超引导下肾囊肿硬化治疗术",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1838,
+  "category": "超声检查",
+  "item_code": "N633",
+  "item_name": "彩超引导下肝囊肿硬化治疗",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1839,
+  "category": "超声检查",
+  "item_code": "N633",
+  "item_name": "彩超引导下肝囊肿硬化治疗",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1840,
+  "category": "超声检查",
+  "item_code": "N634",
+  "item_name": "彩超引导下异位妊娠(子宫切口妊娠)穿刺药物注入治疗术",
+  "body_part": "盆腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1841,
+  "category": "超声检查",
+  "item_code": "N634",
+  "item_name": "彩超引导下异位妊娠(子宫切口妊娠)穿刺药物注入治疗术",
+  "body_part": "盆腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1842,
+  "category": "超声检查",
+  "item_code": "N712",
+  "item_name": "产科彩色多普勒超声常规检查(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1843,
+  "category": "超声检查",
+  "item_code": "N712",
+  "item_name": "产科彩色多普勒超声常规检查(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1844,
+  "category": "超声检查",
+  "item_code": "N713",
+  "item_name": "(单胎)胎儿NT及常规产科彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1845,
+  "category": "超声检查",
+  "item_code": "N713",
+  "item_name": "(单胎)胎儿NT及常规产科彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1846,
+  "category": "超声检查",
+  "item_code": "N831",
+  "item_name": "(双胎)胎儿NT及常规产科彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1847,
+  "category": "超声检查",
+  "item_code": "N831",
+  "item_name": "(双胎)胎儿NT及常规产科彩超(门诊)",
+  "body_part": "胎儿",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1849,
+  "category": "超声检查",
+  "item_code": "O077",
+  "item_name": "左上肢桡动脉、头静脉血管彩超检查(造瘘)(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1850,
+  "category": "超声检查",
+  "item_code": "O077",
+  "item_name": "左上肢桡动脉、头静脉血管彩超检查(造瘘)(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1852,
+  "category": "超声检查",
+  "item_code": "O115",
+  "item_name": "新生儿PICC超声定位及相关大静脉检查(门诊)",
+  "body_part": "中心静脉",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1853,
+  "category": "超声检查",
+  "item_code": "O115",
+  "item_name": "新生儿PICC超声定位及相关大静脉检查(门诊)",
+  "body_part": "中心静脉",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1854,
+  "category": "超声检查",
+  "item_code": "O118",
+  "item_name": "新生儿UVC超声定位及相关大静脉检查(门诊)",
+  "body_part": "脐静脉",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1855,
+  "category": "超声检查",
+  "item_code": "O118",
+  "item_name": "新生儿UVC超声定位及相关大静脉检查(门诊)",
+  "body_part": "脐静脉",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1856,
+  "category": "电位图",
+  "item_code": "O141",
+  "item_name": "心电图及心电向量图",
+  "body_part": "常规",
+  "location": "门诊三楼B区315"
+ },
+ {
+  "id": 1857,
+  "category": "电位图",
+  "item_code": "O141",
+  "item_name": "心电图及心电向量图",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)心电图"
+ },
+ {
+  "id": 1862,
+  "category": "内窥镜",
+  "item_code": "O278",
+  "item_name": "电子乙状结肠镜检查",
+  "body_part": "常规",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1863,
+  "category": "内窥镜",
+  "item_code": "O279",
+  "item_name": "超声支气管镜检查（支气管淋巴结针吸活检术",
+  "body_part": "肺部淋巴结、肺部肿块",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1864,
+  "category": "内窥镜",
+  "item_code": "O347",
+  "item_name": "无痛经电子胃镜超声微探头检查(吸氧1次+吸痰1次)",
+  "body_part": "常规",
+  "location": "门诊3楼心电图>麻醉门诊>内镜中心"
+ },
+ {
+  "id": 1865,
+  "category": "内窥镜",
+  "item_code": "O349",
+  "item_name": "无痛超声胃镜检查术",
+  "body_part": "常规",
+  "location": "门诊3楼心电图>麻醉门诊>内镜中心"
+ },
+ {
+  "id": 1866,
+  "category": "内窥镜",
+  "item_code": "O351",
+  "item_name": "无痛超声结肠镜检查",
+  "body_part": "常规",
+  "location": "门诊3楼心电图>麻醉门诊>内镜中心"
+ },
+ {
+  "id": 1867,
+  "category": "内窥镜",
+  "item_code": "O375",
+  "item_name": "局麻电子纤维支气管镜检查",
+  "body_part": "气管",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1868,
+  "category": "内窥镜",
+  "item_code": "O376",
+  "item_name": "无痛电子纤维支气管镜检查",
+  "body_part": "气管",
+  "location": "门诊3楼心电图>麻醉门诊>内镜中心"
+ },
+ {
+  "id": 1869,
+  "category": "内窥镜",
+  "item_code": "O376",
+  "item_name": "无痛电子纤维支气管镜检查",
+  "body_part": "气管",
+  "location": "经开分院3楼C区内镜中心"
+ },
+ {
+  "id": 1870,
+  "category": "电位图",
+  "item_code": "O390",
+  "item_name": "常规心电图检查+采用十二通道加收",
+  "body_part": "常规",
+  "location": "门诊三楼B区315"
+ },
+ {
+  "id": 1871,
+  "category": "电位图",
+  "item_code": "O390",
+  "item_name": "常规心电图检查+采用十二通道加收",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)心电图"
+ },
+ {
+  "id": 1872,
+  "category": "电位图",
+  "item_code": "O391",
+  "item_name": "常规心电图检查+十二通道+床旁心电图",
+  "body_part": "常规",
+  "location": "门诊三楼B区315"
+ },
+ {
+  "id": 1873,
+  "category": "电位图",
+  "item_code": "O391",
+  "item_name": "常规心电图检查+十二通道+床旁心电图",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)心电图"
+ },
+ {
+  "id": 1874,
+  "category": "超声检查",
+  "item_code": "O400",
+  "item_name": "小儿肠套叠肠扭转水灌肠复位术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1875,
+  "category": "超声检查",
+  "item_code": "O400",
+  "item_name": "小儿肠套叠肠扭转水灌肠复位术(门诊)",
+  "body_part": "腹部",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1876,
+  "category": "超声检查",
+  "item_code": "O404",
+  "item_name": "左上肢桡动脉、头静脉、肱动脉、贵要静脉血管彩超(造瘘)(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1877,
+  "category": "超声检查",
+  "item_code": "O404",
+  "item_name": "左上肢桡动脉、头静脉、肱动脉、贵要静脉血管彩超(造瘘)(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1878,
+  "category": "病理检查",
+  "item_code": "O426",
+  "item_name": "宫颈液基细胞学(AI辅助诊断)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1879,
+  "category": "病理检查",
+  "item_code": "O428",
+  "item_name": "宫腔液基细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1880,
+  "category": "病理检查",
+  "item_code": "O430",
+  "item_name": "胸水液基细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1881,
+  "category": "病理检查",
+  "item_code": "O431",
+  "item_name": "腹水液基细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1882,
+  "category": "病理检查",
+  "item_code": "O432",
+  "item_name": "心包液液基细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1883,
+  "category": "病理检查",
+  "item_code": "O433",
+  "item_name": "脑脊液液基细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1884,
+  "category": "病理检查",
+  "item_code": "O434",
+  "item_name": "囊肿穿刺液液基细胞学检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1889,
+  "category": "病理检查",
+  "item_code": "O443",
+  "item_name": "细胞块制作及病理诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1890,
+  "category": "病理检查",
+  "item_code": "O444",
+  "item_name": "HER2-FISH检测与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1891,
+  "category": "病理检查",
+  "item_code": "O445",
+  "item_name": "BCL2/BCL6/MYC-FISH检测与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1892,
+  "category": "病理检查",
+  "item_code": "O446",
+  "item_name": "尿路上皮FISH检测与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1893,
+  "category": "病理检查",
+  "item_code": "O447",
+  "item_name": "1p/19q-FISH检测与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1894,
+  "category": "病理检查",
+  "item_code": "O448",
+  "item_name": "FISH(荧光原位杂交)检测与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1895,
+  "category": "病理检查",
+  "item_code": "O449",
+  "item_name": "PD-L1检测与伴随诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1896,
+  "category": "病理检查",
+  "item_code": "O450",
+  "item_name": "HPV(23分型)分子检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1897,
+  "category": "病理检查",
+  "item_code": "O451",
+  "item_name": "结核分枝杆菌DNA检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1899,
+  "category": "病理检查",
+  "item_code": "O458",
+  "item_name": "B淋巴细胞基因重排检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1900,
+  "category": "病理检查",
+  "item_code": "O463",
+  "item_name": "KRAS/NRAS/BRAF基因突变联合检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1901,
+  "category": "病理检查",
+  "item_code": "O466",
+  "item_name": "EGFR/ALK/ROS1基因突变联合检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1902,
+  "category": "病理检查",
+  "item_code": "O512",
+  "item_name": "免疫组化染色及诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1903,
+  "category": "病理检查",
+  "item_code": "O513",
+  "item_name": "免疫组化染色及诊断(增加项目)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1904,
+  "category": "病理检查",
+  "item_code": "O514",
+  "item_name": "特殊染色及诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1905,
+  "category": "病理检查",
+  "item_code": "O516",
+  "item_name": "特殊染色及诊断(增加项目)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1906,
+  "category": "病理检查",
+  "item_code": "O519",
+  "item_name": "术中冰冻病理诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1907,
+  "category": "病理检查",
+  "item_code": "O520",
+  "item_name": "术中冰冻病理诊断(增加部位/切缘/淋巴)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1908,
+  "category": "病理检查",
+  "item_code": "O522",
+  "item_name": "快速病理制片及诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1909,
+  "category": "病理检查",
+  "item_code": "O523",
+  "item_name": "快速病理制片及诊断(增加部位/切缘/淋巴)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1910,
+  "category": "病理检查",
+  "item_code": "O527",
+  "item_name": "术后组织病理诊断(+1部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1911,
+  "category": "病理检查",
+  "item_code": "O531",
+  "item_name": "术后组织病理诊断(+2部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1912,
+  "category": "病理检查",
+  "item_code": "O535",
+  "item_name": "术后组织病理诊断(+3部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1913,
+  "category": "病理检查",
+  "item_code": "O537",
+  "item_name": "术后组织病理诊断(+4部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1914,
+  "category": "病理检查",
+  "item_code": "O540",
+  "item_name": "内镜组织活检(1部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1915,
+  "category": "病理检查",
+  "item_code": "O542",
+  "item_name": "内镜组织活检(2部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1916,
+  "category": "病理检查",
+  "item_code": "O545",
+  "item_name": "活检组织病理诊断(1部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1917,
+  "category": "病理检查",
+  "item_code": "O548",
+  "item_name": "术后组织病理诊断(+5部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1918,
+  "category": "病理检查",
+  "item_code": "O550",
+  "item_name": "骨髓组织病理诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1919,
+  "category": "病理检查",
+  "item_code": "O565",
+  "item_name": "局部活检组织病理诊断(1部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1920,
+  "category": "病理检查",
+  "item_code": "O566",
+  "item_name": "局部活检组织病理诊断(增加部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1921,
+  "category": "病理检查",
+  "item_code": "O594",
+  "item_name": "病理会诊",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1922,
+  "category": "病理检查",
+  "item_code": "O595",
+  "item_name": "病理会诊(多组织块加收)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1923,
+  "category": "病理检查",
+  "item_code": "O596",
+  "item_name": "脱落细胞涂片检查与诊断",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1924,
+  "category": "病理检查",
+  "item_code": "O611",
+  "item_name": "内镜组织活检(3部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1925,
+  "category": "病理检查",
+  "item_code": "O612",
+  "item_name": "内镜组织活检(4部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1926,
+  "category": "病理检查",
+  "item_code": "O613",
+  "item_name": "ESD手术病理检查(长度小于4CM)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1927,
+  "category": "病理检查",
+  "item_code": "O615",
+  "item_name": "ESD手术病理检查(长度4-8CM)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1928,
+  "category": "病理检查",
+  "item_code": "O616",
+  "item_name": "ESD手术病理检查(长度大于8CM)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1929,
+  "category": "病理检查",
+  "item_code": "O623",
+  "item_name": "ESD手术病理检查(增加部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1930,
+  "category": "病理检查",
+  "item_code": "O670",
+  "item_name": "肺癌甲基化检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1931,
+  "category": "病理检查",
+  "item_code": "O694",
+  "item_name": "术后组织病理诊断(+6部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1932,
+  "category": "病理检查",
+  "item_code": "O695",
+  "item_name": "术后组织病理诊断(+7部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1933,
+  "category": "病理检查",
+  "item_code": "O698",
+  "item_name": "术后组织病理诊断(+8部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1934,
+  "category": "病理检查",
+  "item_code": "O699",
+  "item_name": "术后组织病理诊断(+9部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1935,
+  "category": "病理检查",
+  "item_code": "O700",
+  "item_name": "术后组织病理诊断(+10部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1936,
+  "category": "病理检查",
+  "item_code": "O708",
+  "item_name": "免疫组化染色及诊断(CD38)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1937,
+  "category": "病理检查",
+  "item_code": "O709",
+  "item_name": "免疫组化染色及诊断(CD45)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1938,
+  "category": "病理检查",
+  "item_code": "O711",
+  "item_name": "免疫组化染色及诊断(CD138)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1939,
+  "category": "病理检查",
+  "item_code": "O714",
+  "item_name": "活检组织病理诊断(2部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1940,
+  "category": "病理检查",
+  "item_code": "O715",
+  "item_name": "活检组织病理诊断(3部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1941,
+  "category": "病理检查",
+  "item_code": "O716",
+  "item_name": "活检组织病理诊断(4部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1942,
+  "category": "病理检查",
+  "item_code": "O717",
+  "item_name": "活检组织病理诊断(5部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1943,
+  "category": "病理检查",
+  "item_code": "O718",
+  "item_name": "活检组织病理诊断(6部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1944,
+  "category": "病理检查",
+  "item_code": "O719",
+  "item_name": "活检组织病理诊断(12部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1945,
+  "category": "病理检查",
+  "item_code": "O776",
+  "item_name": "EMR切除组织(1部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1946,
+  "category": "病理检查",
+  "item_code": "O777",
+  "item_name": "EMR切除组织(增加部位)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1947,
+  "category": "病理检查",
+  "item_code": "O795",
+  "item_name": "NTRK1/2/3基因融合检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1953,
+  "category": "超声检查",
+  "item_code": "O849",
+  "item_name": "指间动脉血管彩色多普勒超声(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1954,
+  "category": "超声检查",
+  "item_code": "O849",
+  "item_name": "指间动脉血管彩色多普勒超声(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1955,
+  "category": "超声检查",
+  "item_code": "O850",
+  "item_name": "双侧颈总动脉PWV(脉搏波传导速度)血管彩色多普勒超声(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1956,
+  "category": "超声检查",
+  "item_code": "O850",
+  "item_name": "双侧颈总动脉PWV(脉搏波传导速度)血管彩色多普勒超声(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1957,
+  "category": "超声检查",
+  "item_code": "O851",
+  "item_name": "趾间动脉血管彩色多普勒超声(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1958,
+  "category": "超声检查",
+  "item_code": "O851",
+  "item_name": "趾间动脉血管彩色多普勒超声(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1959,
+  "category": "病理检查",
+  "item_code": "O871",
+  "item_name": "EBER原位杂交",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1960,
+  "category": "病理检查",
+  "item_code": "O872",
+  "item_name": "宫颈病变甲基化检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1966,
+  "category": "内窥镜",
+  "item_code": "O927",
+  "item_name": "经电子纤支镜治疗",
+  "body_part": "气管",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1967,
+  "category": "内窥镜",
+  "item_code": "O929",
+  "item_name": "经电子纤支镜肺泡灌洗诊疗术",
+  "body_part": "肺部",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1968,
+  "category": "内窥镜",
+  "item_code": "O930",
+  "item_name": "经电子纤支镜防污染采样刷检查",
+  "body_part": "气管",
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1971,
+  "category": "超声检查",
+  "item_code": "O982",
+  "item_name": "双侧上肢动脉血管(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1972,
+  "category": "超声检查",
+  "item_code": "O982",
+  "item_name": "双侧上肢动脉血管(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1973,
+  "category": "超声检查",
+  "item_code": "O983",
+  "item_name": "双侧上肢静脉血管(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1974,
+  "category": "超声检查",
+  "item_code": "O983",
+  "item_name": "双侧上肢静脉血管(门诊)",
+  "body_part": "血管",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1975,
+  "category": "超声检查",
+  "item_code": "P014",
+  "item_name": "子宫输卵管超声造影(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1976,
+  "category": "超声检查",
+  "item_code": "P014",
+  "item_name": "子宫输卵管超声造影(门诊)",
+  "body_part": "常规",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1977,
+  "category": "超声检查",
+  "item_code": "P015",
+  "item_name": "宫腔水造影(门诊)",
+  "body_part": "宫腔",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1978,
+  "category": "超声检查",
+  "item_code": "P015",
+  "item_name": "宫腔水造影(门诊)",
+  "body_part": "宫腔",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1981,
+  "category": "病理检查",
+  "item_code": "P215",
+  "item_name": "结核分枝杆菌检测（RNA）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1982,
+  "category": "超声检查",
+  "item_code": "P217",
+  "item_name": "新生儿先心病超声筛查（免费）",
+  "body_part": null,
+  "location": "门诊三楼B区306超声科"
+ },
+ {
+  "id": 1983,
+  "category": "超声检查",
+  "item_code": "P219",
+  "item_name": "胃肠超声造影检查（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1984,
+  "category": "超声检查",
+  "item_code": "P219",
+  "item_name": "胃肠超声造影检查（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1986,
+  "category": "超声检查",
+  "item_code": "P229",
+  "item_name": "心脏彩超（包括心脏彩色多普勒超声、左心功能测定）（门诊）",
+  "body_part": "心脏",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1987,
+  "category": "超声检查",
+  "item_code": "P229",
+  "item_name": "心脏彩超（包括心脏彩色多普勒超声、左心功能测定）（门诊）",
+  "body_part": "心脏",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1988,
+  "category": "超声检查",
+  "item_code": "P234",
+  "item_name": "心脏彩超、右心声学造影(门诊)",
+  "body_part": "心脏",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1989,
+  "category": "超声检查",
+  "item_code": "P234",
+  "item_name": "心脏彩超、右心声学造影(门诊)",
+  "body_part": "心脏",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1990,
+  "category": "病理检查",
+  "item_code": "P241",
+  "item_name": "DNA倍体检测（液基细胞硫堇法）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1991,
+  "category": "病理检查",
+  "item_code": "P247",
+  "item_name": "HP（幽门螺杆菌）定性及耐药检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 1992,
+  "category": "超声检查",
+  "item_code": "P249",
+  "item_name": "彩超引导下经皮选择性静脉穿刺置管术（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 1993,
+  "category": "超声检查",
+  "item_code": "P249",
+  "item_name": "彩超引导下经皮选择性静脉穿刺置管术（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 1994,
+  "category": "内窥镜",
+  "item_code": "P250",
+  "item_name": "上消化道内镜检查",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1995,
+  "category": "内窥镜",
+  "item_code": "P252",
+  "item_name": "肠镜检查",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1996,
+  "category": "内窥镜",
+  "item_code": "P253",
+  "item_name": "内镜色素检查（消化）",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 1997,
+  "category": "其他专科检查",
+  "item_code": "P264",
+  "item_name": "基础肺功能(通气+残气容积+流速容量+气道阻力)",
+  "body_part": null,
+  "location": "门诊二楼B区203"
+ },
+ {
+  "id": 1999,
+  "category": "内窥镜",
+  "item_code": "P270",
+  "item_name": "肠镜检查（无痛）",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2000,
+  "category": "内窥镜",
+  "item_code": "P271",
+  "item_name": "上消化道内镜检查（无痛）",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2001,
+  "category": "病理检查",
+  "item_code": "P277",
+  "item_name": "宫颈液基细胞学检测(体检)",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 2002,
+  "category": "病理检查",
+  "item_code": "P277",
+  "item_name": "宫颈液基细胞学检测(体检)",
+  "body_part": null,
+  "location": "二楼B2区"
+ },
+ {
+  "id": 2003,
+  "category": "超声检查",
+  "item_code": "P280",
+  "item_name": "双侧乳内动脉超声检查(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2004,
+  "category": "超声检查",
+  "item_code": "P280",
+  "item_name": "双侧乳内动脉超声检查(门诊)",
+  "body_part": "乳腺",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2005,
+  "category": "病理检查",
+  "item_code": "P284",
+  "item_name": "阴道微生态检测（免疫荧光法）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 2006,
+  "category": "超声检查",
+  "item_code": "P485",
+  "item_name": "排尿性膀胱输尿管超声造影（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2007,
+  "category": "超声检查",
+  "item_code": "P485",
+  "item_name": "排尿性膀胱输尿管超声造影（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2008,
+  "category": "病理检查",
+  "item_code": "Q061",
+  "item_name": "真菌免疫荧光检测（液基法）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 2009,
+  "category": "超声检查",
+  "item_code": "Q062",
+  "item_name": "四肢动静脉血管超声（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2010,
+  "category": "超声检查",
+  "item_code": "Q062",
+  "item_name": "四肢动静脉血管超声（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2011,
+  "category": "超声检查",
+  "item_code": "Q063",
+  "item_name": "四肢动脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2012,
+  "category": "超声检查",
+  "item_code": "Q063",
+  "item_name": "四肢动脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2013,
+  "category": "超声检查",
+  "item_code": "Q064",
+  "item_name": "四肢静脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2014,
+  "category": "超声检查",
+  "item_code": "Q064",
+  "item_name": "四肢静脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2015,
+  "category": "超声检查",
+  "item_code": "Q068",
+  "item_name": "左侧肢体静脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2016,
+  "category": "超声检查",
+  "item_code": "Q068",
+  "item_name": "左侧肢体静脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2017,
+  "category": "超声检查",
+  "item_code": "Q069",
+  "item_name": "右侧肢体静脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2018,
+  "category": "超声检查",
+  "item_code": "Q069",
+  "item_name": "右侧肢体静脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2019,
+  "category": "超声检查",
+  "item_code": "Q072",
+  "item_name": "颞浅动脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2020,
+  "category": "超声检查",
+  "item_code": "Q072",
+  "item_name": "颞浅动脉血管彩超（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2021,
+  "category": "超声检查",
+  "item_code": "Q074",
+  "item_name": "左心造影（门诊）",
+  "body_part": "心脏",
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2022,
+  "category": "超声检查",
+  "item_code": "Q074",
+  "item_name": "左心造影（门诊）",
+  "body_part": "心脏",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2023,
+  "category": "超声检查",
+  "item_code": "Q077",
+  "item_name": "颈动脉造影（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2024,
+  "category": "超声检查",
+  "item_code": "Q077",
+  "item_name": "颈动脉造影（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2025,
+  "category": "超声检查",
+  "item_code": "Q085",
+  "item_name": "胎儿脐血流监测（门诊）",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2026,
+  "category": "超声检查",
+  "item_code": "Q085",
+  "item_name": "胎儿脐血流监测（门诊）",
+  "body_part": null,
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2027,
+  "category": "病理检查",
+  "item_code": "Q098",
+  "item_name": "乳糖耐受及肠道屏障检测（特殊染色及酶组织化学法）",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 2028,
+  "category": "超声检查",
+  "item_code": "Q156",
+  "item_name": "心脏彩色多普勒超声（门诊）",
+  "body_part": "心脏",
+  "location": "门诊三楼B区306超声科"
+ },
+ {
+  "id": 2029,
+  "category": "超声检查",
+  "item_code": "Q156",
+  "item_name": "心脏彩色多普勒超声（门诊）",
+  "body_part": "心脏",
+  "location": "门诊三楼（A2区)超声医学科"
+ },
+ {
+  "id": 2030,
+  "category": "病理检查",
+  "item_code": "Q266",
+  "item_name": "人乳头瘤病毒(HPV)E6/E7mRNA 检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 2031,
+  "category": "超声检查",
+  "item_code": "Q306",
+  "item_name": "（双胎）胎儿常规及生长指标评估彩超(门诊)",
+  "body_part": null,
+  "location": "门诊三楼B区306超声科"
+ },
+ {
+  "id": 2032,
+  "category": "超声检查",
+  "item_code": "Q308",
+  "item_name": "（双胎）胎儿四维彩超(门诊)",
+  "body_part": null,
+  "location": "门诊三楼B区306超声科"
+ },
+ {
+  "id": 2033,
+  "category": "超声检查",
+  "item_code": "Q310",
+  "item_name": "（双胎）胎儿心脏超声(门诊)",
+  "body_part": null,
+  "location": "门诊三楼B区306超声科"
+ },
+ {
+  "id": 2034,
+  "category": "超声检查",
+  "item_code": "Q313",
+  "item_name": "（双胎）产科彩色多普勒超声常规检查(门诊)",
+  "body_part": null,
+  "location": "门诊三楼B区306超声科"
+ },
+ {
+  "id": 2035,
+  "category": "病理检查",
+  "item_code": "Q800",
+  "item_name": "5种突变基因联合检测",
+  "body_part": null,
+  "location": "门诊四楼A区7通道"
+ },
+ {
+  "id": 2036,
+  "category": "SPECT检查",
+  "item_code": "R526",
+  "item_name": "SPECT/CT局部融合显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2037,
+  "category": "SPECT检查",
+  "item_code": "R527",
+  "item_name": "膀胱输尿管返流核素显象",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2038,
+  "category": "SPECT检查",
+  "item_code": "R528",
+  "item_name": "骶尾椎骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2039,
+  "category": "SPECT检查",
+  "item_code": "R529",
+  "item_name": "放射免疫断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2040,
+  "category": "SPECT检查",
+  "item_code": "R530",
+  "item_name": "放射受体断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2041,
+  "category": "SPECT检查",
+  "item_code": "R531",
+  "item_name": "肺灌注断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2043,
+  "category": "SPECT检查",
+  "item_code": "R533",
+  "item_name": "腹股沟、髂淋巴断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2044,
+  "category": "SPECT检查",
+  "item_code": "R534",
+  "item_name": "肝胆动态核素显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2045,
+  "category": "SPECT检查",
+  "item_code": "R535",
+  "item_name": "肝胶体断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2046,
+  "category": "SPECT检查",
+  "item_code": "R536",
+  "item_name": "肝血池断层显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2047,
+  "category": "SPECT检查",
+  "item_code": "R537",
+  "item_name": "肝血流断层显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2048,
+  "category": "SPECT检查",
+  "item_code": "R538",
+  "item_name": "骨骼局部断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2049,
+  "category": "SPECT检查",
+  "item_code": "R539",
+  "item_name": "骨盆断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2051,
+  "category": "SPECT检查",
+  "item_code": "R541",
+  "item_name": "骨血流血池（三时相）显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2052,
+  "category": "SPECT检查",
+  "item_code": "R542",
+  "item_name": "急性心肌梗塞灶断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2053,
+  "category": "SPECT检查",
+  "item_code": "R543",
+  "item_name": "甲状旁腺断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2054,
+  "category": "SPECT检查",
+  "item_code": "R544",
+  "item_name": "甲状腺癌全身131碘显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2056,
+  "category": "SPECT检查",
+  "item_code": "R546",
+  "item_name": "甲状腺断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2057,
+  "category": "SPECT检查",
+  "item_code": "R547",
+  "item_name": "甲状腺核素显像（不加融合）",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2058,
+  "category": "SPECT检查",
+  "item_code": "R548",
+  "item_name": "甲状腺吸碘试验测定",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2059,
+  "category": "SPECT检查",
+  "item_code": "R549",
+  "item_name": "颈部淋巴断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2060,
+  "category": "SPECT检查",
+  "item_code": "R550",
+  "item_name": "颈椎骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2061,
+  "category": "SPECT检查",
+  "item_code": "R551",
+  "item_name": "局部淋巴断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2062,
+  "category": "SPECT检查",
+  "item_code": "R552",
+  "item_name": "局部炎症断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2063,
+  "category": "SPECT检查",
+  "item_code": "R553",
+  "item_name": "肋骨断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2064,
+  "category": "SPECT检查",
+  "item_code": "R554",
+  "item_name": "颅骨骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2065,
+  "category": "SPECT检查",
+  "item_code": "R555",
+  "item_name": "门控负荷心肌灌注断层显象",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2066,
+  "category": "SPECT检查",
+  "item_code": "R556",
+  "item_name": "门控静息心肌灌注断层显象",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2067,
+  "category": "SPECT检查",
+  "item_code": "R557",
+  "item_name": "脑池断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2068,
+  "category": "SPECT检查",
+  "item_code": "R558",
+  "item_name": "脑血流灌注断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2070,
+  "category": "SPECT检查",
+  "item_code": "R560",
+  "item_name": "盆腔淋巴断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2071,
+  "category": "SPECT检查",
+  "item_code": "R561",
+  "item_name": "亲肿瘤断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2072,
+  "category": "SPECT检查",
+  "item_code": "R562",
+  "item_name": "全身骨骼显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2073,
+  "category": "SPECT检查",
+  "item_code": "R563",
+  "item_name": "全身骨骼显像加融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2074,
+  "category": "SPECT检查",
+  "item_code": "R564",
+  "item_name": "全身核素显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2075,
+  "category": "SPECT检查",
+  "item_code": "R565",
+  "item_name": "全身淋巴断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2076,
+  "category": "SPECT检查",
+  "item_code": "R566",
+  "item_name": "全身炎症核素显像",
+  "body_part": null,
+  "location": "门诊三楼B区306"
+ },
+ {
+  "id": 2077,
+  "category": "SPECT检查",
+  "item_code": "R566",
+  "item_name": "全身炎症核素显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2078,
+  "category": "SPECT检查",
+  "item_code": "R566",
+  "item_name": "全身炎症核素显像",
+  "body_part": null,
+  "location": "三江门诊二楼一诊区22室"
+ },
+ {
+  "id": 2079,
+  "category": "SPECT检查",
+  "item_code": "R567",
+  "item_name": "肾动态核素显象＋肾小球滤过率(GFR)测定",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2080,
+  "category": "SPECT检查",
+  "item_code": "R568",
+  "item_name": "肾动态核素显象＋肾有效血浆流量（ERPF）测定",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2081,
+  "category": "SPECT检查",
+  "item_code": "R569",
+  "item_name": "肾静态核素显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2082,
+  "category": "SPECT检查",
+  "item_code": "R570",
+  "item_name": "肾上腺断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2084,
+  "category": "SPECT检查",
+  "item_code": "R572",
+  "item_name": "十二指肠胃返流断层显象",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2085,
+  "category": "SPECT检查",
+  "item_code": "R573",
+  "item_name": "双上肢腋窝、锁骨下淋巴断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2086,
+  "category": "SPECT检查",
+  "item_code": "R574",
+  "item_name": "唾液腺核素显象",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2087,
+  "category": "SPECT检查",
+  "item_code": "R575",
+  "item_name": "胃肠道蛋白丢失断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2088,
+  "category": "SPECT检查",
+  "item_code": "R576",
+  "item_name": "胃排空核素显像",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2089,
+  "category": "SPECT检查",
+  "item_code": "R577",
+  "item_name": "下肢深静脉断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2090,
+  "category": "SPECT检查",
+  "item_code": "R578",
+  "item_name": "消化道出血断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2091,
+  "category": "SPECT检查",
+  "item_code": "R579",
+  "item_name": "心功能断层显象",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2092,
+  "category": "SPECT检查",
+  "item_code": "R580",
+  "item_name": "心肌淀粉样变性PYP断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2093,
+  "category": "SPECT检查",
+  "item_code": "R581",
+  "item_name": "胸廓内淋巴断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2094,
+  "category": "SPECT检查",
+  "item_code": "R582",
+  "item_name": "胸椎骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2095,
+  "category": "SPECT检查",
+  "item_code": "R583",
+  "item_name": "腰椎骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2096,
+  "category": "SPECT检查",
+  "item_code": "R584",
+  "item_name": "异位胃粘膜断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2097,
+  "category": "SPECT检查",
+  "item_code": "R585",
+  "item_name": "异位胃粘膜核素显象不融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2098,
+  "category": "SPECT检查",
+  "item_code": "R586",
+  "item_name": "阴囊断层显像融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2100,
+  "category": "SPECT检查",
+  "item_code": "R588",
+  "item_name": "右上肢骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2101,
+  "category": "SPECT检查",
+  "item_code": "R589",
+  "item_name": "右下肢骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2103,
+  "category": "SPECT检查",
+  "item_code": "R591",
+  "item_name": "左上肢骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2104,
+  "category": "SPECT检查",
+  "item_code": "R592",
+  "item_name": "左下肢骨骼断层显像+融合",
+  "body_part": null,
+  "location": "第二住院大楼一楼核医学科"
+ },
+ {
+  "id": 2105,
+  "category": "病理检查",
+  "item_code": "R646",
+  "item_name": "人PIK3CA基因突变检测",
+  "body_part": null,
+  "location": "门诊四楼病理科"
+ },
+ {
+  "id": 2106,
+  "category": "内窥镜",
+  "item_code": "S010",
+  "item_name": "（放大内镜胃）内镜色素检查(不含麻醉费)",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2107,
+  "category": "内窥镜",
+  "item_code": "S191",
+  "item_name": "(胃镜)内镜色素检查",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2108,
+  "category": "内窥镜",
+  "item_code": "S192",
+  "item_name": "(胃镜无痛)内镜色素检查[不含麻醉费]",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2109,
+  "category": "内窥镜",
+  "item_code": "S193",
+  "item_name": "(肠镜无痛)内镜色素检查[不含麻醉费]",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2110,
+  "category": "内窥镜",
+  "item_code": "S194",
+  "item_name": "(肠镜)内镜色素检查",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2111,
+  "category": "内窥镜",
+  "item_code": "S200",
+  "item_name": "(放大内镜肠)内镜色素检查[不含麻醉费]",
+  "body_part": null,
+  "location": "门诊三楼B区309"
+ },
+ {
+  "id": 2115,
+  "category": "病理检查",
+  "item_code": "S224",
+  "item_name": "人SHOX2、RASSF1A基因甲基化DNA检测",
+  "body_part": null,
+  "location": "门诊四楼病理科"
+ }
+]
