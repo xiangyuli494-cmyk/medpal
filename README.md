@@ -4,6 +4,83 @@
 
 一个陪一个不会用手机的老人走完一次医院全流程的服务系统。会用手机的人走 App / 小程序，家属走微信，陪诊师走工作台，老人走设备端——**四端同一个内核**。
 
+## 快速上手
+
+### 开发环境
+
+- **Python**：3.12（与 CI 一致；本机 `medpal312` 当前为 3.12.15）
+
+**方式一：conda（本机已有 `medpal312`，直接激活）**
+
+```powershell
+conda activate medpal312
+
+# 仅首次创建时执行：
+# conda create -n medpal312 python=3.12
+```
+
+**方式二：venv（没有 conda 时）**
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# 若执行策略拦截：
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+两种环境二选一，先激活再安装依赖：
+
+```bash
+pip install -r requirements-dev.txt
+pip install -r backend/requirements.txt
+```
+
+> 环境变量模板见 `.env.example`：复制为 `.env` 后填写，`.env` 不进仓库。
+
+### 验证
+
+~~~powershell
+python -m pytest backend/tests -q          # 12 条测试
+python tools/check_guard_words.py          # 红线扫描
+python tools/check_handoff.py              # 交接单检查
+~~~
+
+### 启动与预览
+
+**启动 mock 服务**
+
+~~~powershell
+conda activate medpal312
+powershell -ExecutionPolicy Bypass -File tools/dev.ps1
+~~~
+
+- API：`http://127.0.0.1:8000/api/v1/health`
+- WS：`ws://127.0.0.1:8090`
+
+**预览演示页**
+
+~~~powershell
+# 方式一：直接打开
+start demo/v4.html
+
+# 方式二：静态服务器（便于相对路径或局域网访问）
+python -m http.server 8080 --directory demo
+# 浏览器打开 http://127.0.0.1:8080/v4.html
+~~~
+
+**目标部署形态（W2 起，尚未实现）**
+
+~~~text
+Nginx → Django ASGI + Channels :8000
+        MySQL 8 · Redis
+        ASR / TTS / OCR 经适配器调用公网 API
+~~~
+
+对应端口与拓扑见 `docs/plan/11-技术方案与接口契约.md` §5.1。当前仓库还没有 `manage.py` / `config/asgi.py`，不要直接执行生产启动命令。
+
+当前没有前端工程与构建步骤：`demo/v4.html` 直接双击打开。后端服务与四端页面还没有，W1 末补齐空壳。
+
 ---
 
 ## 现在是什么状态
@@ -89,20 +166,6 @@ medpal/
 │   └── companion-console/ 陪诊师工作台
 └── firmware/ hardware/  条件交付 C3/C4
 ~~~
-
----
-
-## 本地能跑什么
-
-~~~powershell
-pip install -r requirements-dev.txt
-python -m pytest backend/tests -q          # 12 条测试
-powershell -ExecutionPolicy Bypass -File tools/dev.ps1   # 起 mock 接口(8000)与 mock 会话(8090)
-python tools/check_guard_words.py          # 红线扫描
-python tools/check_handoff.py              # 交接单检查
-~~~
-
-后端服务与前端页面还没有，W1 末补齐空壳。
 
 ---
 
