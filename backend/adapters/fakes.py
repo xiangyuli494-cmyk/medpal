@@ -42,3 +42,5 @@ class FakePush:
     async def send(self, openid: str, template: str, data: dict[str, str]) -> bool:
         self.sent.append((openid, template, data))
         return True
+
+# harmless comment to change code only
