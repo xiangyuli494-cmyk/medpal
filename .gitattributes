@@ -1,0 +1,8 @@
+# 统一换行符，避免 Windows 与 macOS 之间整文件 diff
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.png binary
+*.jpg binary
+*.svg text eol=lf
