@@ -40,3 +40,11 @@ media/
 staticfiles/
 test-results/
 playwright-report/
+
+# 演示与录音（合规：原始素材不进仓库）
+.kiosk-profile/
+storage/
+*.wav
+*.mp3
+*.m4a
+*.webm

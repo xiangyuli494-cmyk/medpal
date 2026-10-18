@@ -1,0 +1,20 @@
+name: Handoff
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  handoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 取材基线
+        run: git fetch origin ${{ github.base_ref }} --depth=1
+
+      - name: 检查模块交接单
+        run: python tools/check_handoff.py --base origin/${{ github.base_ref }}

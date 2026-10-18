@@ -1,0 +1,7 @@
+# 开发与测试依赖（生产依赖见 backend/requirements.txt）
+# 首次安装后执行 pip freeze > requirements.lock 再精确锁定版本
+ruff~=0.6
+pytest~=8.3
+pytest-cov~=5.0
+pytest-django~=4.9
+websockets~=15.0
