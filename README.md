@@ -10,33 +10,24 @@
 
 - **Python**：3.12（与 CI 一致；本机 `medpal312` 当前为 3.12.15）
 
-**方式一：conda（本机已有 `medpal312`，直接激活）**
-
-```powershell
-conda activate medpal312
-
-# 仅首次创建时执行：
-# conda create -n medpal312 python=3.12
+```bash
+conda create -n medpal312 python=3.12
+conda activate medpal312 #激活环境
 ```
 
-**方式二：venv（没有 conda 时）**
-
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-# 若执行策略拦截：
-# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```bash
+python3.12 -m venv medpal312
+medpal312\Scripts\activate #激活环境
 ```
 
-两种环境二选一，先激活再安装依赖：
+安装包
 
 ```bash
 pip install -r requirements-dev.txt
 pip install -r backend/requirements.txt
 ```
 
-> 环境变量模板见 `.env.example`：复制为 `.env` 后填写，`.env` 不进仓库。
+> 环境变量模板见 `.env.example`：复制为 `.env` 后填写
 
 ### 验证
 
