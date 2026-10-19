@@ -68,6 +68,8 @@ scope 只能用：domain api device user family console firmware hardware test d
 
 ## 五、PR 与合并
 
+完整规则见 [docs/合并规则.md](合并规则.md)：机器查什么、人要做什么、被拦了怎么查。下面是摘要。
+
 一个 PR 只做一件事，并且**必须交一份模块交接单**：
 
 ~~~powershell
