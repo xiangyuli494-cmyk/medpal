@@ -36,8 +36,15 @@ MIN_CHARS = 20
 
 
 def git(*args: str) -> str:
+    # core.quotepath=false：让 git diff 输出原始 UTF-8 文件名。
+    # 否则中文交接单名会被转义成 "docs/handoff/W2-...-\347..."，
+    # is_handoff() 认不出 docs/handoff/，CI 会误报“没有交交接单”。
     return subprocess.run(
-        ["git", *args], check=True, capture_output=True, text=True, encoding="utf-8"
+        ["git", "-c", "core.quotepath=false", *args],
+        check=True,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
     ).stdout
 
 
