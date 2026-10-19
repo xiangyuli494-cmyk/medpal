@@ -36,13 +36,22 @@ MIN_CHARS = 20
 
 
 def git(*args: str) -> str:
+    # core.quotepath=false：否则中文/空格路径会被转义成 \345\210... 形式，匹配不到 docs/handoff/
     return subprocess.run(
-        ["git", *args], check=True, capture_output=True, text=True, encoding="utf-8"
+        ["git", "-c", "core.quotepath=false", *args],
+        check=True,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
     ).stdout
 
 
 def changed_files(base: str) -> list[str]:
-    out = git("diff", "--name-only", f"{base}...HEAD")
+    try:
+        out = git("diff", "--name-only", f"{base}...HEAD")
+    except subprocess.CalledProcessError:
+        # 浅克隆或缺少 merge-base 时退化为两点 diff，避免整条检查失效
+        out = git("diff", "--name-only", f"{base}..HEAD")
     return [line.strip() for line in out.splitlines() if line.strip()]
 
 
