@@ -1,0 +1,138 @@
+@startuml domain-model-er
+!theme plain
+hide circle
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam shadowing false
+skinparam padding 5
+skinparam classAttributeFontName "Microsoft YaHei"
+skinparam classAttributeFontSize 12
+skinparam nodesep 35
+skinparam ranksep 45
+
+title 小暖陪诊 · 领域模型 v0.1（W1 冻结最小可用字段集）
+
+entity "Episode 陪诊单" as episode {
+  * id : str
+  --
+  * status : EpisodeStatus
+  * companions : list[Companion]
+  * consents : list[Consent]
+  * timeline : list[Timeline]
+  * tasks : list[Task]
+  * media : list[Media]
+  * handovers : list[Handover]
+  events : list[Event]  «可延后»
+  summary : str  «可延后»
+}
+
+entity "Consent 授权" as consent {
+  * grantor : str
+  * grantee : str
+  * scope : enum
+  * status : enum
+  * revoked_at : datetime
+  * rule : 规则项，非存储列
+}
+
+entity "Timeline 时间轴" as timeline {
+  * episode_id : str
+  * at : datetime
+  * type : enum
+  * visibility : enum
+  * source : enum
+  node : EpisodeStatus  «可延后»
+}
+
+entity "Task 待办" as task {
+  * id : str
+  * episode_id : str
+  * title : str
+  * type : enum
+  * status : TaskStatus
+  * owner : str
+  evidence : str  «可延后»
+}
+
+entity "Memory 长期记忆" as memory {
+  * user_id : str
+  * allergy : str
+  * salutation : str
+  last_result : str  «可延后»
+  problems : str  «可延后»
+}
+
+entity "AuditLog 调用留痕" as audit {
+  * input : text
+  * output : text
+  * model : str
+  * latency_ms : int
+  * corrected : bool
+  * episode_id : str
+  * status : EpisodeStatus
+  cost : decimal  «可延后»
+}
+
+entity "Handover 交接双签" as handover {
+  * id : str
+  * episode_id : str
+  * items : list[str]
+  * parties : list[str]
+  * signed_at : datetime
+  * evidence : str
+  * corrections : list[Correction]
+}
+
+entity "User 用户" as user {
+  * id : str
+  * role : enum
+  * channel_pref : enum
+  dialect : str  «可延后»
+}
+
+entity "AccessibilityProfile\n无障碍档案" as access {
+  * user_id : str
+  * vision : str
+  * hearing : str
+  cognitive : str  «可延后»
+  mobility : str  «可延后»
+  literacy : str  «可延后»
+}
+
+entity "Media 材料" as media {
+  * id : str
+  * episode_id : str
+  * kind : enum
+  * confidence : float
+  * human_checked : bool
+}
+
+episode ||--o{ timeline
+episode ||--o{ task
+episode ||--o{ handover
+episode ||--o{ consent
+episode ||--o{ media
+episode ||--o{ audit
+user   ||--o{ consent
+user   ||--o{ memory
+user   ||--o  access
+
+note bottom of media
+  Media 由 04 号裁决第 11 条补入：
+  11 号只在 Episode 写了 media[]，无字段定义，
+  而 Handover.items 需要引用它。
+end note
+
+note bottom of audit
+  episode_id 与 status 由 04 号裁决第 12 条补入，
+  否则工作台答不出「这句是哪单、哪个节点说的」。
+end note
+
+legend right
+  带 «可延后» 的字段：W1 不实现，
+  W4 前以 v0.2 次版本号追加。
+  「最小可用字段集」列见 domain-model.md §5。
+endlegend
+
+@enduml
