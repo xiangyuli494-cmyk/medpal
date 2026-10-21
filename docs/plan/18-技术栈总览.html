@@ -126,7 +126,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
       <span class="chip k">Channels + Redis</span>
       <span class="chip k">Vue 3</span>
       <span class="chip">Vite</span><span class="chip">uni-app</span>
-      <span class="chip">Vant</span><span class="chip">Element Plus</span>
+      <span class="chip">Vant</span>
       <span class="chip">DashScope</span><span class="chip">MySQL 8</span>
       <span class="chip">pytest</span><span class="chip">Playwright</span>
       <span class="chip">Locust</span><span class="chip">GitHub Actions</span>
@@ -213,7 +213,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 </table>
 
 <h2><span class="num">03</span>前端技术栈</h2>
-<div class="chap-note">四个通道是四个独立网页工程，共用一套 API 契约与设计令牌，但不共用代码仓库目录。</div>
+<div class="chap-note">三个网页是三个独立工程，共用一套 API 契约与设计令牌，但不共用代码仓库目录。设备端是产品本体，用户端与家属端是它的两个远程延伸。</div>
 
 <table>
   <thead><tr><th>通道</th><th>框架</th><th>UI 库</th><th>构建</th><th>关键差异</th><th>ADR</th></tr></thead>
@@ -282,7 +282,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <tr><td class="n">L3</td><td class="k">契约测试</td><td class="p">schemathesis</td><td>OpenAPI 全覆盖</td></tr>
     <tr><td class="n">L4</td><td class="k">端到端测试</td><td class="p">@playwright/test</td><td>W4 ≥ 8 条，W8 ≥ 15 条</td></tr>
     <tr><td class="n">L5</td><td class="k">红线专项</td><td class="p">pytest + 禁用词表 + 剂量样例集</td><td>禁用词 <b>0</b>，剂量错误 <b>0</b></td></tr>
-    <tr><td class="n">L6</td><td class="k">无障碍测试</td><td class="p">@axe-core/playwright</td><td>四个通道全过（条件项）</td></tr>
+    <tr><td class="n">L6</td><td class="k">无障碍测试</td><td class="p">@axe-core/playwright</td><td>三个网页全过（条件项）</td></tr>
     <tr><td class="n">L7</td><td class="k">可用性测试</td><td>人工：10 人（视障 3 / 听障 2 / 老人 5）</td><td>W7 单场执行</td></tr>
     <tr><td class="n">L8</td><td class="k">性能测试</td><td class="p">locust</td><td>条件项</td></tr>
   </tbody>

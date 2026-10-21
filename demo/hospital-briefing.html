@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>院内智慧陪诊终端 · 给医院的方案演示</title>
+<style>
+  /* ==== 设计令牌 ==== */
+  :root{
+    --paper:#fbfaf7; --paper-2:#ffffff; --line:#e3ded4; --line-2:#d3ccbe;
+    --ink:#16202c; --ink-2:#4d5a68; --ink-3:#8a949e;
+    --teal:#0d6e63; --teal-soft:#e6f2f0; --teal-line:#b8d9d4;
+    --amber:#b86b12; --amber-soft:#fbf1e2; --amber-line:#ecd3ac;
+    --red:#b3261e; --red-soft:#fbeceb;
+    --shadow:0 1px 2px rgba(22,32,44,.04),0 8px 24px -12px rgba(22,32,44,.14);
+    --shadow-lg:0 2px 4px rgba(22,32,44,.05),0 24px 48px -20px rgba(22,32,44,.24);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(900px 500px at 12% -10%, #eef3f2 0%, transparent 62%),
+      radial-gradient(700px 420px at 96% 4%, #fbf0e0 0%, transparent 58%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    font-size:15px; line-height:1.6; min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Songti SC","STSong","SimSun","Noto Serif SC",serif}
+
+  /* ==== 页头 ==== */
+  header.top{
+    position:sticky; top:0; z-index:40;
+    background:rgba(251,250,247,.86); backdrop-filter:blur(10px) saturate(1.2);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{max-width:1400px; margin:0 auto; padding:14px 26px; display:flex; align-items:center; gap:22px; flex-wrap:wrap}
+  .brand{display:flex; align-items:baseline; gap:12px; min-width:0}
+  .brand h1{margin:0; font-size:19px; letter-spacing:.06em; font-weight:700}
+  .brand .sub{font-size:12.5px; color:var(--ink-3); letter-spacing:.1em; white-space:nowrap}
+  .badge{
+    font-size:11.5px; letter-spacing:.08em; color:var(--teal);
+    border:1px solid var(--teal-line); background:var(--teal-soft);
+    border-radius:999px; padding:3px 11px; white-space:nowrap;
+  }
+  /* 步骤轨道 */
+  .rail{display:flex; align-items:center; gap:6px; margin-left:auto; flex-wrap:wrap}
+  .rail button{
+    font:inherit; font-size:12px; color:var(--ink-3); background:transparent;
+    border:1px solid transparent; border-radius:8px; padding:5px 9px; cursor:pointer;
+    transition:.16s; white-space:nowrap;
+  }
+  .rail button:hover{color:var(--ink); background:#f0ede6}
+  .rail button.on{color:#fff; background:var(--teal); border-color:var(--teal)}
+  .rail .sep{width:1px; height:16px; background:var(--line-2); margin:0 3px}
+
+  /* ==== 主区 ==== */
+  main{max-width:1400px; margin:0 auto; padding:26px 26px 104px;
+    display:grid; grid-template-columns:minmax(0,1fr) 460px; gap:34px;
+    align-items:center; align-content:center; min-height:calc(100vh - 108px)}
+  main.doc-mode{grid-template-columns:minmax(0,1fr); max-width:940px;
+    align-items:start; align-content:safe center; min-height:calc(100vh - 108px);
+    padding-top:26px; padding-bottom:96px}
+  main.doc-mode aside{display:none}
+  main.doc-mode .doc{max-width:940px}
+  @media (max-width:1120px){ main{grid-template-columns:1fr; gap:26px} }
+
+  /* ==== 舞台（设备）==== */
+  .stage{display:flex; flex-direction:column; align-items:center; gap:18px; padding-top:6px}
+  .stage-note{font-size:12.5px; color:var(--ink-3); letter-spacing:.05em}
+
+  .device{
+    width:100%; max-width:400px;
+    background:linear-gradient(180deg,#f2f5f8 0%,#dbe2ea 62%,#c9d2dd 100%);
+    border-radius:34px; padding:16px 16px 22px;
+    box-shadow:var(--shadow-lg), inset 0 1px 0 #fff;
+    position:relative;
+  }
+  .device::before{
+    content:""; position:absolute; inset:7px; border-radius:28px;
+    border:1px solid rgba(255,255,255,.7); pointer-events:none;
+  }
+  .plate{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 4px 10px; font-size:10.5px; letter-spacing:.09em; color:#5a6672; font-weight:700;
+  }
+  .plate .live{display:flex; align-items:center; gap:5px; color:#3c7d5f}
+  .plate .dot{width:6px; height:6px; border-radius:50%; background:#37a06f; box-shadow:0 0 0 3px rgba(55,160,111,.16)}
+  .plate .dot.off{background:#98a3ad; box-shadow:none}
+
+  /* 屏幕 */
+  .screen{
+    background:#000; border-radius:16px; border:5px solid #232b35;
+    min-height:470px; padding:16px 15px 12px;
+    display:flex; flex-direction:column; gap:9px;
+    --fg:#ffe600; --bar:#ffe600; --barfg:#000;
+    box-shadow:inset 0 0 0 1px #000, 0 6px 18px -8px rgba(0,0,0,.6);
+    position:relative; overflow:hidden;
+  }
+  .screen.white{--fg:#fff; --bar:#fff}
+  .screen .s-title{font-size:18px; font-weight:900; color:var(--fg); letter-spacing:.02em; line-height:1.3; border-bottom:2px solid var(--fg); padding-bottom:7px}
+  .screen .s-body{flex:1; display:flex; flex-direction:column; justify-content:center; gap:7px; font-size:20px; line-height:1.48; color:var(--fg); font-weight:700; word-break:break-word}
+  .screen .s-body.small{font-size:16.5px}
+  .screen .s-body .kv{display:flex; gap:8px; font-size:17px; align-items:baseline}
+  .screen .s-body .kv i{font-style:normal; opacity:.66; min-width:88px; font-weight:700; white-space:nowrap}
+  .screen .s-body b{color:#fff}
+  .screen .s-body .warnline{color:#ff8a65}
+  .screen .s-opts{display:flex; flex-wrap:wrap; gap:6px}
+  .screen .chip{
+    font-size:13.5px; font-weight:800; padding:7px 12px; border-radius:999px;
+    border:2px solid var(--fg); color:var(--fg); background:transparent; cursor:pointer;
+    font-family:inherit; transition:.12s;
+  }
+  .screen .chip:hover{background:rgba(255,230,0,.14)}
+  .screen .s-primary{
+    width:100%; min-height:58px; border-radius:12px; border:none; cursor:pointer;
+    background:#3f9be0; color:#04121f; font-family:inherit; font-size:17px; font-weight:900;
+    letter-spacing:.04em; box-shadow:0 4px 0 #2a7ab8; transition:.1s; margin-top:2px;
+  }
+  .screen .s-primary:hover{background:#57abec}
+  .screen .s-primary:active{transform:translateY(2px); box-shadow:0 2px 0 #2a7ab8}
+  .screen .s-primary[disabled]{opacity:.4; cursor:default}
+  .screen .s-comfort{
+    display:none; background:#3a2410; border:1px solid #b07a2e; border-radius:9px;
+    padding:7px 9px; font-size:13px; font-weight:800; color:#ffd8a8; line-height:1.45;
+  }
+  .screen .s-comfort.on{display:block}
+  .screen .s-cap{
+    background:var(--bar); color:var(--barfg); border-radius:7px; padding:6px 9px;
+    font-size:12.5px; font-weight:800; min-height:30px; display:flex; align-items:center;
+  }
+
+  /* 底栏四控件 */
+  .dock{display:grid; grid-template-columns:1.75fr 1fr 1fr 1.2fr; gap:7px; margin-top:2px}
+  .dock .k{
+    border:none; border-radius:11px; min-height:56px; cursor:pointer; font-family:inherit;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+    font-size:11px; font-weight:900; letter-spacing:.02em; color:#101820;
+    background:linear-gradient(180deg,#f7fafc,#c8d2de); box-shadow:0 3px 0 #9dabbc;
+    transition:.1s; line-height:1.2;
+  }
+  .dock .k:active{transform:translateY(2px); box-shadow:0 1px 0 #9dabbc}
+  .dock .k .ico{font-size:15px}
+  .dock .k.mic{background:linear-gradient(180deg,#4cc98a,#1f8f5b); color:#04170e; box-shadow:0 3px 0 #16704a}
+  .dock .k.sos{background:linear-gradient(180deg,#e5484d,#a9171c); color:#fff; box-shadow:0 3px 0 #7d1015}
+  .screen-foot{display:flex; justify-content:space-between; padding:8px 5px 0; font-size:9.5px; color:#5f6a76; font-weight:700; letter-spacing:.06em}
+
+  /* 家属手机 */
+  .phone{
+    width:270px; background:#0f151c; border-radius:22px; padding:9px;
+    box-shadow:var(--shadow-lg); align-self:center;
+  }
+  .phone .notch{width:56px; height:4px; border-radius:99px; background:#2b343d; margin:2px auto 8px}
+  .phone .ph-screen{background:#f4f5f7; border-radius:14px; padding:11px; min-height:300px; display:flex; flex-direction:column; gap:9px}
+  .ph-head{display:flex; align-items:center; gap:7px; font-size:11.5px; color:#5d6874; font-weight:700}
+  .ph-head .avatar{width:19px; height:19px; border-radius:5px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800}
+  .ph-msg{background:#fff; border-radius:9px; padding:10px; font-size:12.5px; line-height:1.65; color:#1e2833; box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .ph-msg b{color:var(--teal)}
+  .ph-msg .h{font-weight:800; font-size:12px; margin-bottom:5px; color:#0f1720}
+  .ph-msg ul{margin:6px 0 0; padding-left:16px}
+  .ph-msg li{margin:2px 0}
+  .ph-foot{font-size:10.5px; color:#98a2ad; text-align:center; margin-top:auto}
+
+  /* ==== 右侧解说 ==== */
+  aside{position:sticky; top:88px; display:flex; flex-direction:column; gap:16px}
+  @media (max-width:1120px){ aside{position:static} }
+
+  .narr{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:16px;
+    padding:22px 22px 20px; box-shadow:var(--shadow);
+  }
+  .narr .eyebrow{
+    display:flex; align-items:center; gap:9px; font-size:11.5px; letter-spacing:.14em;
+    color:var(--ink-3); font-weight:700; margin-bottom:11px;
+  }
+  .narr .eyebrow .num{
+    width:23px; height:23px; border-radius:6px; background:var(--teal); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; letter-spacing:0;
+  }
+  .narr h2{margin:0 0 6px; font-size:24px; line-height:1.34; letter-spacing:.01em; font-weight:700}
+  .narr .lede{margin:0 0 16px; font-size:14px; color:var(--ink-2); line-height:1.7}
+
+  .dl{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--line)}
+  .dl .row{display:grid; grid-template-columns:78px 1fr; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); align-items:start}
+  .dl .row:last-child{border-bottom:none}
+  .dl dt{font-size:12px; color:var(--ink-3); letter-spacing:.06em; font-weight:700; padding-top:1px}
+  .dl dd{margin:0; font-size:13.5px; color:var(--ink); line-height:1.66}
+  .dl dd em{font-style:normal; color:var(--teal); font-weight:700}
+
+  .callout{
+    background:var(--amber-soft); border:1px solid var(--amber-line); border-left:3px solid var(--amber);
+    border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.66; color:#6d4410; margin-top:14px;
+  }
+  .callout b{color:#8a4f0c}
+
+  /* 文档型视图 */
+  .doc{background:var(--paper-2); border:1px solid var(--line); border-radius:18px; padding:34px 38px; box-shadow:var(--shadow); max-width:760px; margin:0 auto}
+  .doc h2{margin:0 0 4px; font-size:27px; letter-spacing:.01em}
+  .doc .lede{margin:0 0 24px; color:var(--ink-2); font-size:14.5px}
+  .doc h3{margin:26px 0 10px; font-size:16px; letter-spacing:.04em; color:var(--teal); display:flex; align-items:center; gap:8px}
+  .doc h3::before{content:""; width:3px; height:15px; background:var(--teal); border-radius:2px}
+  .doc table{width:100%; border-collapse:collapse; font-size:13.5px; margin:6px 0 4px}
+  .doc th{text-align:left; font-weight:700; color:var(--ink-3); font-size:11.5px; letter-spacing:.1em; padding:7px 10px 7px 0; border-bottom:1px solid var(--line-2)}
+  .doc td{padding:9px 10px 9px 0; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.6}
+  .doc tr:last-child td{border-bottom:none}
+  .doc .tag{display:inline-block; font-size:11px; padding:1px 7px; border-radius:5px; background:var(--teal-soft); color:var(--teal); font-weight:700; letter-spacing:.04em}
+  .doc .tag.no{background:var(--red-soft); color:var(--red)}
+  .doc ul{margin:8px 0; padding-left:20px; font-size:13.5px; line-height:1.8}
+  .doc .kvline{display:grid; grid-template-columns:120px 1fr; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13.5px}
+  .doc .kvline:last-child{border:none}
+  .doc .kvline .k{color:var(--ink-3); font-size:12px; letter-spacing:.05em; font-weight:700; padding-top:2px}
+
+  /* ==== 底部导航 ==== */
+  .footbar{
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    background:rgba(251,250,247,.9); backdrop-filter:blur(10px);
+    border-top:1px solid var(--line); padding:12px 26px;
+  }
+  .foot-inner{max-width:1400px; margin:0 auto; display:flex; align-items:center; gap:16px}
+  .foot-inner .pos{font-size:12.5px; color:var(--ink-3); letter-spacing:.08em; font-variant-numeric:tabular-nums}
+  .foot-inner .pos b{color:var(--ink); font-size:14px}
+  .btn{
+    font:inherit; font-size:13.5px; font-weight:700; letter-spacing:.02em;
+    border-radius:10px; padding:10px 20px; cursor:pointer; transition:.15s;
+    border:1px solid var(--line-2); background:var(--paper-2); color:var(--ink);
+  }
+  .btn:hover{background:#f2efe8; border-color:#c2b9a8}
+  .btn.primary{background:var(--teal); border-color:var(--teal); color:#fff; box-shadow:0 2px 0 #095249}
+  .btn.primary:hover{background:#0f7d70}
+  .btn:disabled{opacity:.35; cursor:default}
+  .foot-inner .spacer{flex:1}
+
+  /* 提示 */
+  .hint{font-size:12px; color:var(--ink-3); display:flex; align-items:center; gap:6px}
+  .kbd{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:10.5px; background:#efebe3; border:1px solid var(--line-2); border-bottom-width:2px; border-radius:4px; padding:1px 5px; color:var(--ink-2)}
+
+  /* 动效 */
+  @keyframes fadeUp{from{opacity:0; transform:translateY(7px)} to{opacity:1; transform:none}}
+  .fade{animation:fadeUp .3s cubic-bezier(.2,.7,.3,1) both}
+  @media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1 class="serif">院内智慧陪诊终端</h1>
+      <span class="sub">建设方案演示 · 面向医院</span>
+    </div>
+    <span class="badge">教学项目 · 不收费</span>
+    <nav class="rail" id="rail"></nav>
+  </div>
+</header>
+
+<main>
+  <!-- 左：设备舞台 -->
+  <section class="stage" id="stage"></section>
+
+  <!-- 右：解说 -->
+  <aside id="aside"></aside>
+</main>
+
+<div class="footbar">
+  <div class="foot-inner">
+    <button class="btn" id="prev">← 上一步</button>
+    <span class="pos" id="pos"></span>
+    <div class="spacer"></div>
+    <span class="hint"><span class="kbd">←</span><span class="kbd">→</span> 键也可以翻页</span>
+    <button class="btn primary" id="next">下一步 →</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   静态数据（与设备端原型一致，医院看到的每个字都是真机上会出现的）
+   ========================================================= */
+var SPOTS = {
+  hall:{name:'门诊大厅', beacon:'B-01', tip:'门诊大厅，是您就诊的第一站。这里可以挂号、缴费、取号，也可以向服务台工作人员求助。'},
+  reg:{name:'挂号收费处', beacon:'B-02', tip:'挂号收费处，可以现场挂号、缴费和打印发票。窗口设有低位柜台，方便轮椅使用者。'},
+  im:{name:'内科诊区', beacon:'B-03', tip:'内科诊区，包含心血管内科、呼吸内科和消化内科诊室。请在候诊区就坐，听到叫号后再进入诊室。'},
+  lab:{name:'检验科采血窗口', beacon:'B-05', tip:'检验科采血窗口，抽血前请先取号，抽血后请按压针眼五分钟。'},
+  pharm:{name:'门诊药房', beacon:'B-07', tip:'门诊药房，取药请出示取药单，药师会当面交代用法用量。'}
+};
+
+var DEPTS = {
+  '心血管内科':{room:'门诊楼 2 层 A 区 208 诊室', wait:'约 15 分钟', intro:'主要诊治高血压、冠心病、心律失常等疾病。'},
+  '呼吸内科':{room:'门诊楼 2 层 A 区 212 诊室', wait:'约 20 分钟', intro:'主要诊治咳嗽、哮喘、肺部感染等疾病。'},
+  '消化内科':{room:'门诊楼 2 层 B 区 216 诊室', wait:'约 20 分钟', intro:'主要诊治胃痛、反酸、腹泻等。'},
+  '神经内科':{room:'门诊楼 3 层 A 区 305 诊室', wait:'约 25 分钟', intro:'主要诊治头痛、头晕、脑血管病等。'},
+  '骨科':{room:'门诊楼 1 层 C 区 118 诊室', wait:'约 15 分钟', intro:'主要诊治骨折、关节疼痛、颈腰椎疾病等。'},
+  '急诊科':{room:'门诊楼 1 层 急诊区 E100', wait:'立即接诊', intro:'急诊科，24 小时开放，危重情况请立即前往。'}
+};
+
+var NAV = ['从门诊大厅出发，向前走约 20 米','右手边是无障碍电梯，乘到 2 层','出电梯左转，前方 3 米有台阶，右侧设缓坡与扶手','沿走廊直行，左手边经过饮水处','到达心血管内科分诊台，208 诊室在右手边'];
+
+/* =========================================================
+   每一幕的解说词
+   ========================================================= */
+var VIEWS = [
+  {
+    id:'open', kind:'doc', nav:'为什么做',
+    title:'每天有一批患者，能自己走，但走不明白',
+    lede:'他们不识字、看不清字、不会用自助机、听不懂叫号、找不到科室、记不住医嘱。有家属，但家属在上班、在外地。',
+    body:function(){ return `
+      <h3>现在的三种办法，各有各的缺口</h3>
+      <table>
+        <tr><th style="width:130px">现有办法</th><th>缺口</th></tr>
+        <tr><td><b>导医台问路</b></td><td>只能指路，管不了挂号、检查、取药、医嘱这一整条链；高峰期一个人答不过来</td></tr>
+        <tr><td><b>志愿者陪走</b></td><td>人力有限，一个人同一时间只能陪一个人；排班、培训、管理都要投入</td></tr>
+        <tr><td><b>家属请假陪同</b></td><td>请一天假少一天工资；家属不在本地的根本来不了</td></tr>
+      </table>
+
+      <h3>我们的思路</h3>
+      <p style="font-size:15.5px;line-height:1.8;margin:6px 0 0">
+        不增加人手，而是把「陪着一个老人走完全程」这件事，<b>做成一台放在门诊大厅的设备</b>。<br>
+        老人不用学、不用打字、不用手机，从进院到离院全程有人「陪着说话」；家属在手机上远程看见进度与医嘱。
+      </p>
+
+      <h3>它做四件事</h3>
+      <ul>
+        <li>告诉老人<b>下一步去哪、做什么、等多久</b></li>
+        <li>把医生说的话<b>原样记住</b>，再慢慢讲一遍</li>
+        <li>在老人紧张、等待、找不到路时，<b>先安抚，再办事</b></li>
+        <li>出问题时，<b>第一时间叫到人</b></li>
+      </ul>
+      <p style="font-size:13px;color:#8a949e;margin-top:18px">它不做医疗判断，不给用药建议，不替代医生。</p>
+    `; }
+  },
+
+  {
+    id:'arrive', nav:'① 抵达建档',
+    title:'把身份证放上去，就算到了',
+    lede:'老人不用注册账号、不用扫码、不用记密码。放一下身份证，屏幕上就出现他自己的名字。',
+    phone:null,
+    dl:[
+      ['老人做什么','走到设备前，把身份证放在读卡区。'],
+      ['设备做什么','屏幕自动亮起，播报欢迎语；读出身份信息，建档；屏幕显示姓名、年龄、家属手机（已脱敏）。'],
+      ['为什么这样设计','这一代人最熟悉「放身份证」这个动作，比扫码和输手机号可靠得多。'],
+      ['兜底','身份证读不出来 → 服务台人员输入 6 位绑定码，一样能进；人脸识别失败 → 直接引导刷身份证，不报错。']
+    ],
+    callout:'设备令牌只对这一位老人的这一次就诊有效，最长 4 小时。不是长期账号，离院即失效。'
+  },
+
+  {
+    id:'triage', nav:'② 说哪里不舒服',
+    title:'说一句「我胸闷」，就够了',
+    lede:'不用在几十个科室里找自己该看哪个。老人只要说哪里难受，设备追问一句，给出建议。',
+    dl:[
+      ['老人做什么','按住屏幕上的绿色话筒，说「我胸闷」。'],
+      ['设备做什么','追问一句「大概持续多久了」「有没有出汗或呼吸困难」，然后给出建议科室、诊室位置、预计等待时间。'],
+      ['为什么这样设计','挂号这一步对老人最难，因为他不知道自己该看哪个科。把这一步变成「说一句话」，是整套方案里省事最多的一处。'],
+      ['安全边界','说到「胸痛 + 出汗 / 呼吸困难」时，系统强制转急诊科，不允许继续走普通流程。']
+    ],
+    callout:'分诊结论只是「建议看哪个科」，屏幕上同时显示「分诊仅作就诊参考，不能替代医生诊断」。'
+  },
+
+  {
+    id:'register', nav:'③ 确认挂号',
+    title:'重要的事，一定再问一遍',
+    lede:'挂号是会产生后果的操作。设备不会替老人做决定，而是把科室、诊室、时间摆出来，让老人自己点确认。',
+    phone:{h:'【演示·XX医院】挂号成功', body:'<b>张××</b> 已在门诊大厅自助终端完成挂号。<br>科室：心血管内科<br>诊室：门诊楼 2 层 A 区 208<br>取号码：A012<br>预计等待：约 15 分钟'},
+    dl:[
+      ['老人做什么','看一眼屏幕，点「确认挂号」。'],
+      ['设备做什么','把科室、诊室、医生、时间摆成大字号，念一遍，等老人确认后才提交。'],
+      ['为什么这样设计','老人手抖、容易误触。凡是「会产生后果」的动作，一律二次确认；而且确认语句是固定脚本，不允许被改写。'],
+      ['家属端','同时收到一条推送，知道老人已经挂上号、在哪个诊室、还要等多久。']
+    ],
+    callout:'挂号确认这一环<b>禁止使用 AI 生成文本</b>——固定脚本才能保证确认语句一个字都不会漏。'
+  },
+
+  {
+    id:'waiting', nav:'④ 候诊盯号',
+    title:'号不用自己盯，设备帮你看着',
+    lede:'候诊是老人最焦虑的一段。不知道还要等多久、怕错过叫号、不敢去洗手间——这些都能被设备接住。',
+    dl:[
+      ['老人做什么','坐着等。什么都不用做。'],
+      ['设备做什么','显示「您的号码第 12 位 / 当前叫到第 8 位 / 预计等待约 15 分钟」；快叫到时主动播报提醒。'],
+      ['为什么这样设计','「还要等多久」是候诊区被问得最多的一句话。把不确定变成确定的数字，焦虑就少一半。'],
+      ['情绪陪伴','等待超过一定时间，设备会用短句慢速说一句安抚的话，再回到进度。这部分可以随时关掉。']
+    ],
+    callout:'老人说「我去洗手间」时，设备会回答「号不会过，我盯着」——这句安抚比任何功能都管用。'
+  },
+
+  {
+    id:'guide', nav:'⑤ 走到哪讲到哪',
+    title:'走过去就讲，不用点任何东西',
+    lede:'院内布了 8 个定位点。老人走到哪，设备就知道他在哪，自动讲这里是什么地方、该做什么。',
+    dl:[
+      ['老人做什么','走路。不需要任何操作。'],
+      ['设备做什么','识别当前位置，自动播报讲解词；如果老人正在填表或导航中，只播报不打断。'],
+      ['为什么这样设计','老人迷路往往不是因为不认路，而是不知道「到了这个地方该干什么」。讲解词回答的是后者。'],
+      ['谁定文案','讲解词由医院提供，我们负责录入。改文案不需要改代码。']
+    ],
+    callout:'试点先布 8 个点：门诊大厅、挂号收费处、内科诊区、外科诊区、检验科采血、放射科、门诊药房、无障碍卫生间。'
+  },
+
+  {
+    id:'nav', nav:'⑥ 带路',
+    title:'不是「在二楼」，而是「出电梯往左第三个门」',
+    lede:'老人听不懂「A 区 208」这种编号。设备把一段路拆成五句人话，一句一句说。',
+    dl:[
+      ['老人做什么','说「带我去心血管内科」，或者点一下目的地。'],
+      ['设备做什么','分五步讲：出门往前 20 米 → 无障碍电梯到 2 层 → 出电梯左转，前方有台阶但右侧有缓坡 → 沿走廊直行 → 到分诊台，208 在右手边。'],
+      ['为什么这样设计','带的是「动作」而不是「地址」。台阶、缓坡、扶手这些细节必须说出来，坐轮椅和拄拐的老人靠这个判断走哪边。'],
+      ['兜底','老人说「我找不到」→ 重播当前这段，同时通知服务台派人来接。']
+    ],
+    callout:'楼层解析不出来时，设备只说「到一楼服务台问一下」，<b>绝不编造楼层</b>。'
+  },
+
+  {
+    id:'recap', nav:'⑦ 记住医嘱',
+    title:'医生说的话，逐字再讲一遍',
+    lede:'这是整套系统里最重要的一屏。老人记不住医嘱，回家吃错药，是这类就诊最常见的风险。',
+    phone:{h:'【演示·XX医院】本次就诊提醒', body:'<b>张××</b> 本次就诊 心血管内科，接诊医生 李建国 主任医师。<br>用药医嘱：<ul><li>苯磺酸氨氯地平片 5mg，每日 1 次，晨服，共 14 天</li><li>阿司匹林肠溶片 100mg，每日 1 次，睡前服，共 14 天</li></ul>复诊时间：14 天后 心血管内科。<br><span style="color:#98a2ad;font-size:11px">（演示短信，未接入真实短信通道）</span>'},
+    dl:[
+      ['老人做什么','听完，点「对，记住了」；或者点「不太对，再说一遍」。'],
+      ['设备做什么','把医生原话逐字念一遍，包括药名、剂量、频次、疗程；同时推送给家属手机。'],
+      ['为什么这样设计','医嘱复述这一环<b>禁止 AI 改写</b>。药名和剂量必须原样转录，一个字都不许生成。'],
+      ['不确定时','识别置信度低的剂量，屏幕必须明确标出「这个数字我没认准，请对着药盒看一眼」，<b>不做自动纠错</b>。']
+    ],
+    callout:'老人说「不太对」时，设备不会往下走，而是留在这一屏重讲——连说两次不对，自动转服务台。'
+  },
+
+  {
+    id:'pay', nav:'⑧ 缴费取药与报告',
+    title:'钱怎么算的、药在哪取、报告怎么看',
+    lede:'缴费和取药是老人最容易放弃的两个环节。设备把金额拆开讲，把窗口说清楚，把报告用大白话念一遍。',
+    dl:[
+      ['老人做什么','听，然后点「去取药」。'],
+      ['设备做什么','念总费用、医保支付、自己掏多少；说清取药窗口；报告出来后念关键指标与医生原话。'],
+      ['为什么这样设计','金额必须拆开讲，不能只报一个总数——老人关心的是「我自己要掏多少」。'],
+      ['安全边界','费用解释只用生活化类比，结尾必须挂「最终以医院结算单为准」；对金额有异议时，直接引导到收费窗口人工核对。']
+    ],
+    callout:'报告页只复述医生原话。老人问「我要不要紧」时，设备回答「这个得问医生，我帮您记下来」。'
+  },
+
+  {
+    id:'home', nav:'⑨ 归还与清空',
+    title:'还设备的那一刻，什么都不留',
+    lede:'这是一台公共设备。上一位老人用过的东西，绝不能被下一位看到。',
+    phone:{h:'【演示·XX医院】就诊完成', body:'<b>张××</b> 今天已完成就诊。<br>用时：1 小时 36 分<br>下次复查：14 天后 心血管内科<br>用药医嘱已推送，请协助提醒按时服药。'},
+    dl:[
+      ['老人做什么','点「归还设备」。'],
+      ['设备做什么','清空本地缓存：身份证号、人脸模板、病历临时文件全部删除，屏幕明确告知已删除，然后回到待机屏。'],
+      ['为什么这样设计','「真的清空」和「显示已清空」是两件事。这一屏的验收标准是数据确实被删除，不是只改了一句提示。'],
+      ['家属端','收到一条就诊完成小结：用时多久、下次什么时候复查。']
+    ],
+    callout:'如果老人中途离开没有点归还，设备在闲置超时后自动清空并回到待机。'
+  },
+
+  {
+    id:'safety', kind:'doc', nav:'安全边界',
+    title:'这套系统绝不会做的事',
+    lede:'这是方案里最需要医院确认的部分。边界不是写在纸上的承诺，是写进代码里强制检查的。',
+    body:function(){ return `
+      <h3>先说依据：边界不是我们自己定的</h3>
+      <p style="font-size:14px;line-height:1.8;margin:4px 0 12px">
+        《社会化陪同就医服务 基本要求》（<b>GB/T 47801—2026</b>，2026-11-01 实施）规定：陪同就医服务人员可以
+        <b>提供诊疗向导、代替排队、领取药品、陪伴交流</b>，但<b>不能</b>提供涉及<b>检查结果判读、医疗建议、代为选择或同意治疗方案</b>等服务。
+        我们的功能边界与这条国家标准逐条对齐——这不是自我约束，是行业底线。
+      </p>
+      <table>
+        <tr><th style="width:200px">国家标准</th><th>本设备</th></tr>
+        <tr><td>允许 · 诊疗向导</td><td>九步流程引导、科室与诊室指引、院内分步导航</td></tr>
+        <tr><td>允许 · 代替排队</td><td>自助挂号、候诊盯号、缴费与取药指引</td></tr>
+        <tr><td>允许 · 领取药品</td><td>取药窗口指引、用法用量原样复述</td></tr>
+        <tr><td>允许 · 陪伴交流</td><td>情绪陪伴、点位讲解、家属远程可见</td></tr>
+        <tr><td><span class="tag no">不允许</span> 检查结果判读</td><td>只复述医生原话与报告原始数值，不解读；追问「要不要紧」时答「这个得问医生，我帮您记下来」</td></tr>
+        <tr><td><span class="tag no">不允许</span> 医疗建议</td><td>14 个禁用词强制拦截，不给用药建议、不判断病情轻重</td></tr>
+        <tr><td><span class="tag no">不允许</span> 代为决定</td><td>挂号、缴费等有后果的动作一律二次确认，由老人自己点</td></tr>
+      </table>
+
+      <h3>三条红线</h3>
+      <table>
+        <tr><th style="width:64px">编号</th><th style="width:220px">约束</th><th>怎么保证</th></tr>
+        <tr><td><b>R-1</b></td><td>医学表述必须以医生原话为来源</td><td>所有面向老人的文本走三级管线：固定模板 → 限槽位润色 → 红线词校验；校验不通过退回模板</td></tr>
+        <tr><td><b>R-2</b></td><td>不确定必须当场标记求证，剂量尤其</td><td>置信度低的剂量，屏幕显式标出「这个数字我没认准」，<b>不做自动纠错</b></td></tr>
+        <tr><td><b>R-3</b></td><td>重要医疗材料电子化留存，交接可追溯</td><td>每次状态变化写一条时间轴记录，谁在什么时间做了什么可查</td></tr>
+      </table>
+
+      <h3>系统在任何情况下都不会说的 14 句话</h3>
+      <p style="font-size:13px;color:#4d5a68;margin:4px 0 10px">以下词句被列为禁用词，出现在任何面向老人的文本里都算缺陷，自动化测试会拦截。目标是 <b>0 次</b>，不是「尽量少」。</p>
+      <div style="background:#fbeceb;border:1px solid #f0c9c6;border-radius:10px;padding:14px 16px;font-size:13.5px;line-height:2;color:#8a1f19;font-weight:600">
+        没事的　·　不严重　·　不要紧　·　我认为　·　应该是　·　肯定是　·　你得的是<br>
+        建议您吃　·　可以加量　·　加一片　·　不用去医院　·　小毛病　·　放心吧没事　·　我诊断
+      </div>
+
+      <h3>哪些环节禁止使用 AI 生成</h3>
+      <table>
+        <tr><th style="width:180px">环节</th><th style="width:96px">能否生成</th><th>原因</th></tr>
+        <tr><td>挂号二次确认</td><td><span class="tag no">禁止</span></td><td>重要操作必须用固定脚本，防止确认语句被改写</td></tr>
+        <tr><td>医嘱复述</td><td><span class="tag no">禁止</span></td><td>必须逐字取自医生原话，剂量绝不能被改写</td></tr>
+        <tr><td>药品名称、剂量</td><td><span class="tag no">禁止</span></td><td>原样转录，任何生成都算缺陷</td></tr>
+        <tr><td>费用与医保金额</td><td><span class="tag no">禁止</span></td><td>涉及金额，必须用模板与明细拆解</td></tr>
+        <tr><td>行程播报、报告通俗化</td><td><span class="tag">限槽位</span></td><td>只能改措辞，不能新增医学事实，改完要过一致性校验</td></tr>
+        <tr><td>分诊科室建议</td><td><span class="tag">允许</span></td><td>只做「文本→科室」的映射，最终结论由确定性规则投票产生</td></tr>
+      </table>
+
+      <h3>紧急情况怎么办</h3>
+      <div class="kvline"><span class="k">红旗指征</span><span>说到「胸痛 + 出汗 / 呼吸困难」或「嘴角歪 + 说话不清 + 一侧无力」时，<b>不允许继续走普通流程</b>，强制改推急诊科并播报提示。</span></div>
+      <div class="kvline"><span class="k">一键求助</span><span>屏幕右下角常驻红色求助区，长按 1.5 秒（或 3 秒内点两次）。工单直达服务台，带上点位与老人信息。</span></div>
+      <div class="kvline"><span class="k">闭环要求</span><span>服务台确认派员后，设备上才显示「工作人员正在赶往」——<b>必须有人接手，才算这条求助闭环</b>。</span></div>
+      <div class="kvline"><span class="k">三句兜底</span><span>「我不懂」→ 换更简单的说法重讲；「我找不到」→ 重播路线并通知服务台；「我要找人」→ 直接转服务台，会话不断开。</span></div>
+    `; }
+  },
+
+  {
+    id:'privacy', kind:'doc', nav:'数据与隐私',
+    title:'采什么、存多久、谁能看',
+    lede:'设备放在公共区域，隐私问题比在任何场景都敏感。这一页是我们对医院的承诺清单。',
+    body:function(){ return `
+      <h3>数据清单</h3>
+      <table>
+        <tr><th style="width:170px">项</th><th>我们的做法</th></tr>
+        <tr><td>采集什么</td><td>就诊流程状态、语音（用于识别）、医嘱文本、检查与缴费凭证</td></tr>
+        <tr><td><b>不采集什么</b></td><td><b>不采集真实人脸模板</b>（演示阶段）、不采集身份证原图、<b>不做实时定位</b></td></tr>
+        <tr><td>存多久</td><td>就诊记录按院内规定留存，到期自动删除并写删除日志</td></tr>
+        <tr><td>谁能看</td><td>老人本人；被授权的家属（可随时撤回）；院内相关人员按岗位权限</td></tr>
+        <tr><td>撤回授权</td><td>老人本人在设备上撤回，家属端<b>立刻</b>不可见，不需要等审核</td></tr>
+        <tr><td>设备归还</td><td>一键清空本地缓存：身份证号、人脸模板、病历临时文件全部删除，屏幕明确告知</td></tr>
+        <tr><td>设备鉴权</td><td>令牌只对一位老人的一次就诊有效，最长 4 小时；令牌不进网址、不进日志</td></tr>
+      </table>
+
+      <h3>家属端能看到什么</h3>
+      <ul>
+        <li><b>能看：</b>现在到哪一步了、医生说了什么、药怎么吃、下次什么时候复查</li>
+        <li><b>不能看：</b>老人的实时位置（这不是监控工具）、老人标记为私密的内容</li>
+        <li><b>随时可关：</b>老人可以在设备上关掉家属端的任何一类信息</li>
+      </ul>
+
+      <h3>与医院现有系统的关系</h3>
+      <div style="background:#fbf1e2;border:1px solid #ecd3ac;border-radius:10px;padding:14px 16px;font-size:13.5px;line-height:1.75;color:#6d4410">
+        <b>本期不做 HIS 接口对接。</b><br>
+        原因很实在：HIS 接口需要厂商配合与授权，排期不可控，八周内无法保证。<br>
+        所以试点阶段这套设备是<b>旁路运行</b>的——不碰 HIS，不影响现有业务，出问题也不影响医院正常运转。<br>
+        号源走自建号源中心（结构参照院内排班习惯，扣减有事务保护，不会超卖）；医嘱与报告在试点阶段由医护录入或确认。<br>
+        等验证有效、医院愿意推进时，再把这两块换成 HIS 接口即可，<b>前端与交互不用改</b>。
+      </div>
+    `; }
+  },
+
+  {
+    id:'accept', kind:'doc', nav:'验收与下一步',
+    title:'怎么算做成了',
+    lede:'不靠「感觉还行」，逐条打勾。以下是八周末要交出来的东西。',
+    body:function(){ return `
+      <h3>功能验收</h3>
+      <table>
+        <tr><th style="width:180px">项</th><th>标准</th></tr>
+        <tr><td>全流程走通</td><td>九个步骤无阻断，全程无需工作人员介入</td></tr>
+        <tr><td>老人独立完成率</td><td>10 位测试老人中，<b>≥ 8 位</b>能在无提示下完成建档与挂号</td></tr>
+        <tr><td>语音识别</td><td>20 条方言 / 口音样本，关键词准确率 <b>≥ 90%</b></td></tr>
+        <tr><td>医嘱复述准确</td><td>剂量、频次、药品名逐字一致，<b>错误数 = 0</b></td></tr>
+        <tr><td>单据识别</td><td>剂量字段<b>错误数 = 0</b></td></tr>
+      </table>
+
+      <h3>性能验收</h3>
+      <table>
+        <tr><th style="width:180px">项</th><th>标准</th></tr>
+        <tr><td>触摸到页面有反馈</td><td>&lt; 200 毫秒</td></tr>
+        <tr><td>说完话到设备开口</td><td>&lt; 1.5 秒（95% 的情况）</td></tr>
+        <tr><td>字幕与语音同步偏差</td><td>&lt; 300 毫秒</td></tr>
+        <tr><td>断网恢复</td><td>10 秒内继续，且不丢失当前步骤</td></tr>
+        <tr><td>崩溃恢复</td><td>30 秒内回到待机屏</td></tr>
+        <tr><td>并发</td><td>50 台设备同时在线不报错</td></tr>
+      </table>
+
+      <h3>安全验收</h3>
+      <table>
+        <tr><th style="width:180px">项</th><th>标准</th></tr>
+        <tr><td>禁用词出现次数</td><td><b>0</b></td></tr>
+        <tr><td>红线词拦截</td><td>注入 14 条越界话术，<b>全部</b>被拦截并替换</td></tr>
+        <tr><td>授权撤回</td><td>撤回后家属端 1 秒内不可见</td></tr>
+        <tr><td>设备归还清空</td><td>本地缓存、身份证号、人脸模板、临时文件全部清除</td></tr>
+        <tr><td>越权访问</td><td>换一个就诊单的令牌访问，返回拒绝</td></tr>
+      </table>
+
+      <h3>需要医院配合的事项</h3>
+      <div class="kvline"><span class="k">第 1 周</span><span>明确一位对接人，用于确认讲解词、科室信息、布点位置</span></div>
+      <div class="kvline"><span class="k">第 1–2 周</span><span>提供院内公开资料：科室分布、检查项目、楼层方位图</span></div>
+      <div class="kvline"><span class="k">第 2–3 周</span><span>确认讲解词与话术（我们出初稿，医院审核定稿）</span></div>
+      <div class="kvline"><span class="k">第 3–6 周</span><span>允许现场观察老人实际使用（不采集个人信息）</span></div>
+      <div class="kvline"><span class="k">第 7 周</span><span>协调 10 位左右老人试用（知情同意后）</span></div>
+      <div class="kvline"><span class="k">第 6 周前</span><span>确定 1 个试点点位的电源、WiFi 与摆放位置</span></div>
+
+      <h3>下一步</h3>
+      <ul>
+        <li><b>一次 30 分钟的现场演示</b>——我们在笔记本或平板上把九步完整跑一遍，医院提意见</li>
+        <li><b>确认三件事</b>：试点点位定在哪、讲解词谁审、对接人是谁</li>
+        <li><b>第 4 周末再来一次</b>——这次是全流程可现场操作的版本</li>
+      </ul>
+      <p style="font-size:12.5px;color:#8a949e;margin-top:16px">本项目为教学项目，不收费、不用于商业用途。</p>
+    `; }
+  }
+];
+
+/* =========================================================
+   状态
+   ========================================================= */
+var S = {
+  i:0,
+  on:false,
+  spot:'hall',
+  reg:{dept:'心血管内科', no:'A012', seq:5},
+  comfort:'',
+  sos:false
+};
+
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+/* =========================================================
+   设备屏幕渲染
+   ========================================================= */
+function screen(title, bodyHtml, opts, primary, small){
+  var optHtml = (opts||[]).map(function(o){
+    return '<button class="chip" data-act="'+esc(o.act||'')+'">'+esc(o.label)+'</button>';
+  }).join('');
+  var primHtml = primary
+    ? '<button class="s-primary" data-act="'+esc(primary.act||'next')+'">'+esc(primary.label)+'</button>'
+    : '';
+  return ''
+    + '<div class="screen'+(S.on?'':' white')+'">'
+    +   '<div class="s-title">'+title+'</div>'
+    +   '<div class="s-body'+(small?' small':'')+'">'+bodyHtml+'</div>'
+    +   (S.comfort ? '<div class="s-comfort on">🧡 陪伴：'+esc(S.comfort)+'</div>' : '<div class="s-comfort"></div>')
+    +   (optHtml ? '<div class="s-opts">'+optHtml+'</div>' : '')
+    +   primHtml
+    +   '<div class="s-cap">'+capFor()+'</div>'
+    + '</div>'
+    + '<div class="dock">'
+    +   '<button class="k mic" data-act="mic"><span class="ico">🎤</span><span>按住说话</span></button>'
+    +   '<button class="k" data-act="back"><span class="ico">←</span><span>返回</span></button>'
+    +   '<button class="k" data-act="menu"><span class="ico">☰</span><span>主菜单</span></button>'
+    +   '<button class="k sos" data-act="sos"><span class="ico">🔴</span><span>求助</span></button>'
+    + '</div>'
+    + '<div class="screen-foot"><span>10.1 寸触摸屏 · 语音同步</span><span>'+nowHM()+'</span></div>';
+}
+
+function capFor(){
+  var v = VIEWS[S.i];
+  if(v.id === 'arrive' && !S.on) return '（待机中 · 点一下屏幕就能开始）';
+  var map = {
+    arrive:'您好，我是您的陪诊助手，今天由我陪着您。',
+    triage:'请说出您哪里不舒服，比如说「我胸闷」。',
+    register:'请确认科室和诊室，确认后我就帮您挂上。',
+    waiting:'您的号我盯着，快叫到您的时候我会提醒。',
+    guide:'这里是内科诊区，请在候诊区就坐，听到叫号再进诊室。',
+    nav:'出电梯往左，前方有台阶，右侧有缓坡和扶手。',
+    recap:'氨氯地平片 5 毫克，每天一次，早上吃，共 14 天。',
+    pay:'总共 386 元，医保出 253 元，您自己掏 133 元。',
+    home:'本地缓存已全部清空，请把设备归还服务台。'
+  };
+  return map[v.id] || '（字幕区：与语音同步显示的高对比度大字）';
+}
+function nowHM(){ var d=new Date(); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+
+/* 各幕对应的设备画面 */
+function deviceFor(){
+  var v = VIEWS[S.i];
+  if(S.sos){
+    return screen('一键求助已发送',
+      '<div><b>已通知医院服务台</b></div>'
+      + '<div>位置：'+SPOTS[S.spot].name+'</div>'
+      + '<div>时间：'+nowHM()+'</div>'
+      + '<div style="margin-top:4px">请留在原地，工作人员正在赶来。</div>',
+      [{label:'我知道了', act:'sosOff'}], null, true);
+  }
+
+  switch(v.id){
+    case 'arrive':
+      return screen(S.on ? '欢迎使用' : '待机中',
+        S.on
+          ? '<div>您好，我是您的陪诊助手。</div><div>今天由我陪着您，有事慢慢说就行。</div><div>本设备仅限院内使用，离院请归还服务台。</div>'
+          : '<div>点一下屏幕就能开始。</div><div style="opacity:.75;font-size:16px">不用扫码，不用打字，也不用装 App。</div>',
+        S.on ? [{label:'刷身份证 · 首次建档', act:'id'}, {label:'人脸识别', act:'face'}] : [],
+        S.on ? null : {label:'触摸屏幕开始', act:'on'},
+        false);
+
+    case 'triage':
+      return screen('哪里不舒服',
+        '<div>请按住下面的绿色话筒，说您哪里不舒服。</div><div style="opacity:.75;font-size:16px">也可以直接点下面的例子。</div>',
+        [{label:'我胸闷', act:'symptom'}, {label:'头晕', act:'symptom'}, {label:'胃疼', act:'symptom'}, {label:'咳嗽', act:'symptom'}],
+        null, false);
+
+    case 'register':{
+      var d = DEPTS[S.reg.dept];
+      return screen('确认挂号',
+        '<div>即将为您预约：<b>'+S.reg.dept+'</b></div>'
+        + '<div>诊室：'+d.room+'</div>'
+        + '<div>预计等待：'+d.wait+'</div>'
+        + '<div style="opacity:.75;font-size:16px;margin-top:2px">重要操作需要再确认一次，防止点错。</div>',
+        [{label:'换一个科室', act:'none'}],
+        {label:'确认挂号', act:'next'}, true);
+    }
+
+    case 'waiting':
+      return screen('候诊中 · 我帮您看着号',
+        '<div class="kv"><i>您的号码</i><span>第 12 位</span></div>'
+        + '<div class="kv"><i>当前叫到</i><span>第 8 位</span></div>'
+        + '<div class="kv"><i>预计等待</i><span>约 15 分钟</span></div>',
+        [{label:'我去洗手间', act:'none'}, {label:'我不舒服', act:'sos'}],
+        null, true);
+
+    case 'guide':
+      return screen('当前位置讲解',
+        '<div>当前位置：<b>'+SPOTS[S.spot].name+'</b></div>'
+        + '<div style="opacity:.7;font-size:15px">（已识别到您走到这里，自动播报）</div>'
+        + '<div style="margin-top:3px">'+SPOTS[S.spot].tip+'</div>',
+        [{label:'去内科诊区', act:'spotIm'}, {label:'去药房', act:'spotPharm'}],
+        null, true);
+
+    case 'nav':
+      return screen('前往 心血管内科',
+        '<div>目的地：<b>心血管内科</b></div>'
+        + '<div style="opacity:.75;font-size:16px">第 2 / 5 步</div>'
+        + '<div>'+NAV[1]+'</div>',
+        [{label:'再讲一遍', act:'none'}, {label:'我找不到', act:'sos'}],
+        {label:'我到了', act:'next'}, true);
+
+    case 'recap':
+      return screen('我重复一遍，您听听对不对',
+        '<div style="font-size:17px">医生开的药：</div>'
+        + '<div>① 苯磺酸氨氯地平片 5 毫克</div>'
+        + '<div style="font-size:16px;opacity:.85">每日 1 次 · 晨服 · 共 14 天</div>'
+        + '<div>② 阿司匹林肠溶片 100 毫克</div>'
+        + '<div style="font-size:16px;opacity:.85">每日 1 次 · 睡前服 · 共 14 天</div>',
+        [{label:'不太对，再说一遍', act:'none'}, {label:'念给我听', act:'none'}],
+        {label:'对，记住了', act:'next'}, false);
+
+    case 'pay':
+      return screen('缴费 · 取药',
+        '<div class="kv"><i>总共</i><span>386 元</span></div>'
+        + '<div class="kv"><i>医保出</i><span>253 元</span></div>'
+        + '<div class="kv"><i>自己掏</i><span>133 元</span></div>'
+        + '<div style="font-size:16px;opacity:.85;margin-top:4px">取药窗口：1 楼 门诊药房 3 号窗口</div>',
+        [{label:'这钱怎么算的', act:'none'}],
+        {label:'去取药', act:'next'}, true);
+
+    case 'home':
+      return screen('归还设备 · 缓存已清空',
+        '<div>本地缓存已全部清除。</div>'
+        + '<div>身份证、人脸模板、病历临时文件：<b>已删除</b>。</div>'
+        + '<div style="margin-top:4px">感谢使用，请将设备归还服务台。</div>',
+        [], {label:'返回待机', act:'reset'}, true);
+
+    default:
+      return screen('欢迎使用',
+        '<div>您好，我是您的陪诊助手。</div><div>今天由我陪着您，有事慢慢说就行。</div>',
+        [], {label:'开始', act:'next'}, false);
+  }
+}
+
+/* =========================================================
+   右侧解说
+   ========================================================= */
+function narrFor(){
+  var v = VIEWS[S.i];
+  var num = VIEWS.filter(function(x){ return !x.kind; }).indexOf(v) + 1;
+  var head = v.kind
+    ? '<div class="eyebrow"><span>附录</span></div>'
+    : '<div class="eyebrow"><span class="num">'+num+'</span><span>第 '+num+' 步 / 共 9 步</span></div>';
+  var dl = (v.dl||[]).map(function(r){
+    return '<div class="row"><dt>'+esc(r[0])+'</dt><dd>'+r[1]+'</dd></div>';
+  }).join('');
+  return '<div class="narr fade">'
+    + head
+    + '<h2 class="serif">'+esc(v.title)+'</h2>'
+    + '<p class="lede">'+esc(v.lede)+'</p>'
+    + (dl ? '<dl class="dl">'+dl+'</dl>' : '')
+    + (v.callout ? '<div class="callout">'+v.callout+'</div>' : '')
+    + '</div>';
+}
+
+function phoneFor(){
+  var v = VIEWS[S.i];
+  if(!v.phone) return '';
+  return '<div class="phone fade">'
+    + '<div class="notch"></div>'
+    + '<div class="ph-screen">'
+    +   '<div class="ph-head"><span class="avatar">陪</span>智慧陪诊 · 家属端</div>'
+    +   '<div class="ph-msg"><div class="h">'+v.phone.h+'</div>'+v.phone.body+'</div>'
+    +   '<div class="ph-foot">演示界面 · 不采集真实信息</div>'
+    + '</div></div>';
+}
+
+/* =========================================================
+   渲染
+   ========================================================= */
+function render(){
+  var v = VIEWS[S.i];
+
+  /* 轨道 */
+  var rail = $('rail');
+  rail.innerHTML = VIEWS.map(function(x, idx){
+    return '<button data-jump="'+idx+'" class="'+(idx===S.i?'on':'')+'">'+esc(x.nav)+'</button>';
+  }).join('');
+
+  /* 舞台 */
+  var stage = $('stage');
+  var mainEl = document.querySelector('main');
+  if(v.kind === 'doc'){
+    mainEl.classList.add('doc-mode');
+    stage.innerHTML = '<div class="doc fade">'
+      + '<h2 class="serif">'+esc(v.title)+'</h2>'
+      + '<p class="lede">'+esc(v.lede)+'</p>'
+      + v.body()
+      + '</div>';
+  } else {
+    mainEl.classList.remove('doc-mode');
+    /* 除第一幕（故意的待机态）外，设备都是开着的 */
+    if(v.id !== 'arrive') S.on = true;
+    stage.innerHTML = '<div class="device fade">'
+      + '<div class="plate"><span>院内智慧陪诊终端</span><span class="live"><span class="dot'+(S.on?'':' off')+'"></span>'+(S.on?'运行中':'待机')+'</span></div>'
+      + deviceFor()
+      + '</div>'
+      + '<div class="stage-note">点设备上的按钮可以直接往下走</div>';
+  }
+
+  /* 解说 */
+  $('aside').innerHTML = v.kind === 'doc' ? '' : (narrFor() + phoneFor());
+
+  /* 底栏 */
+  var stepViews = VIEWS.filter(function(x){ return !x.kind; });
+  var cur = stepViews.indexOf(v);
+  $('pos').innerHTML = cur >= 0
+    ? '第 <b>'+(cur+1)+'</b> / '+stepViews.length+' 步'
+    : '<b>附录</b> · '+esc(v.nav);
+  $('prev').disabled = S.i === 0;
+  $('next').disabled = S.i === VIEWS.length - 1;
+  $('next').textContent = S.i === VIEWS.length - 1 ? '演示结束' : '下一步 →';
+}
+
+/* =========================================================
+   交互
+   ========================================================= */
+function go(i, keepHash){
+  S.i = Math.max(0, Math.min(VIEWS.length-1, i));
+  S.sos = false;
+  S.comfort = '';
+  if(!keepHash){ try{ history.replaceState(null,'','#'+(S.i+1)); }catch(err){} }
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-jump],[data-act]');
+  if(!t) return;
+
+  if(t.dataset.jump !== undefined){ go(+t.dataset.jump); return; }
+
+  var a = t.dataset.act;
+  switch(a){
+    case 'on': S.on = true; break;
+    case 'id': S.on = true; break;
+    case 'face': S.on = true; break;
+    case 'symptom': break;
+    case 'sos': S.sos = true; break;
+    case 'sosOff': S.sos = false; break;
+    case 'spotIm': S.spot = 'im'; S.comfort = '第一次来这么大的医院，是容易转晕。跟着我走，一步一步来。'; break;
+    case 'spotPharm': S.spot = 'pharm'; break;
+    case 'reset': S.on = false; S.spot = 'hall'; break;
+    case 'none': return;
+    case 'next': go(S.i + 1); return;
+    default: return;
+  }
+  render();
+});
+
+$('prev').addEventListener('click', function(){ go(S.i-1); });
+$('next').addEventListener('click', function(){ go(S.i+1); });
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'ArrowRight' || e.key === ' '){ e.preventDefault(); go(S.i+1); }
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); go(S.i-1); }
+  if(e.key === 'Home'){ e.preventDefault(); go(0); }
+});
+
+/* 支持 #3 这种深链直接跳到第 3 幕，方便评审时单独发一幕给医院看 */
+var deep = parseInt((location.hash||'').replace('#',''), 10);
+if(deep >= 1 && deep <= VIEWS.length) S.i = deep - 1;
+
+render();
+})();
+</script>
+</body>
+</html>
