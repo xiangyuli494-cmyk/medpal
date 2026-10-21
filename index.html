@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>院内智慧陪诊终端 · 在线演示</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0b1220;--panel:#121c2e;--panel2:#16223a;--line:#25324a;
+    --txt:#e8eefc;--dim:#9fb0cc;--accent:#5ac8fa;--warm:#ff8a3d;--ok:#39d98a;
+  }
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%,#1a2a44 0%,var(--bg) 55%);
+    color:var(--txt);font:16px/1.7 "Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;
+    min-height:100vh;padding:64px 24px 80px;
+  }
+  .wrap{max-width:1000px;margin:0 auto}
+  .tag{
+    display:inline-block;padding:6px 14px;border-radius:999px;
+    font-size:13px;letter-spacing:.12em;color:var(--accent);border:1px solid #2f4a6e;background:#101d31;
+  }
+  h1{font-size:40px;line-height:1.25;margin:22px 0 14px;letter-spacing:-.5px}
+  h1 b{color:var(--warm)}
+  .lede{color:var(--dim);font-size:16px;max-width:720px}
+  .lede code{background:#16223a;padding:2px 7px;border-radius:5px;color:#cfe3ff;font-size:14px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 0}
+  @media (max-width:820px){.grid{grid-template-columns:1fr}}
+  a.card{
+    display:block;text-decoration:none;color:inherit;background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--line);border-radius:18px;padding:28px 26px;transition:.18s ease;
+  }
+  a.card:hover{border-color:#3d6b96;transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .card .k{font-size:12px;letter-spacing:.14em;color:var(--accent);margin-bottom:12px}
+  .card h2{font-size:22px;margin-bottom:10px}
+  .card p{color:var(--dim);font-size:14.5px;margin-bottom:16px}
+  .card .go{color:var(--warm);font-weight:700;font-size:14px}
+  .card .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .chip{font-size:12px;padding:3px 9px;border-radius:6px;background:#1b2b44;color:#a9c3e0}
+  .note{
+    margin-top:40px;padding:20px 22px;border-left:3px solid var(--warm);background:#141f31;
+    border-radius:0 12px 12px 0;color:var(--dim);font-size:14.5px;
+  }
+  .note b{color:#ffd8a8}
+  .note code{background:#1b2b44;padding:2px 6px;border-radius:4px;color:#cfe3ff}
+  footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);color:#6b81a0;font-size:13px;display:flex;gap:18px;flex-wrap:wrap}
+  footer a{color:#8fb4d8;text-decoration:none}
+  footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tag">ONLINE DEMO · 在线演示</div>
+  <h1>院内智慧陪诊终端<br><b>让「一个人看病」也能走完整个流程</b></h1>
+  <p class="lede">
+    一台放在门诊大厅的触摸屏终端，替不会用手机的老人走完院内全流程：刷证建档、语音说病、口述预分诊、语音挂号、点位讲解、院内导航、医嘱回放、一键求助。家属在手机上远程看见进度与医嘱。
+  </p>
+
+  <div class="grid">
+
+    <a class="card" href="demo/device-prototype.html">
+      <div class="k">PRODUCT · 产品本体</div>
+      <h2>设备端原型</h2>
+      <p>触摸屏 + 语音 + 点位讲解 + 情绪陪伴。左侧是演示控制台，中间是仿真的终端，右侧是家属手机与服务台。</p>
+      <div class="go">打开设备端原型 →</div>
+      <div class="meta">
+        <span class="chip">10.1 寸触摸屏</span>
+        <span class="chip">8 个点位</span>
+        <span class="chip">11 场景话术</span>
+      </div>
+    </a>
+
+    <a class="card" href="demo/v4.html">
+      <div class="k">FULL JOURNEY · 全链路</div>
+      <h2>团队全链路演示</h2>
+      <p>多视角 + 架构 + 故障注入。老人 / 视障 / 听障 / 标准 / 家属 五个视角，加上架构分层与五种故障场景。</p>
+      <div class="go">打开全链路演示 →</div>
+      <div class="meta">
+        <span class="chip">7 个视角</span>
+        <span class="chip">28 屏</span>
+        <span class="chip">11 节点闭环</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="note">
+    <b>演示里的一切都是模拟数据。</b>不采集真实身份证号码与人脸模板，短信与工单都在页面内模拟，不会真的发出去。
+    设备仅限院内使用，离院请归还服务台。
+  </div>
+
+  <footer>
+    <span>院内智慧陪诊终端 · 六人团队 · 八周工期</span>
+    <a href="README.md">项目说明</a>
+    <a href="docs/plan/文档评审包.html">规划文档评审包</a>
+    <a href="docs/plan/最终交付说明.html">最终交付说明</a>
+    <a href="https://github.com/xiangyuli494-cmyk/medpal">GitHub 仓库</a>
+  </footer>
+
+</div>
+</body>
+</html>

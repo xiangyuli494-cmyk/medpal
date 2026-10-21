@@ -14,7 +14,7 @@
 | 前置规范 | 齐（访问控制、数据留存、NFR、毕设复用、知情同意书） |
 | 工程骨架 | 在（目录、接口定义、工具链、CI、12 条测试） |
 | 业务代码 | **还没开始**（W1 只定契约，W2 起写领域层） |
-| 能演示的东西 | demo/device-prototype.html（设备端权威原型）、demo/v4.html（全链路演示），都是纯前端单文件，双击可跑 |
+| 能演示的东西 | 在线：https://xiangyuli494-cmyk.github.io/medpal/ ｜本地：demo/device-prototype.html（设备端权威原型）、demo/v4.html（全链路演示），纯前端单文件，双击可跑 |
 
 **还没到能跑起整个系统的阶段**：后端服务、三端页面都还没有，这是 W1 – W2 的活。现在评审的是**文档与骨架**。
 
@@ -22,8 +22,17 @@
 
 ## 快速开始
 
+**方式一：直接在浏览器打开（不用下载任何东西）**
+
+https://xiangyuli494-cmyk.github.io/medpal/
+
+**方式二：本地打开（零依赖，双击即可）**
+
 ```bash
-# 设备端权威原型（零依赖，双击即可）
+# 入口页，两个 demo 都能从这儿进
+start index.html
+
+# 设备端权威原型
 start demo/device-prototype.html
 
 # 全链路演示（含架构与故障视角）
@@ -35,7 +44,7 @@ start demo/v4.html
 | 时间 | 看什么 |
 | --- | --- |
 | 5 分钟 | docs/plan/文档评审包.html（一页看全） |
-| 10 分钟 | demo/device-prototype.html（设备端长什么样） |
+| 10 分钟 | https://xiangyuli494-cmyk.github.io/medpal/demo/device-prototype.html（设备端长什么样） |
 | 30 分钟 | docs/plan/00-项目工期与范围基线.md → 11-技术方案与接口契约.md §4 → docs/specs/device-ia.md |
 | 按角色 | T6 看 12 号规范；T1 看 11 号；T3 看 02 号 §3；T4 看 02 号 §3 与 docs/specs/device-ia.md；T5 看 02 号 §4、§5 |
 
@@ -92,6 +101,7 @@ medpal/
 │   └── tests/        12 条测试
 ├── fixtures/legacy/  从毕设导出的检查项、科室、排班样例
 ├── tools/            mock 服务、红线检查、交接单检查、毕设导出
+├── index.html        演示入口页（在线打开时的首页）
 ├── demo/             device-prototype.html 设备端原型、v4.html 全链路
 ├── device/           设备端（浏览器形态，10.1 寸触摸屏 Kiosk，产品本体）
 ├── frontend/
