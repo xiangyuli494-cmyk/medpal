@@ -128,10 +128,9 @@ RACI 矩阵与权限制衡见 10 号文件。
 
 | 目录 | 内容 |
 | --- | --- |
-| `docs/plan/` | 本规划文档集（00 – 19，共 17 份，含四份 HTML 单页） |
-| `docs/proposal/` | 给医院甲方看的建设方案（对外汇报用） |
+| `docs/plan/` | 本规划文档集（00 – 19，共 18 份：13 份 Markdown + 5 份 HTML 单页） |
 | `docs/specs/` | 前置规范：访问控制、设备端信息架构、数据留存、NFR、毕设复用、领域模型 |
 | `docs/adr/` | 架构决策记录（ADR-000 模板、ADR-016 毕设复用、ADR-017 触摸屏形态） |
 | `docs/api/` | 会话协议 v0.1 |
-| `demo/` | 三个纯前端演示：`hospital-briefing.html` 方案演示、`device-prototype.html` 设备端原型、`v4.html` 全链路 |
+| `demo/` | 两个纯前端演示：`device-prototype.html` 设备端原型、`v4.html` 全链路 |
 | `backend/` `device/` `frontend/` | 代码骨架，W1 只定契约，W2 起写业务 |
