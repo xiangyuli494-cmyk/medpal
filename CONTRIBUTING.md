@@ -62,7 +62,7 @@ docs(adr): ADR-015 访问控制模型
 ~~~
 
 type 只能是：feat fix docs style refactor perf test build ci chore revert
-scope 只能用：domain api device user family console firmware hardware test docs
+scope 只能用：domain api device device-ui legacy user family firmware hardware test docs
 
 一次提交只做一件事。混进无关的格式化改动，评审直接退回。
 
