@@ -10,11 +10,11 @@
 
 | 项 | 状态 |
 | --- | --- |
-| 规划文档 | 齐（17 份，v3.0 八周版） |
+| 规划文档 | 齐（18 份，v3.0 八周版） |
 | 前置规范 | 齐（访问控制、数据留存、NFR、毕设复用、知情同意书） |
 | 工程骨架 | 在（目录、接口定义、工具链、CI、12 条测试） |
 | 业务代码 | **还没开始**（W1 只定契约，W2 起写领域层） |
-| 能演示的东西 | demo/hospital-briefing.html（给医院看的方案演示）、demo/device-prototype.html（设备端权威原型）、demo/v4.html（全链路演示），都是纯前端单文件，双击可跑 |
+| 能演示的东西 | demo/device-prototype.html（设备端权威原型）、demo/v4.html（全链路演示），都是纯前端单文件，双击可跑 |
 
 **还没到能跑起整个系统的阶段**：后端服务、三端页面都还没有，这是 W1 – W2 的活。现在评审的是**文档与骨架**。
 
@@ -23,9 +23,6 @@
 ## 快速开始
 
 ```bash
-# 给医院甲方看的方案演示（13 幕，含九步流程 + 安全边界 + 验收标准）
-start demo/hospital-briefing.html
-
 # 设备端权威原型（零依赖，双击即可）
 start demo/device-prototype.html
 
@@ -38,9 +35,8 @@ start demo/v4.html
 | 时间 | 看什么 |
 | --- | --- |
 | 5 分钟 | docs/plan/文档评审包.html（一页看全） |
-| 10 分钟 | demo/hospital-briefing.html（双击打开，13 幕看完就知道这东西干什么） |
 | 10 分钟 | demo/device-prototype.html（设备端长什么样） |
-| 30 分钟 | docs/proposal/院内智慧陪诊终端-建设方案.md → docs/plan/00-项目工期与范围基线.md → 11-技术方案与接口契约.md §4 |
+| 30 分钟 | docs/plan/00-项目工期与范围基线.md → 11-技术方案与接口契约.md §4 → docs/specs/device-ia.md |
 | 按角色 | T6 看 12 号规范；T1 看 11 号；T3 看 02 号 §3；T4 看 02 号 §3 与 docs/specs/device-ia.md；T5 看 02 号 §4、§5 |
 
 新增的规范值得单独看：
@@ -81,8 +77,7 @@ start demo/v4.html
 medpal/
 ├── .github/          CI、交接单检查、PR / Issue 模板
 ├── docs/
-│   ├── plan/         规划文档集（17 份，含评审包）
-│   ├── proposal/     给医院甲方看的建设方案
+│   ├── plan/         规划文档集（18 份，含评审包）
 │   ├── specs/        前置规范：访问控制、设备端信息架构、留存、NFR、毕设复用
 │   ├── adr/          ADR-000 模板、ADR-016 毕设复用、ADR-017 触摸屏形态
 │   ├── api/          会话协议 v0.1
@@ -97,7 +92,7 @@ medpal/
 │   └── tests/        12 条测试
 ├── fixtures/legacy/  从毕设导出的检查项、科室、排班样例
 ├── tools/            mock 服务、红线检查、交接单检查、毕设导出
-├── demo/             hospital-briefing.html 方案演示、device-prototype.html 设备端原型、v4.html 全链路
+├── demo/             device-prototype.html 设备端原型、v4.html 全链路
 ├── device/           设备端（浏览器形态，10.1 寸触摸屏 Kiosk，产品本体）
 ├── frontend/
 │   ├── user-app/     用户端（老人版 / 标准版）
