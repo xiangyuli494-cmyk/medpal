@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>小暖陪诊 · 最终合并版 Demo (M6) — 四份 Demo 的并集</title>
+<title>院内智慧陪诊终端 · 全链路 Demo — 四份原型的并集</title>
 <style>
 /* ============================================================================
-   小暖陪诊 · 最终合并版 Demo
-   设计令牌：三份成员 Demo 的调色板统一（M1 暖橙 / M2 深蓝控制台 / M3 小暖橙）
+   院内智慧陪诊终端 · 全链路 Demo
+   设计令牌：三份成员 Demo 的调色板统一（M1 暖橙 / M2 深蓝控制台 / M3 终端橙）
    左：场景与演示控制台（来自 M2 的"演示控制台"思想，扩展为通用）
-   中：设备端 4 寸屏（480x800 等比缩放）—— 只做渲染，不做判断
+   中：设备端触摸屏（480x800 等比缩放）—— 只做渲染，不做判断
    右：系统可观测面板 —— 本 Demo 最大的新增：把"证据链"显性化
    ========================================================================== */
 :root{
@@ -461,7 +461,7 @@ body.stage .stage-badge{display:block}
 .wxmsg.hi{background:#fff8f2;border:1px solid #ffd9b8}
 .wx-time{text-align:center;font-size:9.5px;color:#999;margin:2px 0}
 
-/* 工作台 */
+/* 控制台表格 */
 .console-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .console-tbl th{
   text-align:left;padding:5px 7px;background:#182741;color:var(--console-dim);
@@ -539,13 +539,13 @@ body.stage .stage-badge{display:block}
     <div class="cover-mark">暖</div>
     <h1>让「一个人看病」<br>从不可承受，变成可承受</h1>
     <div class="pitch">
-      一台设备陪老人走完医院全程 · 一套系统覆盖 <b>四类用户</b> · 每一句话都可追溯
+      一台设备陪老人走完医院全程 · 家属在手机上远程看见 · 每一句话都可追溯
     </div>
-    <div class="sub2">小暖陪诊 · 面向就医困难人群的陪诊服务系统</div>
+    <div class="sub2">院内智慧陪诊终端 · 医院采购 · 设备是本体</div>
 
     <div class="cover-stats">
       <div class="cover-stat"><div class="cv">8</div><div class="cl">周交付周期</div></div>
-      <div class="cover-stat"><div class="cv">4</div><div class="cl">用户通道</div></div>
+      <div class="cover-stat"><div class="cv">3</div><div class="cl">端（设备 / 用户 / 家属）</div></div>
       <div class="cover-stat"><div class="cv">9</div><div class="cl">状态节点闭环</div></div>
       <div class="cover-stat"><div class="cv">0</div><div class="cl">越界话术放行</div></div>
     </div>
@@ -557,7 +557,7 @@ body.stage .stage-badge{display:block}
   </div>
   <div class="cover-foot">
     <span>成员 A · 知识图谱</span><span>成员 B · 长辈版</span>
-    <span>成员 C · 终端原型</span><span>成员 D · 小暖 v2/v3</span>
+    <span>成员 C · 终端原型</span><span>成员 D · v2/v3 原型</span>
   </div>
 </div>
 
@@ -567,10 +567,10 @@ body.stage .stage-badge{display:block}
 <div class="topbar">
   <div class="brand">
     <div class="mark">暖</div>
-    <div>小暖陪诊 · 最终合并版 Demo<small> &nbsp;v4 / M6 &nbsp;·&nbsp; 四份成员 Demo 的并集</small></div>
+    <div>院内智慧陪诊终端 · 全链路 Demo<small> &nbsp;v4 / M6 &nbsp;·&nbsp; 四份成员 Demo 的并集</small></div>
   </div>
   <div class="spacer"></div>
-  <span class="badge-demo">一内核 · 四通道 · 三层 AI 边界</span>
+  <span class="badge-demo">一内核 · 三通道 · 三层 AI 边界</span>
   <button class="tbtn" id="btnProof">为什么这是"更好的 demo"</button>
   <button class="tbtn" id="btnScript">9 步演示脚本</button>
   <button class="tbtn on" id="btnTts">🔊 语音开</button>
@@ -607,7 +607,7 @@ body.stage .stage-badge{display:block}
   <!-- ------------------------ 中：设备端 ------------------------ -->
   <div class="col col-mid">
     <div class="mid-head">
-      <div class="mid-title">设备端 <b id="devTitle">4 寸屏 480×800</b></div>
+      <div class="mid-title">设备端 <b id="devTitle">触摸屏 480×800</b></div>
       <div class="mid-title" id="devStepIdx">—</div>
     </div>
 
@@ -630,7 +630,7 @@ body.stage .stage-badge{display:block}
 
     <div class="modules" id="moduleStrip"></div>
     <div class="hint" style="max-width:392px">
-      <b>薄客户端纪律</b>：设备端只做「采音 / 播放 / 显示 / 按键 / 震动 / 联网」，
+      <b>薄客户端纪律</b>：设备端只做「采音 / 播放 / 显示 / 触摸 / 震动 / 联网」，
       <b>零业务判断</b>。屏幕上出现的每一句话，都由右栏的证据链生成 —— 换任何通道，内核不变。
     </div>
   </div>
@@ -648,7 +648,7 @@ body.stage .stage-badge{display:block}
     <div class="obs-card">
       <div class="obs-head" data-fold="sm">
         <span class="oi">🔄</span><span>陪诊状态机</span>
-        <span class="oh-tag" id="smTag">9 节点</span>
+        <span class="oh-tag" id="smTag">11 节点</span>
       </div>
       <div class="obs-body" id="smBody"></div>
     </div>
@@ -679,8 +679,8 @@ body.stage .stage-badge{display:block}
 
     <div class="obs-card">
       <div class="obs-head" data-fold="bench">
-        <span class="oi">👩‍⚕️</span><span>陪诊师工作台（来自成员 C）</span>
-        <span class="oh-tag" id="benchTag">3 患者并行</span>
+        <span class="oi">🎛️</span><span>设备端 · 触摸控件与当前状态</span>
+        <span class="oh-tag" id="benchTag">触摸 → 命令</span>
       </div>
       <div class="obs-body" id="benchBody"></div>
     </div>
@@ -711,7 +711,7 @@ body.stage .stage-badge{display:block}
 <!-- ============================ 脚本 ============================ -->
 <script>
 /* ============================================================================
-   小暖陪诊 · 最终合并版 Demo —— 数据与内核（纯逻辑，可单测）
+   院内智慧陪诊终端 · 全链路 Demo —— 数据与内核（纯逻辑，可单测）
    模块： ① 常量/红线  ② 状态机  ③ 话术模板+红线校验器  ④ 图谱推理  ⑤ 规划引擎
           ⑥ 剧本（persons × steps）  ⑦ 视图渲染  ⑧ 系统面板  ⑨ 事件绑定
    ========================================================================== */
@@ -742,7 +742,7 @@ const GUARD = {
 };
 
 /* ==========================================================================
-   ② 陪诊状态机（设备端主流程）—— 9 个节点 + 兜底子状态机
+   ② 陪诊状态机（设备端主流程）—— 11 个节点 + 兜底子状态机
    ========================================================================== */
 const SM = [
   { id:'arrive',  name:'抵达确认',    why:'先确认人到了、人是对的' },
@@ -941,9 +941,7 @@ const PERSONAS = [
     screens:['arrive','brief','reg','ocr','plan','pay','insurance','report','end'] },
   { id:'family', ico:'👨‍👩‍👧', name:'家属 · 女儿在外地', desc:'微信推送 · H5 时间轴 · 隐私红线',
     screens:['family_wechat','family_timeline','family_priv','family_voice'] },
-  { id:'staff',  ico:'👩‍⚕️', name:'陪诊师工作台',   desc:'3 患者并行 · 置信度校对 · 交接双签',
-    screens:['staff_queue','staff_review','staff_handover','staff_escalate'] },
-  { id:'arch',   ico:'🏗️', name:'系统架构',        desc:'一内核四通道 · 模块职责 · 测试资产',
+  { id:'arch',   ico:'🏗️', name:'系统架构',        desc:'一内核三通道 · 模块职责 · 测试资产',
     screens:['arch_layer','arch_proto','arch_test'] },
   { id:'fail',   ico:'⚠️', name:'故障与红线演示',   desc:'主动制造异常 · 看系统是否猜',
     screens:['fail_asr','fail_net','fail_sms','fail_dose','fail_guard'] }
@@ -971,10 +969,6 @@ const SCREEN_META = {
   family_timeline:{ t:'家属端 · 时间轴', sm:'' },
   family_priv:{ t:'家属端 · 隐私红线', sm:'' },
   family_voice:{ t:'家属端 · 语音留言', sm:'' },
-  staff_queue:{ t:'工作台 · 患者队列', sm:'' },
-  staff_review:{ t:'工作台 · 置信度校对', sm:'' },
-  staff_handover:{ t:'工作台 · 交接双签', sm:'' },
-  staff_escalate:{ t:'工作台 · 升级工单', sm:'' },
   arch_layer:{ t:'架构 · 分层', sm:'' },
   arch_proto:{ t:'架构 · 会话协议', sm:'' },
   arch_test:{ t:'架构 · 测试资产', sm:'' },
@@ -1007,10 +1001,10 @@ const STEPS = {
       head:{ name:'张奶奶', state:'正在挂号 · 第 3 步', avatar:'speak' }, progress:20, tab:'home' },
     evidence:{
       fact:{ dept:'心血管内科', doctor:'王医生', slot:'09:40', is_important_action:true, spot:'beacon:挂号收费处' },
-      tpl:{ key:'tpl.important_confirm', text:'即将为您预约心血管内科，王医生，9 点 40。这是重要操作，请说「确认挂号」，或者按绿色的确认键。' },
+      tpl:{ key:'tpl.important_confirm', text:'即将为您预约心血管内科，王医生，9 点 40。这是重要操作，请说「确认挂号」，或者点屏幕上的确认按钮。' },
       llm:{ used:false, why:'重要操作必须用固定脚本，不允许 LLM 改写（防止漏掉"二次确认"这句）' },
       guard:{ pass:true, note:'重要操作话术锁定为模板，LLM 在此节点被禁用' },
-      out:'即将为您预约心血管内科，王医生，9 点 40。这是重要操作，请说「确认挂号」，或者按绿色的确认键。'
+      out:'即将为您预约心血管内科，王医生，9 点 40。这是重要操作，请说「确认挂号」，或者点屏幕上的确认按钮。'
     },
     ledger:['重要操作 = 模板锁定 + 二次确认，这是防误触，也是防 AI 改写'] },
 
@@ -1126,7 +1120,7 @@ const STEPS = {
       guard:{ pass:true, note:'★ 听障模式下旁白永不出声，只有"替我说"出声' },
       out:'（设备出声）我对青霉素过敏，请写给我看。'
     },
-    ledger:['★ 同一句话，对不同通道有不同"出口"—— 这就是一内核四通道'],
+    ledger:['★ 同一句话，对不同通道有不同"出口"—— 这就是一内核三通道'],
     interact:'speakforme' },
 
   /* ============ 识单：置信度三档 ============ */
@@ -1233,7 +1227,7 @@ const STEPS = {
       guard:{ pass:true, note:'家属看到的是 Episode 时间轴，与设备端同一个实体' },
       out:'09:12 接到人 · 09:40 王医生看诊 · 10:05 抽血 · 10:40 CT · 11:20 取药 · 12:48 结束'
     },
-    ledger:['★ 四端统一在同一个 Episode 实体上 —— 这是"一内核"的物理体现'] },
+    ledger:['★ 三端统一在同一个 Episode 实体上 —— 这是"一内核"的物理体现'] },
 
   family_priv:{ sm:'', persona:['family'],
     device:{ type:'family_priv', title:'家属端 · 隐私开关',
@@ -1259,61 +1253,11 @@ const STEPS = {
     },
     ledger:['★ 差异化功能：把"人不在场"这个核心矛盾，用手边最便宜的介质解决'] },
 
-  /* ==================== 陪诊师工作台 ==================== */
-  staff_queue:{ sm:'', persona:['staff'],
-    device:{ type:'staff_queue', title:'工作台 · 3 患者并行',
-      head:{ name:'陪诊师 · 小刘', state:'在岗 · 3 单进行中', avatar:'idle' }, progress:100, tab:'home' },
-    evidence:{
-      fact:{ episodes:3, sla:'单均 96 分钟', alerts:2 },
-      tpl:{ key:'—— 工作台不做话术，只做队列与留痕 ——', text:'' },
-      llm:{ used:false, why:'' },
-      guard:{ pass:true, note:'工作台看的是 Episode 队列，与设备端同一实体' },
-      out:'队列：张奶奶（候诊中 · 已等 15 分钟）· 王先生（导航中 · 视障全程语音）· 李女士（等待缴费 · 听障模式）'
-    },
-    ledger:['★ 陪诊师端是最容易被忽略、却最有商业价值的一块'] },
-
-  staff_review:{ sm:'', persona:['staff'],
-    device:{ type:'staff_review', title:'工作台 · 置信度校对',
-      head:{ name:'陪诊师 · 小刘', state:'2 个字段待校对', avatar:'idle' }, progress:100, tab:'home' },
-    evidence:{
-      fact:{ low_conf:[{f:'手写备注', v:'肾/胃', conf:0.62},{f:'频次', v:'每日 3 次', conf:0.88}], manual_edits:[{f:'剂量', from:'5g', to:'0.5g', by:'companion_07', ts:'10:12'}] },
-      tpl:{ key:'—— 人机协同：AI 出方案，人确认 ——', text:'' },
-      llm:{ used:true, where:'多模态 OCR', why:'低置信字段必须落到人工校对界面，不许静默通过' },
-      guard:{ pass:true, note:'★ 每一次人工修正都留痕：谁、何时、改了什么、原文是什么' },
-      out:'人工修正记录：剂量 5g → 0.5g，由小刘于 10:12 修正（原文保留）。'
-    },
-    ledger:['★ 这条是"可控"的证据：AI 不确定的地方，一定有人接手，且留痕'] },
-
-  staff_handover:{ sm:'', persona:['staff'],
-    device:{ type:'staff_handover', title:'工作台 · 交接双签',
-      head:{ name:'陪诊师 · 小刘', state:'1 项材料待交接', avatar:'idle' }, progress:100, tab:'home' },
-    evidence:{
-      fact:{ material:'病理切片 + 影像片', signatures:['companion_07','family_02'], ts:'11:05', algo:'SHA-256 存证' },
-      tpl:{ key:'—— 红线 R3：重要医疗材料必须电子化留存 + 交接双签 ——', text:'' },
-      llm:{ used:false, why:'签字是法律行为，AI 禁入区' },
-      guard:{ pass:true, note:'🔴 AI 禁入：签字与法律行为必须显式交给人' },
-      out:'交接单 #H-2026-0417-01：病理切片 1 份、影像片 2 张。陪诊师签名 ✓ 家属签名 ✓ 时间戳 11:05。'
-    },
-    ledger:['🔴 AI 禁入区：医疗判断 / 签字与法律行为 / 现场身体处置 / 与医护建立信任 / 复杂价值判断'] },
-
-  staff_escalate:{ sm:'', persona:['staff'],
-    device:{ type:'staff_escalate', title:'工作台 · 升级工单',
-      head:{ name:'陪诊师 · 小刘', state:'1 个升级待处理', avatar:'idle' }, progress:100, tab:'home' },
-    evidence:{
-      fact:{ ticket:'SOS-0417-03', spot:'beacon:内科诊区', level:'call_staff', ack:'已派员前往', age_sec:24 },
-      tpl:{ key:'tpl.escalate', text:'别慌，已经通知服务台了，人正往您这儿赶，我一直开着。' },
-      llm:{ used:false, why:'升级路径是安全相关，模板锁定' },
-      guard:{ pass:true, note:'升级 = 从 AI 移交给人的动作（叫护士 / 打电话给家属 / SOS）' },
-      out:'别慌，已经通知服务台了，人正往您这儿赶，我一直开着。您就站在原地，不用走动，我陪着您一起等。'
-    },
-    ledger:['★ 升级路径必须"有人接手"才算成功 —— 所以工作台必须与设备端联动'],
-    panel:'fail' },
-
   /* ==================== 系统架构 ==================== */
   arch_layer:{ sm:'', persona:['arch'],
-    device:{ type:'arch_layer', title:'分层架构', head:{ name:'系统架构', state:'一内核 · 四通道', avatar:'idle' }, progress:100, tab:'home' },
+    device:{ type:'arch_layer', title:'分层架构', head:{ name:'系统架构', state:'一内核 · 三通道', avatar:'idle' }, progress:100, tab:'home' },
     evidence:{ fact:{ layers:5 }, tpl:{ key:'——', text:'' }, llm:{ used:false, why:'' },
-      guard:{ pass:true, note:'' }, out:'设备端 / App / 家属端 / 工作台 → 应用层 → 领域层（纯逻辑 100% 单测）→ 能力适配层 → 基础设施' },
+      guard:{ pass:true, note:'' }, out:'设备端 / 用户端 / 家属端 → 应用层 → 领域层（纯逻辑 100% 单测）→ 能力适配层 → 基础设施' },
     ledger:['★ 领域层是纯函数：AI 写这一层时，跑测试就知道对不对，人也能看懂 —— 测试就是缰绳'] },
 
   arch_proto:{ sm:'', persona:['arch'],
@@ -1411,13 +1355,13 @@ const MODULES = [
 const RED_FLAGS = [
   { sys:'心血管', ask:'有没有出汗、呼吸困难，或者疼痛往肩膀、后背放射？',
     yes:['出汗','呼吸困难','放射','压榨','后背疼','肩膀疼'],
-    act:'请立即前往急诊科，或按红色一键求助键，我们会立刻通知服务台护送您。' },
+    act:'请立即前往急诊科，或点右下角红色「求助」，我们会立刻通知服务台护送您。' },
   { sys:'神经', ask:'有没有嘴角歪斜、说话不清楚，或者一侧手脚没有力气？',
     yes:['嘴角歪','说话不清','一侧无力','手脚没力','脸麻'],
     act:'突发口角歪斜或一侧肢体无力，可能是脑卒中。请立即前往急诊科。' }
 ];
 
-/* ---- 机制 2：陪诊师情绪陪伴引擎（来自成员 B 的 COMFORT 12 场景 + 去重）----
+/* ---- 机制 2：情绪陪伴引擎（来自成员 B 的 COMFORT 11 场景 + 去重）----
    四条约束：① 同场景不重复 ② 排队不打断 ③ 暖色样式与功能区隔 ④ 可随时关闭 */
 const COMFORT = {
   waiting:  ['您先坐着歇会儿，我帮您看着号，叫到号我会大声提醒您。',
@@ -1433,7 +1377,7 @@ const COMFORT = {
   loginFail:['没认出来不碍事，咱们换身份证，一样能进。',
              '不怪您，是机器偶尔犯糊涂。来，把身份证放上来就行。'],
   idle:     ['您还在吗？我一直在这儿等着呢。',
-             '要是不方便说话，按一下红色键或者确认键，我就知道了。'],
+             '要是不方便说话，点「求助」或者屏幕上的大按钮，我就知道了。'],
   success:  ['号挂好了，您安心坐着等叫号就行。', '都办妥了，剩下的事我提醒您。'],
   farewell: ['今天的事都办完了，您辛苦了，回去路上慢一点。']
 };
@@ -1546,7 +1490,7 @@ V.reg = () => H.h1('这是重要操作，请您确认')
   + H.card('<h2>即将为您预约</h2>'
     + H.kv('科室', '心血管内科') + H.kv('医生', '王医生') + H.kv('时间', '09:40')
     + H.kv('诊室', '门诊楼 2 层 A 区 208'))
-  + H.p('🎙️ 请说「确认挂号」，或者按下面的绿色确认键。')
+  + H.p('🎙️ 请说「确认挂号」，或者点屏幕下方的确认按钮。')
   + H.btn('✅', '确认挂号', '重要操作需二次确认，防止误触', 'primary', 'reg:confirm')
   + H.btn('↩️', '换一个科室', '', 'ghost', 'go:arrive');
 
@@ -1555,7 +1499,7 @@ V.wait = () => H.h1('候诊中 · 我帮您看着号')
   + H.card('<h2>👥 叫号进度</h2>'
     + H.kv('您的号码', '第 12 位') + H.kv('当前叫到', '第 8 位') + H.kv('预计等待', '约 15 分钟'))
   + (S.careMode ? '<div class="verbatim" style="border-left-color:#e2601a">'
-      + '<div class="src">🧡 陪诊师陪伴（可关闭）</div>' + esc(pickComfort('waiting')) + '</div>' : '')
+      + '<div class="src">🧡 情绪陪伴（可关闭）</div>' + esc(pickComfort('waiting')) + '</div>' : '')
   + H.btn('🚻', '我要去洗手间', '号不会过，我盯着', 'ghost', 'wait:leave')
   + H.btn('🆘', '我不舒服', '', 'sos', 'sos');
 
@@ -1748,49 +1692,10 @@ V.family_voice = () => H.h1('您女儿给您留了句话')
   + H.verbatim('为什么这个功能值钱', '它用手边最便宜的介质（10 秒录音），解决了「人不在场」这个最贵的矛盾。')
   + H.btn('▶️', '放给我听', '', 'primary', 'say:family');
 
-/* ===== 成员 C：陪诊师工作台 ===== */
-V.staff_queue = () => H.h1('3 位患者同时进行')
-  + '<div style="overflow-x:auto">' + staffTable([
-      ['张奶奶 78', '候诊中 · 已等 15 分', 'p1', '正常'],
-      ['王先生 56', '导航中 · 视障全程语音', 'p2', '关注'],
-      ['李女士 34', '等待缴费 · 听障模式', 'p3', '正常']
-    ]) + '</div>'
-  + H.card('<h2>📋 队列逻辑</h2><p>设备端跑的是同一个 Episode 状态机，工作台看的是 Episode 队列。'
-    + '<b>一张皮换了，内核没换。</b></p>')
-  + H.btn('🔍', '去看待校对的字段', '2 个低置信度', 'primary', 'go:st_review');
-
-V.staff_review = () => H.h1('AI 认不准的，交给人')
-  + H.card('<h2>⚠️ 2 个字段待校对</h2>'
-    + '<div class="kv"><i>手写备注</i><span>肾 / 胃 ' + H.tag('62%', 'danger') + '</span></div>'
-    + '<div class="kv"><i>频次</i><span>每日 3 次 ' + H.tag('88%', 'warn') + '</span></div>')
-  + H.card('<h2>✍️ 人工修正记录（留痕）</h2>'
-    + H.kv('字段', '剂量') + H.kv('原文（保留）', '5g') + H.kv('改为', '0.5g')
-    + H.kv('修正人', '陪诊师 小刘 (companion_07)') + H.kv('时间', '10:12'))
-  + H.p('★ 每一次人工修正都留痕：谁、何时、改了什么、原文是什么。')
-  + H.btn('✅', '校对完了', '进入交接', 'primary', 'go:st_handover');
-
-V.staff_handover = () => H.h1('材料交接 · 双签')
-  + H.card('<h2>📦 交接单 #H-2026-0417-01</h2>'
-    + H.kv('材料', '病理切片 1 份 · 影像片 2 张')
-    + H.kv('陪诊师签名', '✓ companion_07  11:05')
-    + H.kv('家属签名', '✓ family_02  11:05')
-    + H.kv('存证', 'SHA-256 存证写入'))
-  + '<div class="warnbox">🔴 <b>AI 禁入区</b>：签字与法律行为必须显式交给人。'
-    + '系统只做「提醒该签了」和「记录签过了」，永不代签。</div>'
-  + H.btn('✅', '下一步：升级工单', '', 'primary', 'go:st_escalate');
-
-V.staff_escalate = () => H.h1('升级工单 SOS-0417-03')
-  + H.card('<h2>🆘 一键求助工单</h2>'
-    + H.kv('位置', 'beacon:内科诊区') + H.kv('患者', '张奶奶 · 78 岁')
-    + H.kv('状态', '已派员前往') + H.kv('已等待', '24 秒'))
-  + H.verbatim('设备端同步播报', '别慌，已经通知服务台了，人正往您这儿赶，我一直开着。')
-  + H.p('★ 升级路径必须「有人接手」才算成功 —— 所以工作台必须与设备端联动。')
-  + H.btn('👨‍⚕️', '陪诊师已接手', '工单闭环', 'primary', 'esc:ack');
-
 /* ===== 成员 D：架构 ===== */
-V.arch_layer = () => H.h1('一内核 · 四通道 · 两平台能力')
+V.arch_layer = () => H.h1('一内核 · 三通道 · 两平台能力')
   + '<div class="steps">' + [
-      ['通道层', '设备端 / App / 家属端 / 工作台 —— 只负责「怎么呈现」'],
+      ['通道层', '设备端 / 用户端 / 家属端 —— 只负责「怎么呈现」'],
       ['应用层', '会话编排 · 任务流 · 通知 · 授权 · 留痕'],
       ['领域层 ★', '状态机 · 规划引擎 · 记忆库 · 置信度策略 · 话术约束器（纯 Python，100% 单测）'],
       ['适配层', 'ASR · TTS · OCR · LLM · RAG · 推送 —— 全部可替换'],
@@ -1804,16 +1709,16 @@ V.arch_layer = () => H.h1('一内核 · 四通道 · 两平台能力')
 V.arch_proto = () => H.h1('会话协议 v0.1（先定协议，再写代码）')
   + H.card('<h2>⬆️ 上行（设备 → 服务端）</h2>'
     + '<p style="font-family:monospace;font-size:11px;line-height:1.7">'
-    + '{ "type":"key", "session":"s_123", "key":"GREEN_DOWN" }<br>'
-    + '{ "type":"audio", "session":"s_123", "seq":7, "payload":"&lt;base64&gt;" }<br>'
-    + '{ "type":"touch", "session":"s_123", "action":"confirm_yes" }</p>')
+    + '{ "type":"touch.event", "target":"primary", "action":"tap" }<br>'
+    + '{ "type":"audio.chunk", "seq":7, "payload":"&lt;pcm_s16le&gt;" }<br>'
+    + '{ "type":"text.input", "text":"带我去检验科" }</p>')
   + H.card('<h2>⬇️ 下行（服务端 → 设备）</h2>'
     + '<p style="font-family:monospace;font-size:11px;line-height:1.7">'
     + '{ "type":"turn_result", "turn":7,<br>'
     + '&nbsp;&nbsp;"caption":{"text":"2 楼检验科，出电梯往左"},<br>'
     + '&nbsp;&nbsp;"speech":{"rate":0.86,"can_interrupt":true},<br>'
     + '&nbsp;&nbsp;"device":{"vibrate":"confirm_twice"},<br>'
-    + '&nbsp;&nbsp;"flow":{"step":"go_to_lab","step_index":3,"total":9},<br>'
+    + '&nbsp;&nbsp;"flow":{"step":"NAVIGATE","step_index":8,"total":11},<br>'
     + '&nbsp;&nbsp;"escalation":{"level":"none"},<br>'
     + '&nbsp;&nbsp;"confidence":{"asr":0.91,"intent":0.88} }</p>')
   + '<div class="okbox">这页纸定完，六个人才能真正并行，而不是互相等。</div>'
@@ -1823,7 +1728,7 @@ V.arch_test = () => H.h1('测试资产 = AI 的缰绳')
   + '<div class="steps">' + [
       ['L1 单元测试', 'pytest + pytest-cov · 领域层 100% · &lt;20 秒'],
       ['L2 契约测试', 'pytest-django + schemathesis · 所有对外接口'],
-      ['L3 端到端', 'Playwright · 9 个状态节点各 ≥1 条'],
+      ['L3 端到端', 'Playwright · 11 个状态节点各 ≥1 条'],
       ['L4 无障碍', 'axe-core · 关键页面 0 critical'],
       ['L5 AI 质量', '自建 eval harness · 评测集 + 阈值'],
       ['L6 硬件在环', 'pytest over SSH + 30 项手工检查清单']
@@ -1876,17 +1781,6 @@ V.fail_guard = () => H.h1('越界话术被拦截了')
   + H.p('★ 三层话术管线：模板（90%）→ LLM 润色（可选）→ 红线校验器（不通过就退回模板）。')
   + H.btn('🧪', '再试一次别的说法', '换一句越界话术', 'primary', 'fail:guard2');
 
-/* ---- 陪诊师表格 ---- */
-function staffTable(rows){
-  return '<table class="console-tbl" style="color:#1a1a1a"><thead><tr>'
-    + '<th style="background:#f0e7db;color:#6b6259">患者</th>'
-    + '<th style="background:#f0e7db;color:#6b6259">状态</th>'
-    + '<th style="background:#f0e7db;color:#6b6259">标记</th></tr></thead><tbody>'
-    + rows.map(r => '<tr><td style="border-color:#e6ddd0;color:#1a1a1a;font-weight:700">' + esc(r[0]) + '</td>'
-      + '<td style="border-color:#e6ddd0;color:#1a1a1a">' + esc(r[1]) + '</td>'
-      + '<td style="border-color:#e6ddd0;color:#1a1a1a">' + esc(r[3]) + '</td></tr>').join('')
-    + '</tbody></table>';
-}
 </script>
 <script>
 /* ==========================================================================
@@ -1918,7 +1812,7 @@ function renderSidebar(){
     ['textScale', '🔠', '大字模式 (' + Math.round(S.textScale * 100) + '%)'],
     ['highContrast', '🌗', '高对比度'],
     ['voiceFirst', '🔊', '语音优先'],
-    ['careMode', '🧡', '陪诊师关怀模式'],
+    ['careMode', '🧡', '情绪陪伴模式'],
     ['simBlind', '🦯', '模拟视障（黑屏）']
   ];
   $('#switchList').innerHTML = sw.map(s =>
@@ -1983,7 +1877,6 @@ function renderDevice(){
   if (S.persona === 'deaf') { tabs[1] = ['call', '⌨️', '打字问小暖']; }
   if (S.persona === 'blind') { tabs[0] = ['home', '🏠', '语音主页']; tabs[1] = ['call', '📞', '通话中']; }
   if (S.persona === 'family') { tabs[0] = ['home', '📱', '微信']; tabs[1] = ['call', '📄', '时间轴']; }
-  if (S.persona === 'staff')  { tabs[0] = ['home', '👥', '队列']; tabs[1] = ['call', '✍️', '校对']; }
   if (S.persona === 'arch')   { tabs[0] = ['home', '🏗️', '架构']; tabs[1] = ['call', '📡', '协议']; }
   const activeTab = d.tab || 'home';
   $('#devTabbar').innerHTML = tabs.map(t =>
@@ -2086,15 +1979,15 @@ function renderSystem(){
     + '<div style="display:flex;gap:10px;align-items:flex-start">'
     + '<div class="phone"><div class="phone-top">微信 · 服务通知</div><div class="phone-body">'
     + '<div class="wx-time">今天 12:48</div>'
-    + '<div class="wxmsg hi"><div class="wxh"><span class="wico">暖</span>小暖陪诊</div>'
+    + '<div class="wxmsg hi"><div class="wxh"><span class="wico">陪</span>智慧陪诊</div>'
     + '<div class="wxt">【演示·XX医院】就诊提醒：本次就诊 <b>心血管内科</b>，接诊医生 <b>王医生</b>。<br>'
     + '用药医嘱：1）阿莫西林胶囊 0.5g 每日 3 次 饭后服用。<br>复诊时间：一周后。</div>'
     + '<div class="wxlink">查看本次陪诊时间轴 ›</div></div>'
     + '<div class="wx-time">今天 10:05</div>'
-    + '<div class="wxmsg"><div class="wxh"><span class="wico">暖</span>小暖陪诊</div>'
+    + '<div class="wxmsg"><div class="wxh"><span class="wico">陪</span>智慧陪诊</div>'
     + '<div class="wxt">张奶奶已进入 <b>检验科采血</b>，抽血后会在候诊区休息 5 分钟。</div></div>'
     + '<div class="wx-time">今天 09:12</div>'
-    + '<div class="wxmsg"><div class="wxh"><span class="wico">暖</span>小暖陪诊</div>'
+    + '<div class="wxmsg"><div class="wxh"><span class="wico">陪</span>智慧陪诊</div>'
     + '<div class="wxt">已经在门诊大厅接到张奶奶了，一切正常。</div></div>'
     + '</div></div>'
     + '<div style="flex:1;min-width:0">'
@@ -2106,18 +1999,23 @@ function renderSystem(){
   $('#pushTag').textContent = sent ? '已送达' : '失败·重试中';
   $('#pushTag').className = 'oh-tag ' + (sent ? 'live' : 'new');
 
-  /* ⑥ 陪诊师工作台 */
+  /* ⑥ 设备端 · 触摸控件与当前状态 */
   $('#benchBody').innerHTML = '<table class="console-tbl"><thead><tr>'
-    + '<th>患者</th><th>通道</th><th>当前状态</th><th>待办</th><th>标记</th></tr></thead><tbody>'
-    + [['张奶奶 78', '设备端·大字', '候诊中', '盯号 / 复述校验', '正常'],
-       ['王先生 56', '设备端·视障', '导航中', '步数化导航', '关注'],
-       ['李女士 34', '设备端·听障', '等待缴费', '替我说', '正常'],
-       ['陈先生 41', 'App·标准', '识单中', '<b>2 个字段待校对</b>', '需处理'],
-       ['—', '家属端', '已收到 3 条推送', '—', '正常']].map(r =>
+    + '<th>控件</th><th>target</th><th>当前屏作用</th></tr></thead><tbody>'
+    + [['⏻ 电源', 'power', '开机 / 关机'],
+       ['🔉 音量 − / +', 'volDown / volUp', '播报音量'],
+       ['🐢 语速 − / +', 'spdDown / spdUp', '播报语速'],
+       ['☰ 主菜单', 'menu', '回主菜单'],
+       ['🎤 按住说话', 'voice', '采音，松开发送'],
+       ['↩ 返回', 'back', '上一步'],
+       ['确认 · 挂号', 'primary', '屏内主操作'],
+       ['📍 当前位置讲解', 'replaySpot', '重播点位讲解词'],
+       ['📋 我的医嘱', 'queryRecord', '语音回放医嘱'],
+       ['🆘 一键求助', 'sos', '长按触发，通知服务台']].map(r =>
         '<tr>' + r.map((c, i) => '<td' + (i === 0 ? ' style="font-weight:700"' : '') + '>' + c + '</td>').join('') + '</tr>').join('')
     + '</tbody></table>'
-    + '<div class="hint" style="margin-top:7px">★ 陪诊师端是最容易被忽略、却最有商业价值的一块：'
-    + '多患者并行 + 置信度校对 + 交接双签 + 升级闭环。</div>'
+    + '<div class="hint" style="margin-top:7px">★ 设备端是产品本体：触摸屏 + 语音 + 大字屏，'
+    + '全程不需要打字、不需要会用智能手机。触摸只发命令，状态由服务端推进。</div>'
     + '<div class="warnbox" style="margin-top:7px">🔴 AI 禁入区：医疗判断 / 签字与法律行为 / '
     + '现场身体处置 / 与医护建立信任 / 复杂价值判断。</div>';
 
@@ -2264,7 +2162,7 @@ function run(head, arg){
     case 'wait': audit('', '候诊离开 → 号位顺延保护'); toastConsole('去吧，我盯着号，叫到您我大声喊。'); break;
     case 'exe': audit('', '执行节点：' + arg); toastConsole(arg === 'lost' ? '别急，我一句一句说：出电梯往左，看见第三个窗口就是。' : '到啦，咱们开始。'); break;
     case 'nav': audit('', '视障导航：说出步数与地标，不说左右'); toastConsole('往前走十八步。好，停。右手边是电梯按钮。'); break;
-    case 'esc': audit('ok', '升级工单闭环：陪诊师已接手，设备端同步播报'); toastConsole('✅ 工单闭环：陪诊师已接手'); break;
+    case 'esc': audit('ok', '升级工单闭环：服务台已接手，设备端同步播报'); toastConsole('✅ 工单闭环：服务台已接手'); break;
     case 'say': TTS.speak(STEPS[effectiveScreen()] ? STEPS[effectiveScreen()].evidence.out : '好的，我念给您听。');
       audit('', 'TTS 播报（rate 0.86，可打断）'); toastConsole('🔊 正在播报…'); break;
     case 'fail': {
@@ -2301,10 +2199,10 @@ const MODAL = {
     + '<b>"医生原话（以此为准）"</b>卡片；<b>绝不谎报送达</b>；三级 TTS 降级；纯函数意图解析 + 测试出口</td>'
     + '<td>设备端设计令牌 + 用药医嘱屏 + 「诚实回执」机制 + 语音降级链</td></tr>'
     + '<tr><td><b>成员 C</b><br>终端原型</td><td><b>data-cmd 命令总线</b>（5 个入口收敛成 1 条流）；'
-    + 'beacon 位置即上下文；<b>COMFORT 12 场景情绪陪伴引擎</b>；红旗预警；工单+短信双端闭环</td>'
+    + 'beacon 位置即上下文；<b>COMFORT 11 场景情绪陪伴引擎</b>；红旗预警；工单+短信双端闭环</td>'
     + '<td>整个 demo 的事件架构 + 陪伴条 + 红旗引擎 + 故障演示</td></tr>'
     + '<tr><td><b>成员 D</b><br>小暖 v3</td><td>入口分流（三类用户三套交互契约）；'
-    + '视障"走十八步"步数化导航；听障"替我说"；纯内联 SVG 虚拟形象五表情；医保三宫格；9 个状态节点闭环</td>'
+    + '视障"走十八步"步数化导航；听障"替我说"；纯内联 SVG 虚拟形象五表情；医保三宫格；11 个状态节点闭环</td>'
     + '<td>通道切换 + 视障/听障两条完整通道 + 小暖形象 + 医保屏</td></tr></table>'
     + '<h4>合并版新增的、四份都没有的三件事</h4>'
     + '<ul>'
@@ -2312,8 +2210,8 @@ const MODAL = {
     + '这是"可控地用 AI"唯一能被评委当场验证的形式。</li>'
     + '<li><b>故障注入（左栏④）</b>：主动制造 ASR 低置信、断网、短信失败、剂量模糊、越界话术，'
     + '看系统是否降级/求证/升级，而不是猜。四份 demo 都只演示"顺利路径"。</li>'
-    + '<li><b>陪诊师工作台</b>：四份 demo 里只有一个标题，合并版给了队列 / 置信度校对 / 交接双签 / 升级工单四屏，'
-    + '并且与设备端共用同一个 Episode 实体 —— 这是"一内核四通道"的物理证据。</li>'
+    + '<li><b>设备端逐屏信息架构</b>：四份 demo 都只画了局部屏幕，合并版给了 11 个节点逐屏 + 触摸控件 + '
+    + '点位讲解 + 情绪陪伴，并且与家属端共用同一个 Episode 实体 —— 这是"一内核三通道"的物理证据。</li>'
     + '</ul>'
     + '<h4>一句话</h4>'
     + '<p>成员 A 给了<b>大脑</b>（怎么想），成员 B 给了<b>良心</b>（什么不能说），'
@@ -2330,7 +2228,7 @@ const MODAL = {
     + '<tr><td>5</td><td>回「张奶奶」→ 复述校验，点"对"</td><td>"不是「我说完了」，是「您听懂了」。这是闭环。"</td></tr>'
     + '<tr><td>6</td><td>切「系统架构」→ 会话协议</td><td>"这页纸定完，六个人才能并行。先定协议，再写代码。"</td></tr>'
     + '<tr><td>7</td><td>切「故障与红线」→ 依次注入 5 个故障</td><td>"我们不演示顺利路径。我们演示系统<b>不会猜</b>。"</td></tr>'
-    + '<tr><td>8</td><td>切「陪诊师工作台」→ 交接双签</td><td>"签字是 AI 禁入区。系统只提醒和留痕，永不代签。"</td></tr>'
+    + '<tr><td>8</td><td>按红色「一键求助」→ 服务台派员 → 设备确认有人接手</td><td>"升级路径必须有人接手才算成功。工单不闭环，设备会一直播报，不会自己说没事了。"</td></tr>'
     + '<tr><td>9</td><td>切「家属 · 女儿在外地」→ 语音留言</td><td>"您一个人来，但没有一件事是您一个人扛的。"（收尾）</td></tr>'
     + '</table>'
     + '<h4>必须准备的三个量化指标</h4>'
@@ -2409,7 +2307,7 @@ const TOUR = [
   { p:'adult',  s:'ocr',     say:'识单认不准怎么办：0.5g 和 5g 差十倍，系统标出来问，绝不自动纠错。' },
   { p:'deaf',   s:'speakforme', say:'听障通道下旁白永不出声，只有「替我说」出声 —— 因为那句话是放给医生听的。' },
   { p:'fail',   s:'fail_guard', say:'LLM 想写「没事的，不用去医院」，被红线校验器拦下并回退模板。我们不演示顺利，演示不猜。' },
-  { p:'staff',  s:'staff_handover', say:'签字是 AI 禁入区。系统只提醒该签了、记录签过了，永不代签。' },
+  { p:'elder',  s:'end', say:'到这里设备只做一件事：把今天发生了什么、医生说了什么、药怎么吃，原原本本留在您手上。' },
   { p:'family', s:'family_voice', say:'您一个人来，但没有一件事是您一个人扛的。' }
 ];
 let tourIdx = -1, tourTimer = null;

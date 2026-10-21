@@ -4,7 +4,7 @@
 > 契约来源：`docs/plan/11-技术方案与接口契约.md` §4.4。
 > 状态枚举来源：`docs/specs/domain-model.md` §2.1（11 个节点，大写下划线）。
 > 错误码来源：11 号 §4.4.5（协议层 7 个）+ `docs/plan/19-W1逐人操作手册.md` 步骤 3（设备与业务层 7 个），合并为 §6 一张表。
-> 本文件是 wire 格式的唯一来源。设备端、用户端、家属端、陪诊师工作台与服务端 mock 一律按本文件实现。
+> 本文件是 wire 格式的唯一来源。设备端、用户端、家属端与服务端 mock 一律按本文件实现。
 
 ---
 
@@ -45,13 +45,13 @@
 
 | type | 发送时机 | 字段 | 说明 |
 | --- | --- | --- | --- |
-| `session.hello` | 连接建立后 | `protocol_version`、`device_id`、`episode_id`、`client`、`accessibility_mode` | 会话初始化。`client` ∈ `device` / `user` / `family` / `console`；`accessibility_mode` ∈ `elder` / `vision` / `hearing` / `standard` |
+| `session.hello` | 连接建立后 | `protocol_version`、`device_id`、`episode_id`、`client`、`accessibility_mode` | 会话初始化。`client` ∈ `device` / `user` / `family`；`accessibility_mode` ∈ `elder` / `vision` / `hearing` / `standard` |
 | `audio.start` | 开始录音 | `seq`、`sample_rate`、`encoding` | 声明音频分片序列起点。`encoding` 固定 `pcm_s16le` |
 | `audio.chunk` | 录音过程中 | 二进制帧（帧头见 §3.1） | 服务端按 `seq` 重组 |
 | `audio.end` | 结束录音 | `seq` | 触发 ASR 最终识别 |
 | `text.input` | 文字输入 | `text` | 听障模式与兜底输入 |
 | `control.barge_in` | 用户打断 | 无 | 停止当前播报 |
-| `button.event` | 实体按键动作 | `key`、`action` | `key` ∈ `green` / `red` / `side`；`action` ∈ `press` / `release` / `long_press` |
+| `touch.event` | 触摸动作 | `target`、`action` | `target` 取设备端触摸控件标识符（见 §3.2）；`action` ∈ `tap` / `long_press` |
 | `task.confirm` | 用户确认 | `task_id`、`answer` | 二元确认，用于低置信度信息。`answer` ∈ `yes` / `no` |
 | `ping` | 保活 | 无 | 服务端以 `pong` 响应 |
 
@@ -65,18 +65,32 @@ offset 8..    payload    pcm_s16le
 
 固定 8 字节头。`seq` 从 0 开始，同一 `session_id` 内单调递增，不因重连归零（归零会与服务端去重冲突）。
 
-### 3.2 设备端物理事件到协议消息的映射
+### 3.2 触摸控件到协议消息的映射
 
-设备端源码里习惯用 `GREEN_DOWN` 这类事件名，wire 上一律转成 `button.event`。这张表是转换器，两侧命名不再各写一套。
+设备端是一块 10.1 寸触摸屏（`docs/specs/device-ia.md` §2），没有物理按键。控件标识符与 `touch.event.target` 的取值逐一对应，两侧不再各写一套。
 
-| 设备端物理事件 | 协议消息 |
-| --- | --- |
-| `GREEN_DOWN` | `button.event { key: "green", action: "press" }` |
-| `GREEN_UP` | `button.event { key: "green", action: "release" }` |
-| `RED_LONG` | `button.event { key: "red", action: "long_press" }` |
-| `SIDE` | `button.event { key: "side", action: "press" }` |
+**常驻底栏（每屏都在）**
 
-`action` 的 `release` 是 v0.1 相对 11 号 §4.4.3 的追加值（原表只有 `press` / `long_press`）。绿键有按下与松开两态，缺 `release` 无法表达「按住说话」的结束。属次版本兼容追加，不破坏既有语义。
+| 控件 | `target` | 上行 | 说明 |
+| --- | --- | --- | --- |
+| 按住说话 | `mic` | `audio.start` / `audio.end` | 按下发 `audio.start`，松开发 `audio.end`，**不产生 `touch.event`** |
+| 返回 | `back` | 不上行 | 纯本地退一屏，不退节点 |
+| 主菜单 | `menu` | 不上行 | 纯本地换屏 |
+| 一键求助 | `sos` | `touch.event { target: "sos", action: "long_press" }` | 长按 1.5 秒触发；单击两次（3 秒内）等价，发 `action: "tap"` |
+
+**屏内控件**
+
+| 控件 | `target` | 上行 | 说明 |
+| --- | --- | --- | --- |
+| 主操作按钮 | `primary` | `touch.event { target: "primary", action: "tap" }` | 具体语义由当前节点决定，服务端按 `EpisodeStatus` 解释 |
+| 选项胶囊 | `option:<slot_id>` | `touch.event { target: "option:<slot_id>", action: "tap" }` | `slot_id` 由服务端在 `dialog.reply.slots` 下发，设备端只回传 |
+| 设置面板 | — | 不上行 | 音量、语速、方言、高对比、助听器、陪伴开关全部本地生效 |
+
+**只有 4 类触摸产生上行消息**：`mic` 走音频帧，`primary` 与 `option:*` 走 `touch.event`，`sos` 走 `touch.event` 的 `long_press`。`back` / `menu` 与设置面板是纯本地交互，**不得**上行 —— 换屏不改 `EpisodeStatus`，上行只会让服务端多一批无意义帧。
+
+`primary` 的语义为什么不由设备端自己定：同一个按钮在 `BRIEFING` 是「我听明白了」，在 `REGISTER` 是「确认挂号」，在 `RECAP` 是「对，记住了」。设备端若自己映射，等于把状态机搬进了客户端，违反 §10 第 1 条。按钮的**文案由服务端下发**（`dialog.reply.primary_label`），设备端只负责画与回传 `target`。
+
+这条设计与「设备端只做渲染与采集，不做业务判断」不冲突：本地控件改的是**渲染参数**（音量、语速、当前屏、陪伴开关），不改业务状态。
 
 ---
 
@@ -90,12 +104,12 @@ offset 8..    payload    pcm_s16le
 | `asr.partial` | 识别过程中 | `text`、`confidence` | 用于即时字幕，可高频覆盖 |
 | `asr.final` | 识别完成 | `text`、`confidence` | 置信度 < 0.6 进入求证流程 |
 | `state.transition` | 状态节点跃迁 | `from`、`to`、`at` | 由服务端状态机产生，客户端据此改状态 |
-| `dialog.reply` | 话术生成完成 | `text`、`template_id`、`slots`、`audio_available` | 由三层话术管线产出 |
+| `dialog.reply` | 话术生成完成 | `text`、`template_id`、`slots`、`audio_available`、`primary_label` | 由三层话术管线产出。`primary_label` 是屏内主操作按钮的文案（可空，空则不显示主操作按钮），语义由服务端按当前节点决定，见 §3.2 |
 | `tts.audio` | 语音合成完成 | 二进制帧 | 承载 TTS 音频数据 |
 | `caption.update` | 字幕更新 | `text` | 语音降级链的末端形态 |
 | `guard.blocked` | 红线校验命中 | `rule_id`、`action` | `action` ∈ `replaced` / `escalated` |
-| `task.updated` | 任务状态变更 | `task_id`、`state` | 由工作台或状态机触发 |
-| `escalation.notice` | 升级人工 | `reason`、`target` | `target` ∈ `staff` / `family` / `both` |
+| `task.updated` | 任务状态变更 | `task_id`、`state` | 由状态机触发 |
+| `escalation.notice` | 升级人工 | `reason`、`target` | `target` ∈ `staff` / `family` / `both`。`staff` 指院内服务台，工单侧接收，不使用本项目界面 |
 | `error` | 发生错误 | `code`、`message`、`retryable` | 见 §6 |
 | `pong` | 保活响应 | 无 | 响应 `ping` |
 
@@ -147,15 +161,15 @@ offset 8..    payload    pcm_s16le
 | --- | --- | --- | --- |
 | `none` | 上述条件均未命中 | 正常播报 | — |
 | `ask_again` | `confidence.asr < 0.6`，且本问题尚未复问过 | 复述听到的原文，问「是这个意思吗」，不推进状态 | — |
-| `call_staff` | ① 同一问题连续 2 次未被理解；或 ② 用户说出「我不懂」「我找不到」「我要找人」任一（关键词命中即触发，不看置信度）；或 ③ `confidence.intent < 0.6` 连续 2 次 | 大字提示「已帮您叫陪诊师」，播报一句等待话术 | 陪诊师工作台 |
+| `call_staff` | ① 同一问题连续 2 次未被理解；或 ② 用户说出「我不懂」「我找不到」「我要找人」任一（关键词命中即触发，不看置信度）；或 ③ `confidence.intent < 0.6` 连续 2 次 | 大字提示「已帮您叫服务台」，播报一句等待话术 | 院内服务台 |
 | `call_family` | 老人 90 秒无任何上行输入（`ping` 不算输入） | 先本地提醒一次，30 秒后仍无输入则推送 | 家属端 |
-| `sos` | 跌倒、出血、疼痛自评 ≥ 7 任一命中 | 长震一次 + 大字全屏提示 + 持续播报 | 陪诊师与家属同时（`target: "both"`） |
+| `sos` | 跌倒、出血、疼痛自评 ≥ 7 任一命中 | 长震一次 + 大字全屏提示 + 持续播报 | 院内服务台与家属同时（`target: "both"`） |
 
 三句话讲清降级链（验收要求）：
 
 1. **什么情况重问**：听不清（`asr < 0.6`），复述一遍再问一次。
-2. **什么情况找陪诊师**：问两次还不懂，或用户自己说要找人，立刻转人工，不再自问。
-3. **什么情况叫家属**：90 秒没有任何动静，或出现跌倒、出血、疼痛 ≥ 7，直接通知家属，同时通知陪诊师。
+2. **什么情况找服务台**：问两次还不懂，或用户自己说要找人，立刻转人工，不再自问。
+3. **什么情况叫家属**：90 秒没有任何动静，或出现跌倒、出血、疼痛 ≥ 7，直接通知家属，同时通知服务台。
 
 升级只升不降。一次会话内 `escalation.level` 不得回落到更低级别，`sos` 之后不再出现 `ask_again`。
 
@@ -197,13 +211,13 @@ offset 8..    payload    pcm_s16le
 
 | code | 谁触发 | 设备端行为 | 是否重试 |
 | --- | --- | --- | --- |
-| `E_AUDIO_TOO_SHORT` | 设备端本地：按键时长 < 0.5 秒 | 大字提示「再按住说一次」，**不播报、不上行** | 是 |
+| `E_AUDIO_TOO_SHORT` | 设备端本地：按住说话时长 < 0.5 秒 | 大字提示「再按住说一次」，**不播报、不上行** | 是 |
 | `E_ASR_LOW_CONF` | 服务端：`confidence.asr < 0.6` | 复述听到的原文并问「是这个意思吗」，`escalation` 置 `ask_again` | 是，最多 2 次 |
 | `E_SESSION_EXPIRED` | 服务端：30 分钟无状态跃迁 | 提示「我们重新开始」，保留 `Episode` 与时间轴，不重新建单 | 否 |
 | `E_TURN_OUT_OF_ORDER` | 服务端：`seq` 跳号 | 静默发 `resend(from_seq)` 请求重传，**不打扰用户** | 是 |
 | `E_UPSTREAM_TIMEOUT` | 适配器：上游供应商超时 | 先播兜底话术（固定模板，不生成），再转 `call_staff` | 是，1 次 |
 | `E_QUOTA_LIMIT` | 适配器：供应商限流或额度耗尽 | 转人工，不重复调用上游，避免把额度烧完 | 否 |
-| `E_CONSENT_REVOKED` | 服务端：家属端撤回授权 | 家属通道无任何提示（静默失效）；陪诊师端提示「家属已撤回授权」 | 否 |
+| `E_CONSENT_REVOKED` | 服务端：家属端撤回授权 | 家属通道无任何提示（静默失效） | 否 |
 
 ### 6.3 两组之间的关系
 
@@ -281,10 +295,11 @@ offset 8..    payload    pcm_s16le
 
 | 追加项 | 相对 | 理由 |
 | --- | --- | --- |
-| `button.event.action` 增 `release` | 11 号 §4.4.3 | 绿键按下/松开两态 |
 | `ack` 消息 | 11 号 §4.4.3 未列 | §7.1 送达确认需要 |
 | `resend` / `resend.failed` | 11 号 §4.4.3 未列 | §7.2 补帧需要 |
 | `error.code` 增 `E_` 前缀 | 11 号 §4.4.5 | 统一 wire 格式 |
+| `touch.event` 的 `target` 取值集合 | 11 号 §4.4.3 未列 | 设备端为 10.1 寸触摸屏（ADR-017），控件标识符需在 wire 上可判别 |
+| `dialog.reply.primary_label` | 11 号 §4.4.4 未列 | 屏内主操作的文案由服务端按状态节点下发，设备端不自行映射 |
 
 ---
 
@@ -307,7 +322,7 @@ W1 的可收发验证载体，`tools/mock_ws.py`。W3 由 Django Channels 接 80
 | --- | --- |
 | 依赖 | `websockets`（已在 `requirements-dev.txt`，不进生产依赖） |
 | 端口 | 8090（可用 `--port` 覆盖） |
-| 行为 | 收到 `button.event` 或旧格式 `key` 消息，回一条固定 `turn_result` |
+| 行为 | 收到 `touch.event` 或 `text.input` 消息，回一条固定 `turn_result` |
 | 固定值 | `flow.total = 11`、`flow.step = "NAVIGATE"`、`flow.step_index = 8`、`escalation.level = "none"` |
 
 启动与自检：
@@ -319,7 +334,7 @@ python tools/mock_ws.py
 
 # 终端 2
 websocat ws://127.0.0.1:8090 -t
-{"type":"button.event","session":"s_001","key":"green","action":"press"}
+{"type":"touch.event","session":"s_001","target":"primary","action":"tap"}
 ```
 
 期望收到一条 `turn_result`，其中 `caption.text` 为中文且不乱码，`flow.total` 为 11。
@@ -334,7 +349,7 @@ W1 交付验收，三条全过才算冻结。
 
 | # | 验收项 | 怎么验 | 现状 |
 | --- | --- | --- | --- |
-| 1 | mock 能打通 | 起 `python tools/mock_ws.py`，websocat 发一条 `button.event`，收到 `turn_result` | 待跑 |
+| 1 | mock 能打通 | 起 `python tools/mock_ws.py`，websocat 发一条 `touch.event`，收到 `turn_result` | 待跑 |
 | 2 | 每个错误码都有「设备端行为」且是句子 | 本节 §6 逐行读，14 个码全部有整句描述 | 通过 |
 | 3 | 降级链能用三句话讲清 | §5 末尾三句话 | 通过 |
 | 4 | 断线续传三问有答案 | §7.1 / §7.2 / §7.3 | 通过 |

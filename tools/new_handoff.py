@@ -4,7 +4,7 @@
 
 用法：
     python tools/new_handoff.py --module 领域模型 --owner T1 --week 1
-    python tools/new_handoff.py --module console-shell --owner T4
+    python tools/new_handoff.py --module device-ui --owner T4
 """
 from __future__ import annotations
 

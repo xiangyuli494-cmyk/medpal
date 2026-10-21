@@ -4,7 +4,7 @@
 
 协议来源：docs/api/ws-protocol.md（v0.1）。本文件只实现其中用于自检的最小子集：
   - session.hello  → session.ready
-  - button.event   → turn_result（旧格式 type=key 兼容）
+  - touch.event    → turn_result（target 取设备端触摸控件标识符）
   - text.input     → turn_result
   - ping           → pong
   - ack            → 静默记录，不回复
@@ -16,8 +16,8 @@
 
 自检：
     websocat ws://127.0.0.1:8090 -t
-    {"type":"session.hello","protocol_version":"0.1","device_id":"dev_001","episode_id":"ep_001","client":"device","accessibility_mode":"elder"}
-    {"type":"button.event","session":"s_001","key":"green","action":"press"}
+    {"type":"session.hello","protocol_version":"0.4","device_id":"dev_001","episode_id":"ep_001","client":"device","accessibility_mode":"elder"}
+    {"type":"touch.event","session":"s_001","target":"primary","action":"tap"}
     {"type":"ping"}
 """
 import argparse
@@ -26,7 +26,7 @@ import json
 
 import websockets
 
-PROTOCOL_VERSION = "0.1"
+PROTOCOL_VERSION = "0.4"
 
 TURN = {
     "type": "turn_result",
@@ -38,6 +38,7 @@ TURN = {
     "flow": {"step": "NAVIGATE", "step_index": 8, "total": 11, "why": "抽血要空腹"},
     "escalation": {"level": "none"},
     "confidence": {"asr": 0.91, "intent": 0.88},
+    "primary_label": "我到了",
 }
 
 READY = {
@@ -61,7 +62,7 @@ async def handler(ws) -> None:
             await ws.send(json.dumps(READY, ensure_ascii=False))
         elif kind == "ping":
             await ws.send(json.dumps({"type": "pong"}, ensure_ascii=False))
-        elif kind in ("button.event", "text.input", "key"):
+        elif kind in ("touch.event", "text.input"):
             await ws.send(json.dumps(TURN, ensure_ascii=False))
         # ack / resend / control.barge_in / task.confirm：mock 静默接受，不回复。
 

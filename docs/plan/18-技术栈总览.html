@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>小暖陪诊 · 技术栈总览</title>
+<title>院内智慧陪诊终端 · 技术栈总览</title>
 <style>
 :root{
   --bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
@@ -118,7 +118,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <div class="tag">TECH STACK · 技术栈总览</div>
     <h1>本项目需要用到的技术栈</h1>
     <div class="lead">
-      一个后端内核 + 四个网页通道 + 一套 AI 适配层 + 一套测试工程体系。全部选型已冻结为 ADR-001 – ADR-014，变更须走 ADR 流程。
+      一个后端内核 + 三个网页端 + 一套 AI 适配层 + 一套测试工程体系。全部选型已冻结为 ADR-001 – ADR-017，变更须走 ADR 流程。
     </div>
     <div class="chips">
       <span class="chip k">Python 3.12</span>
@@ -137,16 +137,15 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 
 <h2><span class="num">01</span>分层架构</h2>
-<div class="chap-note">这张图就是全部技术栈的骨架。上四层是网页，下面两层是同一个后端。</div>
+<div class="chap-note">这张图就是全部技术栈的骨架。上三层是网页，下面两层是同一个后端。</div>
 
 <div class="arch">
   <div class="layer">
-    <div class="lh"><span>通道层 · 四个网页（全部运行在浏览器里）</span><small>前端 / Vue 3 生态</small></div>
+    <div class="lh"><span>通道层 · 三个网页（全部运行在浏览器里）</span><small>前端 / Vue 3 生态</small></div>
     <div class="boxrow">
       <div class="bx acc"><div class="n">设备端</div><div class="d">Vue3 + Vite</div></div>
       <div class="bx acc"><div class="n">用户端</div><div class="d">uni-app → H5</div></div>
       <div class="bx acc"><div class="n">家属端</div><div class="d">Vue3 + Vant</div></div>
-      <div class="bx acc"><div class="n">陪诊师工作台</div><div class="d">Vue3 + Element Plus</div></div>
     </div>
   </div>
   <div class="arrow">▼ 全部走同一套 REST + WebSocket ▲</div>
@@ -164,7 +163,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
   <div class="layer">
     <div class="lh"><span>领域层 · 纯 Python 零框架依赖（覆盖率必须 100%）</span><small>本项目技术含量最高的一层</small></div>
     <div class="boxrow">
-      <div class="bx grn"><div class="n">状态机</div><div class="d">9 节点 + 8 跨切面</div></div>
+      <div class="bx grn"><div class="n">状态机</div><div class="d">11 节点 + 8 跨切面</div></div>
       <div class="bx grn"><div class="n">话术引擎</div><div class="d">模板 → LLM → 红线</div></div>
       <div class="bx grn"><div class="n">规划引擎</div><div class="d">约束打分排序</div></div>
       <div class="bx grn"><div class="n">禁忌校验</div><div class="d">剂量 / 过敏 / 重复</div></div>
@@ -222,7 +221,6 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <tr><td class="k">设备端</td><td>Vue 3 + Composition API</td><td>自研大字号组件</td><td class="p">Vite</td><td>全屏 Kiosk 模式，无地址栏无滚动条；三模式（老人 / 视障 / 听障）</td><td class="adr">ADR-002</td></tr>
     <tr><td class="k">用户端</td><td>uni-app（Vue 3 语法）</td><td>uni-ui</td><td class="p">uni-app CLI</td><td>编译为 H5；既有代码库即此形态，迁移成本高于收益</td><td class="adr">ADR-004</td></tr>
     <tr><td class="k">家属端</td><td>Vue 3</td><td>Vant 4</td><td class="p">Vite</td><td>移动端 H5，微信内打开；不做独立 App</td><td class="adr">ADR-005</td></tr>
-    <tr><td class="k">陪诊师工作台</td><td>Vue 3</td><td>Element Plus</td><td class="p">Vite</td><td>桌面端表格与多面板，信息密度高</td><td class="adr">—</td></tr>
   </tbody>
 </table>
 
@@ -257,7 +255,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
   <tbody>
     <tr><td class="k">语音识别 ASR</td><td class="p">DashScope qwen3-asr-flash</td><td>HTTP + 流式</td><td>设备端语音输入、老人对话</td><td>云 ASR → 浏览器原生 → 仅字幕</td></tr>
     <tr><td class="k">语音合成 TTS</td><td class="p">DashScope qwen3-tts-flash</td><td>HTTP</td><td>全通道朗读、视障导航播报</td><td>云 TTS → 浏览器 speechSynthesis → 仅字幕</td></tr>
-    <tr><td class="k">识单 OCR</td><td class="p">DashScope 多模态模型</td><td>HTTP 图像输入</td><td>检查单、处方单字段提取</td><td>模型 → 正则兜底 → 人工校对</td></tr>
+    <tr><td class="k">识单 OCR</td><td class="p">DashScope 多模态模型</td><td>HTTP 图像输入</td><td>检查单、处方单字段提取</td><td>模型 → 正则兜底 → 低置信度当场追问</td></tr>
     <tr><td class="k">话术润色 LLM</td><td class="p">qwen 系列</td><td>HTTP</td><td>只做措辞润色，不做医学判断</td><td>LLM 失败直接回退模板</td></tr>
     <tr><td class="k">知识图谱</td><td class="p">Neo4j（条件 C2）</td><td>Bolt</td><td>症状 → 科室映射，条件交付</td><td>不启用时走规则表</td></tr>
   </tbody>
@@ -329,15 +327,15 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 <h2><span class="num">07</span>硬件技术栈（条件交付）</h2>
 
 <div class="box warn">
-  <b>硬件不承载主流程演示。</b>主演示载体是平板浏览器（ADR-014）。硬件只负责按键与震动，不承担任何业务判断与端侧模型（ADR-003）。
+  <b>硬件不承载主流程演示。</b>主演示载体是 10.1 寸触摸屏（ADR-014）。硬件只负责显示、触摸与震动，不承担任何业务判断与端侧模型（ADR-003）。
 </div>
 
 <table>
   <thead><tr><th>件</th><th>型号 / 技术</th><th>职责</th><th>状态</th></tr></thead>
   <tbody>
-    <tr><td class="k">主控</td><td class="p">树莓派 Zero 2W + 4 寸屏</td><td>跑 Chromium Kiosk，开机直达网页</td><td><span class="tag c">条件 C4</span></td></tr>
-    <tr><td class="k">按键</td><td class="p">ESP32-C3 + MicroPython</td><td>一键求助，按下即上报事件</td><td><span class="tag c">条件 C3</span></td></tr>
-    <tr><td class="k">反馈</td><td class="p">震动马达 + 杜邦线</td><td>确认短震两下 / 出错长震一下</td><td><span class="tag c">条件 C3</span></td></tr>
+    <tr><td class="k">主控</td><td class="p">树莓派 Zero 2W + 10.1 寸触摸屏</td><td>跑 Chromium Kiosk，开机直达网页</td><td><span class="tag c">条件 C4</span></td></tr>
+    <tr><td class="k">触摸</td><td class="p">10.1 寸电容触摸屏（800×1280）</td><td>唯一交互面：底栏 + 主操作 + 选项</td><td><span class="tag c">条件 C3</span></td></tr>
+    <tr><td class="k">反馈</td><td class="p">震动马达 + 驱动板</td><td>确认短震两下 / 出错长震一下</td><td><span class="tag c">条件 C3</span></td></tr>
     <tr><td class="k">外壳</td><td>3D 打印</td><td>整机外观</td><td><span class="tag c">条件 C6</span></td></tr>
     <tr><td class="k">系统</td><td class="p">Raspberry Pi OS + Chromium</td><td>Kiosk 启动参数</td><td><span class="tag c">条件 C4</span></td></tr>
   </tbody>
@@ -386,7 +384,7 @@ python -c "import django; print(django.get_version())"
 pytest --version</code></pre>
 
 <h3>前端</h3>
-<pre><code><span class="c"># 四个网页工程分别装</span>
+<pre><code><span class="c"># 三个网页工程分别装</span>
 npm create vite@latest device-web -- --template vue
 npm install vue-router pinia axios
 npm install -D vitest @testing-library/vue @playwright/test @axe-core/playwright \
@@ -394,9 +392,8 @@ npm install -D vitest @testing-library/vue @playwright/test @axe-core/playwright
 
 <span class="c"># 用户端（uni-app）</span>
 npx degit dcloudio/uni-preset-vue#vite user-web
-<span class="c"># 家属端 / 工作台</span>
-npm install vant        <span class="c"># 家属端</span>
-npm install element-plus <span class="c"># 工作台</span>
+<span class="c"># 家属端</span>
+npm install vant
 
 <span class="c"># 浏览器内核（E2E 用）</span>
 npx playwright install chromium</code></pre>
@@ -437,8 +434,8 @@ make test</code></pre>
 </div>
 
 <footer>
-  <b>小暖陪诊 · 技术栈总览</b>　|　口径依据：<code>00-项目工期与范围基线.md</code>、<code>11-技术方案与接口契约.md</code><br>
-  完整选型理由见 11 号文件 2.1 选型总表（20 行）与 ADR-001 – ADR-014；已否决方案见 11 号文件 2.2 节。<br>
+  <b>院内智慧陪诊终端 · 技术栈总览</b>　|　口径依据：<code>00-项目工期与范围基线.md</code>、<code>11-技术方案与接口契约.md</code><br>
+  完整选型理由见 11 号文件 2.1 选型总表（20 行）与 ADR-001 – ADR-017；已否决方案见 11 号文件 2.2 节。<br>
   与本页冲突时，以 11 号文件为准。
 </footer>
 

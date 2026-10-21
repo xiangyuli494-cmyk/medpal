@@ -1,7 +1,7 @@
 # 领域模型 v0.1
 
 > 状态：W1 冻结最小可用字段集，W2 评审确认冻结。
-> 契约来源：`docs/plan/11-技术方案与接口契约.md` §4.3（实体字段）、§4.3.9（最小可用字段集与冻结口径）。
+> 契约来源：`docs/plan/11-技术方案与接口契约.md` §4.3（实体字段）、§4.3.8（最小可用字段集与冻结口径）。
 > 状态机来源：`docs/plan/02-系统设计规格说明书.md` §3.3（11 个节点）。
 > 口径裁决：`W1-开工包/04-口径裁决表.md` 第 1、4、11、12 条。
 > 本文件是字段口径的唯一来源。11 号 §4.3 为契约级摘要，两者冲突时以本文件为准，并回头修 11 号。
@@ -10,22 +10,21 @@
 
 ## 1 实体总览
 
-10 个实体：11 号 §4.3 的 9 个，加 04 号裁决第 11 条补的 Media。
+9 个实体：11 号 §4.3 的 8 个，加 04 号裁决第 11 条补的 `Media`。
 
 | # | 实体 | 中文 | 最小可用字段数 | 可延后字段数 | 冻结版本 | 来源 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `Episode` | 陪诊单 | 8 | 2 | v0.1（W2） | 11 号 §4.3.1 |
+| 1 | `Episode` | 陪诊单 | 7 | 2 | v0.1（W1） | 11 号 §4.3.1 |
 | 2 | `Timeline` | 时间轴 | 5 | 1 | v0.1（W2） | 11 号 §4.3.2 |
 | 3 | `Task` | 待办任务 | 6 | 1 | v0.1（W2） | 11 号 §4.3.3 |
 | 4 | `Memory` | 长期记忆 | 3 | 2 | v0.1（W2） | 11 号 §4.3.4 |
 | 5 | `Consent` | 授权 | 5 + 1 规则项 | 0 | v0.1（W2） | 11 号 §4.3.5 |
 | 6 | `AuditLog` | 调用留痕 | 7 | 1 | v0.1（W2） | 11 号 §4.3.6 + 裁决 12 |
-| 7 | `Handover` | 交接单 | 7 | 0 | v0.1（W2） | 11 号 §4.3.7 |
-| 8 | `User` | 用户 | 3 | 1 | v0.1（W2） | 11 号 §4.3.8 |
-| 9 | `AccessibilityProfile` | 无障碍档案 | 3 | 3 | v0.1（W2） | 11 号 §4.3.8 |
-| 10 | `Media` | 材料 | 5 | 0 | v0.1（W2） | 04 号裁决 11 |
+| 7 | `User` | 用户 | 3 | 1 | v0.1（W1） | 11 号 §4.3.7 |
+| 8 | `AccessibilityProfile` | 无障碍档案 | 3 | 3 | v0.1（W2） | 11 号 §4.3.7 |
+| 9 | `Media` | 材料 | 5 | 0 | v0.1（W2） | 04 号裁决 11 |
 
-主干实体是 `Episode`。四端（设备端、用户端、家属端、陪诊师工作台）读写的都是同一个 `Episode`，这是「四端一内核」在数据层的落点。
+主干实体是 `Episode`。三端（设备端、用户端、家属端）读写的都是同一个 `Episode`，这是「一端三通道」在数据层的落点。设备端是本体，用户端与家属端是它的两个远程延伸。
 
 ---
 
@@ -58,7 +57,7 @@ class EpisodeStatus(StrEnum):
 
 | # | 状态 | 进入条件 | 出口条件 | 可被打断 | 时间轴写入 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | `ARRIVED` | 设备扫码或陪诊师接单，`Episode` 创建 | 用户确认到院 → `BRIEFING` | 是 | 到院时刻、确认方式 |
+| 1 | `ARRIVED` | 设备刷身份证建档或扫号票绑定，`Episode` 创建 | 用户确认到院 → `BRIEFING` | 是 | 到院时刻、确认方式 |
 | 2 | `BRIEFING` | `ARRIVED` 出口 | 当日行程播报完毕 → `REGISTER` | 是 | 播报文本、是否被打断重播 |
 | 3 | `REGISTER` | `BRIEFING` 出口 | 取号成功（号票号写入 `Task`） → `WAITING` | 是 | 科室、号序、排队人数 |
 | 4 | `WAITING` | `REGISTER` 出口 | 叫号（剩余 ≤ 3 位时提醒） → `IN_ROOM` | 是 | 每次叫号提醒、当前号序 |
@@ -109,8 +108,8 @@ class EpisodeStatus(StrEnum):
 | 触发语句 | 兜底分支 | 处理完回到 |
 | --- | --- | --- |
 | 「我不懂」 | 换一种说法重讲当前节点要点 | 原节点 |
-| 「我找不到」 | 重新导航或呼叫陪诊师 | 原节点（导航类节点回到 `NAVIGATE`） |
-| 「我要找人」 | 转陪诊师，会话不断开 | 原节点 |
+| 「我找不到」 | 重新导航，或推送服务台工单 | 原节点（导航类节点回到 `NAVIGATE`） |
+| 「我要找人」 | 转院内服务台，会话不断开 | 原节点 |
 
 `FALLBACK` 不是第 12 个状态，它是所有节点共享的子状态机，`Episode.status` 在兜底期间保持原值不变，只额外记 `fallback_from`。
 
@@ -137,12 +136,11 @@ class EpisodeStatus(StrEnum):
 | --- | --- | --- | --- | --- |
 | 陪诊单标识 | `id` | 最小可用 | str | 全局唯一 |
 | 状态 | `status` | 最小可用 | `EpisodeStatus` | 见 §2.1 |
-| 陪诊师 | `companions` | 最小可用 | list[`Companion`] | 参与本单的陪诊师 |
+| 院内对接人 | `staff_contact` | 最小可用 | str \| None | 服务台或导医台当班人员的工号，用于升级工单派员与回执；用户自助完成全程时为空 |
 | 授权记录 | `consents` | 最小可用 | list[`Consent`] | 见 §3.5 |
 | 时间轴 | `timeline` | 最小可用 | list[`Timeline`] | 见 §3.2 |
 | 待办任务 | `tasks` | 最小可用 | list[`Task`] | 见 §3.3 |
 | 材料 | `media` | 最小可用 | list[`Media`] | 见 §3.10 |
-| 交接记录 | `handovers` | 最小可用 | list[`Handover`] | 见 §3.7 |
 | 事件流 | `events` | 可延后 | list[`Event`] | 与 `timeline` 重叠，W4 前只保留时间戳与类型 |
 | 陪诊小结 | `summary` | 可延后 | str | W6 前只存自由文本，不定义结构 |
 
@@ -166,9 +164,9 @@ class EpisodeStatus(StrEnum):
 | 任务标识 | `id` | 最小可用 | str | |
 | 所属陪诊单 | `episode_id` | 最小可用 | str | 外键 |
 | 标题 | `title` | 最小可用 | str | 一句话说清要做什么 |
-| 类型 | `type` | 最小可用 | enum | `exam` / `payment` / `pickup` / `handover` / `escalation` |
+| 类型 | `type` | 最小可用 | enum | `exam` / `payment` / `pickup` / `delivery` / `escalation`。`delivery` 对应材料「已交付」确认，不是签署 |
 | 状态 | `status` | 最小可用 | `TaskStatus` | `pending` / `doing` / `done` / `escalated` |
-| 责任人 | `owner` | 最小可用 | str | 陪诊师或系统角色 |
+| 责任人 | `owner` | 最小可用 | str | 院内人员工号或系统角色 |
 | 证据引用 | `evidence` | 可延后 | str | 指向 `Timeline` 或 `Media`；W4 前用 `timeline` 外键替代 |
 
 ### 3.4 Memory 长期记忆
@@ -204,37 +202,21 @@ class EpisodeStatus(StrEnum):
 | 输出 | `output` | 最小可用 | text | 模型返回内容 |
 | 模型 | `model` | 最小可用 | str | 供应商标识与型号 |
 | 耗时 | `latency_ms` | 最小可用 | int | 单次调用耗时（毫秒） |
-| 是否被人工修正 | `corrected` | 最小可用 | bool | 人工校对结果标记 |
-| 所属陪诊单 | `episode_id` | 最小可用 | str | **裁决 12 新增**，缺它工作台查不到「这句是哪单的」 |
+| 是否被人工修正 | `corrected` | 最小可用 | bool | 设备端当场追问后用户改口的结果标记 |
+| 所属陪诊单 | `episode_id` | 最小可用 | str | **裁决 12 新增**，缺它审计查不到「这句是哪单的」 |
 | 所属节点 | `status` | 最小可用 | `EpisodeStatus` | **裁决 12 新增**，缺它查不到「哪个节点说的」 |
 | 成本 | `cost` | 可延后 | decimal | 单次调用费用 |
 
-### 3.7 Handover 交接单
-
-材料交接双签记录。签字属 AI 禁入区，系统只做提醒与留痕，不代签。
-
-| 字段 | 标识符 | 分类 | 类型 | 说明 |
-| --- | --- | --- | --- | --- |
-| 交接标识 | `id` | 最小可用 | str | |
-| 所属陪诊单 | `episode_id` | 最小可用 | str | 外键 |
-| 材料清单 | `items` | 最小可用 | list[str] | 引用 `Media.id` |
-| 交接双方 | `parties` | 最小可用 | list[str] | 交出方与接收方 |
-| 双签时间戳 | `signed_at` | 最小可用 | datetime | 双方签署时刻 |
-| 存证 | `evidence` | 最小可用 | str | 签署证据引用（哈希） |
-| 人工修正留痕 | `corrections` | 最小可用 | list[`Correction`] | 修正人、修正时间、修正内容与原文 |
-
-`Correction` 结构：`{by, at, before, after}`。`before` 必填，否则无法证明改了什么。
-
-### 3.8 User 用户
+### 3.7 User 用户
 
 | 字段 | 标识符 | 分类 | 类型 | 说明 |
 | --- | --- | --- | --- | --- |
 | 用户标识 | `id` | 最小可用 | str | |
-| 角色 | `role` | 最小可用 | enum | `elder` / `family` / `companion` / `staff` |
+| 角色 | `role` | 最小可用 | enum | `elder` / `family` / `staff` |
 | 通道偏好 | `channel_pref` | 最小可用 | enum | `elder` / `vision` / `hearing` / `standard` |
 | 方言偏好 | `dialect` | 可延后 | str | W5 真实 ASR 接入前不启用 |
 
-### 3.9 AccessibilityProfile 无障碍档案
+### 3.8 AccessibilityProfile 无障碍档案
 
 | 字段 | 标识符 | 分类 | 类型 | 说明 |
 | --- | --- | --- | --- | --- |
@@ -245,9 +227,9 @@ class EpisodeStatus(StrEnum):
 | 行动 | `mobility` | 可延后 | str | |
 | 识字 | `literacy` | 可延后 | str | |
 
-### 3.10 Media 材料
+### 3.9 Media 材料
 
-04 号裁决第 11 条新增。11 号只在 `Episode` 里写了 `media[]`，没有字段定义；`Handover.items` 要引用它，缺了没法做双签。
+04 号裁决第 11 条新增。11 号只在 `Episode` 里写了 `media[]`，没有字段定义；`Timeline` 与 `Task.evidence` 要引用它，缺了没法留痕。
 
 | 字段 | 标识符 | 分类 | 类型 | 说明 |
 | --- | --- | --- | --- | --- |
@@ -255,7 +237,7 @@ class EpisodeStatus(StrEnum):
 | 所属陪诊单 | `episode_id` | 最小可用 | str | 外键 |
 | 类型 | `kind` | 最小可用 | enum | `photo` / `audio` / `document` |
 | 置信度 | `confidence` | 最小可用 | float 0–1 | 识别结果置信度，< 0.8 触发求证 |
-| 是否人工校对 | `human_checked` | 最小可用 | bool | 陪诊师是否已核对 |
+| 是否人工校对 | `human_checked` | 最小可用 | bool | 是否已由院内人员或用户本人核对 |
 
 ---
 
@@ -268,7 +250,6 @@ User 1 ── 1 AccessibilityProfile
 Episode 1 ──< Timeline
 Episode 1 ──< Task
 Episode 1 ──< Media
-Episode 1 ──< Handover
 Episode 1 ──< AuditLog（经 episode_id）
 Episode 1 ──< Consent
 ```
@@ -281,8 +262,7 @@ Episode 1 ──< Consent
 重新生成：
 
 ```bash
-java -jar ../.tools/plantuml.jar -tsvg -o docs/specs docs/specs/domain-model.puml
-java -jar ../.tools/plantuml.jar -tpng -o docs/specs docs/specs/domain-model.puml
+cd docs/specs && java -jar ../../.tools/plantuml.jar -charset UTF-8 -tsvg domain-model.puml && java -jar ../../.tools/plantuml.jar -charset UTF-8 -tpng domain-model.puml && mv domain-model-er.svg er.svg && mv domain-model-er.png er.png
 ```
 
 ---
@@ -291,21 +271,20 @@ java -jar ../.tools/plantuml.jar -tpng -o docs/specs docs/specs/domain-model.pum
 
 | 实体 | 最小可用字段集 | 可延后字段 | 冻结版本 |
 | --- | --- | --- | --- |
-| `Episode` | `id`、`status`、`companions`、`consents`、`timeline`、`tasks`、`media`、`handovers` | `events`、`summary` | v0.1（W2） |
+| `Episode` | `id`、`status`、`staff_contact`、`consents`、`timeline`、`tasks`、`media` | `events`、`summary` | v0.1（W1 修订） |
 | `Timeline` | `episode_id`、`at`、`type`、`visibility`、`source` | `node` | v0.1（W2） |
 | `Task` | `id`、`episode_id`、`title`、`type`、`status`、`owner` | `evidence` | v0.1（W2） |
 | `Memory` | `user_id`、`allergy`、`salutation` | `last_result`、`problems` | v0.1（W2） |
 | `Consent` | `grantor`、`grantee`、`scope`、`status`、`revoked_at`、`rule` | 无 | v0.1（W2） |
 | `AuditLog` | `input`、`output`、`model`、`latency_ms`、`corrected`、`episode_id`、`status` | `cost` | v0.1（W2） |
-| `Handover` | `id`、`episode_id`、`items`、`parties`、`signed_at`、`evidence`、`corrections` | 无 | v0.1（W2） |
-| `User` | `id`、`role`、`channel_pref` | `dialect` | v0.1（W2） |
+| `User` | `id`、`role`、`channel_pref` | `dialect` | v0.1（W1） |
 | `AccessibilityProfile` | `user_id`、`vision`、`hearing` | `cognitive`、`mobility`、`literacy` | v0.1（W2） |
 | `Media` | `id`、`episode_id`、`kind`、`confidence`、`human_checked` | 无 | v0.1（W2） |
 
-冻结口径（照 11 号 §4.3.9 执行，与 04 号裁决第 4 条一致）：
+冻结口径（照 11 号 §4.3.8 执行，与 04 号裁决第 4 条一致）：
 
 1. W2 冻结评审**仅受理上表「最小可用字段集」列**。可延后字段不进冻结范围，也不得以「先留位置」为由预置空字段。
-2. 可延后字段的追加时点在 W4 前，以 v0.2 次版本号追加，追加须同时更新本文件、OpenAPI 定义与契约测试。
+2. 可延后字段的追加时点在 W4 前，以次版本号追加，追加须同时更新本文件、OpenAPI 定义与契约测试。
 3. W4 范围冻结后新增字段一律转技术债台账，不在本周期实现。
 4. W1 冻结的是**最小可用字段集的形状**（字段名、类型、归属），W2 评审确认后进入实现。这条落实 04 号裁决第 4 条。
 
@@ -323,7 +302,7 @@ java -jar ../.tools/plantuml.jar -tpng -o docs/specs docs/specs/domain-model.pum
 | I4 | `Consent.status == revoked` 后，该通道即时不可见 | 撤销后立刻查询家属端可见性 |
 | I5 | 每次 AI 调用写一条 `AuditLog`，且 `episode_id`、`status` 非空 | 适配器层打点断言 |
 | I6 | `Media.confidence < 0.8` 时 `human_checked` 必须为 `false` 且进入求证 | 识单流程断言 |
-| I7 | `Handover.corrections[*].before` 非空 | 修正写入前校验 |
+| I7 | `Media.human_checked` 为 `true` 时必须有对应的 `Timeline` 留痕 | 识单流程断言 |
 | I8 | `Memory` 按 `user_id` 唯一，跨 `Episode` 复用 | 建单时读取断言 |
 
 ---
@@ -334,10 +313,10 @@ java -jar ../.tools/plantuml.jar -tpng -o docs/specs docs/specs/domain-model.pum
 
 | # | 差异 | 依据 | 影响面 |
 | --- | --- | --- | --- |
-| D1 | 新增 `Media` 实体（5 字段） | 04 号裁决 11 | `Episode.media`、`Handover.items` |
-| D2 | `AuditLog` 补 `episode_id`、`status` | 04 号裁决 12 | 陪诊师工作台查询、审计导出 |
-| D3 | 状态枚举由中文序列改为大写下划线 11 个 | 04 号裁决 1、19 号步骤 2 | 四端全部 |
-| D4 | `User` 补 `id` 字段 | 11 号 §4.3.8 表格漏了主键 | `Consent`、`Memory`、`AccessibilityProfile` 外键 |
+| D1 | 新增 `Media` 实体（5 字段） | 04 号裁决 11 | `Episode.media`、`Timeline` |
+| D2 | `AuditLog` 补 `episode_id`、`status` | 04 号裁决 12 | 审计导出 |
+| D3 | 状态枚举由中文序列改为大写下划线 11 个 | 04 号裁决 1、19 号步骤 2 | 三端全部 |
+| D4 | `User` 补 `id` 字段 | 11 号 §4.3.7 表格漏了主键 | `Consent`、`Memory`、`AccessibilityProfile` 外键 |
 | D5 | `Consent.rule` 明确标注为规则项而非存储字段 | 11 号 §4.3.5 原文即如此写，此处显式化 | 建表时不得生成该列 |
 | D6 | 字段名由中文改为中文名 + `snake_case` 标识符双列 | 18 号要求「每个术语对应唯一代码标识符」 | 全项目命名 |
 | D7 | `Timeline.type` 取值由中文改为英文枚举 | 与代码一致 | 设备端渲染映射 |
