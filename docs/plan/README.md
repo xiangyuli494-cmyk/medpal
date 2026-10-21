@@ -128,16 +128,10 @@ RACI 矩阵与权限制衡见 10 号文件。
 
 | 目录 | 内容 |
 | --- | --- |
-| medpal-plan-v2 | 本规划文档集 |
-| medpal-demo | 演示程序源码，v4.html 为最终融合版本 |
-| medpal | 项目代码仓库（已初始化，含 CI 骨架与规划文档副本） |
-| member-demos | 成员提交的原始原型 |
-| medpal-plan | 上一版（四人版、24 周）规划文档，仅作历史参考 |
-
-### 7.1 前期文档的沿用说明
-
-| 文档 | 状态 |
-| --- | --- |
-| medpal-plan/00-总纲 | 产品定义、强制性约束、系统分层架构、AI 能力分级继续有效 |
-| medpal-plan/06-现有代码体检与复用策略 | 继续有效，T1 须在 W1 内阅读 |
-| medpal-plan/ 其余文档 | 已由本版替代（四人版、24 周口径） |
+| `docs/plan/` | 本规划文档集（00 – 19，共 17 份，含四份 HTML 单页） |
+| `docs/proposal/` | 给医院甲方看的建设方案（对外汇报用） |
+| `docs/specs/` | 前置规范：访问控制、设备端信息架构、数据留存、NFR、毕设复用、领域模型 |
+| `docs/adr/` | 架构决策记录（ADR-000 模板、ADR-016 毕设复用、ADR-017 触摸屏形态） |
+| `docs/api/` | 会话协议 v0.1 |
+| `demo/` | 三个纯前端演示：`hospital-briefing.html` 方案演示、`device-prototype.html` 设备端原型、`v4.html` 全链路 |
+| `backend/` `device/` `frontend/` | 代码骨架，W1 只定契约，W2 起写业务 |
