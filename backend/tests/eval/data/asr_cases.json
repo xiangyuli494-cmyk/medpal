@@ -1,0 +1,22 @@
+[
+  {"id": "asr-01", "category": "正常语速", "audio": "samples/asr/01_正常_我挂的是内科.wav", "expected_text": "我挂的是内科", "keywords": ["内科"]},
+  {"id": "asr-02", "category": "正常语速", "audio": "samples/asr/02_正常_抽血在几楼.wav", "expected_text": "抽血在几楼", "keywords": ["抽血"]},
+  {"id": "asr-03", "category": "正常语速", "audio": "samples/asr/03_正常_这个检查要空腹吗.wav", "expected_text": "这个检查要空腹吗", "keywords": ["空腹"]},
+  {"id": "asr-04", "category": "正常语速", "audio": "samples/asr/04_正常_我约的是上午十点.wav", "expected_text": "我约的是上午十点", "keywords": ["十点"]},
+  {"id": "asr-05", "category": "正常语速", "audio": "samples/asr/05_正常_缴费窗口在哪儿.wav", "expected_text": "请问缴费窗口在哪儿", "keywords": ["缴费"]},
+  {"id": "asr-06", "category": "方言口音", "audio": "samples/asr/06_方言_化验单啥时候能拿.wav", "expected_text": "我想问下化验单啥时候能拿", "keywords": ["化验单"]},
+  {"id": "asr-07", "category": "方言口音", "audio": "samples/asr/07_方言_药一天吃几回.wav", "expected_text": "这个药一天吃几回", "keywords": ["几回"]},
+  {"id": "asr-08", "category": "方言口音", "audio": "samples/asr/08_方言_大夫让我去拍片子.wav", "expected_text": "大夫让我去拍片子", "keywords": ["拍片"]},
+  {"id": "asr-09", "category": "方言口音", "audio": "samples/asr/09_方言_下午还得再来一趟.wav", "expected_text": "我下午还得再来一趟不", "keywords": ["下午"]},
+  {"id": "asr-10", "category": "方言口音", "audio": "samples/asr/10_方言_挂号费多少钱.wav", "expected_text": "挂号费多少钱", "keywords": ["挂号费"]},
+  {"id": "asr-11", "category": "背景广播声", "audio": "samples/asr/11_噪声_找不到三楼B区.wav", "expected_text": "我找不到三楼 B 区", "keywords": ["三楼"]},
+  {"id": "asr-12", "category": "背景广播声", "audio": "samples/asr/12_噪声_单子交到哪儿.wav", "expected_text": "这个单子要交到哪儿", "keywords": ["单子"]},
+  {"id": "asr-13", "category": "背景广播声", "audio": "samples/asr/13_噪声_老伴儿在门口等我.wav", "expected_text": "我老伴儿在门口等我", "keywords": ["门口"]},
+  {"id": "asr-14", "category": "背景广播声", "audio": "samples/asr/14_噪声_厕所在哪个方向.wav", "expected_text": "请问厕所在哪个方向", "keywords": ["厕所"]},
+  {"id": "asr-15", "category": "背景广播声", "audio": "samples/asr/15_噪声_头晕想坐一会儿.wav", "expected_text": "我头晕，想坐一会儿", "keywords": ["头晕"]},
+  {"id": "asr-16", "category": "老人含糊", "audio": "samples/asr/16_含糊_我先干啥.wav", "expected_text": "嗯……那个……我先干啥", "keywords": ["干啥"]},
+  {"id": "asr-17", "category": "老人含糊", "audio": "samples/asr/17_含糊_我不太认字.wav", "expected_text": "我……我不太认字", "keywords": ["认字"]},
+  {"id": "asr-18", "category": "老人含糊", "audio": "samples/asr/18_含糊_这上面写的啥.wav", "expected_text": "这上面写的啥", "keywords": ["写的啥"]},
+  {"id": "asr-19", "category": "老人含糊", "audio": "samples/asr/19_含糊_那个楼在哪儿来着.wav", "expected_text": "那个楼……在哪儿来着", "keywords": ["在哪儿"]},
+  {"id": "asr-20", "category": "老人含糊", "audio": "samples/asr/20_含糊_腿不好少走点路.wav", "expected_text": "我腿不好，能不能少走点路", "keywords": ["腿"]}
+]

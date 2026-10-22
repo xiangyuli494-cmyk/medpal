@@ -1,0 +1,12 @@
+[
+  {"id": "ocr-01", "doc_type": "挂号单", "image": "samples/ocr/01_挂号单.jpg", "required_fields": ["科室", "医生", "时间"], "dose_check": false},
+  {"id": "ocr-02", "doc_type": "门诊病历首页", "image": "samples/ocr/02_病历首页.jpg", "required_fields": ["主诉", "诊断"], "dose_check": false},
+  {"id": "ocr-03", "doc_type": "检验申请单", "image": "samples/ocr/03_检验申请单.jpg", "required_fields": ["项目", "科室"], "dose_check": false},
+  {"id": "ocr-04", "doc_type": "检验报告", "image": "samples/ocr/04_检验报告.jpg", "required_fields": ["项目", "结果"], "dose_check": false},
+  {"id": "ocr-05", "doc_type": "处方单", "image": "samples/ocr/05_处方单.jpg", "required_fields": ["药品名称", "剂量", "频次"], "dose_check": true},
+  {"id": "ocr-06", "doc_type": "缴费凭证", "image": "samples/ocr/06_缴费凭证.jpg", "required_fields": ["项目", "金额"], "dose_check": false},
+  {"id": "ocr-07", "doc_type": "检查申请单", "image": "samples/ocr/07_检查申请单.jpg", "required_fields": ["部位", "时间"], "dose_check": false},
+  {"id": "ocr-08", "doc_type": "取药单", "image": "samples/ocr/08_取药单.jpg", "required_fields": ["药品名称", "数量", "剂量"], "dose_check": true},
+  {"id": "ocr-09", "doc_type": "出院小结", "image": "samples/ocr/09_出院小结.jpg", "required_fields": ["诊断", "用药", "剂量"], "dose_check": true},
+  {"id": "ocr-10", "doc_type": "医保结算单", "image": "samples/ocr/10_医保结算单.jpg", "required_fields": ["总费用", "医保支付", "自付"], "dose_check": false}
+]
