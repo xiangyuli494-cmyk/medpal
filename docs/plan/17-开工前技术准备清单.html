@@ -202,7 +202,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr data-id="t2f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Web Speech API</b><br><code>speechSynthesis</code> 中文音色</td><td><span class="lv b">B</span></td><td>知道如何降级到纯字幕</td><td>45 min</td></tr>
     <tr data-id="t2g"><td><input type="checkbox" class="chk"></td><td class="t"><b>触觉反馈</b><br><code>navigator.vibrate</code></td><td><span class="lv b">B</span></td><td>能触发短震与长震</td><td>20 min</td></tr>
     <tr data-id="t2h"><td><input type="checkbox" class="chk"></td><td class="t"><b>树莓派基础</b><br>系统烧录、SSH、systemd</td><td><span class="lv c">C</span></td><td>仅在 C4 触发时需要</td><td>—</td></tr>
-    <tr data-id="t2i"><td><input type="checkbox" class="chk"></td><td class="t"><b>触摸屏与 Kiosk 点亮</b><br>引脚、串口、蓝牙</td><td><span class="lv c">C</span></td><td>仅在 C3 触发时需要</td><td>—</td></tr>
+    <tr data-id="t2i"><td><input type="checkbox" class="chk"></td><td class="t"><b>触摸屏点亮与全屏启动</b><br>引脚、串口、蓝牙</td><td><span class="lv c">C</span></td><td>仅在 C3 触发时需要</td><td>—</td></tr>
   </tbody>
 </table>
 
@@ -225,11 +225,11 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
   <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
   <tbody>
     <tr data-id="t4a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vue 3 Composition API</b></td><td><span class="lv a">A</span></td><td>能写出按状态切屏的页面</td><td>150 min</td></tr>
-    <tr data-id="t4b"><td><input type="checkbox" class="chk"></td><td class="t"><b>大字号与高对比排版</b><br>480×800 竖屏、24pt 正文、无横向滚动</td><td><span class="lv a">A</span></td><td>能在固定视口里把一屏话排得下</td><td>120 min</td></tr>
-    <tr data-id="t4c"><td><input type="checkbox" class="chk"></td><td class="t"><b>触摸交互与命中区</b><br>底栏四控件、屏内主操作、长按求助</td><td><span class="lv a">A</span></td><td>能把每个可点元素做到 ≥88×88px 并区分点击/长按</td><td>90 min</td></tr>
+    <tr data-id="t4b"><td><input type="checkbox" class="chk"></td><td class="t"><b>大字号与高对比排版</b><br>1024×600 横屏、24px 正文、无横向滚动</td><td><span class="lv a">A</span></td><td>能在固定视口里把一屏话排得下</td><td>120 min</td></tr>
+    <tr data-id="t4c"><td><input type="checkbox" class="chk"></td><td class="t"><b>触摸交互与命中区</b><br>顶栏三控件、屏内主操作、机身长按求助</td><td><span class="lv a">A</span></td><td>能把每个可点元素做到 ≥88×88px 并区分点击/长按</td><td>90 min</td></tr>
     <tr data-id="t4d"><td><input type="checkbox" class="chk"></td><td class="t"><b>pinia 状态管理</b><br>store 定义与使用</td><td><span class="lv a">A</span></td><td>能把 episodeId 与 status 放进 store</td><td>60 min</td></tr>
     <tr data-id="t4e"><td><input type="checkbox" class="chk"></td><td class="t"><b>浏览器语音合成与采音</b><br>Web Speech、MediaRecorder</td><td><span class="lv b">B</span></td><td>知道降级链每一级怎么接</td><td>45 min</td></tr>
-    <tr data-id="t4f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Chromium Kiosk 全屏启动</b></td><td><span class="lv c">C</span></td><td>能用命令行参数把网页变成一台设备</td><td>—</td></tr>
+    <tr data-id="t4f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Chromium 全屏启动</b></td><td><span class="lv c">C</span></td><td>能用命令行参数把网页变成一台设备</td><td>—</td></tr>
   </tbody>
 </table>
 
@@ -330,7 +330,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr><td class="t"><b>T1</b></td><td>用 dataclass 定义 Episode 实体 + 写一个 pytest 并跑出覆盖率</td><td>测试通过且覆盖率有数值</td></tr>
     <tr><td class="t"><b>T2</b></td><td>起一个 Vite 页面，按钮点击切换两种状态，并录到一段音频</td><td>页面可交互、录音有输出</td></tr>
     <tr><td class="t"><b>T3</b></td><td>uni-app 新建一页并编译出 H5，手机浏览器能打开</td><td>H5 链接可访问</td></tr>
-    <tr><td class="t"><b>T4</b></td><td>用 Vue 3 起一个 480×800 页面，两个触摸目标都不小于 88×88px</td><td>点得中、量得出尺寸</td></tr>
+    <tr><td class="t"><b>T4</b></td><td>用 Vue 3 起一个 1024×600 页面，两个触摸目标都不小于 88×88px</td><td>点得中、量得出尺寸</td></tr>
     <tr><td class="t"><b>T5</b></td><td>调通一次 DashScope 接口，并写出同一个接口的 Fake 版本</td><td>真/假两份都可运行</td></tr>
     <tr><td class="t"><b>T6</b></td><td>写一个含 3 步的 Actions workflow 并跑绿，或一条 Playwright 用例</td><td>CI 绿 或 用例通过</td></tr>
   </tbody>

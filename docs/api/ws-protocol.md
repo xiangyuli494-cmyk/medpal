@@ -67,26 +67,28 @@ offset 8..    payload    pcm_s16le
 
 ### 3.2 触摸控件到协议消息的映射
 
-设备端是一块 10.1 寸触摸屏（`docs/specs/device-ia.md` §2），没有物理按键。控件标识符与 `touch.event.target` 的取值逐一对应，两侧不再各写一套。
+设备端是手持借出式陪诊机，7 寸 1024×600 横屏（`docs/specs/device-ia.md` §2、ADR-018）。屏内控件与机身五个实体键的标识符与 `touch.event.target` 的取值逐一对应，两侧不再各写一套。
 
-**常驻底栏（每屏都在）**
+**机身实体键（不看屏也能用）**
 
 | 控件 | `target` | 上行 | 说明 |
 | --- | --- | --- | --- |
+| 电源 | — | 不上行 | 借还时开关机，不产生任何消息 |
+| 音量－ / 音量＋ | — | 不上行 | 只改扬声器音量，属渲染参数 |
 | 按住说话 | `mic` | `audio.start` / `audio.end` | 按下发 `audio.start`，松开发 `audio.end`，**不产生 `touch.event`** |
-| 返回 | `back` | 不上行 | 纯本地退一屏，不退节点 |
-| 主菜单 | `menu` | 不上行 | 纯本地换屏 |
 | 一键求助 | `sos` | `touch.event { target: "sos", action: "long_press" }` | 长按 1.5 秒触发；单击两次（3 秒内）等价，发 `action: "tap"` |
 
-**屏内控件**
+**顶栏与屏内控件**
 
 | 控件 | `target` | 上行 | 说明 |
 | --- | --- | --- | --- |
+| 返回 | `back` | 不上行 | 纯本地退一屏，不退节点 |
+| 主菜单 | `menu` | 不上行 | 纯本地换屏 |
 | 主操作按钮 | `primary` | `touch.event { target: "primary", action: "tap" }` | 具体语义由当前节点决定，服务端按 `EpisodeStatus` 解释 |
 | 选项胶囊 | `option:<slot_id>` | `touch.event { target: "option:<slot_id>", action: "tap" }` | `slot_id` 由服务端在 `dialog.reply.slots` 下发，设备端只回传 |
 | 设置面板 | — | 不上行 | 音量、语速、方言、高对比、助听器、陪伴开关全部本地生效 |
 
-**只有 4 类触摸产生上行消息**：`mic` 走音频帧，`primary` 与 `option:*` 走 `touch.event`，`sos` 走 `touch.event` 的 `long_press`。`back` / `menu` 与设置面板是纯本地交互，**不得**上行 —— 换屏不改 `EpisodeStatus`，上行只会让服务端多一批无意义帧。
+**只有 4 类操作产生上行消息**：`mic` 走音频帧，`primary` 与 `option:*` 走 `touch.event`，`sos` 走 `touch.event` 的 `long_press`。`back` / `menu`、设置面板与电源、音量四键是纯本地交互，**不得**上行 —— 换屏与调音量都不改 `EpisodeStatus`，上行只会让服务端多一批无意义帧。
 
 `primary` 的语义为什么不由设备端自己定：同一个按钮在 `BRIEFING` 是「我听明白了」，在 `REGISTER` 是「确认挂号」，在 `RECAP` 是「对，记住了」。设备端若自己映射，等于把状态机搬进了客户端，违反 §10 第 1 条。按钮的**文案由服务端下发**（`dialog.reply.primary_label`），设备端只负责画与回传 `target`。
 
@@ -298,7 +300,7 @@ offset 8..    payload    pcm_s16le
 | `ack` 消息 | 11 号 §4.4.3 未列 | §7.1 送达确认需要 |
 | `resend` / `resend.failed` | 11 号 §4.4.3 未列 | §7.2 补帧需要 |
 | `error.code` 增 `E_` 前缀 | 11 号 §4.4.5 | 统一 wire 格式 |
-| `touch.event` 的 `target` 取值集合 | 11 号 §4.4.3 未列 | 设备端为 10.1 寸触摸屏（ADR-017），控件标识符需在 wire 上可判别 |
+| `touch.event` 的 `target` 取值集合 | 11 号 §4.4.3 未列 | 设备端为 7 寸触摸屏 + 机身五键（ADR-018），控件标识符需在 wire 上可判别 |
 | `dialog.reply.primary_label` | 11 号 §4.4.4 未列 | 屏内主操作的文案由服务端按状态节点下发，设备端不自行映射 |
 
 ---
