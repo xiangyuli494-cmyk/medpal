@@ -1,0 +1,33 @@
+name: skeleton
+
+# Walking Skeleton 门禁：全链路必须一条命令跑通，且输出与黄金文件一致。
+# 红了 = 有人动了一根骨头把线弄断了。全组停手先修，不许绕过。
+
+on:
+  push:
+    branches: [main, "feat/**", "fix/**"]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: skeleton-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"   # 同长度改动 + 保留 mtime 时，旧字节码会让门禁假绿
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 骨架必须通电
+        run: python -B -m agent.skeleton --in agent/data/samples/pathway_k27.md --out tmp/trace.json
+
+      - name: 与黄金文件比对
+        run: python -B tools/diff_json.py tmp/trace.json fixtures/golden_trace.json
