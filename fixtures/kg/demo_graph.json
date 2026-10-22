@@ -1,0 +1,76 @@
+{
+  "nodes": [
+    {"key": "symptom:腿疼", "type": "symptom", "name": "腿疼", "aliases": ["腿痛"]},
+    {
+      "key": "symptom:上不来气",
+      "type": "symptom",
+      "name": "上不来气",
+      "aliases": ["喘不上气", "胸闷"]
+    },
+    {"key": "symptom:牙疼", "type": "symptom", "name": "牙疼", "aliases": ["牙痛"]},
+    {
+      "key": "symptom:拉肚子",
+      "type": "symptom",
+      "name": "拉肚子",
+      "aliases": ["肚子疼", "腹泻"]
+    },
+    {"key": "symptom:怀不上", "type": "symptom", "name": "怀不上", "aliases": ["不孕"]},
+    {"key": "symptom:头晕", "type": "symptom", "name": "头晕"},
+    {"key": "disease:腰腿痛", "type": "disease", "name": "腰腿痛", "aliases": ["腰腿疼"]},
+    {"key": "disease:关节退行性变", "type": "disease", "name": "关节退行性变"},
+    {"key": "disease:风湿性关节炎", "type": "disease", "name": "风湿性关节炎"},
+    {
+      "key": "disease:慢阻肺",
+      "type": "disease",
+      "name": "慢性阻塞性肺疾病",
+      "aliases": ["慢阻肺"]
+    },
+    {"key": "disease:小儿哮喘", "type": "disease", "name": "小儿哮喘"},
+    {"key": "disease:龋齿", "type": "disease", "name": "龋齿"},
+    {"key": "disease:急性肠胃炎", "type": "disease", "name": "急性肠胃炎"},
+    {"key": "disease:不孕症", "type": "disease", "name": "不孕症"},
+    {
+      "key": "department:骨科专科",
+      "type": "department",
+      "name": "骨科专科",
+      "aliases": ["骨科"]
+    },
+    {"key": "department:风湿免疫科", "type": "department", "name": "风湿免疫科"},
+    {"key": "department:呼吸内科", "type": "department", "name": "呼吸内科"},
+    {
+      "key": "department:儿科内科",
+      "type": "department",
+      "name": "儿科内科",
+      "aliases": ["儿科"]
+    },
+    {"key": "department:口腔内科", "type": "department", "name": "口腔内科"},
+    {"key": "department:消化专科", "type": "department", "name": "消化专科"},
+    {
+      "key": "department:生殖健康与不孕门诊(试管婴儿)",
+      "type": "department",
+      "name": "生殖健康与不孕门诊(试管婴儿)"
+    }
+  ],
+  "edges": [
+    {"src": "disease:腰腿痛", "dst": "symptom:腿疼", "relation": "表现为"},
+    {"src": "disease:关节退行性变", "dst": "symptom:腿疼", "relation": "表现为"},
+    {"src": "disease:风湿性关节炎", "dst": "symptom:腿疼", "relation": "表现为"},
+    {"src": "disease:腰腿痛", "dst": "department:骨科专科", "relation": "就诊于"},
+    {"src": "disease:关节退行性变", "dst": "department:骨科专科", "relation": "就诊于"},
+    {"src": "disease:风湿性关节炎", "dst": "department:风湿免疫科", "relation": "就诊于"},
+    {"src": "disease:慢阻肺", "dst": "symptom:上不来气", "relation": "表现为"},
+    {"src": "disease:小儿哮喘", "dst": "symptom:上不来气", "relation": "表现为"},
+    {"src": "disease:慢阻肺", "dst": "department:呼吸内科", "relation": "就诊于"},
+    {"src": "disease:小儿哮喘", "dst": "department:儿科内科", "relation": "就诊于"},
+    {"src": "disease:龋齿", "dst": "symptom:牙疼", "relation": "表现为"},
+    {"src": "disease:龋齿", "dst": "department:口腔内科", "relation": "就诊于"},
+    {"src": "disease:急性肠胃炎", "dst": "symptom:拉肚子", "relation": "表现为"},
+    {"src": "disease:急性肠胃炎", "dst": "department:消化专科", "relation": "就诊于"},
+    {"src": "disease:不孕症", "dst": "symptom:怀不上", "relation": "表现为"},
+    {
+      "src": "disease:不孕症",
+      "dst": "department:生殖健康与不孕门诊(试管婴儿)",
+      "relation": "就诊于"
+    }
+  ]
+}
