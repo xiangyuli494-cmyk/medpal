@@ -110,7 +110,7 @@ a{color:var(--blue)}
     <tr><td>领域层（状态机 / 规划引擎 / 话术 / 红线）</td><td><b>保留</b>，压缩至 W2–W3</td><td>系统内核，删则项目不成立</td></tr>
     <tr><td>三端前端</td><td><b>保留</b>，W2 搭骨架、W6 成型</td><td>「一内核三通道」是核心论点</td></tr>
     <tr><td>真 ASR / TTS / OCR</td><td><b>保留</b>，集中在 W5</td><td>演示可信度依赖真实识别</td></tr>
-    <tr><td>树莓派整机 + 10.1 寸触摸屏 + 3D 外壳</td><td><b>降级为条件交付 C3 / C4</b></td><td>采购与调试不可控，且不承担主演示</td></tr>
+    <tr><td>树莓派 4B 整机 + 7 寸 1024×600 触摸屏 + 3D 打印外壳</td><td><b>降级为条件交付 C3 / C4</b></td><td>采购与调试不可控，且不承担主演示</td></tr>
     <tr><td>LLM + RAG 对话</td><td><b>降级为条件交付 C1</b></td><td>模板话术已可覆盖 90% 场景</td></tr>
     <tr><td>知识图谱分诊</td><td><b>降级为条件交付 C2</b></td><td>成员 A 模块可直接接，但非主链路</td></tr>
     <tr><td>医保报销解释器</td><td><b>降级为条件交付 C5</b></td><td>加分项，不影响主线闭环</td></tr>
@@ -176,7 +176,7 @@ a{color:var(--blue)}
     <tr><td><b>T1</b></td><td>项目经理 / 架构师 / 领域工程</td><td>领域层、接口契约、架构决策、进度管理、对外沟通</td><td>—（范围与选型最终裁决权）</td></tr>
     <tr><td><b>T2</b></td><td>设备端与嵌入式</td><td>设备端前端、演示载体、触觉反馈固件、硬件集成</td><td>交互可用性（与 T5 共有）</td></tr>
     <tr><td><b>T3</b></td><td>用户端与家属端前端</td><td>用户端、家属端 H5、推送模板、视觉规范</td><td>—</td></tr>
-    <tr><td><b>T4</b></td><td>毕设底座接入与设备端交互</td><td>设备端逐屏界面、触摸控件、Kiosk 启动</td><td>设备端可用性建议优先权</td></tr>
+    <tr><td><b>T4</b></td><td>毕设底座接入与设备端交互</td><td>设备端逐屏界面、触摸控件、全屏启动</td><td>设备端可用性建议优先权</td></tr>
     <tr><td><b>T5</b></td><td>AI 集成与无障碍</td><td>七类适配器、音频链路、识单置信度、无障碍验收</td><td>无障碍达标性（与 T2 共有）</td></tr>
     <tr><td><b>T6</b></td><td>质量保证</td><td>测试体系、CI/CD、缺陷管理、发布验收、测试报告</td><td><b>合并否决权（对全员生效，含 T1）</b></td></tr>
   </tbody>
@@ -210,7 +210,7 @@ a{color:var(--blue)}
     <tr><td>5</td><td><span class="tag req">必交</span>设备端（浏览器形态，平板/笔记本可跑）</td><td>T2</td><td>W6</td></tr>
     <tr><td>6</td><td><span class="tag req">必交</span>用户端（老人版 / 标准版）</td><td>T3</td><td>W6</td></tr>
     <tr><td>7</td><td><span class="tag req">必交</span>家属端（推送 + 时间轴 + 隐私开关）</td><td>T3</td><td>W6</td></tr>
-    <tr><td>8</td><td><span class="tag req">必交</span>毕设底座接入（fixtures + 只读适配器 + 字段映射 + 号源中心）与设备端逐屏交互（11 屏 + 触摸控件 + Kiosk）</td><td>T4</td><td>W6</td></tr>
+    <tr><td>8</td><td><span class="tag req">必交</span>毕设底座接入（fixtures + 只读适配器 + 字段映射 + 号源中心）与设备端逐屏交互（11 屏 + 触摸控件 + 全屏启动）</td><td>T4</td><td>W6</td></tr>
     <tr><td>9</td><td><span class="tag req">必交</span>真实 ASR / TTS / OCR 三类适配器</td><td>T5</td><td>W5</td></tr>
     <tr><td>10</td><td><span class="tag req">必交</span>无障碍三通道（视障零点击 / 听障替我说 / 老人大字）</td><td>T5 + T2</td><td>W6</td></tr>
     <tr><td>11</td><td><span class="tag req">必交</span>CI 流水线 + 测试 L1–L4</td><td>T6</td><td>W4</td></tr>
@@ -225,7 +225,7 @@ a{color:var(--blue)}
     <tr><td>C1</td><td><span class="tag cond">条件</span>LLM + RAG 对话（医院知识库）</td><td>W4 结束时 M2 提前完成</td></tr>
     <tr><td>C2</td><td><span class="tag cond">条件</span>知识图谱分诊（成员 A 模块接入）</td><td>W3 结束时后端空余算力</td></tr>
     <tr><td>C3</td><td><span class="tag cond">条件</span>震动触觉反馈模块（无按键）</td><td>硬件 W1 下单且 W6 前到货</td></tr>
-    <tr><td>C4</td><td><span class="tag cond">条件</span>树莓派 Kiosk 整机</td><td>平板方案已在 W6 验证通过</td></tr>
+    <tr><td>C4</td><td><span class="tag cond">条件</span>树莓派 4B 手持整机</td><td>平板方案已在 W6 验证通过</td></tr>
     <tr><td>C5</td><td><span class="tag cond">条件</span>医保报销解释器</td><td>W5 结束时前端无阻塞</td></tr>
     <tr><td>C6</td><td><span class="tag cond">条件</span>3D 打印外壳</td><td>不占用软件组工时</td></tr>
   </tbody>

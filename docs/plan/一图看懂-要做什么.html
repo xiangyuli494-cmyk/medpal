@@ -160,9 +160,9 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     <span class="badge o">条件交付</span>
     <span class="cico">🔌</span>
     <div class="cname">触摸屏整机（C3 / C4）</div>
-    <div class="cwhat">10.1 寸触摸屏 + 一个震动马达。点一下 = 网页收到触摸事件；震动 = 网页发一个指令。
+    <div class="cwhat">7 寸 1024×600 触摸屏 + 五个实体键 + 一个震动马达。点一下 = 网页收到触摸事件；按实体键 = 本地处理，震动 = 网页发一个指令。
       屏幕和逻辑全都在上面那个「设备端网页」里，硬件<b>只负责按和震</b></div>
-    <div class="ctech">10.1 寸触摸屏 · 树莓派</div>
+    <div class="ctech">7 寸 1024×600 触摸屏 · 树莓派 4B</div>
     <div class="cmeta"><span>硬件 W1 下单，W6 前到货才做</span><b>T2 · W6</b></div>
   </div>
 </div>
@@ -209,7 +209,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr><td><b>家属端</b></td><td>H5 网页 + 推送</td><td><code>Vue3</code> <code>Vant</code></td><td>T3</td><td>W4 – W6</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>AI 适配器</b></td><td>服务端调用</td><td>DashScope ASR/TTS/OCR</td><td>T5</td><td>W5</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>测试与 CI</b></td><td>流水线 + 测试集</td><td><code>pytest</code> <code>Playwright</code> <code>GitHub Actions</code></td><td>T6</td><td>W1 – W8</td><td><span class="tag m">必交</span></td></tr>
-    <tr><td>触摸屏整机</td><td>触摸屏 + 马达</td><td>10.1 寸触摸屏 · 树莓派</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C3</span></td></tr>
+    <tr><td>触摸屏整机</td><td>触摸屏 + 马达</td><td>7 寸 1024×600 触摸屏 · 树莓派 4B</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C3</span></td></tr>
     <tr><td>树莓派整机</td><td>树莓派 + 外壳</td><td>Raspberry Pi OS + Chromium</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C4</span></td></tr>
     <tr><td>医保解释器</td><td>后端模块</td><td><code>Python</code> 模板</td><td>T1</td><td>W6</td><td><span class="tag o">条件 C5</span></td></tr>
     <tr><td>知识图谱分诊</td><td>后端模块</td><td>复用成员 A 模块</td><td>T5</td><td>W6</td><td><span class="tag o">条件 C2</span></td></tr>
@@ -241,15 +241,15 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <tbody>
     <tr><td>平板（可复用现有的）</td><td>1</td><td>跑设备端网页，主演示载体</td><td><span class="tag m">必须</span></td></tr>
     <tr><td>笔记本（成员自带）</td><td>2</td><td>开发 + 演示备份机</td><td><span class="tag m">必须</span></td></tr>
-    <tr><td>10.1 寸触摸屏</td><td>1</td><td>交互面（C3/C4）</td><td><span class="tag o">可选</span></td></tr>
+    <tr><td>7 寸 1024×600 触摸屏</td><td>1</td><td>交互面（C3/C4）</td><td><span class="tag o">可选</span></td></tr>
     <tr><td>震动马达 + 杜邦线</td><td>2 套</td><td>震动反馈（C3）</td><td><span class="tag o">可选</span></td></tr>
-    <tr><td>树莓派 Zero 2W + 10.1 寸触摸屏</td><td>1 套</td><td>整机（C4）</td><td><span class="tag o">可选</span></td></tr>
+    <tr><td>树莓派 4B + 7 寸 1024×600 触摸屏</td><td>1 套</td><td>整机（C4）</td><td><span class="tag o">可选</span></td></tr>
     <tr><td>3D 打印外壳</td><td>1</td><td>外观（C6）</td><td><span class="tag o">可选</span></td></tr>
   </tbody>
 </table>
 
 <div class="okbox">
-  <b>关键判断</b>：平板方案就是最终演示方案。只要平板能跑通，项目就能验收。
+  <b>关键判断</b>：平板方案就是最终演示方案。只要平板能跑通，项目就能验收；验收后在整机上复现，不改交互。
   树莓派和触摸屏整机是<b>锦上添花</b>——到货就做，不到货不影响答辩。
 </div>
 
@@ -261,7 +261,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr><td><b>T1</b></td><td>领域层代码（状态机 / 规划引擎 / 话术模板 / 红线校验）· 接口文档 · 14 篇 ADR</td></tr>
     <tr><td><b>T2</b></td><td>设备端网页（三模式）· 触摸屏演示包 · 可选：触觉反馈模块</td></tr>
     <tr><td><b>T3</b></td><td>用户端 H5 · 家属端 H5 · 推送模板 · 视觉规范</td></tr>
-    <tr><td><b>T4</b></td><td>设备端逐屏界面（11 节点 + 触摸屏 + Kiosk 启动）</td></tr>
+    <tr><td><b>T4</b></td><td>设备端逐屏界面（11 节点 + 触摸屏 + 全屏启动）</td></tr>
     <tr><td><b>T5</b></td><td>ASR/TTS/OCR 适配器 · 无障碍验收标准 · AI 评测集 200 条</td></tr>
     <tr><td><b>T6</b></td><td>CI 流水线 · 240 条自动化测试 · 周报与验收报告 · 可用性测试报告</td></tr>
   </tbody>

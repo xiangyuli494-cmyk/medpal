@@ -218,7 +218,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 <table>
   <thead><tr><th>通道</th><th>框架</th><th>UI 库</th><th>构建</th><th>关键差异</th><th>ADR</th></tr></thead>
   <tbody>
-    <tr><td class="k">设备端</td><td>Vue 3 + Composition API</td><td>自研大字号组件</td><td class="p">Vite</td><td>全屏 Kiosk 模式，无地址栏无滚动条；三模式（老人 / 视障 / 听障）</td><td class="adr">ADR-002</td></tr>
+    <tr><td class="k">设备端</td><td>Vue 3 + Composition API</td><td>自研大字号组件</td><td class="p">Vite</td><td>全屏模式，无地址栏无滚动条；三模式（老人 / 视障 / 听障）</td><td class="adr">ADR-002</td></tr>
     <tr><td class="k">用户端</td><td>uni-app（Vue 3 语法）</td><td>uni-ui</td><td class="p">uni-app CLI</td><td>编译为 H5；既有代码库即此形态，迁移成本高于收益</td><td class="adr">ADR-004</td></tr>
     <tr><td class="k">家属端</td><td>Vue 3</td><td>Vant 4</td><td class="p">Vite</td><td>移动端 H5，微信内打开；不做独立 App</td><td class="adr">ADR-005</td></tr>
   </tbody>
@@ -327,17 +327,17 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 <h2><span class="num">07</span>硬件技术栈（条件交付）</h2>
 
 <div class="box warn">
-  <b>硬件不承载主流程演示。</b>主演示载体是 10.1 寸触摸屏（ADR-014）。硬件只负责显示、触摸与震动，不承担任何业务判断与端侧模型（ADR-003）。
+  <b>硬件不承载主流程演示。</b>主演示载体是平板或笔记本浏览器；树莓派 4B 与 7 寸 1024×600 触摸屏为 C4 条件交付（ADR-014、ADR-018）。硬件只负责显示、触摸与震动，不承担任何业务判断与端侧模型（ADR-003）。
 </div>
 
 <table>
   <thead><tr><th>件</th><th>型号 / 技术</th><th>职责</th><th>状态</th></tr></thead>
   <tbody>
-    <tr><td class="k">主控</td><td class="p">树莓派 Zero 2W + 10.1 寸触摸屏</td><td>跑 Chromium Kiosk，开机直达网页</td><td><span class="tag c">条件 C4</span></td></tr>
-    <tr><td class="k">触摸</td><td class="p">10.1 寸电容触摸屏（800×1280）</td><td>唯一交互面：底栏 + 主操作 + 选项</td><td><span class="tag c">条件 C3</span></td></tr>
+    <tr><td class="k">主控</td><td class="p">树莓派 4B + 7 寸 1024×600 触摸屏</td><td>跑 Chromium 全屏，开机直达网页</td><td><span class="tag c">条件 C4</span></td></tr>
+    <tr><td class="k">触摸</td><td class="p">7 寸电容触摸屏（1024×600 横屏）</td><td>主要交互面：顶栏 + 主操作 + 选项；机身另有五个实体键</td><td><span class="tag c">条件 C3</span></td></tr>
     <tr><td class="k">反馈</td><td class="p">震动马达 + 驱动板</td><td>确认短震两下 / 出错长震一下</td><td><span class="tag c">条件 C3</span></td></tr>
     <tr><td class="k">外壳</td><td>3D 打印</td><td>整机外观</td><td><span class="tag c">条件 C6</span></td></tr>
-    <tr><td class="k">系统</td><td class="p">Raspberry Pi OS + Chromium</td><td>Kiosk 启动参数</td><td><span class="tag c">条件 C4</span></td></tr>
+    <tr><td class="k">系统</td><td class="p">Raspberry Pi OS + Chromium</td><td>Chromium 全屏启动参数</td><td><span class="tag c">条件 C4</span></td></tr>
   </tbody>
 </table>
 
@@ -350,7 +350,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <tr><td class="k">全部重写为 FastAPI</td><td>既有排班、挂号、检查项数据资产无法复用；八周内无重写与回归窗口</td><td class="adr">ADR-001</td></tr>
     <tr><td class="k">Django 与 FastAPI 混合</td><td>两套框架并行维护，六人团队不具备对应维护与联调能力</td><td class="adr">ADR-001</td></tr>
     <tr><td class="k">设备端原生 Android 应用</td><td>须另维护一套代码；硬件更换时须重写</td><td class="adr">ADR-002</td></tr>
-    <tr><td class="k">设备端承载业务判断与端侧模型</td><td>Zero 2W 算力不足；硬件到货前无法验证；智能分散后无法统一灰度与回滚</td><td class="adr">ADR-003</td></tr>
+    <tr><td class="k">设备端承载业务判断与端侧模型</td><td>设备端算力不用于模型推理；硬件到货前无法验证；智能分散后无法统一灰度与回滚</td><td class="adr">ADR-003</td></tr>
     <tr><td class="k">用户端原生应用或纯小程序</td><td>现有代码库即 uni-app Vue 3，迁移成本高于收益</td><td class="adr">ADR-004</td></tr>
     <tr><td class="k">家属端独立 App</td><td>功能仅为推送与时间轴，独立安装形态增加使用门槛</td><td class="adr">ADR-005</td></tr>
     <tr><td class="k">WebRTC 音频通道</td><td>实现与联调复杂度高于本期需求；首字延迟 1.5 秒内 WebSocket 已可满足</td><td class="adr">ADR-006</td></tr>
