@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>院内便携式语音陪诊终端 · Demo 交互原型</title>
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --bg:#0b1220;--panel:#121c2e;--panel2:#16223a;--line:#25324a;
+    --txt:#e8eefc;--dim:#9fb0cc;--accent:#5ac8fa;--warn:#ffb02e;--danger:#ff4d4f;--ok:#39d98a;
+  }
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1200px 620px at 18% -12%,#18263f,#0b1220 62%);
+    color:var(--txt);min-height:100vh;font-size:14px;
+  }
+  .topbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+    padding:12px 18px;border-bottom:1px solid var(--line);background:#0d1523cc;position:sticky;top:0;z-index:20;backdrop-filter:blur(6px)}
+  .topbar h1{font-size:17px;margin:0;letter-spacing:.5px}
+  .topbar h1 small{color:var(--dim);font-weight:400;font-size:12px;margin-left:8px}
+  .tagset{display:flex;gap:8px;flex-wrap:wrap}
+  .tag{font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:#0f1a2c}
+  .tag.warn{color:#ffd58a;border-color:#5c4a22;background:#241c0d}
+  .layout{display:grid;grid-template-columns:minmax(258px,296px) minmax(430px,1fr) minmax(288px,340px);
+    gap:16px;padding:16px;align-items:start}
+  @media (max-width:1240px){ .layout{grid-template-columns:1fr 1fr} .col-center{grid-column:1/-1;order:-1} }
+  @media (max-width:820px){ .layout{grid-template-columns:1fr} }
+  .card{background:linear-gradient(180deg,#16223a,#111a2b);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:14px}
+  .card>h3{margin:0 0 10px;font-size:13px;color:var(--dim);letter-spacing:.6px;font-weight:700;
+    display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .card>h3 em{font-style:normal;font-size:11px;color:#7d8ca8;font-weight:400}
+  .row{display:flex;flex-wrap:wrap;gap:8px}
+  .row.tight{gap:6px}
+  .btn{background:#1d2a44;border:1px solid #2f3f5e;color:var(--txt);border-radius:10px;padding:8px 10px;
+    font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+  .btn:hover{background:#26365a;border-color:#3d527d}
+  .btn.primary{background:#12496e;border-color:#2b83b8;color:#dff2ff}
+  .btn.primary:hover{background:#165a86}
+  .btn.ok{background:#14503a;border-color:#2c9a6d;color:#dcffee}
+  .btn.ok:hover{background:#1a6349}
+  .btn.danger{background:#5d1720;border-color:#b03a45;color:#ffe1e3}
+  .btn.danger:hover{background:#751c27}
+  .btn.ghost{background:transparent;border-color:#33425f;color:var(--dim)}
+  .btn.ghost:hover{background:#1b2740;color:var(--txt)}
+  .btn[disabled]{opacity:.38;cursor:not-allowed}
+  .btn.wide{width:100%;justify-content:center}
+  label.field{display:block;font-size:12px;color:var(--dim);margin:8px 0 4px}
+  input[type=text],select{width:100%;background:#0e1728;border:1px solid #2b3a57;color:var(--txt);
+    border-radius:9px;padding:7px 9px;font-family:inherit;font-size:13px}
+  input[type=range]{width:100%}
+  .switch{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim);margin:7px 0;cursor:pointer}
+  .switch input{accent-color:var(--accent);width:16px;height:16px}
+  ol.guide{margin:0;padding-left:20px;font-size:12.5px;line-height:1.75;color:#c3cfe4}
+  ol.guide b{color:#ffe066}
+
+  /* ============ 设备 ============ */
+  .col-center{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .device{width:100%;max-width:470px;background:linear-gradient(180deg,#eef2f8,#c3cddd);
+    border-radius:30px;padding:14px 14px 16px;box-shadow:0 26px 60px rgba(0,0,0,.55),inset 0 1px 0 #fff;
+    border:1px solid #ffffff55;color:#111}
+  .plate{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;font-weight:800;color:#3b4a63;margin-bottom:8px}
+  .plate .live{display:inline-flex;align-items:center;gap:5px}
+  .dot{width:8px;height:8px;border-radius:50%;background:#8b98ad;display:inline-block}
+  .dot.on{background:#22c55e;box-shadow:0 0 8px #22c55e}
+  .dot.red{background:#dc2626;box-shadow:0 0 8px #dc2626}
+  .screen{--fg:#ffe600;--bar:#ffe600;--barfg:#000;
+    background:#000;border-radius:16px;border:6px solid #2b3345;padding:12px;
+    min-height:330px;display:flex;flex-direction:column;gap:9px;position:relative;overflow:hidden}
+  .screen.white{--fg:#ffffff;--bar:#ffffff;--barfg:#000}
+  .screen .s-title{font-size:19px;font-weight:900;color:var(--fg);letter-spacing:.5px;
+    border-bottom:2px solid var(--fg);padding-bottom:6px}
+  .screen .s-body{flex:1;display:flex;flex-direction:column;gap:6px;
+    font-size:24px;line-height:1.42;font-weight:800;color:var(--fg);word-break:break-word}
+  .screen .s-body.small{font-size:19px}
+  .screen .s-body .kv{display:flex;gap:8px;font-size:20px}
+  .screen .s-body .kv i{font-style:normal;opacity:.72;min-width:104px;font-weight:700;white-space:nowrap}
+  .screen .s-opts{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:#151f33;color:var(--fg);border:1px solid var(--fg);border-radius:999px;
+    padding:5px 11px;font-size:13.5px;font-weight:800;cursor:pointer;font-family:inherit}
+  .chip:hover{background:#25324d}
+  .screen .s-cap{background:var(--bar);color:var(--barfg);border-radius:9px;padding:6px 9px;
+    font-size:14px;font-weight:800;line-height:1.35;min-height:36px}
+  /* 情绪陪伴条：暖色，与冷色的功能信息区分开 */
+  .screen .s-comfort{display:none;background:#3a2410;border:1px solid #b07a2e;border-radius:10px;
+    color:#ffd8a8;font-size:16px;font-weight:800;line-height:1.42;padding:7px 9px}
+  .screen .s-comfort.on{display:block}
+  .screen-foot{display:flex;justify-content:space-between;font-size:10.5px;color:#8a96ab;font-weight:700;margin-top:2px}
+  .statusbar{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:9px;font-size:11px;font-weight:800;color:#2f3d55}
+  .statusbar span{background:#ffffffaa;border:1px solid #ffffffcc;border-radius:999px;padding:3px 8px}
+  .statusbar span.hi{background:#ffe600cc;border-color:#d8c200}
+  .grille{margin:11px auto 3px;width:60%;height:16px;border-radius:8px;
+    background:repeating-linear-gradient(90deg,#9aa6ba 0 3px,#c6cfdd 3px 6px);border:1px solid #8e9bb1}
+  /* 触摸屏：屏内主操作 + 设置抽屉；按住说话与一键求助在机身实体键上。 */
+  .dock{display:grid;grid-template-columns:1.7fr 1fr 1fr 1.15fr;gap:8px;margin-top:2px}
+  .dock .key{min-height:92px;padding:8px 4px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px}
+  .s-primary{display:none}
+  .s-primary.on{display:block}
+  .s-primary .key{width:100%;min-height:96px;font-size:17px}
+  .key{background:linear-gradient(180deg,#f9fbfe,#c6cfdd);border:1px solid #98a5bb;border-radius:14px;
+    padding:11px 6px;font-weight:900;color:#16243c;font-size:13.5px;cursor:pointer;text-align:center;
+    box-shadow:0 3px 0 #93a1b8,0 5px 10px rgba(0,0,0,.22);user-select:none;font-family:inherit;line-height:1.25}
+  .key small{display:block;font-size:10.5px;font-weight:700;color:#4b5b76;margin-top:3px}
+  .key:active{transform:translateY(2px);box-shadow:0 1px 0 #93a1b8}
+  .key.ok{background:linear-gradient(180deg,#a9dbff,#3f9be0);color:#04243d;border-color:#2a72ab;box-shadow:0 3px 0 #235f8f}
+  .key.mic{background:linear-gradient(180deg,#96eab8,#2fae6d);color:#06301c;border-color:#1c7d4c;box-shadow:0 3px 0 #176b41}
+  .key.sos{background:linear-gradient(180deg,#ff7373,#d32020);color:#fff;border-color:#a01414;
+    font-size:13.5px;line-height:1.2;box-shadow:0 3px 0 #8c1111,0 6px 14px rgba(211,32,32,.45)}
+  .key.sos small{color:#ffe3e3}
+  .key.set{background:linear-gradient(180deg,#ffe9a8,#e8bf4f);border-color:#c39d2e;box-shadow:0 3px 0 #a5851f}
+  /* 设置抽屉：盖住屏幕中间，不弹模态错框 */
+  .settings{display:none;position:absolute;left:6px;right:6px;top:52px;bottom:96px;
+    background:#0b1220;border:2px solid #ffe600;border-radius:14px;padding:10px;overflow:auto;z-index:5}
+  .settings.on{display:block}
+  .settings h4{margin:0 0 8px;font-size:15px;color:#ffe600;font-weight:900}
+  .settings .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .settings .key{min-height:64px;font-size:12.5px}
+  .gear{background:none;border:none;color:#2f3d55;font-size:14px;cursor:pointer;font-family:inherit;font-weight:800}
+  .phone{background:#0d1424;border:1px solid #2b3a57;border-radius:18px;padding:10px}
+  .phone-top{display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim);margin-bottom:8px;font-weight:700}
+  .msgs{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto}
+  .msg{background:#16324f;border:1px solid #2f5f8c;border-radius:12px;padding:8px 10px;font-size:12.5px;line-height:1.5;color:#dbeaff}
+  .msg .mt{display:block;font-size:10.5px;color:#8fb6dd;margin-bottom:4px}
+  .msg.failed{background:#3a1a20;border-color:#8f3b45;color:#ffd9dc}
+  .msg .acts{margin-top:6px}
+  .empty{color:#67748c;font-size:12px;padding:8px 2px}
+  .ticket{border:1px solid #2b3a57;border-radius:11px;padding:9px;margin-bottom:8px;background:#101b2e;font-size:12.5px;line-height:1.55}
+  .ticket.sos{border-color:#8f3b45;background:#2a141a}
+  .ticket.done{border-color:#2c9a6d;background:#10261d}
+  .ticket .th{display:flex;justify-content:space-between;font-weight:800;margin-bottom:4px}
+  .cachelist{font-size:12.5px;line-height:1.6}
+  .cacheitem{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #26334c;padding:4px 0}
+  .cacheitem i{font-style:normal;color:#8fa1bd}
+  .lock{color:#ffd58a;font-weight:800}
+  .logs{max-height:230px;overflow:auto;font-size:12px;line-height:1.55;font-family:Consolas,"Courier New",monospace}
+  .logline{border-bottom:1px dashed #22304a;padding:3px 0;color:#a9bad4}
+  .logline b{color:#5ac8fa}
+  .logline.warn{color:#ffcf7a}
+  .logline.warm{color:#ffc98a}
+  .logline.err{color:#ff9aa2}
+  .logline.ok{color:#86e6b0}
+  .hint{font-size:11.5px;color:#7d8ca8;line-height:1.6;margin-top:8px}
+
+  /* 若脚本被环境拦截（内置预览器 / CSP / 禁用 JS），该提示会保留在页面上，避免"点了没反应"却不知原因 */
+  #noScriptWarn{position:fixed;left:0;right:0;top:0;z-index:9999;background:#7a1d12;color:#ffe9c9;
+    font-size:14px;font-weight:700;line-height:1.6;padding:10px 16px;border-bottom:2px solid #ffb02e}
+  #noScriptWarn b{color:#ffd25e}
+</style>
+</head>
+<body>
+
+<div id="noScriptWarn">
+  ⚠ 本页面的脚本没有运行起来，所以触摸屏幕不会有任何反应。<br>
+  原因通常是：在内置预览器 / 聊天窗口里打开，或浏览器禁用了 JavaScript。<br>
+  <b>请把「陪诊终端_交互原型.html」保存到本地，用 Edge 或 Chrome 双击打开。</b>
+</div>
+
+<header class="topbar">
+  <h1>院内便携式语音陪诊终端 · Demo 交互原型 <small>v1.2（家属推送 · 情绪陪伴）</small></h1>
+  <div class="tagset">
+    <span class="tag warn">仅院内租借使用 · 离院收回</span>
+    <span class="tag">模拟测试数据 · 不录入真实人脸/身份证</span>
+    <span class="tag">分诊仅作就诊参考，不能替代医生诊断</span>
+    <span class="tag"><button class="btn ghost" data-cmd="reset">重置演示</button></span>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ================= 左：演示控制台 ================= -->
+  <aside class="col col-left">
+    <div class="card">
+      <h3>演示控制台 <em>模拟真实环境</em></h3>
+      <div class="hint">用左侧按钮模拟"读卡器 / 摄像头 / beacon / 医生工作站 / 短信网关"，右侧设备按真机交互响应。</div>
+    </div>
+
+    <div class="card">
+      <h3>A. 电源与身份 <em>FR-01</em></h3>
+      <div class="row">
+        <button class="btn primary" data-cmd="power" id="powerBtn">开机</button>
+        <button class="btn" data-cmd="login">建档 / 登录</button>
+      </div>
+      <label class="field">模拟读卡器（身份证）</label>
+      <div class="row">
+        <button class="btn" data-cmd="idNew">首次来院 · 刷身份证建档</button>
+        <button class="btn" data-cmd="idExisting">复诊 · 刷身份证调档</button>
+      </div>
+      <label class="field">模拟摄像头（人脸识别）</label>
+      <div class="row">
+        <button class="btn ok" data-cmd="faceOk">人脸识别成功</button>
+        <button class="btn danger" data-cmd="faceFail">人脸识别失败（走兜底）</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>B. 点位触发 <em>FR-02 beacon</em></h3>
+      <div class="hint">点击即模拟患者走进该点位，设备自动播报讲解。当前点位：<b id="spotNow">门诊大厅</b></div>
+      <div class="row tight" id="spotBtns" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <h3>C. 医生工作站 <em>FR-01 档案保存</em></h3>
+      <div class="hint">模拟医生完成本次接诊：系统自动保存档案，并推送医嘱、复诊时间给预留的家属手机。</div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn ok" data-cmd="consult" id="consultBtn">模拟接诊完成</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>D. 家属推送通道 <em>FR-06 本版新增</em></h3>
+      <label class="field">预留紧急联系人手机号（仅 1 个）</label>
+      <input type="text" id="contactInput" value="138****6688">
+      <label class="switch"><input type="checkbox" id="smsFail"> 模拟短信通道异常（触发失败重试）</label>
+      <div class="row">
+        <button class="btn" data-cmd="smsResend">重发最近一条</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>E. 设备设置 <em>触摸屏 / 无障碍</em></h3>
+      <label class="field">方言识别适配（Demo 为模拟切换）</label>
+      <select id="dialectSel">
+        <option>普通话</option>
+        <option>四川话</option>
+        <option>粤语</option>
+        <option>东北话</option>
+        <option>吴语（上海话）</option>
+      </select>
+      <label class="switch"><input type="checkbox" id="contrastChk"> 小屏幕切换白字高对比模式</label>
+      <label class="switch"><input type="checkbox" id="muteChk"> 静音演示（仅看字幕，不出声）</label>
+      <label class="switch"><input type="checkbox" id="headsetChk"> 接入蓝牙助听器 / 耳机</label>
+      <div class="row">
+        <button class="btn ghost" data-cmd="ttsTest">语音自检</button>
+        <button class="btn ghost" data-cmd="wipe">模拟归还清空</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>F. 语音指令模拟 <em>没有麦克风也能演示</em></h3>
+      <div class="hint">输入一句话后回车，等价于患者对着设备说话。可用示例："我胸闷"、"肚子疼"、"带我去药房"、"我的医嘱"、"确认挂号"、"取消预约"。</div>
+      <input type="text" id="sayInput" placeholder="例如：我肚子疼" style="margin-top:8px">
+      <div class="row" style="margin-top:8px">
+        <button class="btn primary" data-cmd="sayInput">发送给设备</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>G. 建议演示顺序 <em>9 步跑通全流程</em></h3>
+      <ol class="guide">
+        <li>触摸屏幕任意位置开机：自动播报欢迎与引导</li>
+        <li>点 <b>首次来院·刷身份证建档</b>：生成档案</li>
+        <li>点 <b>点位</b> 里的"内科诊区"：自动讲解</li>
+        <li>按住机身 <b>🎤 按住说话</b> 说"我胸闷"：口述症状预分诊</li>
+        <li>点屏幕上的 <b>大按钮</b>二次确认：完成语音挂号</li>
+        <li>说"带我去心血管内科"：院内模拟导航</li>
+        <li>点 <b>模拟接诊完成</b>：档案保存 + 家属短信推送</li>
+        <li>说"我的医嘱"：语音查询 / 回放医嘱</li>
+        <li>长按机身 <b>求助</b> 键 1.5 秒，再到右侧服务台点"派员前往"</li>
+        <li>在 F 区输入 <b>"我一个人来的，心里有点怕"</b>：看它怎么先接情绪、再办事情</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>H. 陪伴模式 <em>情绪陪伴 · 本次新增</em></h3>
+      <label class="switch"><input type="checkbox" id="comfortChk" checked> 开启情绪陪伴</label>
+      <div class="hint">像一位有耐心的陪护者那样：识别到紧张、焦虑、等待、独处时，主动用简短、慢速的话安抚，并给确定性（下一步做什么、等多久、我在哪）。不打断关键操作，不诊断、不替代家属，可随时关闭。</div>
+      <div class="row tight" style="margin-top:8px">
+        <button class="btn" data-cmd="comfortWait">候诊等待陪伴</button>
+        <button class="btn" data-cmd="comfortNervous">检查前安抚</button>
+        <button class="btn" data-cmd="comfortNegative">患者说"我一个人，有点怕"</button>
+        <button class="btn" data-cmd="comfortIdle">久未回应·主动问候</button>
+        <button class="btn" data-cmd="comfortBye">就诊结束·温暖道别</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= 中：设备 ================= -->
+  <section class="col col-center">
+    <div class="device">
+      <div class="plate">
+        <span>语音陪诊终端 · 讲解机模式</span>
+        <span class="live"><span class="dot" id="powerDot"></span><span id="powerTxt">已关机</span></span>
+      </div>
+
+      <div class="screen" id="screen">
+        <div class="s-title" id="scrTitle">设备已关机</div>
+        <div class="s-body" id="scrBody" role="status" aria-live="polite">
+          <div>请触摸屏幕任意位置开机。</div>
+        </div>
+        <div class="s-comfort" id="scrComfort"></div>
+        <div class="s-opts" id="scrOpts"></div>
+        <div class="s-cap" id="scrCap" aria-live="polite">（字幕区：与语音同步显示的超大高对比度文字）</div>
+        <div class="s-primary" id="scrPrimary"></div>
+        <div class="dock">
+          <button class="key mic" data-cmd="voice">🎤 按住说话<small>松开结束</small></button>
+          <button class="key" data-cmd="back">← 返回<small>上一屏</small></button>
+          <button class="key" data-cmd="menu">☰ 主菜单<small>全部功能</small></button>
+          <button class="key sos" data-cmd="sos">求助<small>长按 1.5 秒</small></button>
+        </div>
+        <div class="settings" id="settingsPanel">
+          <h4>设置 · 本机生效，不上传</h4>
+          <div class="grid">
+            <button class="key set" data-cmd="volDown">音量 −<small id="volTxt">70%</small></button>
+            <button class="key set" data-cmd="volUp">音量 ＋<small>当前 <span id="volTxt2">70%</span></small></button>
+            <button class="key set" data-cmd="spdDown">语速 −<small id="spdTxt">1.0x</small></button>
+            <button class="key set" data-cmd="spdUp">语速 ＋<small>当前 <span id="spdTxt2">1.0x</span></small></button>
+            <button class="key" data-cmd="replaySpot">当前位置讲解<small>重复播报</small></button>
+            <button class="key" data-cmd="queryRecord">我的医嘱<small>语音查询</small></button>
+            <button class="key" data-cmd="power" id="powerKey">⏻ 电源<small>演示用 · 真机常驻</small></button>
+            <button class="key" data-cmd="closeSettings">✕ 关闭设置<small>回到当前屏</small></button>
+          </div>
+        </div>
+      </div>
+      <div class="screen-foot"><span>7 寸触摸屏 · 与语音同步</span><span id="scrClock">--:--</span></div>
+
+      <div class="statusbar" id="statusbar"></div>
+    </div>
+    <div class="hint" style="max-width:470px;text-align:center">
+      触摸 + 机身五键：主操作按钮由服务端下发；按住说话、一键求助在机身上，不看屏也能按。不依赖滑动或双击。
+    </div>
+  </section>
+
+  <!-- ================= 右：外部系统 ================= -->
+  <aside class="col col-right">
+    <div class="card">
+      <h3>家属手机（模拟） <em>FR-06</em></h3>
+      <div class="phone">
+        <div class="phone-top"><span>短信 · 紧急联系人</span><span id="phoneNum">138****6688</span></div>
+        <div class="msgs" id="smsList"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>医院服务台（模拟） <em>FR-05 一键求助</em></h3>
+      <div id="ticketList"></div>
+    </div>
+
+    <div class="card">
+      <h3>本地缓存与隐私 <em>加密 / 一键清空</em></h3>
+      <div class="cachelist" id="cacheList"></div>
+      <div class="row" style="margin-top:9px">
+        <button class="btn danger wide" data-cmd="wipe">归还设备 · 一键清空本地缓存</button>
+      </div>
+      <div class="hint">Demo 全程使用模拟测试数据，不采集真实身份证号码与人脸模板。</div>
+    </div>
+
+    <div class="card">
+      <h3>事件日志 <em>系统行为留痕</em></h3>
+      <div class="logs" id="logList"></div>
+    </div>
+  </aside>
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  /* 脚本能跑到这里，说明 JavaScript 正常；先撤掉"脚本未运行"的提示条 */
+  function warnBar(msg){
+    var el = document.getElementById('noScriptWarn');
+    if(!el){ el = document.createElement('div'); el.id = 'noScriptWarn'; document.body.appendChild(el); }
+    el.innerHTML = msg;
+  }
+  var nsw = document.getElementById('noScriptWarn');
+  if(nsw && nsw.parentNode) nsw.parentNode.removeChild(nsw);
+  window.addEventListener('error', function(ev){
+    warnBar('⚠ 原型运行出错：' + (ev.message || ev) + '（把这行信息发我即可定位）');
+  });
+
+  /* =========================================================
+     一、静态数据（全部为模拟测试数据）
+     ========================================================= */
+
+  var SPOTS = {
+    hall:  { name:'门诊大厅',       beacon:'B-01', tip:'门诊大厅，是您就诊的第一站。这里可以挂号、缴费、取号，也可以向服务台工作人员求助。' },
+    reg:   { name:'挂号收费处',     beacon:'B-02', tip:'挂号收费处，可以现场挂号、缴费和打印发票。窗口设有低位柜台，方便轮椅使用者。' },
+    im:    { name:'内科诊区',       beacon:'B-03', tip:'内科诊区，包含心血管内科、呼吸内科和消化内科诊室。请在候诊区就坐，听到叫号后再进入诊室。' },
+    surg:  { name:'外科诊区',       beacon:'B-04', tip:'外科诊区，包含骨科和普通外科诊室。诊区入口处设有扶手，地面为防滑材质。' },
+    lab:   { name:'检验科采血窗口', beacon:'B-05', tip:'检验科采血窗口，抽血前请先取号，抽血后请按压针眼五分钟。' },
+    rad:   { name:'放射科',         beacon:'B-06', tip:'放射科，做CT或拍片前请取下身上金属物品，检查室内有工作人员全程陪同。' },
+    pharm: { name:'门诊药房',       beacon:'B-07', tip:'门诊药房，取药请出示取药单，药师会当面交代用法用量。' },
+    wc:    { name:'无障碍卫生间',   beacon:'B-08', tip:'无障碍卫生间，门为推拉式，内部设有扶手和紧急呼叫拉绳。' }
+  };
+
+  var DEPTS = {
+    '心血管内科':   { room:'门诊楼2层 A区 208诊室', wait:'约15分钟', intro:'主要诊治高血压、冠心病、心律失常、心力衰竭等疾病。' },
+    '呼吸内科':     { room:'门诊楼2层 A区 212诊室', wait:'约20分钟', intro:'主要诊治咳嗽、哮喘、慢性支气管炎、肺部感染等疾病。' },
+    '消化内科':     { room:'门诊楼2层 B区 216诊室', wait:'约20分钟', intro:'主要诊治胃痛、反酸、腹泻、肝胆疾病等。' },
+    '神经内科':     { room:'门诊楼3层 A区 305诊室', wait:'约25分钟', intro:'主要诊治头痛、头晕、脑血管病、肢体麻木等疾病。' },
+    '骨科':         { room:'门诊楼1层 C区 118诊室', wait:'约15分钟', intro:'主要诊治骨折、关节疼痛、颈椎腰椎疾病等。' },
+    '皮肤科':       { room:'门诊楼1层 D区 126诊室', wait:'约10分钟', intro:'主要诊治皮炎、湿疹、瘙痒、皮疹等皮肤疾病。' },
+    '眼科':         { room:'门诊楼3层 C区 318诊室', wait:'约20分钟', intro:'主要诊治视物模糊、眼痛、白内障、青光眼等疾病。' },
+    '耳鼻喉科':     { room:'门诊楼3层 C区 322诊室', wait:'约15分钟', intro:'主要诊治耳鸣、听力下降、鼻塞、咽痛等疾病。' },
+    '泌尿外科':     { room:'门诊楼1层 B区 112诊室', wait:'约15分钟', intro:'主要诊治尿频、尿痛、排尿困难、泌尿系结石等疾病。' },
+    '儿科':         { room:'门诊楼1层 E区 儿童诊区 101诊室', wait:'约30分钟', intro:'接诊14周岁以下儿童，诊区设有儿童候诊区。' },
+    '妇产科':       { room:'门诊楼2层 C区 226诊室', wait:'约25分钟', intro:'主要诊治妇科疾病与孕产期保健。' },
+    '全科医学门诊': { room:'门诊楼1层 A区 105诊室', wait:'约10分钟', intro:'全科医学门诊，可先在此咨询，由医生判断需要转诊的专科。' },
+    '急诊科':       { room:'门诊楼1层 急诊区 E100', wait:'立即接诊', intro:'急诊科，24小时开放，危重情况请立即前往。' }
+  };
+
+  var TRIAGE_RULES = [
+    { dept:'心血管内科', keys:['胸闷','胸痛','胸口','心口','心慌','心悸','心跳','血压','心脏','气不够'] },
+    { dept:'呼吸内科',   keys:['咳嗽','咳痰','气喘','喘不上','发烧','发热','气短','痰','嗓子'] },
+    { dept:'消化内科',   keys:['胃痛','胃疼','胃胀','胃不舒服','肚子痛','肚子疼','肚子不舒服','腹痛','腹泻','拉肚子','反酸','烧心','恶心','呕吐','便秘'] },
+    { dept:'神经内科',   keys:['头晕','头昏','头痛','头疼','麻木','手麻','脚麻','眩晕','失眠'] },
+    { dept:'骨科',       keys:['关节','腰痛','腰疼','脖子疼','颈椎','膝盖','扭伤','骨折','腿疼','脚崴'] },
+    { dept:'皮肤科',     keys:['皮疹','疹子','瘙痒','痒','皮肤','起泡'] },
+    { dept:'眼科',       keys:['眼睛','看不清','视物模糊','眼痛','眼红','流泪'] },
+    { dept:'耳鼻喉科',   keys:['耳鸣','耳痛','听不清','鼻塞','流鼻血','咽痛','喉咙痛','声音嘶哑'] },
+    { dept:'泌尿外科',   keys:['尿频','尿痛','尿急','排尿','血尿'] },
+    { dept:'儿科',       keys:['孩子','小孩','儿童','宝宝','孙子','孙女'] },
+    { dept:'妇产科',     keys:['怀孕','孕期','月经','白带','产检'] }
+  ];
+
+  var RED_FLAGS = {
+    '心血管内科': { extra:['出汗','呼吸困难','压榨','放射','冒冷汗'], tip:'胸痛伴出汗或呼吸困难，可能是急性心血管事件。' },
+    '神经内科':   { extra:['嘴角歪','嘴歪','说话不清','无力','摔倒','口齿不清'], tip:'突发口角歪斜或一侧肢体无力，可能是脑卒中。' }
+  };
+
+  var RED_FLAG_ACTION = '请立即前往急诊科，或点右下角红色「一键求助」，我们会立刻通知服务台护送您。';
+
+  /* ---------------------------------------------------------
+     情绪陪伴话术库
+     原则：先接情绪再办事情；给确定性（下一步做什么、等多久、我在哪）；
+           短句慢速；同一场景不重复同一句；不诊断、不替代家属、可随时关闭。
+     --------------------------------------------------------- */
+  var COMFORT = {
+    negative: [
+      '听您说话，好像有点担心。不着急，一件一件来，我陪着您。',
+      '心里发慌是常事，很多人到这儿都这样。咱们先把号挂上，剩下的我提醒您。',
+      '您别一个人扛着。有不方便的地方，点屏幕右下角的「求助」，我马上叫人来帮您。'
+    ],
+    loginFail: [
+      '没认出来不碍事，咱们换身份证，一样能进。',
+      '不怪您，是机器偶尔犯糊涂。来，把身份证放上来就行。'
+    ],
+    waiting: [
+      '您先坐着歇会儿，我帮您看着号，叫到号我会大声提醒您。',
+      '现在是{time}，您已经等了一会儿了。要是着急，我可以帮您问问服务台。',
+      '等待最容易着急。您要是累了就靠着歇歇，有事喊我一声。'
+    ],
+    nervous: [
+      '抽血就一下下，很快就过去了。您把脸转过去，我数三个数。',
+      '要是心里发紧，跟着我做：慢慢吸气——再慢慢呼气。',
+      '我就在这儿等着，做完出来您喊我一声。'
+    ],
+    nervousScan: [
+      '里面的机器响是正常的，不是坏了，您不用怕。',
+      '检查的时候不能动，您要是累了就先松松肩膀，很快就完。',
+      '我就在门外等着您，出来喊我一声。'
+    ],
+    emergency: [
+      '情况有点急，但您别慌，我陪着您，咱们现在就去急诊。',
+      '您先坐下别动，我马上通知服务台来人接您。'
+    ],
+    sos: [
+      '别慌，已经通知服务台了，人正往您这儿赶，我一直开着。',
+      '您就站在原地，不用走动，我陪着您一起等。'
+    ],
+    success: [
+      '号挂好了，您安心坐着等叫号就行。',
+      '都办妥了，剩下的事我提醒您。'
+    ],
+    result: [
+      '今天的事都办完了，您辛苦了，回去路上慢一点。',
+      '该吃的药、该复诊的日子我都记住了，也告诉您家里人了。'
+    ],
+    farewell: [
+      '设备我收好了。您多保重，早点好起来。',
+      '回去好好歇着，有事再来找我。'
+    ],
+    idle: [
+      '您还在吗？我一直在这儿等着呢。',
+      '要是不方便说话，点「求助」或者屏幕上的大按钮，我就知道了。'
+    ]
+  };
+
+  var Q1 = { text:'这个不舒服，大概持续多长时间了？', opts:['今天刚开始','2到3天','一周以上','一个月以上'] };
+  var Q2 = {
+    '心血管内科': { text:'有没有出汗、呼吸困难，或者疼痛往肩膀、后背放射？', opts:['有','没有','说不清'] },
+    '神经内科':   { text:'有没有嘴角歪斜、说话不清楚，或者一侧手脚没有力气？', opts:['有','没有','说不清'] },
+    __default:    { text:'有没有伴随发热，或者症状在逐渐加重？', opts:['有','没有','说不清'] }
+  };
+
+  /* =========================================================
+     二、状态与工具
+     ========================================================= */
+
+  var state = {
+    power:false, spot:'hall', volume:70, speed:1.0, dialect:'普通话',
+    contrast:'yellow', headset:false, mute:false,
+    user:null, record:null, reg:null, triage:null, nav:null,
+    pendingConfirm:null, activeDept:null,
+    cache:[], sms:[], tickets:[], logs:[],
+    contact:'138****6688', smsFail:false, screenId:'off', seq:12,
+    comfortOn:true, lastActivity:Date.now(), lastComfort:{}, comfortAt:0,
+    comfortSpeaking:false, comfortTimer:null
+  };
+
+  var ui = { title:'设备已关机', lines:['请触摸屏幕任意位置开机。'], opts:[], small:false };
+
+  function $(id){ return document.getElementById(id); }
+  function pad(n){ return (n<10?'0':'') + n; }
+  function nowStr(){ var d=new Date(); return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds()); }
+  function dateCN(offsetDays){
+    var d = new Date(Date.now() + (offsetDays||0)*86400000);
+    return d.getFullYear()+'年'+pad(d.getMonth()+1)+'月'+pad(d.getDate())+'日';
+  }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function log(text, kind){
+    state.logs.unshift({ t:nowStr(), text:text, kind:kind||'' });
+    if(state.logs.length > 60) state.logs.pop();
+    renderLogs();
+  }
+
+  /* =========================================================
+     三之二、情绪陪伴引擎
+     ========================================================= */
+
+  function clockCN(){
+    var d = new Date();
+    return pad(d.getHours()) + '点' + pad(d.getMinutes()) + '分';
+  }
+
+  /* 同一场景避免连续说同一句 */
+  function pickComfort(scene){
+    var arr = COMFORT[scene];
+    if(!arr || !arr.length) return null;
+    var line = arr[Math.floor(Math.random() * arr.length)];
+    if(arr.length > 1 && line === state.lastComfort[scene]){
+      line = arr[(arr.indexOf(line) + 1) % arr.length];
+    }
+    state.lastComfort[scene] = line;
+    return line.replace('{time}', clockCN());
+  }
+
+  function hideComfort(){
+    var el = $('scrComfort');
+    if(el){ el.className = 's-comfort'; el.innerHTML = ''; }
+  }
+
+  /* 触发一次情绪陪伴：显示暖色陪伴条 + 排队播报（不打断正在进行的播报） */
+  function comfort(scene){
+    if(!state.power) return false;
+    if(!state.comfortOn){ log('陪伴模式已关闭，未触发情绪陪伴。','warn'); return false; }
+    var line = pickComfort(scene);
+    if(!line) return false;
+    var el = $('scrComfort');
+    if(el){ el.innerHTML = '🧡 陪伴：' + esc(line); el.className = 's-comfort on'; }
+    state.comfortAt = Date.now();
+    log('情绪陪伴（' + scene + '）：' + line, 'warm');
+    speakWarm(line);
+    return true;
+  }
+
+  /* =========================================================
+     三、语音播报 + 字幕
+     ========================================================= */
+
+  var voices = [];
+  function loadVoices(){
+    if(!window.speechSynthesis) return;
+    voices = window.speechSynthesis.getVoices() || [];
+  }
+  if(window.speechSynthesis){
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  }
+  function pickVoice(){
+    var i;
+    for(i=0;i<voices.length;i++){ if(/^zh/i.test(voices[i].lang||'')) return voices[i]; }
+    return null;
+  }
+
+  function speak(text, interrupt, slow){
+    state.caption = text;
+    $('scrCap').textContent = text;
+    if(!state.power || state.mute || !window.speechSynthesis) return;
+    /* 正在说安慰话时不打断它：后面的话排队，等安慰说完再讲（像一位有耐心的陪护者） */
+    if(interrupt !== false && !state.comfortSpeaking){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'zh-CN';
+    u.rate = Math.max(0.5, Math.min(1.6, 0.95 * state.speed * (slow ? 0.85 : 1)));
+    u.volume = state.volume/100;
+    var v = pickVoice(); if(v) u.voice = v;
+    if(slow){
+      u.onend = function(){ state.comfortSpeaking = false; };
+      u.onerror = u.onend;
+    }
+    try{ window.speechSynthesis.speak(u); }catch(e){}
+  }
+
+  /* 安抚语：比常规播报慢 15%，且排队不打断正在说的话 */
+  function speakWarm(text){
+    speak(text, false, true);
+    if(state.power && !state.mute && window.speechSynthesis){
+      state.comfortSpeaking = true;
+      if(state.comfortTimer) clearTimeout(state.comfortTimer);
+      state.comfortTimer = setTimeout(function(){ state.comfortSpeaking = false; }, 9000);
+    }
+  }
+
+  function stopSpeak(){ if(window.speechSynthesis){ try{ window.speechSynthesis.cancel(); }catch(e){} } }
+
+  /* =========================================================
+     四、渲染
+     ========================================================= */
+
+  function setScreen(id, title, lines, opts, small, primary){
+    state.screenId = id;
+    ui = { title:title, lines:lines||[], opts:opts||[], small:!!small, primary:primary||null };
+    /* 刚说过的安抚语要让它留在屏幕上：同一次交互内的换屏不擦掉陪伴条 */
+    if(Date.now() - state.comfortAt > 1500) hideComfort();
+    renderDevice();
+  }
+
+  function renderDevice(){
+    $('scrTitle').textContent = ui.title;
+    $('scrBody').className = 's-body' + (ui.small ? ' small' : '');
+    $('scrBody').innerHTML = ui.lines.map(function(l){ return '<div>'+l+'</div>'; }).join('');
+    $('scrOpts').innerHTML = ui.opts.map(function(o){
+      return '<button class="chip" data-cmd="'+o.cmd+'">'+esc(o.label)+'</button>';
+    }).join('');
+    var pw = $('scrPrimary');
+    if(ui.primary){
+      pw.className = 's-primary on';
+      pw.innerHTML = '<button class="key ok" data-cmd="'+ui.primary.cmd+'">'+esc(ui.primary.label)+'</button>';
+    }else{
+      pw.className = 's-primary';
+      pw.innerHTML = '';
+    }
+    $('screen').className = 'screen' + (state.contrast === 'white' ? ' white' : '');
+    renderStatus();
+  }
+
+  function renderStatus(){
+    var parts = [
+      '音量 ' + state.volume + '%',
+      '语速 ' + state.speed.toFixed(1) + 'x',
+      '方言 ' + state.dialect,
+      '输出 ' + (state.headset ? '蓝牙助听器' : '扬声器'),
+      '缓存 ' + state.cache.length + ' 项',
+      '<span class="lock">🔒 本地加密</span>',
+      '陪伴 ' + (state.comfortOn ? '开' : '关'),
+      '点位 ' + SPOTS[state.spot].beacon
+    ];
+    $('statusbar').innerHTML = parts.map(function(p,i){ return '<span'+(i===4?' class="hi"':'')+'>'+p+'</span>'; }).join('')
+      + '<button class="gear" data-cmd="openSettings" title="设置">⚙ 设置</button>';
+    var v = state.volume + '%';
+    var sp = state.speed.toFixed(1) + 'x';
+    if($('volTxt')) $('volTxt').textContent = v;
+    if($('volTxt2')) $('volTxt2').textContent = v;
+    if($('spdTxt')) $('spdTxt').textContent = sp;
+    if($('spdTxt2')) $('spdTxt2').textContent = sp;
+    $('spotNow').textContent = SPOTS[state.spot].name;
+    $('powerDot').className = 'dot' + (state.power ? ' on' : '');
+    $('powerTxt').textContent = state.power ? '运行中' : '已关机';
+    $('powerBtn').textContent = state.power ? '关机' : '开机';
+    $('powerKey').innerHTML = '⏻ 电源<small>' + (state.power ? '关机' : '开机') + '</small>';
+    $('consultBtn').disabled = !state.power || !state.user;
+    $('phoneNum').textContent = state.contact;
+  }
+
+  function renderLogs(){
+    if(!state.logs.length){ $('logList').innerHTML = '<div class="empty">暂无事件。</div>'; return; }
+    $('logList').innerHTML = state.logs.map(function(l){
+      return '<div class="logline '+l.kind+'"><b>'+l.t+'</b> '+esc(l.text)+'</div>';
+    }).join('');
+  }
+
+  function renderSms(){
+    if(!state.sms.length){ $('smsList').innerHTML = '<div class="empty">暂无推送记录。完成一次接诊后会自动推送。</div>'; return; }
+    $('smsList').innerHTML = state.sms.map(function(m){
+      var acts = '';
+      if(m.status === 'failed'){
+        acts = '<div class="acts"><button class="btn danger" data-cmd="smsRetry:'+m.id+'">重试发送</button></div>';
+      }
+      return '<div class="msg'+(m.status==='failed'?' failed':'')+'">'
+        + '<span class="mt">'+m.at+' · '+(m.status==='failed'?'<b>发送失败</b> · 待重试':'发送成功')+'</span>'
+        + esc(m.text) + acts + '</div>';
+    }).join('');
+  }
+
+  function renderTickets(){
+    if(!state.tickets.length){ $('ticketList').innerHTML = '<div class="empty">暂无求助工单。</div>'; return; }
+    $('ticketList').innerHTML = state.tickets.map(function(t){
+      var cls = t.status==='done' ? 'ticket done' : 'ticket sos';
+      var head = t.status==='done' ? '已派员前往' : '待响应';
+      var act = t.status==='done' ? '' : '<div class="row" style="margin-top:6px"><button class="btn ok" data-cmd="ticketAck:'+t.id+'">派员前往</button></div>';
+      return '<div class="'+cls+'"><div class="th"><span>'+t.no+' · 一键求助</span><span>'+head+'</span></div>'
+        + '<div>位置：'+esc(t.spot)+'（beacon '+t.beacon+'）</div>'
+        + '<div>患者：'+esc(t.who)+' · '+esc(t.age)+'</div>'
+        + '<div>联系：'+esc(t.contact)+'</div>'
+        + '<div>时间：'+t.at+'</div>' + act + '</div>';
+    }).join('');
+  }
+
+  function renderCache(){
+    if(!state.cache.length){
+      $('cacheList').innerHTML = '<div class="empty">本地缓存为空（已清空，符合"离院即清"要求）。</div>';
+      return;
+    }
+    $('cacheList').innerHTML = state.cache.map(function(c){
+      return '<div class="cacheitem"><span>'+esc(c.name)+'</span><i>'+esc(c.value)+'</i></div>';
+    }).join('') + '<div class="hint">共 '+state.cache.length+' 项，均为临时缓存，归还设备可一键清空。</div>';
+  }
+
+  function renderSpots(){
+    $('spotBtns').innerHTML = Object.keys(SPOTS).map(function(k){
+      return '<button class="btn'+(state.spot===k?' primary':'')+'" data-cmd="spot:'+k+'">'+SPOTS[k].name+'</button>';
+    }).join('');
+  }
+
+  function renderAll(){ renderDevice(); renderSms(); renderTickets(); renderCache(); renderLogs(); renderSpots(); }
+
+  function cacheAdd(name, value){
+    for(var i=0;i<state.cache.length;i++){ if(state.cache[i].name === name){ state.cache[i].value = value; renderCache(); renderStatus(); return; } }
+    state.cache.push({ name:name, value:value });
+    renderCache(); renderStatus();
+  }
+
+  /* =========================================================
+     五、屏幕内容（各功能界面）
+     ========================================================= */
+
+  function scrOff(){
+    setScreen('off','设备已关机',['请触摸屏幕任意位置开机。'], []);
+  }
+
+  function scrBoot(warnLines){
+    var lines = [
+      '您好，我是您的陪诊助手。',
+      '今天由我陪着您，有事慢慢说就行。',
+      '本设备仅限院内使用，离院请归还服务台。'
+    ];
+    if(warnLines && warnLines.length){
+      lines = lines.concat(warnLines.map(function(w){ return '<span style="font-size:15px;opacity:.8">'+w+'</span>'; }));
+    }
+    setScreen('boot','欢迎使用', lines, [
+      { label:'主菜单', cmd:'menu' },
+      { label:'语音口令', cmd:'voice' }
+    ], false, { label:'建档 / 登录', cmd:'login' });
+  }
+
+  /* 检查语音合成是否真的可用：没有中文语音包时只走字幕，并明确告诉演示者 */
+  function voiceWarn(){
+    if(!window.speechSynthesis) return '提示：本浏览器不支持语音合成，本次仅字幕演示。';
+    if(state.mute) return '提示：已开启静音演示，本次仅字幕演示。';
+    if(voices.length && !pickVoice()) return '提示：本机未找到中文语音包，本次仅字幕演示（可在系统设置里安装中文语音）。';
+    return null;
+  }
+
+  function scrMenu(user){
+    var lines = [];
+    if(user){
+      lines.push('您好，'+user.name+'。我一直在这儿，您慢慢说。');
+    } else {
+      lines.push('您好，请先建立档案或登录。');
+    }
+    lines.push('请说出您的需求，或点屏幕上的按钮。');
+    setScreen('menu','主菜单', lines, [
+      { label:'1 建档 / 登录', cmd:'login' },
+      { label:'2 当前位置讲解', cmd:'replaySpot' },
+      { label:'3 语音挂号', cmd:'triage' },
+      { label:'4 院内导航', cmd:'depts' },
+      { label:'5 我的医嘱', cmd:'queryRecord' },
+      { label:'6 归还设备', cmd:'wipe' },
+      { label:'语音口令', cmd:'voice' }
+    ]);
+  }
+
+  function scrLogin(){
+    setScreen('login','建档 / 登录',[
+      '首次来院请刷身份证建立档案。',
+      '复诊可以人脸识别调取档案。',
+      '人脸识别失败时，可刷身份证兜底登录。'
+    ],[
+      { label:'人脸识别·复诊调档', cmd:'faceOk' },
+      { label:'人脸失败·身份证兜底', cmd:'faceFail' }
+    ], false, { label:'刷身份证 · 首次建档', cmd:'idNew' });
+  }
+
+  function scrUserCard(title){
+    var u = state.user;
+    setScreen('user', title, [
+      '<div class="kv"><i>姓名</i><span>'+esc(u.name)+'</span></div>',
+      '<div class="kv"><i>身份证</i><span>'+esc(u.idNo)+'（已脱敏）</span></div>',
+      '<div class="kv"><i>年龄</i><span>'+esc(u.age)+' · '+esc(u.gender)+'</span></div>',
+      '<div class="kv"><i>家属手机</i><span>'+esc(state.contact)+'</span></div>'
+    ],[
+      { label:'主菜单', cmd:'menu' },
+      { label:'语音挂号', cmd:'triage' },
+      { label:'我的医嘱', cmd:'queryRecord' }
+    ]);
+  }
+
+  function scrGuide(spotId){
+    var s = SPOTS[spotId];
+    setScreen('guide','点位自动讲解',[
+      '当前位置：'+s.name,
+      '（beacon '+s.beacon+' 已触发，自动播报）',
+      s.tip
+    ],[
+      { label:'重复播报', cmd:'replaySpot' },
+      { label:'院内导航', cmd:'depts' },
+      { label:'主菜单', cmd:'menu' }
+    ], true);
+  }
+
+  function scrTriageAsk(){
+    setScreen('triage','语音分诊 · 请描述症状',[
+      '请说出您哪里不舒服。',
+      '例如：胸闷、咳嗽、胃痛、头晕、腿疼。',
+      '（分诊仅作就诊参考，不能替代医生诊断）'
+    ],[
+      { label:'我胸闷心慌', cmd:'sym:胸闷心慌' },
+      { label:'我咳嗽发烧', cmd:'sym:咳嗽发烧' },
+      { label:'我胃痛反酸', cmd:'sym:胃痛反酸' },
+      { label:'我头晕手麻', cmd:'sym:头晕手麻' },
+      { label:'我腿疼关节痛', cmd:'sym:腿疼关节痛' },
+      { label:'按麦克风说症状', cmd:'voice' }
+    ], true);
+  }
+
+  function scrTriageAskQ(stage){
+    var t = state.triage;
+    var q = stage === 1 ? Q1 : (Q2[t.dept] || Q2.__default);
+    setScreen('triage','语音分诊 · 追问补充信息',[
+      q.text,
+      '<span style="font-size:16px;opacity:.75">已记录：'+esc(t.symptomText)+'</span>'
+    ], q.opts.map(function(o,i){
+      return { label:o, cmd:'tri'+(stage===1?'A':'B')+':'+i };
+    }), true);
+  }
+
+  function scrTriageResult(){
+    var t = state.triage;
+    var goDept = t.redFlag ? '急诊科' : t.dept;
+    var d = DEPTS[goDept];
+    var extra = t.redFlag ? ['<b>⚠ '+t.redFlagTip+'</b>', RED_FLAG_ACTION] : ['建议就诊科室：'+t.dept, DEPTS[t.dept].intro];
+    setScreen('triageResult','预分诊结果', extra.concat([
+      '<span style="font-size:16px;opacity:.8">就诊参考：' + goDept + ' · ' + d.room + ' · 预计等待 ' + d.wait + '</span>',
+      '<span style="font-size:15px;opacity:.7">分诊仅作就诊参考，不能替代医生诊断。</span>'
+    ]), t.redFlag ? [
+      { label:'一键求助', cmd:'sos' },
+      { label:'主菜单', cmd:'menu' }
+    ] : [
+      { label:'换一个科室', cmd:'changeReg' },
+      { label:'主菜单', cmd:'menu' }
+    ], true, t.redFlag
+      ? { label:'我要挂号 → 急诊科', cmd:'regAsk:急诊科' }
+      : { label:'就这个科室 · 挂号', cmd:'regAsk:'+t.dept });
+  }
+
+  function scrConfirm(dept){
+    var d = DEPTS[dept];
+    setScreen('confirm','挂号二次确认',[
+      '即将为您预约：'+dept,
+      '诊室：'+d.room,
+      '请说"确认挂号"，或点下面的确认按钮。',
+      '<span style="font-size:15px;opacity:.7">重要操作需要再确认一次，防止点错。</span>'
+    ],[
+      { label:'取消', cmd:'confirmNo' }
+    ], true, { label:'确认挂号', cmd:'confirmYes' });
+  }
+
+  function scrRegOk(){
+    var r = state.reg;
+    setScreen('reg','挂号成功',[
+      '<div class="kv"><i>科室</i><span>'+esc(r.dept)+'</span></div>',
+      '<div class="kv"><i>取号码</i><span>'+r.no+'</span></div>',
+      '<div class="kv"><i>候诊序号</i><span>第 '+r.seq+' 位</span></div>',
+      '<div class="kv"><i>诊室</i><span>'+esc(r.room)+'</span></div>',
+      '请到候诊区就坐，听到叫号后再进入诊室。'
+    ],[
+      { label:'变更预约', cmd:'changeReg' },
+      { label:'取消预约', cmd:'regCancel' },
+      { label:'主菜单', cmd:'menu' }
+    ], true, { label:'导航去诊室', cmd:'nav:'+r.dept });
+  }
+
+  function scrDepts(mode){
+    var keys = Object.keys(DEPTS);
+    var isReg = mode === 'reg';
+    var opts = keys.slice(0,10).map(function(k){
+      return { label:k, cmd:(isReg ? 'reAsk:' : 'nav:') + k };
+    });
+    opts.push({ label:'主菜单', cmd:'menu' });
+    setScreen('depts', isReg ? '变更预约 · 选择科室' : '院内导航 · 选择目的地',
+      [ isReg ? '请说出或选择要改挂的科室，确认后原预约会被替换。' : '请说出或选择您要去的科室。' ], opts, true);
+  }
+
+  function scrNav(){
+    var n = state.nav;
+    var step = n.steps[n.idx] || '';
+    var lines = [
+      '目的地：'+n.dept,
+      '第 '+(n.idx+1)+' / '+n.steps.length+' 步',
+      step
+    ];
+    if(n.idx === n.steps.length-1) lines.push('<b>已到达目的地。</b>');
+    var last = n.idx === n.steps.length-1;
+    var opts = last
+      ? [{ label:'重复播报', cmd:'navRepeat' }, { label:'结束导航', cmd:'navStop' }]
+      : [{ label:'下一步', cmd:'navNext' }, { label:'重复本步', cmd:'navRepeat' }, { label:'结束导航', cmd:'navStop' }];
+    setScreen('nav','院内语音导航', lines, opts, true);
+  }
+
+  function scrRecord(prefix){
+    var r = state.record;
+    if(!r){ setScreen('record','我的档案',['还没有就诊记录。','完成本次接诊后会自动保存档案。'], [{label:'主菜单',cmd:'menu'}]); return; }
+    setScreen('record', prefix || '就诊档案', [
+      '<div class="kv"><i>接诊医生</i><span>'+esc(r.doctor)+'</span></div>',
+      '<div class="kv"><i>科　　室</i><span>'+esc(r.dept)+'</span></div>',
+      '<div class="kv"><i>病　　情</i><span>'+esc(r.dx)+'</span></div>',
+      '<div class="kv"><i>用药医嘱</i><span>'+esc(r.meds[0])+'</span></div>',
+      '<div class="kv"><i>　　　　</i><span>'+esc(r.meds[1])+'</span></div>',
+      '<div class="kv"><i>复诊时间</i><span>'+esc(r.revisit)+'</span></div>'
+    ],[
+      { label:'语音播报医嘱', cmd:'queryRecord' },
+      { label:'再次推送家属', cmd:'smsPushManual' },
+      { label:'主菜单', cmd:'menu' }
+    ], true);
+  }
+
+  function scrSos(){
+    var t = state.tickets[0];
+    setScreen('sos','一键求助已发送',[
+      '<b>已通知医院服务台</b>',
+      '位置：'+SPOTS[state.spot].name+'（beacon '+SPOTS[state.spot].beacon+'）',
+      '时间：'+(t ? t.at : nowStr()),
+      '请留在原地，工作人员正在赶来。'
+    ],[
+      { label:'再次求助', cmd:'sos' },
+      { label:'主菜单', cmd:'menu' }
+    ], true);
+  }
+
+  function scrWipe(){
+    setScreen('wipe','归还设备 · 缓存已清空',[
+      '本地缓存已全部清除。',
+      '身份证、人脸模板、病历临时文件：已删除。',
+      '感谢使用，请将设备归还服务台。'
+    ],[
+      { label:'重新开机演示', cmd:'power' }
+    ], true);
+  }
+
+  function scrVoice(){
+    setScreen('voice','语音口令',[
+      '请按住屏幕左下方的「按住说话」说。',
+      '可用口令示例见下方。'
+    ],[
+      { label:'建档', cmd:'say:建档' },
+      { label:'我要挂号', cmd:'say:我要挂号' },
+      { label:'带我去心血管内科', cmd:'say:带我去心血管内科' },
+      { label:'我的医嘱', cmd:'say:我的医嘱' },
+      { label:'一键求助', cmd:'say:一键求助' },
+      { label:'返回主菜单', cmd:'say:返回主菜单' }
+    ], true);
+  }
+
+  /* =========================================================
+     六、业务动作
+     ========================================================= */
+
+  function powerOn(){
+    state.power = true; state.mute = false; $('muteChk').checked = false;
+    var warn = voiceWarn();
+    log('设备开机，自检通过，本地缓存无残留。' + (warn ? ' ' + warn : ' 语音播报正常。'), warn ? 'warn' : 'ok');
+    scrBoot(warn ? [warn] : null);
+    speak('您好，我是您的语音陪诊助手，今天由我陪着您。本设备仅限院内使用，离院请归还服务台。请说出您的需求，例如建档、挂号、导航。');
+  }
+  function powerOff(){
+    state.power = false; stopSpeak();
+    log('设备关机。','');
+    scrOff(); renderStatus();
+  }
+  function togglePower(){ if(state.power) powerOff(); else powerOn(); }
+
+  function openLogin(){
+    if(!state.power) return needPower();
+    scrLogin();
+    speak('请选择登录方式。首次来院请刷身份证建档；复诊可以人脸识别调取档案。');
+  }
+
+  function readIdExisting(){
+    if(!state.power) return needPower();
+    if(!state.user){ return readIdNew(true); }
+    state.user.face = false;
+    log('读卡器读取身份证成功，调取既有档案：'+state.user.name,'ok');
+    scrUserCard('身份证登录成功');
+    speak('已通过身份证调取您的档案。'+state.user.name+'，请选择需要的服务。');
+  }
+
+  function readIdNew(existing){
+    if(!state.power) return needPower();
+    var isNew = !existing && !state.user;
+    if(isNew){
+      state.user = { name:'张××', idNo:'1101**********1234', age:'72岁', gender:'男', face:false };
+      log('读卡器读取身份证成功，新建个人就诊档案。','ok');
+      cacheAdd('身份证号（脱敏）','1101**********1234');
+      cacheAdd('就诊档案（临时）','档案ID P2026-0417');
+      cacheAdd('人脸模板','未采集（Demo 不使用真实人脸）');
+    }
+    scrUserCard(isNew ? '建档成功' : '身份证登录成功');
+    speak(isNew
+      ? '身份证读取成功，已为您建立个人就诊档案。' + state.user.name + '，接下来可以挂号、导航或查询医嘱。'
+      : '已通过身份证调取您的档案，请选择需要的服务。');
+  }
+
+  function faceLoginOk(){
+    if(!state.power) return needPower();
+    if(!state.user){
+      state.user = { name:'张××', idNo:'1101**********1234', age:'72岁', gender:'男', face:true };
+      cacheAdd('身份证号（脱敏）','1101**********1234');
+      cacheAdd('就诊档案（临时）','档案ID P2026-0417');
+      cacheAdd('人脸模板','未采集（Demo 不使用真实人脸）');
+    } else { state.user.face = true; }
+    log('人脸识别成功（模拟），调取档案：'+state.user.name,'ok');
+    scrUserCard('人脸识别登录成功');
+    speak('人脸识别成功，已为您调取就诊档案。'+state.user.name+'，请选择需要的服务。');
+  }
+
+  function faceLoginFail(){
+    if(!state.power) return needPower();
+    log('人脸识别失败（模拟），转入身份证兜底登录。','warn');
+    setScreen('login','人脸识别失败 · 请兜底登录',[
+      '没有识别成功。',
+      '请刷身份证登录，或到服务台找工作人员帮忙。'
+    ],[
+      { label:'刷身份证兜底登录', cmd:'idExisting' },
+      { label:'重试人脸识别', cmd:'faceOk' },
+      { label:'主菜单', cmd:'menu' }
+    ], true);
+    speak('人脸识别没有成功，请不要着急。请刷身份证登录，也可以点「求助」让工作人员来帮您。');
+    comfort('loginFail');
+  }
+
+  function setSpot(id){
+    if(!SPOTS[id]) return;
+    state.spot = id;
+    renderSpots(); renderStatus();
+    var s = SPOTS[id];
+    log('beacon '+s.beacon+' 触发，自动播报：'+s.name,'');
+    if(state.screenId === 'triage' || state.screenId === 'nav' || state.screenId === 'confirm'){
+      speak('已进入'+s.name+'。' + s.tip);
+    } else {
+      scrGuide(id);
+      speak('已到达'+s.name+'。' + s.tip);
+    }
+    /* 走到采血、放射这类容易紧张的科室，按场景主动安抚 */
+    if(id === 'lab') comfort('nervous');
+    if(id === 'rad') comfort('nervousScan');
+  }
+
+  function replaySpot(){
+    if(!state.power) return needPower();
+    var s = SPOTS[state.spot];
+    scrGuide(state.spot);
+    speak('当前位置，'+s.name+'。'+s.tip);
+  }
+
+  function startTriage(){
+    if(!state.power) return needPower();
+    state.triage = { stage:'main', symptomText:'', dept:null, answers:[], redFlag:false };
+    scrTriageAsk();
+    speak('请说出您哪里不舒服，例如胸闷、咳嗽、胃痛、头晕或者腿疼。');
+  }
+
+  function matchDept(text){
+    var i,j,k;
+    for(i=0;i<TRIAGE_RULES.length;i++){
+      var r = TRIAGE_RULES[i];
+      for(j=0;j<r.keys.length;j++){
+        if(text.indexOf(r.keys[j]) >= 0) return r.dept;
+      }
+    }
+    for(k in DEPTS){ if(text.indexOf(k) >= 0) return k; }
+    return null;
+  }
+
+  function submitSymptoms(text){
+    if(!state.power) return needPower();
+    if(!state.triage) state.triage = { stage:'main', symptomText:'', dept:null, answers:[], redFlag:false };
+    var dept = matchDept(text);
+    if(!dept){
+      log('分诊：未能从"'+text+'"中匹配到科室，请患者换一种说法。','warn');
+      setScreen('triage','语音分诊 · 没听清',[
+        '我没有听清楚。',
+        '请换一种说法，比如说"我胸口闷""我咳嗽""我肚子疼"。',
+        '也可以点右下角的「求助」，让服务台协助您。'
+      ],[
+        { label:'重新描述', cmd:'triage' },
+        { label:'一键求助', cmd:'sos' },
+        { label:'主菜单', cmd:'menu' }
+      ], true);
+      speak('我没有听清楚，请换一种说法，比如说，我胸口闷，我咳嗽，或者我肚子疼。');
+      return;
+    }
+    state.triage.symptomText = text;
+    state.triage.dept = dept;
+    state.triage.stage = 1;
+    log('分诊：识别主诉"'+text+'"，初判科室 '+dept+'，进入追问。','');
+    scrTriageAskQ(1);
+    speak('我记下了。' + Q1.text);
+  }
+
+  function triageAnswer(stage, idx){
+    var t = state.triage;
+    if(!t) return;
+    if(stage === 1){
+      t.answers.push(Q1.opts[idx]);
+      t.stage = 2;
+      scrTriageAskQ(2);
+      speak((Q2[t.dept] || Q2.__default).text);
+      return;
+    }
+    var q2 = Q2[t.dept] || Q2.__default;
+    t.answers.push(q2.opts[idx]);
+    t.stage = 3;
+    var said = t.answers.join('、');
+    if(q2.opts[idx] === '有'){
+      var rf = RED_FLAGS[t.dept];
+      if(rf){
+        t.redFlag = true; t.redFlagTip = rf.tip;
+      }
+    }
+    log('分诊：追问回答 '+said+'，生成预分诊结果 → '+t.dept+(t.redFlag?'（触发红旗预警）':''), t.redFlag?'err':'ok');
+    scrTriageResult();
+    if(t.redFlag){
+      speak('请注意，' + t.redFlagTip + RED_FLAG_ACTION + '本提示仅作就诊参考，不能替代医生诊断。');
+      comfort('emergency');
+    } else {
+      speak('根据您的描述，建议就诊科室是' + t.dept + '。' + DEPTS[t.dept].intro + '本结果仅作就诊参考，不能替代医生诊断。需要我为您挂这个科室的号吗？');
+    }
+  }
+
+  function askRegister(dept){
+    if(!state.power) return needPower();
+    if(!state.user){ openLogin(); speak('挂号前需要先建立档案或登录。请刷身份证，或者人脸识别。'); return; }
+    state.pendingConfirm = { type:'reg', dept:dept };
+    state.activeDept = dept;
+    scrConfirm(dept);
+    speak('即将为您预约' + dept + '，诊室在' + DEPTS[dept].room + '。这是重要操作，请说"确认挂号"，或者点屏幕上的大按钮。');
+  }
+
+  function doConfirm(){
+    if(!state.power) return needPower();
+    if(!state.pendingConfirm){
+      // 无待确认事项时，主操作按钮等价于主菜单
+      openMenu(); return;
+    }
+    var dept = state.pendingConfirm.dept;
+    state.pendingConfirm = null;
+    state.seq += 1;
+    state.reg = {
+      dept:dept, no:'A' + ('00' + state.seq).slice(-3), seq:5,
+      room:DEPTS[dept].room, wait:DEPTS[dept].wait
+    };
+    cacheAdd('挂号记录（临时）', dept + ' ' + state.reg.no);
+    log('挂号成功：'+dept+'，取号码 '+state.reg.no+'。','ok');
+    scrRegOk();
+    speak('挂号成功。您的取号码是 ' + state.reg.no + '，' + dept + '，诊室在' + state.reg.room + '。请到候诊区就坐，听到叫号后再进入诊室。');
+    comfort('success');
+  }
+
+  function doCancelConfirm(){
+    if(!state.pendingConfirm){ openMenu(); return; }
+    var dept = state.pendingConfirm.dept;
+    state.pendingConfirm = null;
+    log('患者取消挂号确认：'+dept+'，未产生预约。','warn');
+    scrMenu(state.user);
+    speak('好的，已取消。本次没有为您挂号。您可以换个科室，或者稍后再挂。');
+  }
+
+  function cancelReg(){
+    if(!state.reg){ speak('您当前没有预约。'); return; }
+    var dept = state.reg.dept;
+    state.reg = null;
+    cacheAdd('挂号记录（临时）','已取消');
+    log('取消预约成功：'+dept+'。','warn');
+    scrMenu(state.user);
+    speak('已为您取消' + dept + '的预约。需要重新挂号，请说挂号。');
+  }
+
+  function startNav(dept){
+    if(!state.power) return needPower();
+    if(!DEPTS[dept]) return;
+    state.nav = { dept:dept, idx:0, steps:routeFor(dept) };
+    log('院内导航开始：前往 '+dept+'。','');
+    scrNav();
+    speak('导航开始，目的地'+dept+'。' + state.nav.steps[0]);
+  }
+
+  function routeFor(dept){
+    var d = DEPTS[dept];
+    var floor = (d.room.match(/门诊楼(\d层)/) || [,'1层'])[1];
+    var from = SPOTS[state.spot].name;
+    return [
+      '从'+from+'出发，跟随语音提示前行约20米。',
+      '右手边是无障碍电梯，乘坐电梯前往'+floor+'。',
+      '出电梯后左转。前方3米有台阶，请注意脚下；台阶右侧设有缓坡通道和扶手。',
+      '沿走廊直行，左手边经过无障碍卫生间。',
+      '到达'+dept+'分诊台，'+d.room+'。'
+    ];
+  }
+
+  function navNext(){
+    var n = state.nav; if(!n) return;
+    if(n.idx < n.steps.length-1){
+      n.idx += 1;
+      scrNav();
+      speak(n.steps[n.idx]);
+      if(n.idx === n.steps.length-1) log('已到达 '+n.dept+'。','ok');
+    } else { navRepeat(); }
+  }
+  function navRepeat(){ var n = state.nav; if(!n) return; speak(n.steps[n.idx]); }
+  function navStop(){
+    if(!state.nav) return;
+    var dept = state.nav.dept;
+    state.nav = null;
+    log('导航结束：'+dept+'。','');
+    scrMenu(state.user);
+    speak('已结束导航。');
+  }
+
+  function simulateConsult(){
+    if(!state.user){ speak('请先建立档案或登录。'); return; }
+    var dept = state.reg ? state.reg.dept : (state.triage && state.triage.dept ? state.triage.dept : '全科医学门诊');
+    state.record = {
+      dept:dept,
+      doctor:'李建国 主任医师',
+      dx: dept === '心血管内科' ? '原发性高血压 2级（中危）' : '上呼吸道感染（门诊随访）',
+      meds: dept === '心血管内科'
+        ? ['苯磺酸氨氯地平片 5mg  每日1次 晨服  共14天','阿司匹林肠溶片 100mg  每日1次 睡前服  共14天']
+        : ['连花清瘟胶囊 4粒  每日3次 口服  共5天','布洛芬混悬液 10ml  发热时服用  不超过3天'],
+      revisit: dateCN(14) + ' 上午 · ' + dept + ' ' + DEPTS[dept].room,
+      at: nowStr()
+    };
+    cacheAdd('就诊档案（临时）','档案ID P2026-0417');
+    log('医生工作站回传：接诊完成，系统自动保存档案并加密。','ok');
+    pushSms('consult');
+    scrRecord('就诊档案已保存');
+    speak('本次接诊已完成，档案已自动保存并加密。医嘱和复诊时间已推送给您的家属' + state.contact + '。');
+    comfort('result');
+  }
+
+  function pushSms(reason){
+    if(!state.user){ speak('还没有档案，无法推送。'); return; }
+    var r = state.record;
+    var text;
+    if(r){
+      text = '【演示·XX医院】' + state.user.name + '就诊提醒：本次就诊 ' + r.dept + '，接诊医生 ' + r.doctor
+        + '。用药医嘱：1）' + r.meds[0] + '；2）' + r.meds[1]
+        + '。复诊时间：' + r.revisit + '。请协助提醒按时服药与复诊。（Demo 模拟短信，未接入真实短信通道）';
+    } else {
+      text = '【演示·XX医院】' + state.user.name + '已完成建档，预留本机号为紧急联系人。（Demo 模拟短信）';
+    }
+    var id = 'M' + Date.now();
+    var failed = state.smsFail;
+    state.sms.push({ id:id, at:nowStr(), text:text, status: failed ? 'failed' : 'ok', reason:reason });
+    renderSms();
+    if(failed){
+      log('短信网关异常，推送失败，已进入重试队列。','err');
+      speak('档案已保存。但家属短信推送暂时失败，系统会自动重试。');
+    } else {
+      log('已推送就诊信息至家属手机 '+state.contact+'（模拟短信网关）。','ok');
+    }
+  }
+
+  function resendSms(id){
+    var target = null, i;
+    if(id){ for(i=0;i<state.sms.length;i++){ if(state.sms[i].id === id) target = state.sms[i]; } }
+    else if(state.sms.length){ target = state.sms[state.sms.length-1]; }
+    if(!target){ speak('没有需要重发的短信。'); return; }
+    if(state.smsFail){
+      target.status = 'failed';
+      log('重试失败：短信通道仍异常，30秒后再次重试。','err');
+      renderSms();
+      speak('短信通道仍然异常，系统会在30秒后再次重试。');
+      return;
+    }
+    target.status = 'ok';
+    target.at = nowStr();
+    log('短信重试成功，已送达 '+state.contact+'。','ok');
+    renderSms();
+    if(state.power) speak('家属短信已重新发送成功。');
+  }
+
+  function sos(){
+    if(!state.power) return needPower();
+    var who = state.user ? state.user.name : '未建档访客';
+    var age = state.user ? state.user.age + ' ' + state.user.gender : '年龄未知';
+    var t = {
+      id:'T' + Date.now(), no:'SOS-' + pad(new Date().getHours()) + pad(new Date().getMinutes()),
+      spot:SPOTS[state.spot].name, beacon:SPOTS[state.spot].beacon,
+      who:who, age:age, contact:state.user ? state.contact : '未预留', at:nowStr(), status:'new'
+    };
+    state.tickets.unshift(t);
+    renderTickets();
+    log('一键求助已发送：位置 '+t.spot+'（beacon '+t.beacon+'）、患者 '+who+'。','err');
+    scrSos();
+    speak('已向医院服务台发送求助。您的位置是' + t.spot + '，请留在原地，工作人员正在赶来。');
+    comfort('sos');
+  }
+
+  function ackTicket(id){
+    var i;
+    for(i=0;i<state.tickets.length;i++){
+      if(state.tickets[i].id === id){
+        state.tickets[i].status = 'done';
+        state.tickets[i].ackAt = nowStr();
+        log('服务台已派员前往（工单 '+state.tickets[i].no+'）。','ok');
+      }
+    }
+    renderTickets();
+    if(state.power) speak('服务台已收到您的求助，工作人员正在赶往' + SPOTS[state.spot].name + '，请原地等待。');
+  }
+
+  function openRecord(){
+    if(!state.power) return needPower();
+    if(!state.user){ openLogin(); speak('请先登录，才能查看您的档案。'); return; }
+    scrRecord();
+    if(state.record) speak('已为您显示本次就诊档案。');
+    else speak('您本次还没有就诊记录。完成接诊后系统会自动保存。');
+  }
+
+  function queryRecord(){
+    if(!state.power) return needPower();
+    if(!state.user){ openLogin(); speak('请先登录，才能查询您的医嘱。'); return; }
+    if(!state.record){
+      scrRecord();
+      speak('您本次还没有医嘱记录。看完诊后，系统会自动保存档案，您可以随时来查询。');
+      return;
+    }
+    var r = state.record;
+    scrRecord('医嘱语音查询');
+    speak('本次接诊医生是' + r.doctor + '，科室' + r.dept + '。病情记录：' + r.dx
+      + '。用药医嘱，第一，' + r.meds[0] + '；第二，' + r.meds[1]
+      + '。复诊时间是' + r.revisit + '。以上信息已推送家属手机。需要再听一遍，请说重复播报。');
+  }
+
+  function wipe(){
+    var n = state.cache.length;
+    state.cache = [];
+    state.user = null; state.record = null; state.reg = null;
+    state.triage = null; state.nav = null; state.pendingConfirm = null;
+    renderCache(); renderStatus();
+    log('归还设备：一键清空本地缓存，共清除 '+n+' 项（身份证、人脸模板、病历临时文件）。','ok');
+    scrWipe();
+    speak('本地缓存已全部清空。身份证、人脸模板、病历临时文件已经删除。感谢使用，请将设备归还服务台。');
+    comfort('farewell');
+  }
+
+  function needPower(){ /* 关机状态下提示先开机 */ log('设备未开机，操作被忽略。','warn'); return; }
+
+  function adjustVolume(d){
+    state.volume = Math.max(0, Math.min(100, state.volume + d));
+    renderStatus();
+    log('音量调节为 '+state.volume+'%。','');
+    if(state.power) speak('音量' + state.volume + '。', true);
+  }
+  function adjustSpeed(d){
+    state.speed = Math.round(Math.max(0.6, Math.min(1.6, state.speed + d)) * 10)/10;
+    renderStatus();
+    log('播报语速调节为 '+state.speed.toFixed(1)+' 倍。','');
+    if(state.power) speak('语速已调为' + state.speed.toFixed(1) + '倍。这是当前语速的示例。', true);
+  }
+
+  /* =========================================================
+     七、语音指令解析（简短指令）
+     ========================================================= */
+
+  function voiceAnswerIndex(text){
+    if(/今天|刚|刚才|一会|半天|1天|一天/.test(text)) return 0;
+    if(/2|二|两|3|三|几天|两三天/.test(text)) return 1;
+    if(/一周|1周|七|7|十天|半个月/.test(text)) return 2;
+    if(/月|很久|半年|一年|长期/.test(text)) return 3;
+    if(/有|是|嗯|对|加重|出汗|呼吸|歪|无力|说清/.test(text)) return 0;
+    if(/没有|无|不|没|否/.test(text)) return 1;
+    if(/说不清|不清楚|不知道|不记得|忘了/.test(text)) return 2;
+    return -1;
+  }
+
+  function handleVoice(raw){
+    var text = String(raw||'').replace(/\s/g,'');
+    if(!text) return;
+    if(!state.power){ needPower(); return; }
+    state.lastActivity = Date.now();
+    log('语音识别（'+state.dialect+'）：'+text, '');
+    $('scrCap').textContent = '识别到："' + text + '"';
+
+    /* 0) 情绪优先：先接住情绪，再继续办事情（不打断挂号等关键流程） */
+    var emotional = /害怕|紧张|担心|着急|孤单|没人陪|一个人|心里慌|不放心|太麻烦|心里没底|不敢|无助/.test(text);
+    if(emotional) comfort('negative');
+
+    // 0) 明确的系统指令词（优先级最高，避免主诉里的词被误判）
+    var explicit = /求助|救命|建档|登记|登录|刷卡|身份证|人脸|刷脸|医嘱|用药|药怎么吃|查询|档案|返回|主页|主菜单|菜单|取消|退号|归还|清空|讲解|介绍|音量|语速|挂号|预约|看病|导航|带我去|怎么走|往哪走/;
+
+    // 1) 挂号等重要操作：二次语音确认优先
+    if(state.pendingConfirm){
+      if(/确认|好的|是的|对|没错|可以|挂/.test(text)){ doConfirm(); return; }
+      if(/取消|不用|不要|算了|不挂/.test(text)){ doCancelConfirm(); return; }
+      speak('这是重要操作，请明确说"确认挂号"，或者点确认按钮。');
+      return;
+    }
+
+    // 2) 分诊追问阶段：只接受选项回答
+    if(state.triage && (state.triage.stage === 1 || state.triage.stage === 2)){
+      var idx = voiceAnswerIndex(text);
+      if(idx >= 0 && idx <= 2){ triageAnswer(state.triage.stage, idx); return; }
+      speak('请回答选项，比如说，今天刚开始，或者一周以上。');
+      return;
+    }
+
+    // 3) 分诊主诉阶段：优先把话当症状理解（句子带情绪也照样分诊，绝不跳去导航）
+    if(state.triage && state.triage.stage === 'main'){
+      if(matchDept(text) || (!explicit.test(text) && !emotional)){ submitSymptoms(text); return; }
+      if(emotional){ return; }   // 纯情绪表达：已经安抚过，不再追问症状
+    }
+
+    // 4) 取消 / 变更预约（必须早于"挂号"判断，否则"取消预约"会被当成挂号）
+    if(/取消预约|取消挂号|退号|不看了|不挂了|变更预约|改约|换科室/.test(text)){
+      if(/变更|改约|换科室/.test(text)){ scrDepts('reg'); speak('请说出您要改挂的科室。'); return; }
+      cancelReg(); return;
+    }
+
+    // 5) 通用指令
+    if(/求助|救命|帮忙|叫人|快来|不舒服得厉害/.test(text)){ sos(); return; }
+    if(/建档|登记|办卡|第一次|没来过|登录|刷卡|身份证/.test(text)){ openLogin(); return; }
+    if(/人脸|刷脸/.test(text)){ faceLoginOk(); return; }
+    if(/医嘱|用药|吃什么药|药怎么吃|复诊时间|查档案|我的档案|查询|档案/.test(text)){ queryRecord(); return; }
+    if(/再听一遍|重复播报|再说一遍/.test(text)){
+      if(state.nav){ navRepeat(); } else { replaySpot(); }
+      return;
+    }
+    var dept = matchDept(text);
+    if(dept){ startNav(dept); return; }
+    if(/导航|怎么走|带我去|我要去|去一下|往哪走|在哪|去药房|去检验科/.test(text)){
+      scrDepts('nav');
+      speak('请说出您要去的科室，例如心血管内科、检验科、门诊药房。');
+      return;
+    }
+    if(/讲解|介绍|这里|当前位置|这是哪/.test(text)){ replaySpot(); return; }
+    if(/挂号|看病|预约|分诊|症状/.test(text)){ startTriage(); return; }
+    if(/归还|清空|还机器|不用了/.test(text)){ wipe(); return; }
+    if(/返回|主页|主菜单|菜单/.test(text)){ openMenu(); return; }
+    if(/音量|大声|小声|语速|快一点|慢一点/.test(text)){ speak('音量与语速请点顶栏的「设置」调节。'); return; }
+
+    // 6) 兜底：分诊进行中就把话当成症状；纯情绪表达则只安抚、不再追问
+    if(emotional){ return; }
+    if(state.triage && state.triage.stage === 'main'){ submitSymptoms(text); return; }
+    speak('我没有听清楚。可以说，建档、挂号、带我导航、我的医嘱，或者点「求助」。');
+  }
+
+  function openMenu(){
+    if(!state.power) return needPower();
+    scrMenu(state.user);
+    speak(state.user ? '您好，' + state.user.name + '，请说出您需要的服务。' : '请先建立档案或登录，也可以直接说出需要的服务。');
+  }
+
+  function goBack(){
+    if(!state.power) return needPower();
+    if(state.screenId === 'nav'){ navStop(); return; }
+    if(state.screenId === 'confirm'){ doCancelConfirm(); return; }
+    openMenu();
+  }
+
+  /* =========================================================
+     八、命令分发
+     ========================================================= */
+
+  function runCommand(cmd){
+    if(!cmd) return;
+    state.lastActivity = Date.now();
+    var i = cmd.indexOf(':');
+    var key = i >= 0 ? cmd.slice(0, i) : cmd;
+    var arg = i >= 0 ? cmd.slice(i+1) : null;
+
+    switch(key){
+      case 'openSettings': $('settingsPanel').classList.add('on'); log('打开设置面板（本地，不上行）','warn'); break;
+    case 'closeSettings': $('settingsPanel').classList.remove('on'); break;
+    case 'reset': location.reload(); return;
+      case 'power': togglePower(); return;
+      case 'menu': openMenu(); return;
+      case 'back': goBack(); return;
+      case 'login': openLogin(); return;
+      case 'idNew': readIdNew(false); return;
+      case 'idExisting': readIdExisting(); return;
+      case 'faceOk': faceLoginOk(); return;
+      case 'faceFail': faceLoginFail(); return;
+      case 'spot': setSpot(arg); return;
+      case 'replaySpot': replaySpot(); return;
+      case 'triage': startTriage(); return;
+      case 'sym': submitSymptoms(arg); return;
+      case 'triA': triageAnswer(1, parseInt(arg,10)); return;
+      case 'triB': triageAnswer(2, parseInt(arg,10)); return;
+      case 'regAsk': askRegister(arg); return;
+      case 'confirmYes': doConfirm(); return;
+      case 'confirmNo': doCancelConfirm(); return;
+      case 'regCancel': cancelReg(); return;
+      case 'depts': if(!state.power) return needPower(); scrDepts('nav'); speak('请说出或选择您要去的科室。'); return;
+      case 'changeReg': if(!state.power) return needPower(); scrDepts('reg'); speak('请说出您要改挂的科室。'); return;
+      case 'reAsk': askRegister(arg); return;
+      case 'nav': startNav(arg); return;
+      case 'navNext': navNext(); return;
+      case 'navRepeat': navRepeat(); return;
+      case 'navStop': navStop(); return;
+      case 'record': openRecord(); return;
+      case 'queryRecord': queryRecord(); return;
+      case 'consult': simulateConsult(); return;
+      case 'smsPushManual':
+        if(!state.record){ speak('还没有就诊记录，暂时无法推送。'); return; }
+        pushSms('manual');
+        speak('已再次推送就诊信息给家属手机' + state.contact + '。');
+        return;
+      case 'smsResend': resendSms(null); return;
+      case 'smsRetry': resendSms(arg); return;
+      case 'sos': sos(); return;
+      case 'ticketAck': ackTicket(arg); return;
+      case 'wipe': wipe(); return;
+      case 'voice':
+        if(!state.power) return needPower();
+        scrVoice();
+        log('进入语音指令界面。','');
+        if(recog){
+          stopSpeak();
+          try{ recog.start(); log('正在聆听（'+state.dialect+'）…',''); }
+          catch(err){ log('麦克风启动失败，请使用屏幕口令或控制台输入框。','warn'); }
+        } else {
+          speak('请说出简短指令。当前浏览器不支持麦克风识别，请点屏幕上的口令，或用左侧语音指令输入框。');
+        }
+        return;
+      case 'sayInput':
+        handleVoice($('sayInput').value);
+        $('sayInput').value = '';
+        return;
+      case 'say': handleVoice(arg); return;
+      case 'volUp': adjustVolume(10); return;
+      case 'volDown': adjustVolume(-10); return;
+      case 'spdUp': adjustSpeed(0.1); return;
+      case 'spdDown': adjustSpeed(-0.1); return;
+      case 'ttsTest':
+        if(!state.power) return needPower();
+        speak('语音自检。当前音量' + state.volume + '%，语速' + state.speed.toFixed(1) + '倍，识别方言' + state.dialect + '。');
+        log('执行语音自检。','');
+        return;
+      case 'comfortWait': comfort('waiting'); return;
+      case 'comfortNervous': comfort('nervous'); return;
+      case 'comfortNegative': handleVoice('我一个人来的，心里有点害怕'); return;
+      case 'comfortIdle': comfort('idle'); return;
+      case 'comfortBye': comfort('farewell'); return;
+      default: return;
+    }
+  }
+
+  document.addEventListener('click', function(e){
+    var el = e.target && e.target.closest ? e.target.closest('[data-cmd]') : null;
+    if(el){
+      e.preventDefault();
+      runCommand(el.getAttribute('data-cmd'));
+      return;
+    }
+    /* 关机状态：触摸屏幕任意位置即开机（真机上电即亮，这里模拟"点一下开机"） */
+    if(!state.power && e.target && e.target.closest && e.target.closest('.screen')){
+      e.preventDefault();
+      log('检测到触摸，开机。','ok');
+      powerOn();
+    }
+  });
+
+  /* =========================================================
+     九、表单与初始化
+     ========================================================= */
+
+  var recog = null;
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(SR){
+    recog = new SR();
+    recog.lang = 'zh-CN';
+    recog.interimResults = false;
+    recog.maxAlternatives = 1;
+    recog.onresult = function(ev){
+      var t = ev.results[0][0].transcript;
+      log('麦克风采集完成。','');
+      handleVoice(t);
+    };
+    recog.onerror = function(){ log('麦克风未授权或不可用，请使用屏幕口令或下方输入框。','warn'); };
+  }
+
+  $('contactInput').addEventListener('change', function(){
+    var v = this.value.trim();
+    state.contact = v || '138****6688';
+    this.value = state.contact;
+    renderStatus();
+    log('紧急联系人手机号更新为 '+state.contact+'。','');
+  });
+
+  $('dialectSel').addEventListener('change', function(){
+    state.dialect = this.value;
+    renderStatus();
+    log('方言识别切换为 '+state.dialect+'。','');
+    if(state.power) speak('已切换为' + state.dialect + '识别。');
+  });
+
+  $('contrastChk').addEventListener('change', function(){
+    state.contrast = this.checked ? 'white' : 'yellow';
+    renderDevice();
+    log('小屏幕显示切换为' + (this.checked ? '白字高对比' : '黄字高对比') + '模式。','');
+  });
+
+  $('muteChk').addEventListener('change', function(){
+    state.mute = this.checked;
+    if(state.mute) stopSpeak();
+    log(state.mute ? '演示进入静音模式（仅字幕）。' : '演示恢复语音播报。','');
+  });
+
+  $('headsetChk').addEventListener('change', function(){
+    state.headset = this.checked;
+    renderStatus();
+    log(state.headset ? '已连接蓝牙助听器 / 耳机（模拟）。' : '音频输出切回扬声器。','');
+    if(state.power) speak(state.headset ? '已连接蓝牙助听器。' : '音频已切换到扬声器。');
+  });
+
+  $('smsFail').addEventListener('change', function(){
+    state.smsFail = this.checked;
+    log(state.smsFail ? '已开启"短信通道异常"模拟。' : '短信通道恢复正常。','warn');
+  });
+
+  $('comfortChk').addEventListener('change', function(){
+    state.comfortOn = this.checked;
+    if(!state.comfortOn) hideComfort();
+    renderStatus();
+    log(state.comfortOn ? '情绪陪伴已开启。' : '情绪陪伴已关闭（仅保留必要的操作提示）。','warm');
+    if(state.power) speak(state.comfortOn ? '情绪陪伴已开启，我会留意您的情绪。' : '情绪陪伴已关闭。');
+  });
+
+  // 麦克风：优先语音识别，不可用时给出输入提示
+  var micEl = document.querySelector('[data-cmd="voice"]');
+  if(micEl){
+    micEl.addEventListener('contextmenu', function(e){
+      e.preventDefault();
+      if(recog){ try{ recog.start(); log('正在聆听（'+state.dialect+'）…',''); }catch(err){} }
+    });
+  }
+
+  // 控制台的语音指令输入框：回车即发送
+  $('sayInput').addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); runCommand('sayInput'); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(!state.power) return;
+    var tag = (e.target && e.target.tagName) || '';
+    if(tag === 'INPUT' || tag === 'SELECT') return;
+    var map = { '1':'login','2':'replaySpot','3':'triage','4':'depts','5':'queryRecord','6':'wipe','0':'menu' };
+    if(map[e.key]){ runCommand(map[e.key]); return; }
+    if(e.key === 'Enter'){ runCommand('confirmYes'); return; }
+    if(e.key === 'Escape'){ goBack(); return; }
+    if(e.key === 's' || e.key === 'S'){ runCommand('sos'); return; }
+    if(e.key === 'm' || e.key === 'M'){ runCommand('voice'); return; }
+  });
+
+  // 时钟
+  function tick(){
+    var d = new Date();
+    $('scrClock').textContent = pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  setInterval(tick, 15000);
+
+  /* 久未回应（真机约 90 秒无任何操作）→ 主动问候一次，避免老人以为设备坏了 */
+  setInterval(function(){
+    if(!state.power || !state.comfortOn) return;
+    if(state.screenId === 'off' || state.screenId === 'wipe') return;
+    if(Date.now() - state.lastActivity > 90000){
+      state.lastActivity = Date.now();
+      comfort('idle');
+    }
+  }, 15000);
+  tick();
+
+  // 初始状态
+  state.logs = [];
+  log('原型已就绪。点击左侧"开机"开始演示。','ok');
+  renderAll();
+  scrOff();
+  $('scrCap').textContent = '（字幕区：与语音同步显示的超大高对比度文字）';
+})();
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>开工前技术准备清单 · 小暖陪诊</title>
+<title>开工前技术准备清单 · 院内智慧陪诊终端</title>
 <style>
 :root{
   --bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
@@ -166,7 +166,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr data-id="c3"><td><input type="checkbox" class="chk"></td><td class="t"><b>Pull Request 流程</b><br>提 PR、看 CI 结果、按评论修改、合并</td><td><span class="lv a">A</span></td><td>独立走完一次 PR 全流程</td><td>30 min</td></tr>
     <tr data-id="c4"><td><input type="checkbox" class="chk"></td><td class="t"><b>Markdown 写作</b><br>标题、表格、代码块、列表</td><td><span class="lv a">A</span></td><td>能写出符合项目规范的周报与文档</td><td>20 min</td></tr>
     <tr data-id="c5"><td><input type="checkbox" class="chk"></td><td class="t"><b>跑通测试命令</b><br>在仓库里执行 <code>make test</code></td><td><span class="lv a">A</span></td><td>本地能跑通并看懂失败信息</td><td>30 min</td></tr>
-    <tr data-id="c6"><td><input type="checkbox" class="chk"></td><td class="t"><b>业务理解：陪诊全流程</b><br>读 02 号规格说明书 + 把 <code>v4.html</code> 完整点一遍</td><td><span class="lv a">A</span></td><td>能说出 9 个状态节点的顺序与各端职责</td><td>60 min</td></tr>
+    <tr data-id="c6"><td><input type="checkbox" class="chk"></td><td class="t"><b>业务理解：陪诊全流程</b><br>读 02 号规格说明书 + 把 <code>v4.html</code> 完整点一遍</td><td><span class="lv a">A</span></td><td>能说出 11 个状态节点的顺序与各端职责</td><td>60 min</td></tr>
     <tr data-id="c7"><td><input type="checkbox" class="chk"></td><td class="t"><b>合规红线</b><br>三条强制约束、禁用词表、AI 禁入区</td><td><span class="lv a">A</span></td><td>能背出三条约束并解释为什么</td><td>30 min</td></tr>
     <tr data-id="c8"><td><input type="checkbox" class="chk"></td><td class="t"><b>看板与 Issue 使用</b><br>GitHub Projects 四列、Issue 标签</td><td><span class="lv b">B</span></td><td>会给自己认领的 Issue 改状态</td><td>20 min</td></tr>
   </tbody>
@@ -184,7 +184,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr data-id="t1b"><td><input type="checkbox" class="chk"></td><td class="t"><b>pytest 基础</b><br><code>fixture</code> <code>parametrize</code> <code>raises</code> 覆盖率</td><td><span class="lv a">A</span></td><td>能给纯函数写参数化测试并跑出覆盖率</td><td>120 min</td></tr>
     <tr data-id="t1c"><td><input type="checkbox" class="chk"></td><td class="t"><b>Django 最小应用</b><br>项目结构、URL 路由、视图、迁移</td><td><span class="lv a">A</span></td><td>能起一个返回 JSON 的接口</td><td>180 min</td></tr>
     <tr data-id="t1d"><td><input type="checkbox" class="chk"></td><td class="t"><b>DRF 序列化与视图</b><br><code>Serializer</code> <code>APIView</code> 权限</td><td><span class="lv a">A</span></td><td>能写增查两个接口并加鉴权</td><td>120 min</td></tr>
-    <tr data-id="t1e"><td><input type="checkbox" class="chk"></td><td class="t"><b>状态机设计思路</b><br>状态表、转移表、禁止转移校验</td><td><span class="lv a">A</span></td><td>能画出 9 节点状态图并实现转移校验</td><td>90 min</td></tr>
+    <tr data-id="t1e"><td><input type="checkbox" class="chk"></td><td class="t"><b>状态机设计思路</b><br>状态表、转移表、禁止转移校验</td><td><span class="lv a">A</span></td><td>能画出 11 节点状态图并实现转移校验</td><td>90 min</td></tr>
     <tr data-id="t1f"><td><input type="checkbox" class="chk"></td><td class="t"><b>OpenAPI 规范</b><br>paths / schema / 版本号</td><td><span class="lv b">B</span></td><td>能读懂自己生成的 openapi.yaml</td><td>60 min</td></tr>
     <tr data-id="t1g"><td><input type="checkbox" class="chk"></td><td class="t"><b>Django Channels</b><br>ASGI、consumer、group</td><td><span class="lv b">B</span></td><td>知道 WebSocket 如何接到 Django</td><td>90 min</td></tr>
   </tbody>
@@ -202,7 +202,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr data-id="t2f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Web Speech API</b><br><code>speechSynthesis</code> 中文音色</td><td><span class="lv b">B</span></td><td>知道如何降级到纯字幕</td><td>45 min</td></tr>
     <tr data-id="t2g"><td><input type="checkbox" class="chk"></td><td class="t"><b>触觉反馈</b><br><code>navigator.vibrate</code></td><td><span class="lv b">B</span></td><td>能触发短震与长震</td><td>20 min</td></tr>
     <tr data-id="t2h"><td><input type="checkbox" class="chk"></td><td class="t"><b>树莓派基础</b><br>系统烧录、SSH、systemd</td><td><span class="lv c">C</span></td><td>仅在 C4 触发时需要</td><td>—</td></tr>
-    <tr data-id="t2i"><td><input type="checkbox" class="chk"></td><td class="t"><b>ESP32 MicroPython</b><br>引脚、串口、蓝牙</td><td><span class="lv c">C</span></td><td>仅在 C3 触发时需要</td><td>—</td></tr>
+    <tr data-id="t2i"><td><input type="checkbox" class="chk"></td><td class="t"><b>触摸屏点亮与全屏启动</b><br>引脚、串口、蓝牙</td><td><span class="lv c">C</span></td><td>仅在 C3 触发时需要</td><td>—</td></tr>
   </tbody>
 </table>
 
@@ -220,16 +220,16 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
   </tbody>
 </table>
 
-<h3><span class="who">T4</span>陪诊师工作台 <span style="font-size:11px;color:var(--dim);font-weight:400">约 8 小时</span></h3>
+<h3><span class="who">T4</span>设备端交互 <span style="font-size:11px;color:var(--dim);font-weight:400">约 8 小时</span></h3>
 <table>
   <thead><tr><th style="width:40px"></th><th>技术点</th><th>等级</th><th>需达到</th><th>预估</th></tr></thead>
   <tbody>
-    <tr data-id="t4a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vue 3 Composition API</b></td><td><span class="lv a">A</span></td><td>能写出带列表与详情切换的页面</td><td>150 min</td></tr>
-    <tr data-id="t4b"><td><input type="checkbox" class="chk"></td><td class="t"><b>Element Plus 表格与表单</b><br><code>el-table</code> <code>el-form</code> 校验</td><td><span class="lv a">A</span></td><td>能做出可编辑的校对表格</td><td>120 min</td></tr>
-    <tr data-id="t4c"><td><input type="checkbox" class="chk"></td><td class="t"><b>多任务并发界面</b><br>队列、看板、Tab 切换</td><td><span class="lv a">A</span></td><td>能做出 3 患者并行的队列视图</td><td>90 min</td></tr>
-    <tr data-id="t4d"><td><input type="checkbox" class="chk"></td><td class="t"><b>pinia 状态管理</b><br>store 定义与使用</td><td><span class="lv a">A</span></td><td>能把当前选中患者放进 store</td><td>60 min</td></tr>
-    <tr data-id="t4e"><td><input type="checkbox" class="chk"></td><td class="t"><b>签名与留痕交互</b><br>时间戳、二次确认、原文对比</td><td><span class="lv b">B</span></td><td>知道双签界面怎么设计</td><td>45 min</td></tr>
-    <tr data-id="t4f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Django Admin 后台</b></td><td><span class="lv c">C</span></td><td>运营后台先用它兜底</td><td>—</td></tr>
+    <tr data-id="t4a"><td><input type="checkbox" class="chk"></td><td class="t"><b>Vue 3 Composition API</b></td><td><span class="lv a">A</span></td><td>能写出按状态切屏的页面</td><td>150 min</td></tr>
+    <tr data-id="t4b"><td><input type="checkbox" class="chk"></td><td class="t"><b>大字号与高对比排版</b><br>1024×600 横屏、24px 正文、无横向滚动</td><td><span class="lv a">A</span></td><td>能在固定视口里把一屏话排得下</td><td>120 min</td></tr>
+    <tr data-id="t4c"><td><input type="checkbox" class="chk"></td><td class="t"><b>触摸交互与命中区</b><br>顶栏三控件、屏内主操作、机身长按求助</td><td><span class="lv a">A</span></td><td>能把每个可点元素做到 ≥88×88px 并区分点击/长按</td><td>90 min</td></tr>
+    <tr data-id="t4d"><td><input type="checkbox" class="chk"></td><td class="t"><b>pinia 状态管理</b><br>store 定义与使用</td><td><span class="lv a">A</span></td><td>能把 episodeId 与 status 放进 store</td><td>60 min</td></tr>
+    <tr data-id="t4e"><td><input type="checkbox" class="chk"></td><td class="t"><b>浏览器语音合成与采音</b><br>Web Speech、MediaRecorder</td><td><span class="lv b">B</span></td><td>知道降级链每一级怎么接</td><td>45 min</td></tr>
+    <tr data-id="t4f"><td><input type="checkbox" class="chk"></td><td class="t"><b>Chromium 全屏启动</b></td><td><span class="lv c">C</span></td><td>能用命令行参数把网页变成一台设备</td><td>—</td></tr>
   </tbody>
 </table>
 
@@ -301,7 +301,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
 </div>
 
 <div class="box ok">
-  <b>可选（不到货不影响）</b>：MySQL 8、Redis、微信开发者工具、树莓派、ESP32。
+  <b>可选（不到货不影响）</b>：MySQL 8、Redis、微信开发者工具、树莓派、触摸屏。
   本地开发默认用 SQLite + 假适配器，<b>不依赖任何外部服务也能跑通全部测试</b>。
 </div>
 
@@ -330,7 +330,7 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr><td class="t"><b>T1</b></td><td>用 dataclass 定义 Episode 实体 + 写一个 pytest 并跑出覆盖率</td><td>测试通过且覆盖率有数值</td></tr>
     <tr><td class="t"><b>T2</b></td><td>起一个 Vite 页面，按钮点击切换两种状态，并录到一段音频</td><td>页面可交互、录音有输出</td></tr>
     <tr><td class="t"><b>T3</b></td><td>uni-app 新建一页并编译出 H5，手机浏览器能打开</td><td>H5 链接可访问</td></tr>
-    <tr><td class="t"><b>T4</b></td><td>Element Plus 做一个可编辑表格，改完能提交</td><td>表格可增删改</td></tr>
+    <tr><td class="t"><b>T4</b></td><td>用 Vue 3 起一个 1024×600 页面，两个触摸目标都不小于 88×88px</td><td>点得中、量得出尺寸</td></tr>
     <tr><td class="t"><b>T5</b></td><td>调通一次 DashScope 接口，并写出同一个接口的 Fake 版本</td><td>真/假两份都可运行</td></tr>
     <tr><td class="t"><b>T6</b></td><td>写一个含 3 步的 Actions workflow 并跑绿，或一条 Playwright 用例</td><td>CI 绿 或 用例通过</td></tr>
   </tbody>

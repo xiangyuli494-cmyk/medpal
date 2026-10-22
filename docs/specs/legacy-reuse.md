@@ -35,16 +35,16 @@
 | --- | --- | --- | --- | --- | --- |
 | 1 | 检查项 + 院内方位（743 条） | aichat_departmentcheckitem（wzsm） | 检查规划引擎的位置数据、导航话术 | **已导出** fixtures/legacy/check_items.json | 完成 |
 | 2 | 科室字典（33 个） | aichat_hospitalschedule.yjksmc | 科室选择、需求分类 | **已导出** departments.json | 完成 |
-| 3 | 排班结构（rs 总号源 / fybz 余号源 / dateindex 唯一索引） | aichat_hospitalschedule | 陪诊师排期与接单：新表照这个结构写，**不复用旧表** | 借结构 | W2 |
+| 3 | 排班结构（rs 总号源 / fybz 余号源 / dateindex 唯一索引） | aichat_hospitalschedule | 号源中心：按此结构建新表，承载「科室-医生-日期-时段-余号」与扣减事务，**不复用旧表** | 借结构 | W2 |
 | 4 | 排班样例（40 条，姓名已脱敏） | 同上 | 演示数据、W2 骨架联调 | **已导出** schedule_samples.json | 完成 |
 | 5 | 短信验证码登录 | user/views.py send_code / sms_login | 用户端与家属端登录 | 抄逻辑，重写接口 | W3 |
 | 6 | Excel 批量导入范式 | myfile/views.py upload | 后台上传科室/检查项 | 参考 | W4 |
-| 7 | 审核后台单页 | static/audit/index.html | 运营看板兜底 | 直接拿来改 | W4 |
-| 8 | 两套 uni-app 页面（9 + 5 页） | html_ye/medical、html_ye/doctor | 用户端适老页面、工作台布局 | 参考交互，重写代码 | W2 |
+| 7 | 审核后台单页 | static/audit/index.html | 开发期数据查看（不入交付范围） | 参考 | — |
+| 8 | 两套 uni-app 页面（9 + 4 页） | html_ye/medical、html_ye/doctor | 用户端适老页面交互参考 | 参考交互，重写代码 | W2 |
 | 9 | Celery + Redis 基座 | aiserver/celery.py | 推送、生成小结 | 直接沿用配置 | W4 |
 | 10 | DashScope 调用封装 | aichat/ 里的调用代码 | W5 选型对比的参考实现 | 参考 | W5 |
 
-**最值钱的是第 1 和第 3 项**：743 条检查项连院内位置都带着，这是从零做不出来的；号源扣减结构可以直接套成「陪诊师排期 - 接单 - 陪诊单」。
+**最值钱的是第 1 和第 3 项**：743 条检查项连院内位置都带着，这是从零做不出来的；号源扣减结构（`rs` 总号 / `fybz` 余号 / 事务内 UPDATE ... WHERE fybz > 0）可以直接套成「号源中心」，是设备端完成「确认挂号」这一步的真实底座。
 
 ---
 
@@ -57,7 +57,7 @@
 | AllowAny + csrf_exempt + 从 body 取 user_id | 任何人可冒充任意用户查病历，这是法律风险，不是代码风格问题 |
 | 明文密码（passwd 字段） | 陪诊涉老人隐私，必须用 set_password |
 | SECRET_KEY 派生 Fernet 落库 | 换密钥或改字段，历史数据全部解不开 |
-| 外键全是裸 IntegerField | 订单、陪诊师、老人会出现孤儿数据 |
+| 外键全是裸 IntegerField | 挂号记录、医生、患者会出现孤儿数据 |
 | 症状问答 / DiagnosisReport / checkpoints 三表 | 与陪诊域无关，且强绑 topic_id |
 
 ---
@@ -110,7 +110,7 @@ python tools/legacy/extract_seed.py --sql "E:/3 源码/1 源代码/Django_projec
 | /user/send_code/ | POST | 短信验证码 | 逻辑可抄，接口重写 |
 | /user/sms_login/ | POST | 验证码登录 | 逻辑可抄，接口重写 |
 | /myfile/uploads/ | POST | Excel 批量导入 | 范式可参考 |
-| /ai/doctor/patients/ 等 | GET | 医生端接口 | 不接，工作台全新写 |
+| /ai/doctor/patients/ 等 | GET | 医生端接口 | 不接，本项目不做院内人员界面 |
 
 ---
 
