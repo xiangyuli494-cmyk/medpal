@@ -92,7 +92,7 @@
   .statusbar span.hi{background:#ffe600cc;border-color:#d8c200}
   .grille{margin:11px auto 3px;width:60%;height:16px;border-radius:8px;
     background:repeating-linear-gradient(90deg,#9aa6ba 0 3px,#c6cfdd 3px 6px);border:1px solid #8e9bb1}
-  /* 触摸屏：常驻底栏 + 屏内主操作 + 设置抽屉。无物理按键。 */
+  /* 触摸屏：屏内主操作 + 设置抽屉；按住说话与一键求助在机身实体键上。 */
   .dock{display:grid;grid-template-columns:1.7fr 1fr 1fr 1.15fr;gap:8px;margin-top:2px}
   .dock .key{min-height:92px;padding:8px 4px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px}
   .s-primary{display:none}
@@ -251,12 +251,12 @@
         <li>触摸屏幕任意位置开机：自动播报欢迎与引导</li>
         <li>点 <b>首次来院·刷身份证建档</b>：生成档案</li>
         <li>点 <b>点位</b> 里的"内科诊区"：自动讲解</li>
-        <li>按住底栏 <b>🎤 按住说话</b> 说"我胸闷"：口述症状预分诊</li>
+        <li>按住机身 <b>🎤 按住说话</b> 说"我胸闷"：口述症状预分诊</li>
         <li>点屏幕上的 <b>大按钮</b>二次确认：完成语音挂号</li>
         <li>说"带我去心血管内科"：院内模拟导航</li>
         <li>点 <b>模拟接诊完成</b>：档案保存 + 家属短信推送</li>
         <li>说"我的医嘱"：语音查询 / 回放医嘱</li>
-        <li>点底栏 <b>求助</b>（长按 1.5 秒），再到右侧服务台点"派员前往"</li>
+        <li>长按机身 <b>求助</b> 键 1.5 秒，再到右侧服务台点"派员前往"</li>
         <li>在 F 区输入 <b>"我一个人来的，心里有点怕"</b>：看它怎么先接情绪、再办事情</li>
       </ol>
     </div>
@@ -312,12 +312,12 @@
           </div>
         </div>
       </div>
-      <div class="screen-foot"><span>10.1 寸触摸屏 · 与语音同步</span><span id="scrClock">--:--</span></div>
+      <div class="screen-foot"><span>7 寸触摸屏 · 与语音同步</span><span id="scrClock">--:--</span></div>
 
       <div class="statusbar" id="statusbar"></div>
     </div>
     <div class="hint" style="max-width:470px;text-align:center">
-      全触摸操作：底栏四个控件常驻，主操作按钮由服务端下发。没有物理按键，也不依赖滑动或双击。
+      触摸 + 机身五键：主操作按钮由服务端下发；按住说话、一键求助在机身上，不看屏也能按。不依赖滑动或双击。
     </div>
   </section>
 
