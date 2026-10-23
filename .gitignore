@@ -48,3 +48,7 @@ storage/
 *.mp3
 *.m4a
 *.webm
+
+# AI 探针样本与结果（含医疗样本，绝不入库）
+tools/probe/samples/
+tools/probe/results.jsonl
