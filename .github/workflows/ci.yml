@@ -1,34 +1,43 @@
-name: lint-and-test
+name: CI
+
 on:
-  push:
-    branches: [ feat/**, main ]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: 安装依赖
         run: |
           python -m pip install --upgrade pip
-          pip install ruff pytest pytest-cov pyyaml
+          pip install -r requirements-dev.txt
+          if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
 
       - name: Ruff Lint
         run: ruff check .
 
       - name: Ban except Exception:pass
         run: |
-          grep -r "except Exception:" --include="*.py" . | grep "pass" && exit 1 || echo "ok"
-      - name: Check forbidden words
+          if [ -d backend/domain ]; then
+            ! grep -rnE "^\s*(import|from)\s+(django|requests|openai|dashscope|sqlalchemy|pymysql)" backend/domain/ \
+              || (echo "领域层禁止引入框架与外部 SDK" && exit 1)
+          fi
+
+      - name: 异常吞没检查
         run: |
           python - <<END
 import yaml

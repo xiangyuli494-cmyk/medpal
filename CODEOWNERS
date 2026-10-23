@@ -1,0 +1,25 @@
+# CODEOWNERS —— 谁改谁审
+# 语法：路径 @GitHub账号
+# 生效条件：账号必须是仓库 Collaborator，否则该规则被忽略
+
+# 默认：T1 兜底
+*                                   @xiangyuli494-cmyk
+
+# 赛题3 主线
+/agent/ontology/                    @zincumyu
+/agent/parse/                       @suyouZJF
+/agent/retrieve/                    @suyouZJF
+/agent/web/                         @xy-Z5
+/agent/eval/                        @suyouZJF
+/agent/tools/                       @Dewqian
+/agent/docs/                        @xiangyuli494-cmyk
+
+# 门禁与工程
+/.github/                           @Dewqian
+/tools/diff_json.py                 @Dewqian
+/agent/skeleton.py                  @xiangyuli494-cmyk
+/fixtures/golden_trace.json         @Dewqian
+
+# 已冻结区：改动须 T1 批准
+/docs/                             @xiangyuli494-cmyk
+/backend/                           @xiangyuli494-cmyk
