@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
 
       - name: 安装依赖
         run: |
@@ -27,10 +29,10 @@ jobs:
           pip install -r requirements-dev.txt
           if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
 
-      - name: Ruff Lint
+      - name: 代码规范检查（硬门槛）
         run: ruff check .
 
-      - name: Ban except Exception:pass
+      - name: 领域层 import 白名单
         run: |
           if [ -d backend/domain ]; then
             ! grep -rnE "^\s*(import|from)\s+(django|requests|openai|dashscope|sqlalchemy|pymysql)" backend/domain/ \
@@ -39,27 +41,13 @@ jobs:
 
       - name: 异常吞没检查
         run: |
-          python - <<END
-import yaml
-import os
-forbidden_file = "./docs/forbidden_words.yaml"
-if os.path.exists(forbidden_file):
-  with open(forbidden_file,"r",encoding="utf-8") as f:
-    data = yaml.safe_load(f)
-    words = data.get("words",[])
-    for w in words:
-      res = os.popen(f'grep -r "{w}" --include="*.py" --include="*.md" .').read()
-      if res:
-        print(f"❌ 检测到禁用词: {w}")
-        print(res)
-        exit(1)
-    print("✅ 禁用词检查通过")
-else:
-  print("⚠️ 禁用词文件还不存在，先跳过，后面我们再建forbidden_words.yaml")
-END
+          ! grep -rn "except Exception:\s*pass" --include=*.py . \
+            || (echo "禁止吞没异常" && exit 1)
 
-      - name: Domain boundary check (placeholder)
-        run: echo "领域边界校验脚本待补充"
+      - name: 红线回归（禁用词）
+        run: python tools/check_guard_words.py
 
-      - name: Pytest & Coverage
-        run: pytest --cov=. --cov-report=term
+      - name: 单元测试
+        run: python -m pytest backend/tests -q --cov=backend/domain --cov-report=term-missing
+        # 覆盖率门槛 W1 先不设：领域层还是空的，设了必然红。
+        # W2 领域层开始写的第一天，加 --cov-fail-under=100
