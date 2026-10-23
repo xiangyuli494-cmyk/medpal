@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 jobs:
-  check:
+  lint-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,42 +15,39 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install ruff pytest pytest-cov pyyaml
 
-
-     
       - name: Ruff Lint
         run: ruff check .
 
-      
       - name: Ban except Exception:pass
         run: |
           grep -r "except Exception:" --include="*.py" . | grep "pass" && exit 1 || echo "ok"
       - name: Check forbidden words
         run: |
           python - <<END
-          import yaml
-          import os
-          forbidden_file = "./docs/forbidden_words.yaml"
-          if os.path.exists(forbidden_file):
-              with open(forbidden_file,"r",encoding="utf-8") as f:
-                  data = yaml.safe_load(f)
-                  words = data.get("words",[])
-              for w in words:
-                  res = os.popen(f'grep -r "{w}" --include="*.py" --include="*.md" .').read()
-                  if res:
-                      print(f"❌ 检测到禁用词：{w}")
-                      print(res)
-                      exit(1)
-              print("✅ 禁用词检查通过")
-          else:
-              print("⚠️  禁用词文件还不存在，先跳过，后面我们再建forbidden_words.yaml")
-          END
+import yaml
+import os
+forbidden_file = "./docs/forbidden_words.yaml"
+if os.path.exists(forbidden_file):
+  with open(forbidden_file,"r",encoding="utf-8") as f:
+    data = yaml.safe_load(f)
+    words = data.get("words",[])
+    for w in words:
+      res = os.popen(f'grep -r "{w}" --include="*.py" --include="*.md" .').read()
+      if res:
+        print(f"❌ 检测到禁用词: {w}")
+        print(res)
+        exit(1)
+    print("✅ 禁用词检查通过")
+else:
+  print("⚠️ 禁用词文件还不存在，先跳过，后面我们再建forbidden_words.yaml")
+END
 
       - name: Domain boundary check (placeholder)
         run: echo "领域边界校验脚本待补充"
