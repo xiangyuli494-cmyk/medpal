@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#08090b" />
+    <title>小暖陪诊 · 设备模拟器</title>
+  </head>
+  <body>
+    <header class="devbar">
+      <strong class="devbar-title">设备端模拟器</strong>
+      <nav id="tabs" class="dev-tabs" aria-label="联调页面"></nav>
+      <div class="dev-status" role="status">
+        <span id="wsDot" class="dot" data-tone="pending"></span>
+        <span id="wsText">连接中…</span>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div id="deviceStage" class="device-stage">
+        <div class="device-wrap">
+          <section class="device" aria-label="小暖陪诊设备模拟器">
+            <header class="statusbar">
+              <div class="status-left">
+                <span>07 号机</span>
+                <span>·</span>
+                <span id="clock">--:--</span>
+                <span>·</span>
+                <span id="netState">联网</span>
+              </div>
+              <div class="top-actions">
+                <button type="button" class="top-btn" data-local="back">← 返回</button>
+                <button type="button" class="top-btn" data-local="menu">☰ 菜单</button>
+                <button type="button" class="top-btn" data-local="settings">⚙ 设置</button>
+              </div>
+            </header>
+
+            <h1 id="screenTitle" class="screen-title">设备端</h1>
+
+            <section class="screen-body">
+              <p id="caption" class="caption" role="status" aria-live="polite">
+                等待服务端下发内容…
+              </p>
+              <p id="flow" class="flow"></p>
+              <p id="escalation" class="escalation" hidden></p>
+              <div id="options" class="options" hidden></div>
+            </section>
+
+            <button id="primary" type="button" class="primary">主操作</button>
+
+            <div class="secondary">
+              <button id="sos" type="button" class="control sos">一键求助</button>
+              <button id="spot" type="button" class="control">点位选择</button>
+              <button id="mic" type="button" class="control ghost">语音（文字代替）</button>
+            </div>
+
+            <form id="textForm" class="text-form">
+              <input
+                id="textInput"
+                type="text"
+                autocomplete="off"
+                placeholder="听障/兜底：输入文字，回车发送"
+              />
+              <button type="submit">发送</button>
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <div id="memberStage" class="member-stage" hidden>
+        <div class="member-bar">
+          <span id="memberUrl"></span>
+          <a id="openMember" href="#" target="_blank" rel="noreferrer">新窗口打开</a>
+        </div>
+        <iframe
+          id="memberFrame"
+          title="小组成员页面"
+          referrerpolicy="no-referrer"
+          allow="microphone; camera; autoplay"
+        ></iframe>
+        <p class="member-hint">
+          空白时：对方开发服务器未启动，或页面禁止 iframe 嵌入。
+        </p>
+      </div>
+    </main>
+
+    <footer class="devkeys">
+      <div class="devkeys-row">
+        <span class="devkeys-label">调试四键（旧协议映射）</span>
+        <button type="button" data-debug="GREEN_DOWN">GREEN_DOWN → primary</button>
+        <button type="button" data-debug="GREEN_UP">GREEN_UP → back</button>
+        <button type="button" data-debug="RED_LONG">RED_LONG → sos</button>
+        <button type="button" data-debug="SIDE">SIDE → spot</button>
+      </div>
+      <div id="eventLog" class="event-log" aria-live="polite"></div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
