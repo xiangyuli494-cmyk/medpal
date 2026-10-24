@@ -1,0 +1,22 @@
+type: object
+properties:
+  sample_dir:
+    type: string
+    title: 默认扫描目录
+    description: 未显式给路径时从这里取样本
+  default_source_type:
+    type: string
+    title: 默认来源类型
+    enum: [public_standard, synthetic, internal]
+    default: public_standard
+  max_files_per_run:
+    type: integer
+    title: 单次最多处理文件数
+    default: 50
+    minimum: 1
+    maximum: 500
+  fail_on_zero_anchor:
+    type: boolean
+    title: 锚点为空即判失败
+    default: true
+required: []

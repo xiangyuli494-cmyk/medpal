@@ -1,0 +1,20 @@
+type: object
+properties:
+  auto_approve:
+    type: boolean
+    title: 跳过人工确认
+    description: 仅限离线回归测试，正式演示必须为 false
+    default: false
+  min_candidates_to_publish:
+    type: integer
+    title: 发布所需最少候选数
+    default: 1
+    minimum: 1
+  align_required:
+    type: boolean
+    title: 对齐失败是否阻断发布
+    default: false
+  default_note:
+    type: string
+    title: 默认版本说明
+required: []

@@ -1,0 +1,12 @@
+# 运行期产物不进版本库；种子本体 ontology_v0.9.jsonl 要进，所以只排 *.db
+__pycache__/
+*.pyc
+.pytest_cache/
+.dsh-ops-update-*.lock
+
+mcp-server/data/*.db
+mcp-server/reports/
+eval/reports/*.json
+eval/reports/*.md
+!eval/reports/.gitkeep
+tmp/

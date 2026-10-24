@@ -1,0 +1,5 @@
+# S1 运行参数（每个智能体可单独覆盖）
+sample_dir: ./data/samples
+default_source_type: public_standard
+max_files_per_run: 50
+fail_on_zero_anchor: true
