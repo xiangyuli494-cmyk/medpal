@@ -120,10 +120,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 body.stage .col-left,body.stage .col-right{display:none}
 body.stage .layout{grid-template-columns:1fr}
 body.stage .col-mid{padding-top:8px}
-body.stage .device{width:460px;height:min(820px,calc(100vh - 160px))}
-body.stage .device-wrap{transform:scale(1.02);transition:transform .3s ease}
-body.stage .modules{max-width:440px}
-body.stage .mid-head{max-width:440px}
+body.stage .device-wrap{transform:none}
+body.stage .modules{max-width:1024px}
+body.stage .mid-head{max-width:1024px}
 .stage-badge{
   position:fixed;right:16px;bottom:14px;z-index:400;display:none;
   font-size:11px;color:var(--console-dim);background:rgba(20,31,49,.9);
@@ -221,37 +220,51 @@ body.stage .stage-badge{display:block}
 .inject-btn.on{border-style:solid;border-color:var(--danger);color:#ff8b8b;background:#2a1a1c}
 
 /* ====================== 中栏：设备端 ====================== */
-.mid-head{display:flex;align-items:center;gap:10px;width:100%;max-width:392px;justify-content:space-between}
+.mid-head{display:flex;align-items:center;gap:10px;width:100%;max-width:1024px;justify-content:space-between}
 .mid-title{font-size:12px;color:var(--console-dim)}
 .mid-title b{color:var(--console-txt)}
-.device-wrap{position:relative}
+/* 真机屏幕 1024×600 横屏：设备端按 1024×600 逻辑尺寸排版，整体按可用宽度等比缩放。
+   --usr 由 fitDevice() 写入（= 可用宽 / 1024，上限 1），--fit 继续承担溢出退档。
+   全部子元素尺寸均为 calc(Npx * var(--scale))，因此只改这一个乘数就能整体缩放。 */
+.device-wrap{position:relative;width:100%;display:flex;justify-content:center}
 .device{
-  width:378px;height:min(788px,calc(100vh - 168px));min-height:520px;background:var(--dev-bg);border-radius:26px;
-  border:9px solid #223047;box-shadow:0 22px 54px rgba(0,0,0,.6),0 0 0 1px #0a121d;
+  /* 机身尺寸只由 --usr（可用宽 / 1024）决定：真机就是 1024×600 横屏。
+     --fit 退档只缩里面的字与间距，机身不动，所以才真能腾出高度。 */
+  width:calc(1024px * var(--usr));height:calc(600px * var(--usr));background:var(--dev-bg);
+  border:1px solid #2b3b52;box-shadow:0 18px 46px rgba(0,0,0,.55);
   overflow:hidden;display:flex;flex-direction:column;color:var(--dev-text);
-  --usr:1; --fit:1; --scale:calc(var(--usr) * var(--fit));
+  --usr:1; --fit:1; --txt:1; --scale:calc(var(--usr) * var(--fit) * var(--txt));
   font-size:calc(16px * var(--scale));position:relative;
 }
 .device.hc{--dev-bg:#000;--dev-card:#111;--dev-text:#fff;--dev-weak:#c9c9c9;--dev-line:#3a3a3a;--dev-primary:#ff9f45;--dev-accent:#ffb877}
 .device.sim-blind{--dev-bg:#0a0a0a;--dev-card:#151515;--dev-text:#fff;--dev-weak:#bfbfbf;--dev-line:#333;--dev-primary:#ffb347}
 .dev-status{
-  height:24px;flex-shrink:0;display:flex;align-items:center;gap:7px;padding:0 12px;
-  background:#000;color:#cfd8e3;font-size:calc(10.5px * var(--scale));font-family:var(--mono);
+  height:calc(26px * var(--scale));flex-shrink:0;display:flex;align-items:center;gap:calc(8px * var(--scale));padding:0 calc(14px * var(--scale));
+  background:#000;color:#cfd8e3;font-size:calc(12px * var(--scale));font-family:var(--mono);
 }
-.dev-status .sdot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.dev-status .sdot{width:calc(7px * var(--scale));height:calc(7px * var(--scale));border-radius:50%;background:var(--ok)}
 .dev-status .sdot.off{background:#666}
 .dev-status .grow{flex:1}
+/* 设置入口：机身不设实体键，音量与语速收在顶栏齿轮里（只改本机，不上行） */
+.dev-status .gear{
+  width:calc(26px * var(--scale));height:calc(19px * var(--scale));display:grid;place-items:center;
+  background:#1b2432;color:#cfd8e3;border:1px solid #33445c;border-radius:calc(5px * var(--scale));
+  font-size:calc(11px * var(--scale));line-height:1;cursor:pointer;padding:0;
+}
+.dev-status .gear:hover{background:#26364b;color:#fff}
 .dev-head{
-  flex-shrink:0;padding:7px 14px;display:flex;align-items:center;gap:9px;
+  flex-shrink:0;padding:calc(6px * var(--scale)) calc(16px * var(--scale));display:flex;align-items:center;gap:calc(10px * var(--scale));
   border-bottom:1px solid var(--dev-line);background:var(--dev-card);
 }
-.avatar{width:34px;height:34px;flex-shrink:0}
+.avatar{width:calc(30px * var(--scale));height:calc(30px * var(--scale));flex-shrink:0}
 .dev-head .who{flex:1;min-width:0}
 .dev-head .nm{font-weight:700;font-size:calc(15px * var(--scale));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dev-head .st{font-size:calc(11px * var(--scale));color:var(--dev-weak);margin-top:1px}
-.dev-prog{height:5px;background:var(--dev-line);flex-shrink:0}
+.dev-prog{height:calc(4px * var(--scale));background:var(--dev-line);flex-shrink:0}
 .dev-prog .bar{height:100%;background:linear-gradient(90deg,var(--dev-primary),#f0a04b);transition:width .5s ease}
-.dev-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 12px 16px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth}
+.dev-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:calc(12px * var(--scale)) calc(16px * var(--scale)) calc(14px * var(--scale));display:flex;flex-direction:column;gap:calc(9px * var(--scale));scroll-behavior:smooth}
+/* 一屏一件事：每屏最多三个可点处（说明书 4.1），按钮随屏幕收紧 */
+.dev-body .big-btn{padding:calc(10px * var(--scale)) calc(13px * var(--scale))}
 /* 矮屏时正文可滚，但主操作永远贴在可视区底部，避免按钮落到折线以下 */
 .dev-body > .big-btn:last-child{
   position:sticky;bottom:-2px;z-index:6;background:var(--dev-card);
@@ -261,29 +274,28 @@ body.stage .stage-badge{display:block}
 .dev-body > .big-btn.primary:last-child{background:var(--dev-primary)}
 .dev-body > .big-btn.sos:last-child{background:var(--dev-danger)}
 
-.dev-tabbar{
-  flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--dev-line);
-  background:var(--dev-card);
+/* 字幕条：设备端最下面一区，与播报同步（听障通道只出声时关掉，字幕全留） */
+.dev-cap{
+  flex-shrink:0;min-height:calc(40px * var(--scale));display:flex;align-items:center;gap:calc(9px * var(--scale));
+  padding:calc(5px * var(--scale)) calc(16px * var(--scale));background:#12181f;color:#e6edf5;
+  font-size:calc(14px * var(--scale));line-height:1.45;
 }
-.dev-tab{
-  padding:7px 2px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;
-  font-size:calc(10px * var(--scale));color:var(--dev-weak);border-top:2.5px solid transparent;
-}
-.dev-tab .ti{font-size:calc(17px * var(--scale))}
-.dev-tab.on{color:var(--dev-primary);border-top-color:var(--dev-primary);font-weight:700}
-.dev-tab:active{background:var(--dev-line)}
+.dev-cap .cap-ico{flex-shrink:0;font-size:calc(15px * var(--scale));opacity:.9}
+.dev-cap .cap-txt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dev-cap .cap-lv{flex-shrink:0;font-size:calc(11px * var(--scale));color:#8fa3ba;font-family:var(--mono)}
+.device.sim-blind .dev-cap{font-size:calc(16px * var(--scale))}
 
 /* 设备端组件 */
-.card{background:var(--dev-card);border:1px solid var(--dev-line);border-radius:var(--radius);padding:10px 12px}
-.card h2{font-size:calc(15px * var(--scale));margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.card{background:var(--dev-card);border:1px solid var(--dev-line);border-radius:var(--radius);padding:calc(11px * var(--scale)) calc(13px * var(--scale))}
+.card h2{font-size:calc(16px * var(--scale));margin-bottom:calc(7px * var(--scale));display:flex;align-items:center;gap:calc(6px * var(--scale))}
 .card h3{font-size:calc(13px * var(--scale));margin-bottom:5px;color:var(--dev-accent)}
 .card p{font-size:calc(13.5px * var(--scale));line-height:1.62}
 .card .lead{font-size:calc(15px * var(--scale));font-weight:600;line-height:1.5}
 .h1{font-size:calc(20px * var(--scale));font-weight:800;line-height:1.3;letter-spacing:-.01em}
 .big-btn{
-  width:100%;padding:12px 13px;border-radius:var(--radius);background:var(--dev-card);
-  border:2px solid var(--dev-line);text-align:left;display:flex;gap:11px;align-items:center;
-  transition:.14s;font-size:calc(16px * var(--scale));font-weight:600;
+  width:100%;padding:calc(12px * var(--scale)) calc(14px * var(--scale));border-radius:var(--radius);background:var(--dev-card);
+  border:2px solid var(--dev-line);text-align:left;display:flex;gap:calc(12px * var(--scale));align-items:center;
+  transition:.14s;font-size:calc(17px * var(--scale));font-weight:600;
 }
 .big-btn:active{transform:scale(.975);background:#f4ede2}
 .big-btn .ico{font-size:calc(24px * var(--scale))}
@@ -295,7 +307,7 @@ body.stage .stage-badge{display:block}
 .big-btn.sos .sub{color:rgba(255,255,255,.92);font-weight:500}
 .big-btn.primary .ico{filter:drop-shadow(0 1px 2px rgba(0,0,0,.18))}
 .big-btn.ghost{background:transparent}
-.kv{display:flex;gap:9px;padding:3.5px 0;border-bottom:1px dashed var(--dev-line);font-size:calc(13px * var(--scale))}
+.kv{display:flex;gap:calc(9px * var(--scale));padding:calc(4px * var(--scale)) 0;border-bottom:1px dashed var(--dev-line);font-size:calc(14px * var(--scale))}
 .kv:last-child{border-bottom:none}
 .kv i{font-style:normal;color:var(--dev-weak);flex-shrink:0;min-width:4.6em}
 .kv span{flex:1;font-weight:600}
@@ -307,8 +319,8 @@ body.stage .stage-badge{display:block}
 .tag.warn{background:#fdf0d5;color:#9a6800}
 .tag.danger{background:#fde0e0;color:var(--dev-danger)}
 .verbatim{
-  background:#f7f1e6;border-left:4px solid var(--dev-accent);padding:9px 11px;
-  border-radius:0 10px 10px 0;font-size:calc(13.5px * var(--scale));line-height:1.65;
+  background:#f7f1e6;border-left:calc(4px * var(--scale)) solid var(--dev-accent);padding:calc(9px * var(--scale)) calc(12px * var(--scale));
+  border-radius:0 calc(10px * var(--scale)) calc(10px * var(--scale)) 0;font-size:calc(14px * var(--scale));line-height:1.65;
 }
 .verbatim .src{font-size:calc(11px * var(--scale));color:var(--dev-weak);margin-bottom:4px;font-weight:700}
 .uncertain{
@@ -319,11 +331,14 @@ body.stage .stage-badge{display:block}
   background:#e8f0fd;border:1.5px solid var(--blue);border-radius:11px;padding:10px 12px;
   font-size:calc(15px * var(--scale));font-weight:700;line-height:1.5;text-align:center;
 }
+/* 横屏 1024 宽：内容多的屏用两列，把高度换成宽度，不为装下而缩字号 */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:calc(9px * var(--scale))}
+.cols2 > .card{margin:0}
 .steps{display:flex;flex-direction:column;gap:6px}
-.step{display:flex;gap:9px;align-items:flex-start;padding:7px 10px;border-radius:11px;background:var(--dev-card);border:1px solid var(--dev-line)}
+.step{display:flex;gap:calc(9px * var(--scale));align-items:flex-start;padding:calc(7px * var(--scale)) calc(10px * var(--scale));border-radius:11px;background:var(--dev-card);border:1px solid var(--dev-line)}
 .step .n{
-  width:22px;height:22px;border-radius:50%;background:var(--dev-line);color:var(--dev-weak);
-  display:grid;place-items:center;font-size:calc(11.5px * var(--scale));font-weight:800;flex-shrink:0
+  width:calc(22px * var(--scale));height:calc(22px * var(--scale));border-radius:50%;background:var(--dev-line);color:var(--dev-weak);
+  display:grid;place-items:center;font-size:calc(12px * var(--scale));font-weight:800;flex-shrink:0
 }
 .step.now{border-color:var(--dev-primary);background:#fff4ec;box-shadow:0 3px 12px rgba(217,84,30,.14)}
 .step.now .n{background:var(--dev-primary);color:#fff}
@@ -335,8 +350,8 @@ body.stage .stage-badge{display:block}
 .wave span{width:4px;border-radius:3px;background:var(--dev-primary);animation:wv .9s ease-in-out infinite}
 @keyframes wv{0%,100%{height:7px;opacity:.45}50%{height:32px;opacity:1}}
 .caption-live{
-  background:#1a1a1a;color:#fff;border-radius:11px;padding:10px 12px;
-  font-size:calc(14px * var(--scale));line-height:1.55;min-height:52px
+  background:#1a1a1a;color:#fff;border-radius:11px;padding:calc(10px * var(--scale)) calc(13px * var(--scale));
+  font-size:calc(15px * var(--scale));line-height:1.55;min-height:calc(52px * var(--scale))
 }
 .caption-live b{color:#ffcf8f}
 .device.sim-blind .caption-live{font-size:calc(16px * var(--scale))}
@@ -539,38 +554,19 @@ body.stage .stage-badge{display:block}
 }
 @media(max-width:1280px){
   .layout{grid-template-columns:230px minmax(400px,1fr) minmax(360px,1fr)}
-  .device{width:336px;height:calc(100vh - 120px);min-height:420px}
 }
-/* 投影与小笔记本（答辩现场常见 1366×768、1024×768）：机身拉满可用高度，字号退一档 */
+/* 设备端是 1024×600 固定逻辑尺寸，高度不再随窗口伸缩：
+   只由 fitDevice() 按可用宽度算一次 --usr，其余一概不猜。 */
 @media(max-height:880px){
-  body.stage .device{height:calc(100vh - 84px)}
-  .device{--fit:.88; height:calc(100vh - 110px); min-height:400px}
   .col-mid .hint{display:none}
-  .dev-body{padding:9px 11px 11px;gap:7px}
-  .card{padding:9px 11px}
-  .dev-status{height:22px}
-  .dev-head{padding:6px 12px}
 }
 @media(max-height:800px){
-  .device{--fit:.78; height:calc(100vh - 96px)}
   .col-mid{gap:7px;padding:10px 8px}
   .modules{margin-top:0}
-  .dev-body{gap:6px;padding:8px 10px 10px}
-  .card{padding:8px 10px;border-radius:13px}
-  .big-btn{padding:10px 11px;gap:9px}
-  .dev-tabbar{height:60px}
-  /* 排检查六项在矮屏上按紧凑行排，保证六项和主按钮同屏可见 */
-  .steps{gap:4px}
-  .step{padding:5px 9px;gap:7px;border-radius:9px}
-  .step .n{width:19px;height:19px}
-  .step .sw{margin-top:1px;line-height:1.35}
 }
 @media(max-height:720px){
-  .device{--fit:.70; height:calc(100vh - 88px)}
   .col-mid{gap:6px;padding:8px 6px}
   .modules{margin-top:2px;gap:4px}
-  .dev-tabbar{height:56px}
-  .dev-body{gap:5px;padding:7px 9px 9px}
 }
 /* 窄屏（1024 投影、小笔记本）：顶栏先让位，避免整页横向滚动 */
 @media(max-width:1100px){
@@ -596,7 +592,7 @@ body.stage .stage-badge{display:block}
     <div class="cover-stats">
       <div class="cover-stat"><div class="cv">8</div><div class="cl">周交付周期</div></div>
       <div class="cover-stat"><div class="cv">3</div><div class="cl">端（设备 / 用户 / 家属）</div></div>
-      <div class="cover-stat"><div class="cv">9</div><div class="cl">状态节点闭环</div></div>
+      <div class="cover-stat"><div class="cv">11</div><div class="cl">状态节点闭环</div></div>
       <div class="cover-stat"><div class="cv">0</div><div class="cl">越界话术放行</div></div>
     </div>
 
@@ -666,22 +662,27 @@ body.stage .stage-badge{display:block}
         <div class="dev-status">
           <span class="sdot" id="stDot"></span>
           <span id="stPower">已开机</span>
-          <span class="grow"></span>
           <span id="stSpot">📍 门诊大厅</span>
-          <span id="stNet">📶 4G</span>
+          <span class="grow"></span>
+          <span id="stNet">📶 联网</span>
           <span id="stClock">09:12</span>
+          <button class="gear" id="stGear" data-cmd="gear" title="音量与语速（只改本机）">⚙</button>
         </div>
         <div class="dev-head" id="devHead"></div>
         <div class="dev-prog"><div class="bar" id="devBar" style="width:0%"></div></div>
         <div class="dev-body" id="devBody"></div>
-        <div class="dev-tabbar" id="devTabbar"></div>
+        <div class="dev-cap">
+          <span class="cap-ico">🗣️</span>
+          <span class="cap-txt" id="capTxt">字幕与播报同步</span>
+          <span class="cap-lv" id="capLv">字幕</span>
+        </div>
       </div>
     </div>
 
     <div class="modules" id="moduleStrip"></div>
-    <div class="hint" style="max-width:392px">
-      <b>薄客户端纪律</b>：设备端只做「采音 / 播放 / 显示 / 触摸 / 震动 / 联网」，
-      <b>零业务判断</b>。屏幕上出现的每一句话，都由右栏的证据链生成 —— 换任何通道，内核不变。
+    <div class="hint" style="max-width:1024px">
+      <b>薄客户端纪律</b>：设备端只做「采音 / 播放 / 显示 / 触摸 / 联网」五项，
+      <b>零业务判断</b>，机身不设实体键。屏幕上出现的每一句话，都由右栏的证据链生成 —— 换任何通道，内核不变。
     </div>
   </div>
 
@@ -912,7 +913,7 @@ const PLAN = {
     { name:'尿常规（排尿）',      room:'2F 检验科 7 号窗',  needsEmptyBladder:true,score:300 },
     { name:'心电图（预约 10:00）', room:'2F 心功能室',      timeLocked:'10:00',    score:800 },
     { name:'胸部 CT（预约 10:40）',room:'B1 影像中心',      timeLocked:'10:40',    score:800 },
-    { name:'取药',                room:'1F 门诊药房',       score:0 }
+    { name:'取药',                room:'2F 门诊药房',       score:0 }
   ],
   floorOf(room){ const m = room.match(/^(\d+F|B\d)/); return m ? m[1] : '?'; },
   /* 为什么"憋尿"和"排尿"必须拆开：它们互相冲突 */
@@ -982,13 +983,13 @@ function avatarSvg(state, size){
    ========================================================================== */
 const PERSONAS = [
   { id:'elder',  ico:'👴', name:'张奶奶 · 78 岁',  desc:'不会用手机 · 记忆辅助 · 大字触屏',
-    screens:['arrive','brief','reg','wait','recall','plan','execute','pay','report','meds','end'] },
+    screens:['arrive','brief','reg','wait','consult','recall','plan','execute','pay','report','meds','end','give_back'] },
   { id:'blind',  ico:'👁️', name:'王先生 · 56 岁',  desc:'视力障碍 · 全程语音 · 步数化导航',
-    screens:['arrive','reg','nav_step','triage','execute','end'] },
+    screens:['arrive','reg','nav_step','triage','execute','end','give_back'] },
   { id:'deaf',   ico:'👂', name:'李女士 · 34 岁',  desc:'听力障碍 · 文字优先 · 替我说',
-    screens:['arrive','reg','wait','speakforme','recall','pay','end'] },
+    screens:['arrive','reg','wait','speakforme','recall','pay','end','give_back'] },
   { id:'adult',  ico:'🧑', name:'陈先生 · 41 岁',  desc:'标准流程 · 识单置信度 · 医保解释',
-    screens:['arrive','brief','reg','ocr','plan','pay','insurance','report','end'] },
+    screens:['arrive','brief','reg','consult','ocr','plan','pay','insurance','report','end','give_back'] },
   { id:'family', ico:'👨‍👩‍👧', name:'家属 · 女儿在外地', desc:'微信推送 · H5 时间轴 · 隐私红线',
     screens:['family_wechat','family_timeline','family_priv','family_voice'] },
   { id:'arch',   ico:'🏗️', name:'系统架构',        desc:'一内核三通道 · 模块职责 · 测试资产',
@@ -1003,6 +1004,7 @@ const SCREEN_META = {
   brief:{ t:'今日行程播报', sm:'brief' },
   reg:{ t:'取号挂号（二次确认）', sm:'reg' },
   wait:{ t:'候诊盯号', sm:'wait' },
+  consult:{ t:'进诊室', sm:'consult' },
   recall:{ t:'复述校验 ★闭环', sm:'recall' },
   plan:{ t:'检查规划', sm:'plan' },
   execute:{ t:'执行与导航', sm:'execute' },
@@ -1010,6 +1012,8 @@ const SCREEN_META = {
   report:{ t:'看报告', sm:'report' },
   meds:{ t:'我的用药医嘱', sm:'report' },
   end:{ t:'小结回家', sm:'end' },
+  give_back:{ t:'还机 · 清空与回执', sm:'end' },
+  settings:{ t:'设置（只改本机）', sm:'' },
   nav_step:{ t:'步数化导航（视障）', sm:'execute' },
   triage:{ t:'语音分诊（图谱推理）', sm:'reg' },
   speakforme:{ t:'替我说（听障）', sm:'consult' },
@@ -1037,20 +1041,20 @@ const STEPS = {
       head:{ name:'张奶奶', state:'已到院 · 门诊大厅', avatar:'idle' },
       progress:8, tab:'home' },
     evidence:{
-      fact:{ step:'arrive', spot:'beacon:门诊大厅', user:'u_1024', memory_hits:2 },
+      fact:{ step:'arrive', spot:'门诊大厅', user:'u_1024', memory_hits:2 },
       tpl:{ key:'—— 入口页不生成医学内容 ——', text:'今天 4 月 17 日，您约的是心血管内科王医生，早上 9 点 40。我一直在。' },
       llm:{ used:false, why:'入口播报是确定性文案，走模板，零 token' },
       guard:{ pass:true, note:'未包含任何医学结论，无需挂免责' },
       out:'今天 4 月 17 日，您约的是心血管内科王医生，早上 9 点 40。我一直在。'
     },
-    ledger:['beacon 触发点是「门诊大厅」，自动播报当前位置与今日行程'] },
+    ledger:['起点是「门诊大厅」，老人在屏上选点，选点即讲，自动播报当前位置与今日行程'] },
 
   /* ============ 取号挂号（重要操作二次确认）============ */
   reg:{ sm:'reg', persona:['elder','blind','deaf','adult'],
     device:{ type:'reg', title:'挂号二次确认',
       head:{ name:'张奶奶', state:'正在挂号 · 第 3 步', avatar:'speak' }, progress:20, tab:'home' },
     evidence:{
-      fact:{ dept:'心血管内科', doctor:'王医生', slot:'09:40', is_important_action:true, spot:'beacon:挂号收费处' },
+      fact:{ dept:'心血管内科', doctor:'王医生', slot:'09:40', is_important_action:true, spot:'挂号收费处' },
       tpl:{ key:'tpl.important_confirm', text:'即将为您预约心血管内科，王医生，9 点 40。这是重要操作，请说「确认挂号」，或者点屏幕上的确认按钮。' },
       llm:{ used:false, why:'重要操作必须用固定脚本，不允许 LLM 改写（防止漏掉"二次确认"这句）' },
       guard:{ pass:true, note:'重要操作话术锁定为模板，LLM 在此节点被禁用' },
@@ -1078,7 +1082,7 @@ const STEPS = {
     device:{ type:'wait', title:'候诊盯号',
       head:{ name:'张奶奶', state:'候诊中 · 第 12 位', avatar:'speak' }, progress:30, tab:'home' },
     evidence:{
-      fact:{ queue_no:12, current:8, est_wait_min:15, silent_sec:12, spot:'beacon:内科诊区' },
+      fact:{ queue_no:12, current:8, est_wait_min:15, silent_sec:12, spot:'内科诊区' },
       tpl:{ key:'tpl.wait_care', text:'现在是 9 点 26 分，您已经等了一会儿了。要是着急，我可以帮您问问服务台。' },
       llm:{ used:false, why:'主动关怀走模板池随机，避免每次都一样' },
       guard:{ pass:true, note:'无医学内容' },
@@ -1087,6 +1091,20 @@ const STEPS = {
     ledger:['L2 主动：沉默 12 秒主动关怀；到点未做主动提醒'] },
 
   /* ============ 复述校验（闭环，最大亮点之一）============ */
+  /* ============ 进诊室（十一步的第 5 步）============ */
+  consult:{ sm:'consult', persona:['elder','adult'],
+    device:{ type:'consult', title:'进诊室',
+      head:{ name:'张奶奶', state:'叫到号了 · 208 诊室', avatar:'speak' }, progress:44, tab:'home',
+      caption:'到您的号了，往裡走，右边第三间。' },
+    evidence:{
+      fact:{ queue_no:12, called:true, room:'门诊楼 2 层 A 区 208', landmark:'出电梯右手边，第三间' },
+      tpl:{ key:'tpl.enter_room', text:'到您的号了，往裡走，右边第三间。把门推开就行，医生在等您。' },
+      llm:{ used:false, why:'叫号与诊室号必须逐字来自 HIS，不走生成' },
+      guard:{ pass:true, note:'无医学内容' },
+      out:'到您的号了，往裡走，右边第三间。进去把这张单子给医生，我在门口等您。'
+    },
+    ledger:['★ 叫号到进诊室：不跳步，门牌与楼层逐字来自 HIS'] },
+
   recall:{ sm:'recall', persona:['elder','deaf'],
     device:{ type:'recall', title:'复述校验',
       head:{ name:'张奶奶', state:'让您重复一遍', avatar:'listen' }, progress:56, tab:'repeat' },
@@ -1105,7 +1123,7 @@ const STEPS = {
     device:{ type:'plan', title:'检查规划 · 为什么这么排',
       head:{ name:'张奶奶', state:'5 项检查 · 已重排', avatar:'speak' }, progress:64, tab:'home' },
     evidence:{
-      fact:{ items:5, fasting:true, full_bladder:true, time_locked:['10:00','10:40'], floors:['2F','3F','B1','1F'] },
+      fact:{ items:5, fasting:true, full_bladder:true, time_locked:['10:00','10:40'], floors:['2F','3F','B1'] },
       tpl:{ key:'tpl.plan_order', text:'先抽血，因为要空腹；B 超要憋尿，排在喝水之后；CT 约了 10 点 40，不能动。' },
       llm:{ used:false, why:'排序理由由规则引擎给出，LLM 只做措辞包装，不得增删理由' },
       guard:{ pass:true, note:'理由即依据，可追溯到具体约束字段' },
@@ -1214,12 +1232,12 @@ const STEPS = {
     device:{ type:'pay', title:'缴费 · 取药',
       head:{ name:'张奶奶', state:'本次费用', avatar:'speak' }, progress:80, tab:'home' },
     evidence:{
-      fact:{ total:386, insurance:253, self:133, window:'1F 门诊药房 3 号窗口',
+      fact:{ total:386, insurance:253, self:133, window:'2F 门诊药房 3 号窗口',
               pay_at:'自助机或人工窗口均可', next:'取药后回诊区等报告' },
       tpl:{ key:'tpl.pay', text:'这 {total} 块，医保帮您出了 {ins} 块，您自己掏 {self} 块。{pickup}{disclaimer}' },
       llm:{ used:false, why:'涉及金额，全部走模板与明细拆解，禁止 LLM 生成数字' },
       guard:{ pass:true, note:'挂费用免责：最终以医院结算单为准' },
-      out:'这 386 块，医保帮您出了 253 块，您自己掏 133 块。药在 1 楼门诊药房 3 号窗口取，药师会当面告诉您怎么吃。最终以医院结算单为准。'
+      out:'这 386 块，医保帮您出了 253 块，您自己掏 133 块。药在 2 楼门诊药房 3 号窗口取，药师会当面告诉您怎么吃。最终以医院结算单为准。'
     },
     ledger:['L3 说明白：钱花在哪、药去哪取，一次说清',
              '★ 只报数不解释政策，政策问题引导到医保窗口'] },
@@ -1257,7 +1275,7 @@ const STEPS = {
   /* ============ 小结回家 ============ */
   end:{ sm:'end', persona:['elder','blind','deaf','adult'],
     device:{ type:'end', title:'今天都办完了',
-      head:{ name:'张奶奶', state:'流程完成', avatar:'happy' }, progress:100, tab:'home' },
+      head:{ name:'张奶奶', state:'流程完成', avatar:'happy' }, progress:96, tab:'home' },
     evidence:{
       fact:{ done:5, total_min:96, next_visit:'一周后门诊复查', family_notified:true, family_channel:'wechat' },
       tpl:{ key:'tpl.end', text:'今天的事都办完了，您辛苦了。{next}。{family}{care}' },
@@ -1267,6 +1285,35 @@ const STEPS = {
     },
     ledger:['一句话定义整个产品：您一个人来，但没有一件事是您一个人扛的'],
     panel:'push' },
+
+  /* ============ 还机：清空本机记录 + 删除回执（ADR-019）============ */
+  give_back:{ sm:'end', persona:['elder','blind','deaf','adult'],
+    device:{ type:'give_back', title:'还机 · 清空与回执',
+      head:{ name:'张奶奶', state:'准备还机', avatar:'idle' }, progress:100, tab:'home',
+      caption:'归还前，我把本机记的东西都删掉。' },
+    evidence:{
+      fact:{ wipe:['姓名与年龄段','今天的行程','用药医嘱','检查结果','录音与照片'],
+              receipt_no:'W-20261023-0417', receipt_on_screen_only:true, after:'设备回到待机，等下一个借用人' },
+      tpl:{ key:'tpl.give_back', text:'按「归还」后，这台机器会删掉 {n} 类记录，并给您一个回执编号。' },
+      llm:{ used:false, why:'删除清单必须逐项可核对，不允许任何生成模型改写' },
+      guard:{ pass:true, note:'删除是确定性动作，无推断、无补全' },
+      out:'归还前，我把本机记的东西都删掉：姓名与年龄段、今天的行程、用药医嘱、检查结果、录音与照片。删完给您一个回执编号。'
+    },
+    ledger:['★ 归还 = 清空 + 逐条列出 + 给回执（不是一句“已清除”）'] },
+
+  /* ============ 设置：音量语速，只改本机 ============ */
+  settings:{ sm:'', persona:['elder','blind','deaf','adult'],
+    device:{ type:'settings', title:'设置 · 只改本机',
+      head:{ name:'张奶奶', state:'设置面板', avatar:'idle' }, progress:100, tab:'home',
+      caption:'音量与语速只改这台机器，不上传。' },
+    evidence:{
+      fact:{ volume:6, rate:0.86, caption:'常开', local_only:true },
+      tpl:{ key:'—— 纯本地交互，不进会话状态机 ——', text:'音量 {volume}/10，语速 {rate}。字幕常开，不能关。' },
+      llm:{ used:false, why:'设置面板不涉及任何生成内容' },
+      guard:{ pass:true, note:'无医学内容' },
+      out:'音量与语速只改这台机器，服务台看不到，也不会记录。'
+    },
+    ledger:['机身不设实体键：音量与语速收在顶栏齿轮里'] },
 
   /* ==================== 成员 B / C：家属端 ==================== */
   family_wechat:{ sm:'', persona:['family'],
@@ -1326,7 +1373,7 @@ const STEPS = {
     ledger:['★ 领域层是纯函数：AI 写这一层时，跑测试就知道对不对，人也能看懂 —— 测试就是缰绳'] },
 
   arch_proto:{ sm:'', persona:['arch'],
-    device:{ type:'arch_proto', title:'会话协议 v0.1', head:{ name:'系统架构', state:'先定协议，再写代码', avatar:'idle' }, progress:100, tab:'home' },
+    device:{ type:'arch_proto', title:'会话协议 v0.4', head:{ name:'系统架构', state:'先定协议，再写代码', avatar:'idle' }, progress:100, tab:'home' },
     evidence:{ fact:{ ws:'/ws/session/{id}' }, tpl:{ key:'——', text:'' }, llm:{ used:false, why:'' },
       guard:{ pass:true, note:'' }, out:'上行：key / audio / touch　下行：turn_result { caption, speech, device, flow, escalation, confidence }' },
     ledger:['★ 这页纸定完，六个人才能真正并行，而不是互相等'] },
@@ -1403,7 +1450,7 @@ const MODULES = [
   { id:'asr',   ico:'🎙️', name:'ASR 适配器',   steps:['arrive','fail_asr','wait','speakforme'] },
   { id:'tpl',   ico:'📝', name:'话术模板',     steps:['brief','reg','plan','execute','end'] },
   { id:'guard', ico:'🛡️', name:'红线校验器',   steps:['fail_guard','report','meds','insurance'] },
-  { id:'sm',    ico:'🔄', name:'陪诊状态机',   steps:['arrive','reg','wait','recall','plan','execute','pay','report','end'] },
+  { id:'sm',    ico:'🔄', name:'陪诊状态机',   steps:['arrive','reg','wait','consult','recall','plan','execute','pay','report','end','give_back'] },
   { id:'kg',    ico:'🕸️', name:'知识图谱',     steps:['triage'] },
   { id:'plan',  ico:'🧮', name:'规划引擎',     steps:['plan','execute'] },
   { id:'ocr',   ico:'📷', name:'OCR 适配器',   steps:['ocr','fail_dose'] },
@@ -1429,21 +1476,27 @@ const RED_FLAGS = [
 /* ---- 机制 2：情绪陪伴引擎（来自成员 B 的 COMFORT 11 场景 + 去重）----
    四条约束：① 同场景不重复 ② 排队不打断 ③ 暖色样式与功能区隔 ④ 可随时关闭 */
 const COMFORT = {
+  negative: ['您别急，慢慢说，我听着呢。',
+             '听您说话，好像有点担心。不着急，一件一件来，我陪着您。'],
   waiting:  ['您先坐着歇会儿，我帮您看着号，叫到号我会大声提醒您。',
              '等待最容易着急。您要是累了就靠着歇歇，有事喊我一声。'],
   nervous:  ['抽血就一下下，很快就过去了。您把脸转过去，我数三个数。',
              '要是心里发紧，跟着我做：慢慢吸气——再慢慢呼气。',
              '我就在这儿等着，做完出来您喊我一声。'],
-  scanNerv: ['里面的机器响是正常的，不是坏了，您不用怕。',
+  nervousScan: ['里面的机器响是正常的，不是坏了，您不用怕。',
              '检查的时候不能动，您要是累了就先松松肩膀，很快就完。',
              '我就在门外等着您，出来喊我一声。'],
   emergency:['情况有点急，但您别慌，我陪着您，咱们现在就去急诊。',
              '您先坐下别动，我马上通知服务台来人接您。'],
-  loginFail:['没认出来不碍事，咱们换身份证，一样能进。',
-             '不怪您，是机器偶尔犯糊涂。来，把身份证放上来就行。'],
+  sos:      ['我已经叫人了，您就在原地等，别自己走动。',
+             '服务台收到了，人已经在过来，我陪着您。'],
+  loginFail:['没对上不碍事，咱们重说一遍，一样能进。',
+             '不怪您，是机器偶尔犯糊涂。您再说一次姓名和年龄段就行。'],
   idle:     ['您还在吗？我一直在这儿等着呢。',
              '要是不方便说话，点「求助」或者屏幕上的大按钮，我就知道了。'],
   success:  ['号挂好了，您安心坐着等叫号就行。', '都办妥了，剩下的事我提醒您。'],
+  result:   ['结果我念给您听，医生怎么说，我就怎么说。',
+             '这些话我不替您猜，字面上写什么，我念什么。'],
   farewell: ['今天的事都办完了，您辛苦了，回去路上慢一点。']
 };
 let lastComfort = {};
@@ -1492,6 +1545,9 @@ const S = {
   simBlind:false, smsFail:false, netDown:false, asrLow:false, doseAmb:false, guardTest:false,
   redFlag:'none',            /* none | cardio | neuro | hit */
   consentLocation:false, consentMedia:true,
+  volume:6, rate:0.86,       /* 音量与语速：只改本机，不上行 */
+  giveReceipt:null,          /* 还机回执：{no, at, items} */
+  idleAt:0, idleHit:false,   /* 90 秒无操作触发 idle 陪伴 */
   visited:{}, counted:{}, audit:[], metrics:{ llmCalls:0, blocked:0, tplHits:0, tl:0 },
   auto:null
 };
@@ -1542,12 +1598,11 @@ const V = {};
 V.arrive = () => H.h1('您好，需要我帮您做什么？')
   + H.p('今天 4 月 17 日，我一直在。', 'lead')
   + H.card('<h2>📋 今天的安排</h2>'
-    + H.kv('科室', '心血管内科') + H.kv('医生', '王医生') + H.kv('时间', '09:40')
+    + H.kv('看谁', '心血管内科 王医生 · 09:40')
     + H.kv('还要做', '抽血 · 腹部 B 超'))
-  + H.btn('📝', '我要挂号', '选科室、医生，三步完成', '', 'go:reg')
-  + (screens().indexOf('meds') >= 0 ? H.btn('💊', '我的用药医嘱', '医生写的字，我念给您听', '', 'go:meds') : '')
   + H.btn('🆘', '我要求助', '不舒服、摔倒、找不到路', 'sos', 'sos')
-  + H.btn('➡️', '接着上次往下走', '已经挂过号的，从这一步继续', 'ghost', 'next');
+  + H.btn('➡️', '接着上次往下走', '已经挂过号的，从这一步继续', 'ghost', 'next')
+  + H.btn('📝', '我要挂号', '选科室、医生，三步完成', 'primary', 'go:reg');
 
 /* ===== 共用：行程播报 ===== */
 V.brief = () => H.h1('今天的安排，我念给您听')
@@ -1572,6 +1627,15 @@ V.wait = () => H.h1('候诊中 · 我帮您看着号')
   + H.comfort('waiting')
   + H.btn('🚻', '我要去洗手间', '号不会过，我盯着', 'ghost', 'wait:leave')
   + H.btn('🆘', '我不舒服', '', 'sos', 'sos');
+
+/* ===== 共用：进诊室（十一步第 5 步）===== */
+V.consult = () => H.h1('到您的号了，往裡走')
+  + H.card('<h2>🚪 去这间</h2>'
+    + H.kv('诊室', '门诊楼 2 层 A 区 208') + H.kv('怎么走', '出电梯右手边，第三间'))
+  + H.verbatim('进门这句给医生看', '您好，我是张奶奶，78 岁，心血管内科复诊。')
+  + H.p('进去把单子给医生，我在门外等您。')
+  + H.btn('▶️', '我进去了', '里面听医生的', 'primary', 'next')
+  + H.btn('🆘', '我找不到', '', 'ghost', 'sos');
 
 /* ===== 共用：复述校验（★闭环，可交互）===== */
 V.recall = () => H.h1('我重复一遍，您听听对不对')
@@ -1613,7 +1677,7 @@ V.execute = () => H.h1('第 1 项 · 抽血（空腹）')
 V.pay = () => H.h1('缴费 · 取药')
   + H.card('<h2>💰 本次费用</h2>'
     + H.kv('总共', '386 元') + H.kv('医保出', '253 元') + H.kv('自己掏', '133 元'))
-  + H.card('<h2>💊 取药窗口</h2><p>1 楼 门诊药房 3 号窗口。药师会当面交代用法用量。</p>')
+  + H.card('<h2>💊 取药窗口</h2><p>2 楼 门诊药房 3 号窗口。药师会当面交代用法用量。</p>')
   + '<div id="payOut"></div>'
   + H.btn('💴', '这钱是怎么算的', '我用买菜的方式讲给您听', '', 'pay:why')
   + H.btn('✅', '去取药', '', 'primary', 'pay:next');
@@ -1638,7 +1702,53 @@ V.end = () => H.h1('今天都办完了')
   + H.comfort('farewell')
   + H.p('📨 用药医嘱和复查时间，已经告诉您女儿了。')
   + H.btn('🔊', '再念一遍医嘱', '', '', 'say:meds')
-  + H.btn('🏁', '结束本次陪诊', '回到首页', 'ghost', 'go:arrive');
+  + H.btn('🏁', '去还机', '归还前会把本机记录清掉', 'primary', 'go:give_back');
+
+/* ===== 共用：还机 —— 清空本机记录 + 删除回执（ADR-019）=====
+   说明书 3.4 第十一步：老人按「归还」→ 机器逐件列出删了什么 → 给出回执号。 */
+V.give_back = () => {
+  const r = S.giveReceipt;
+  if (r) {
+    return H.h1('本机记录已清空')
+      + H.card('<h2>✅ 已删除的 ' + r.items + ' 项</h2>'
+        + H.kv('姓名与年龄段', '已删除')
+        + H.kv('今天的行程', '已删除')
+        + H.kv('用药医嘱', '已删除（已另发给家属）')
+        + H.kv('检查结果', '已删除')
+        + H.kv('录音与照片', '已删除'))
+      + H.verbatim('🧾 删除回执', '回执编号 ' + r.no + '　' + r.at + '　仅本屏展示，不上传')
+      + H.comfort('farewell')
+      + H.p('请把设备交回服务台。下一台机器不会看到您的任何信息。')
+      + H.btn('🏠', '好了，我已交还', '下一位老人接着用', 'primary', 'give:home');
+  }
+  return H.h1('要还机了，我先把东西删干净')
+    + H.card('<h2>🧹 按「归还」后会删掉这些</h2>'
+      + H.kv('姓名与年龄段', '删')
+      + H.kv('今天的行程', '删')
+      + H.kv('用药医嘱', '删（已同步给家属）')
+      + H.kv('检查结果', '删')
+      + H.kv('录音与照片', '删'))
+    + H.p('删完会给您一个回执编号，万一有疑问可以拿它找服务台。')
+    + H.btn('🧾', '先看回执长什么样', '', '', 'give:receipt')
+    + H.btn('🔴', '归还并清空', '删完就不能恢复', 'sos', 'give:confirm');
+};
+
+/* ===== 设置：音量与语速（只改本机，不上行；机身不设实体键）===== */
+V.settings = () => H.h1('设置 · 只在这台机器上生效')
+  + '<div class="cols2">'
+    + H.card('<h2>🔊 播报</h2>'
+      + H.kv('音量', S.volume + ' / 10')
+      + H.kv('语速', S.rate.toFixed(2) + ' ×')
+      + H.kv('字幕', '常开（不可关）'))
+    + H.card('<h2>🧡 情绪陪伴</h2>'
+      + H.kv('当前', S.careMode ? '开' : '关')
+      + '<p>关掉后只播事实与下一步。三处固定不插安抚：挂号确认、剂量复述、医保金额。</p>')
+  + '</div>'
+  + H.p('只改这台机器，不传服务台，也不记录。')
+  + H.btn('🔉', '音量减', '', '', 'gear:volDown')
+  + H.btn('🔊', '音量加', '', '', 'gear:volUp')
+  + H.btn('🐢', '换语速', '慢 / 常态轮换', '', 'gear:rate')
+  + H.btn('✅', '好了，回刚才那屏', '', 'primary', 'gear:close');
 
 /* ===== 老人：用药医嘱（成员 B 的"医生原话"卡片）===== */
 V.meds = () => H.h1('我的用药医嘱')
@@ -1661,9 +1771,9 @@ V.nav_step = () => '<div class="card" style="background:#0a0a0a;border-color:#33
   + H.card('<h2>🦯 视障模式 · 全程语音</h2>'
     + H.kv('步数', '18 步') + H.kv('转向', '停 → 右手边') + H.kv('地标', '电梯按钮')
     + H.kv('物品位置', '一律放您左手边'))
-  + '<div class="card"><h2>📳 震动编码</h2>'
-    + H.kv('确认', '短震两下') + H.kv('出错', '长震一下') + H.kv('该走了', '连震三次')
-    + '<p style="margin-top:6px;font-size:calc(12px * var(--scale));color:var(--dev-weak)">不说「往左往右」，说「走多少步、摸到什么」。</p></div>'
+  + '<div class="card"><h2>🔊 语音提示（无震动马达）</h2>'
+    + H.kv('确认', '短提示音') + H.kv('出错', '长提示音') + H.kv('该走了', '连续提示三声')
+    + '<p style="margin-top:6px;font-size:calc(12px * var(--scale));color:var(--dev-weak)">不说「往左往右」，说「走多少步、摸到什么」；每一步同步上屏幕字幕，听不清也能看。</p></div>'
   + H.btn('▶️', '我准备好了', '继续带路', 'primary', 'nav:next');
 
 /* ===== 成员 B：语音分诊 + 红旗预警 ===== */
@@ -1733,8 +1843,8 @@ V.insurance = () => H.h1('这 386 块，医保帮您出了 253 块')
     + '<div class="kv"><i>乙类药 59</i><span>' + H.tag('先自付 10%', 'warn') + '</span></div>'
     + '<div class="kv"><i>丙类 7</i><span>' + H.tag('一分不报', 'danger') + '</span></div>'
     + '<p style="margin-top:6px">甲类 320 + 乙类扣自付后 41.4 = 361.4，361.4 × 70% = <b>253</b></p>')
-  + H.card('<h2>💡 想少花点</h2><p>可以问医生：「这个药有没有医保目录内的替代？」<b>但我不替医生决定用药。</b></p>')
-  + H.uncertain('最终以医院结算单为准，我不能替医保局给您打包票。')
+  + H.p('<b>🧡 想少花点：</b>可以问医生「这个药有没有医保目录内的替代？」<b>但我不替医生决定用药。</b>')
+  + H.uncertain('最终以医院结算单为准。')
   + H.btn('✅', '我明白了', '', 'primary', 'go:end');
 
 /* ===== 成员 C：家属端 ===== */
@@ -1748,7 +1858,7 @@ V.family_wechat = () => H.h1('一条会说话的微信')
 
 V.family_timeline = () => H.h1('一次陪诊的时间轴')
   + '<div class="steps">' + [
-      ['09:12', '接到人', '门诊大厅 · beacon 自动识别'],
+      ['09:12', '接到人', '门诊大厅 · 起点由服务台设好'],
       ['09:40', '王医生看诊', '心率 78 · 血压 138/86'],
       ['10:05', '抽血完成', '空腹项，排在最前'],
       ['10:40', '胸部 CT', '固定预约，倒推其他项'],
@@ -1793,7 +1903,7 @@ V.arch_layer = () => H.h1('一内核 · 三通道 · 两平台能力')
   + H.p('★ 为什么这么分：领域层是纯函数，AI 写这一层时跑测试就知道对不对。')
   + H.btn('📡', '看会话协议', '', 'primary', 'go:arch_proto');
 
-V.arch_proto = () => H.h1('会话协议 v0.1（先定协议，再写代码）')
+V.arch_proto = () => H.h1('会话协议 v0.4（先定协议，再写代码）')
   + H.card('<h2>⬆️ 上行（设备 → 服务端）</h2>'
     + '<p style="font-family:monospace;font-size:calc(11px * var(--scale));line-height:1.7">'
     + '{ "type":"touch.event", "target":"primary", "action":"tap" }<br>'
@@ -1804,7 +1914,7 @@ V.arch_proto = () => H.h1('会话协议 v0.1（先定协议，再写代码）')
     + '{ "type":"turn_result", "turn":7,<br>'
     + '&nbsp;&nbsp;"caption":{"text":"2 楼检验科，出电梯往左"},<br>'
     + '&nbsp;&nbsp;"speech":{"rate":0.86,"can_interrupt":true},<br>'
-    + '&nbsp;&nbsp;"device":{"vibrate":"confirm_twice"},<br>'
+    + '&nbsp;&nbsp;"device":{"flash":"primary"},<br>'
     + '&nbsp;&nbsp;"flow":{"step":"NAVIGATE","step_index":8,"total":11},<br>'
     + '&nbsp;&nbsp;"escalation":{"level":"none"},<br>'
     + '&nbsp;&nbsp;"confidence":{"asr":0.91,"intent":0.88} }</p>')
@@ -1889,10 +1999,13 @@ function persona(){
 function screens(){ return persona().screens; }
 function effectiveScreen(){
   const ss = screens();
+  /* 设置页和还机屏不属于任一通道：设置是纯本地面板（机身不设实体键），还机是任何人都要做的收尾 */
+  if (S.screen === 'settings') return 'settings';
   return ss.indexOf(S.screen) >= 0 ? S.screen : (ss[0] || 'arrive');
 }
 /* 跳到某一屏：本通道有就直接去，本通道没有就切到拥有该屏的通道 */
 function goTo(sid){
+  if (sid === 'settings') { S.screen = 'settings'; return true; }
   if (screens().indexOf(sid) >= 0) { S.screen = sid; return true; }
   const owner = PERSONAS.find(p => p.screens.indexOf(sid) >= 0);
   if (owner) { S.persona = owner.id; S.screen = sid;
@@ -1953,23 +2066,30 @@ function renderDevice(){
   const d = step.device || {};
 
   const dev = $('#device');
-  dev.style.setProperty('--usr', String(S.textScale));
+  /* 大字模式只是字号倍数：1 / 1.2，写进 --txt，不动机身尺寸 */
+  dev.style.setProperty('--txt', String(S.textScale));
   dev.classList.toggle('hc', S.highContrast);
   dev.classList.toggle('sim-blind', S.simBlind);
 
-  /* 状态栏 */
+  /* 状态栏：点位 · 时间 · 联网状态（不带电量：整机无电池，插座供电）*/
   $('#stDot').className = 'sdot' + (S.netDown ? ' off' : '');
   $('#stPower').textContent = S.netDown ? '离线' : '已开机';
-  $('#stSpot').textContent = '📍 ' + (S.simBlind ? '内科诊区' : '门诊大厅');
-  $('#stNet').textContent = S.netDown ? '📵 无网' : '📶 4G';
-  const spotByScreen = { execute:'检验科采血窗口', nav_step:'门诊楼 2F 电梯口', triage:'内科诊区',
-    speakforme:'208 诊室', wait:'内科诊区', meds:'门诊药房', arrive:'门诊大厅' };
+  /* 八个点位（ADR-019：不使用蓝牙信标，起点由老人在屏上选或服务台设好）*/
+  const spotByScreen = {
+    arrive:'门诊大厅', brief:'门诊大厅', plan:'门诊大厅', ocr:'门诊大厅', report:'门诊大厅',
+    reg:'挂号收费处', wait:'内科诊区', consult:'内科诊区', recall:'内科诊区',
+    triage:'内科诊区', speakforme:'内科诊区', execute:'检验科采血窗口',
+    nav_step:'检验科采血窗口', pay:'门诊药房', insurance:'门诊药房', meds:'门诊药房',
+    end:'门诊大厅', give_back:'门诊大厅', settings:'门诊大厅'
+  };
   $('#stSpot').textContent = '📍 ' + (spotByScreen[sid] || '门诊大厅');
+  $('#stNet').textContent = S.netDown ? '📵 无网' : '📶 联网';
   $('#stClock').textContent = ['09:12','09:26','09:40','10:05','10:40','11:20','12:48'][S.idx % 7];
 
   /* 头像 + 头部 */
   const av = d.head ? d.head.avatar : 'idle';
-  $('#devHead').innerHTML = avatarSvg(av, 38)
+  const avPx = Math.round(38 * (parseFloat(getComputedStyle(dev).getPropertyValue('--scale')) || 1));
+  $('#devHead').innerHTML = avatarSvg(av, avPx)
     + '<div class="who"><div class="nm">' + esc(d.head ? d.head.name : '小暖') + '</div>'
     + '<div class="st">' + esc(d.head ? d.head.state : '') + '</div></div>'
     + '<div>' + (S.voiceFirst ? '<span class="tag ok">语音优先</span>' : '') + '</div>';
@@ -1983,19 +2103,9 @@ function renderDevice(){
   const fn = V[sid];
   $('#devBody').innerHTML = fn ? fn() : '<div class="card"><h2>' + esc(meta.t) + '</h2><p>（本屏暂无设备端视图）</p></div>';
 
-  /* 底部 tab */
-  const tabs = [
-    ['home', '🏠', '主页'], ['call', '📞', '和小暖通话'],
-    ['repeat', '🔁', '再念一遍'], ['family', '👨‍👩‍👧', '家属']
-  ];
-  if (S.persona === 'deaf') { tabs[1] = ['call', '⌨️', '打字问小暖']; }
-  if (S.persona === 'blind') { tabs[0] = ['home', '🏠', '语音主页']; tabs[1] = ['call', '📞', '通话中']; }
-  if (S.persona === 'family') { tabs[0] = ['home', '📱', '微信']; tabs[1] = ['call', '📄', '时间轴']; }
-  if (S.persona === 'arch')   { tabs[0] = ['home', '🏗️', '架构']; tabs[1] = ['call', '📡', '协议']; }
-  const activeTab = d.tab || 'home';
-  $('#devTabbar').innerHTML = tabs.map(t =>
-    '<div class="dev-tab ' + (t[0] === activeTab ? 'on' : '') + '" data-cmd="tab:' + t[0] + '">'
-    + '<span class="ti">' + t[1] + '</span>' + esc(t[2]) + '</div>').join('');
+  /* 字幕条：与播报同步，把当前屏那句话再写一遍 */
+  $('#capTxt').textContent = (d.caption || (step.evidence && step.evidence.out) || '字幕与播报同步');
+  $('#capLv').textContent = (S.persona === 'deaf') ? '仅字幕' : '字幕';
 
   /* 模块条 */
   $('#moduleStrip').innerHTML = MODULES.map(m =>
@@ -2113,23 +2223,19 @@ function renderSystem(){
   $('#pushTag').textContent = sent ? '已送达' : '失败·重试中';
   $('#pushTag').className = 'oh-tag ' + (sent ? 'live' : 'new');
 
-  /* ⑥ 设备端 · 触摸控件与当前状态 */
+  /* ⑥ 设备端 · 屏内入口与当前状态 */
   $('#benchBody').innerHTML = '<table class="console-tbl"><thead><tr>'
-    + '<th>控件</th><th>target</th><th>当前屏作用</th></tr></thead><tbody>'
-    + [['⏻ 电源', 'power', '开机 / 关机'],
-       ['🔉 音量 − / +', 'volDown / volUp', '播报音量'],
-       ['🐢 语速 − / +', 'spdDown / spdUp', '播报语速'],
-       ['☰ 主菜单', 'menu', '回主菜单'],
-       ['🎤 按住说话', 'voice', '采音，松开发送'],
-       ['↩ 返回', 'back', '上一步'],
-       ['确认 · 挂号', 'primary', '屏内主操作'],
-       ['📍 当前位置讲解', 'replaySpot', '重播点位讲解词'],
-       ['📋 我的医嘱', 'queryRecord', '语音回放医嘱'],
-       ['🆘 一键求助', 'sos', '长按触发，通知服务台']].map(r =>
+    + '<th>屏内入口</th><th>target</th><th>当前屏作用</th></tr></thead><tbody>'
+    + [['▶ 主操作', 'primary', '全屏最大的按钮，继续下一步'],
+       ['○ 选项胶囊', 'option:*', '最多三个，次要选择'],
+       ['🎤 语音', 'mic', '单击开始录音，再单击结束'],
+       ['🆘 求助', 'sos', '单击即发，通知服务台'],
+       ['📍 选点位', 'spot', '屏上选起点，选点即讲'],
+       ['⚙ 设置', 'settings', '音量与语速，只改本机']].map(r =>
         '<tr>' + r.map((c, i) => '<td' + (i === 0 ? ' style="font-weight:700"' : '') + '>' + c + '</td>').join('') + '</tr>').join('')
     + '</tbody></table>'
-    + '<div class="hint" style="margin-top:7px">★ 设备端是产品本体：触摸屏 + 语音 + 大字屏，'
-    + '全程不需要打字、不需要会用智能手机。触摸只发命令，状态由服务端推进。</div>'
+    + '<div class="hint" style="margin-top:7px">★ 机身不设实体键：屏幕就是全部交互面。'
+    + '所有入口都在屏上，只用单击，不滑不按不长按。</div>'
     + '<div class="warnbox" style="margin-top:7px">🔴 AI 禁入区：医疗判断 / 签字与法律行为 / '
     + '现场身体处置 / 与医护建立信任 / 复杂价值判断。</div>';
 
@@ -2184,32 +2290,49 @@ function render(){
   autoFitDevice();
 }
 
+/* ---------- 屏幕适配 ----------
+   设备端是 1024×600 固定逻辑尺寸。这里只做一件事：把可用宽度除以 1024
+   写进 --usr（上限 1，不放大），高度由 aspect 关系自然得出。
+   窗口宽度变化时重算一次；容器宽度变化（放映模式、拖窗口）也重算。 */
+function fitDevice(){
+  const dev = $('#device'), wrap = dev && dev.parentElement;
+  if (!dev || !wrap) return;
+  const avail = wrap.clientWidth - 2;
+  const u = Math.max(.42, Math.min(1, avail / 1024));
+  dev.style.setProperty('--usr', String(Math.round(u * 1000) / 1000));
+}
+
 /* ---------- 每屏自适应 ----------
-   矮屏（投影 1024×768）叠加大字模式时，个别屏的正文会高过机身，
-   主操作按钮被挤到折线以下。每屏渲染后量一次：装不下就把 --fit 退一档
-   （每次 0.02，最低 0.56），装得下就回到基准档，不留痕迹。 */
-const FIT_MIN = 0.56, FIT_STEP = 0.02;
-function autoFitDevice(){
+   机身固定 1024×600，装不下时把 --fit 逐档退（每次 0.02，最低 0.82）：
+   退的是里面的字与间距，机身不动，所以真能腾出高度；0.82 以下字就小于 16px 了，宁可让老人滚。 */
+const FIT_MIN = 0.82, FIT_STEP = 0.02;
+function autoFitOnce(){
   const dev = $('#device'), body = $('#devBody');
   if (!dev || !body) return;
-  if (!dev.dataset.bf) {
-    dev.style.removeProperty('--fit');          /* 先清内联，读媒体查询给的基准档 */
-    const b = parseFloat(getComputedStyle(dev).getPropertyValue('--fit'));
-    dev.dataset.bf = String(b > 0 ? b : 1);
-  }
-  const base = parseFloat(dev.dataset.bf);
+  const base = 1;
+  const SLACK = 3;          /* 留 3px 余量：字体与行高量化会让 sc/ch 在 1–2px 内抖动 */
+  const fits = () => (body.scrollHeight - body.clientHeight) <= -SLACK;
   dev.style.setProperty('--fit', String(base));
-  if (body.scrollHeight - body.clientHeight <= 1) return;   /* 装得下就不动 */
+  void body.offsetHeight;                        /* 强制回流：设完 --fit 后重新量一次，否则读到旧高度 */
+  if (fits()) return;                            /* 装得下就不动 */
   for (let f = base - FIT_STEP; f >= FIT_MIN - 1e-6; f -= FIT_STEP){
     dev.style.setProperty('--fit', f.toFixed(2));
-    if (body.scrollHeight - body.clientHeight <= 1) return;
+    void body.offsetHeight;
+    if (fits()) return;
   }
+}
+function autoFitDevice(){
+  autoFitOnce();
+  /* 字体度量与粘底按钮的回流要等一帧才稳，第二遍用真实高度再校一次 */
+  requestAnimationFrame(() => { requestAnimationFrame(autoFitOnce); });
+  /* 字体真正就绪后再校一次（首帧常读到回退字体宽度，行高会来回跳） */
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ autoFitOnce(); });
+  /* 图片/头像 SVG 插入后的最终一次兜底 */
+  setTimeout(autoFitOnce, 400);
 }
 function resetAutoFit(){
   const dev = $('#device');
-  if (!dev) return;
-  dev.removeAttribute('data-bf');
-  dev.style.removeProperty('--fit');
+  if (dev) dev.style.removeProperty('--fit');
 }
 
 /* ==========================================================================
@@ -2238,8 +2361,8 @@ function run(head, arg){
     case 'screen': S.screen = arg; S.visited[arg] = true; audit('', '跳到屏幕 ' + arg); render(); break;
     case 'switch': {
       if (arg === 'textScale') {
-        /* 大字模式是字号倍数，不是开关：100% ↔ 125%（再大一档会挤出屏幕）*/
-        S.textScale = (S.textScale > 1.05) ? 1 : 1.25;
+        /* 大字模式是字号倍数，不是开关：100% ↔ 120%（再大一档正文会挤出屏幕）*/
+        S.textScale = (S.textScale > 1.05) ? 1 : 1.2;
       } else {
         S[arg] = !S[arg];
       }
@@ -2327,15 +2450,41 @@ function run(head, arg){
     case 'sos': {
       const rec = honestReceipt(false, '医院服务台', '演示模式没有连接后端，所以不会真的发出通知');
       audit('block', 'SOS 工单 SOS-0417-' + (10 + Math.floor(Math.random() * 89)) + ' 已生成（升级 = 移交给人）');
+      audit('', '情绪陪伴 → sos（说明书表 3：在屏上按「求助」触发）');
       toastConsole('🆘 求助已记录。' + (S.smsFail ? '但通知通道异常，请按屏幕上的大按钮打电话。' : '已通知服务台，请留在原地。'));
-      break;
+      TTS.speak(pickComfort('sos')); render(); break;
     }
     case 'reg': {
       audit('ok', '重要操作二次确认：' + arg + '（话术由模板锁定，LLM 在此节点被禁用）');
       toastConsole('挂号成功，取号码 A012，候诊序号第 12 位。');
+      TTS.speak(pickComfort('success'));
       if (arg === 'emergency') goTo('triage');
       else { const t = nextOfScreen(); if (t) S.screen = t; }
       render(); break;
+    }
+    case 'gear': {
+      if (arg === 'volUp')   { S.volume = Math.min(10, S.volume + 1); toastConsole('🔊 音量 ' + S.volume + ' / 10（只改本机）'); break; }
+      if (arg === 'volDown') { S.volume = Math.max(1, S.volume - 1);  toastConsole('🔉 音量 ' + S.volume + ' / 10（只改本机）'); break; }
+      if (arg === 'rate')    { S.rate = S.rate >= 1 ? 0.86 : +(S.rate + 0.10).toFixed(2); toastConsole('🐢 语速 ' + S.rate.toFixed(2) + ' ×（只改本机）'); break; }
+      if (arg === 'close')   { S.screen = S.prevScreen || screens()[0] || 'arrive'; render(); break; }
+      S.prevScreen = effectiveScreen(); S.screen = 'settings';
+      audit('', '打开设置面板（纯本地交互，不进会话状态机）');
+      render(); break;
+    }
+    case 'give': {
+      if (arg === 'confirm') {
+        const no = 'W-20261023-' + String(1000 + Math.floor(Math.random() * 8999)).slice(1);
+        S.giveReceipt = { no: no, at: new Date().toLocaleTimeString('zh-CN', { hour12:false }).slice(0,5), items: 5 };
+        S.visited = {}; S.counted = {};
+        audit('ok', '归还：本机记录已清空（5 类），删除回执 ' + no + ' 仅屏幕展示');
+        goTo('give_back'); render(); break;
+      }
+      if (arg === 'receipt') { toastConsole('🧾 回执样例：W-20261023-0417 · 12:48 · 已删除 5 项'); break; }
+      if (arg === 'home') {
+        S.giveReceipt = null; S.screen = screens()[0] || 'arrive';
+        audit('', '设备回待机，等下一个借用人'); render(); break;
+      }
+      break;
     }
     case 'recall': {
       const out = $('#recallOut');
@@ -2415,7 +2564,7 @@ const MODAL = {
     + '<b>"医生原话（以此为准）"</b>卡片；<b>绝不谎报送达</b>；三级 TTS 降级；纯函数意图解析 + 测试出口</td>'
     + '<td>设备端设计令牌 + 用药医嘱屏 + 「诚实回执」机制 + 语音降级链</td></tr>'
     + '<tr><td><b>成员 C</b><br>终端原型</td><td><b>data-cmd 命令总线</b>（5 个入口收敛成 1 条流）；'
-    + 'beacon 位置即上下文；<b>COMFORT 11 场景情绪陪伴引擎</b>；红旗预警；工单+短信双端闭环</td>'
+    + '屏上选点即上下文（不使用蓝牙信标）；<b>COMFORT 11 场景情绪陪伴引擎</b>；红旗预警；工单+短信双端闭环</td>'
     + '<td>整个 demo 的事件架构 + 陪伴条 + 红旗引擎 + 故障演示</td></tr>'
     + '<tr><td><b>成员 D</b><br>小暖 v3</td><td>入口分流（三类用户三套交互契约）；'
     + '视障"走十八步"步数化导航；听障"替我说"；纯内联 SVG 虚拟形象五表情；医保三宫格；11 个状态节点闭环</td>'
@@ -2601,7 +2750,7 @@ const AUTO_TOUR = /tour/.test(location.hash);
   });
 })();
 audit('ok', '设备开机，自检通过，本地缓存无残留');
-audit('', 'beacon 触发点「门诊大厅」→ 自动播报当前位置与今日行程');
+audit('', '起点「门诊大厅」由老人在屏上选定 → 自动播报当前位置与今日行程');
 render();
 if (AUTO_TOUR) setTimeout(tourStart, 400);
 </script>
