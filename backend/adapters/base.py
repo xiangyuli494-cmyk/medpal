@@ -2,6 +2,7 @@
 
 规则（12 号 §4.4）：每个能力必须同时有真实现与假实现，测试默认用假实现。
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

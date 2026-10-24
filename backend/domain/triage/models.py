@@ -2,6 +2,7 @@
 
 这一层不依赖数据库、网络或任何框架，便于 100% 单元测试。
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

@@ -10,6 +10,7 @@
 4. 儿科过滤：只有明确年龄 < 阈值才保留儿科；年龄未知按成人处理；
 5. confidence 是相对占比，不是准确率。
 """
+
 from __future__ import annotations
 
 from collections import Counter, defaultdict
@@ -56,9 +57,7 @@ def traverse(
             return
         seen_diseases.add(disease_key)
 
-        for department_key in repo.out_neighbors(
-            disease_key, DEPARTMENT_RELATION, neighbor_limit
-        ):
+        for department_key in repo.out_neighbors(disease_key, DEPARTMENT_RELATION, neighbor_limit):
             department = repo.node_name(department_key)
             if not keep_pediatric and department and is_pediatric_department(department):
                 skipped_pediatric.add(department)
@@ -70,9 +69,7 @@ def traverse(
     for node_key in keys:
         node_type = repo.node_type(node_key)
         if node_type == "symptom":
-            for disease_key in repo.in_neighbors(
-                node_key, SYMPTOM_RELATION, neighbor_limit
-            ):
+            for disease_key in repo.in_neighbors(node_key, SYMPTOM_RELATION, neighbor_limit):
                 add_departments(disease_key)
         elif node_type == "disease":
             add_departments(node_key)

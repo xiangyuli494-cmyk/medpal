@@ -3,6 +3,7 @@
 LLM 只能「选」节点，不能「造」节点：
 LLM 提议的每个 node_key 都必须经过 GraphRepository 校验，编造的 key 一律丢弃。
 """
+
 from __future__ import annotations
 
 import json
@@ -60,7 +61,7 @@ SELECT_TOOL = {
                 "node_keys": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "选中的节点键列表，如 [\"symptom:腿疼\"]，最多 5 个",
+                    "description": '选中的节点键列表，如 ["symptom:腿疼"]，最多 5 个',
                 },
                 "reason": {"type": "string", "description": "简要说明为什么选这些节点"},
             },

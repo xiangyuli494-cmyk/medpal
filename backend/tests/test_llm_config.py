@@ -1,4 +1,5 @@
 """LLM 配置与 OpenAI-compatible 适配器测试，不联网。"""
+
 from __future__ import annotations
 
 import json

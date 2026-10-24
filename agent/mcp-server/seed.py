@@ -34,6 +34,7 @@ def DR(i: str, label: str) -> dict:
 def P(i: str, label: str) -> dict:
     return {"id": i, "type": "Department", "label": label}
 
+
 ASSET_ID = "AST-2026-000137"
 SAMPLE_PATH = Path(__file__).resolve().parent.parent / "data" / "samples" / "pathway_k27.md"
 

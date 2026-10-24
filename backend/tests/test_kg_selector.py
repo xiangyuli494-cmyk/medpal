@@ -1,4 +1,5 @@
 """KG 节点选择器测试：规则层 + FakeLlm，不联网。"""
+
 from __future__ import annotations
 
 import json
@@ -197,9 +198,7 @@ def test_select_nodes_accepts_json_string(repo: MemoryGraphRepository) -> None:
 
 
 def test_selector_feeds_traversal(repo: MemoryGraphRepository) -> None:
-    llm = FakeLlm(
-        [_message(_tool_call("select_nodes", {"node_keys": ["symptom:腿疼"]}))]
-    )
+    llm = FakeLlm([_message(_tool_call("select_nodes", {"node_keys": ["symptom:腿疼"]}))])
 
     selection = NodeSelector(repo, llm, prompt="test").select("我腿疼")
     result = traverse(selection.nodes, repo)

@@ -10,6 +10,7 @@
     python tools/kg/demo.py "我腿疼" --llm --trace
     python tools/kg/demo.py "我腿疼" --no-llm --age 68
 """
+
 from __future__ import annotations
 
 import argparse
@@ -68,9 +69,7 @@ def main() -> int:
             print("探测失败：配置不完整")
             return 2
         try:
-            message = OpenAICompatibleLlm(config).chat(
-                [{"role": "user", "content": "回复 ok"}], []
-            )
+            message = OpenAICompatibleLlm(config).chat([{"role": "user", "content": "回复 ok"}], [])
         except LlmError as exc:
             print(f"探测失败：{exc}")
             if "insufficient_quota" in str(exc):
@@ -115,8 +114,7 @@ def main() -> int:
     for item in result.suggestions:
         evidence = "、".join(item.evidence)
         print(
-            f"  - {item.department}  票数={item.votes}  "
-            f"置信度={item.confidence}  依据={evidence}"
+            f"  - {item.department}  票数={item.votes}  置信度={item.confidence}  依据={evidence}"
         )
     print(f"理由：{reason_text(result)}")
     return 0
