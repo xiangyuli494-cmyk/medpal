@@ -12,6 +12,7 @@
 
 只用标准库，装了 Python 3.10+ 就能跑。
 """
+
 from __future__ import annotations
 
 import argparse
@@ -40,7 +41,7 @@ def parse_markdown(path: Path) -> dict:
             if line.lstrip().startswith("#"):
                 if line.startswith("# "):
                     title = line.lstrip("#").strip()
-                continue          # 标题只做定位，不进正文
+                continue  # 标题只做定位，不进正文
             if line.strip():
                 body.append(line)
         if not body:
@@ -54,6 +55,7 @@ def parse_markdown(path: Path) -> dict:
         "blocks": blocks,
         "anchors": [stem + "#" + b["loc"] for b in blocks],
     }
+
 
 # ---------------------------------------------------------------- 2. 本体（硬编码）
 
@@ -95,6 +97,7 @@ def anchor_of(blocks: list, hint: str):
             return b["loc"]
     return None
 
+
 # ---------------------------------------------------------------- 4. 存储
 
 
@@ -113,8 +116,7 @@ def build_store(db_path: Path, asset: dict, triples: list) -> None:
     )
     con.execute(
         "INSERT INTO asset VALUES (?,?,?,?,?)",
-        (ASSET_ID, asset["title"], asset["modality"],
-         len(asset["blocks"]), len(asset["anchors"])),
+        (ASSET_ID, asset["title"], asset["modality"], len(asset["blocks"]), len(asset["anchors"])),
     )
     con.executemany(
         "INSERT INTO triple VALUES (?,?,?,?,?)",
@@ -122,6 +124,7 @@ def build_store(db_path: Path, asset: dict, triples: list) -> None:
     )
     con.commit()
     con.close()
+
 
 # ---------------------------------------------------------------- 5. 两跳遍历
 
@@ -149,6 +152,7 @@ def two_hop(start: str, triples: list, depth: int = 2) -> dict:
         frontier = nxt
     return found
 
+
 # ---------------------------------------------------------------- 6. 主流程
 
 
@@ -156,11 +160,15 @@ def run(in_path: Path, out_path: Path, db_path: Path) -> dict:
     steps = []
 
     asset = parse_markdown(in_path)
-    steps.append({
-        "step": 1, "op": "parse",
-        "detail": asset["modality"] + " -> " + str(len(asset["blocks"])) + " blocks",
-        "evidence": asset["anchors"][:1], "ref": "PARSE",
-    })
+    steps.append(
+        {
+            "step": 1,
+            "op": "parse",
+            "detail": asset["modality"] + " -> " + str(len(asset["blocks"])) + " blocks",
+            "evidence": asset["anchors"][:1],
+            "ref": "PARSE",
+        }
+    )
 
     triples = []
     unresolved = []
@@ -171,33 +179,52 @@ def run(in_path: Path, out_path: Path, db_path: Path) -> dict:
         triples.append((h, r, t, c, hint, loc))
 
     all_anchors = [asset["stem"] + "#" + t[5] for t in triples if t[5]]
-    steps.append({
-        "step": 2, "op": "align_evidence",
-        "detail": str(len(triples)) + " triples, " + str(len(unresolved)) + " 断链",
-        "evidence": all_anchors, "ref": "EVIDENCE",
-    })
+    steps.append(
+        {
+            "step": 2,
+            "op": "align_evidence",
+            "detail": str(len(triples)) + " triples, " + str(len(unresolved)) + " 断链",
+            "evidence": all_anchors,
+            "ref": "EVIDENCE",
+        }
+    )
 
     build_store(db_path, asset, triples)
-    steps.append({
-        "step": 3, "op": "ingest",
-        "detail": "asset " + ASSET_ID + " + " + str(len(triples)) + " triples -> " + db_path.name,
-        "evidence": [ASSET_ID], "ref": "STORE",
-    })
+    steps.append(
+        {
+            "step": 3,
+            "op": "ingest",
+            "detail": "asset "
+            + ASSET_ID
+            + " + "
+            + str(len(triples))
+            + " triples -> "
+            + db_path.name,
+            "evidence": [ASSET_ID],
+            "ref": "STORE",
+        }
+    )
 
     start = "SYM-EPI"
     reached = two_hop(start, triples, depth=2)
-    steps.append({
-        "step": 4, "op": "reason_2hop",
-        "detail": "从 " + start + " 出发两跳，到达 " + str(len(reached)) + " 个实体",
-        "evidence": all_anchors[:3], "ref": "TRAVERSE",
-    })
+    steps.append(
+        {
+            "step": 4,
+            "op": "reason_2hop",
+            "detail": "从 " + start + " 出发两跳，到达 " + str(len(reached)) + " 个实体",
+            "evidence": all_anchors[:3],
+            "ref": "TRAVERSE",
+        }
+    )
 
     dept_votes = {}
     for node, (_p, conf, _r) in reached.items():
         if LABELS.get(node, ("", ""))[0] == "Department":
             dept_votes[node] = round(dept_votes.get(node, 0.0) + conf, 4)
-    depts = [{"id": k, "label": LABELS[k][1], "score": v}
-             for k, v in sorted(dept_votes.items(), key=lambda kv: -kv[1])]
+    depts = [
+        {"id": k, "label": LABELS[k][1], "score": v}
+        for k, v in sorted(dept_votes.items(), key=lambda kv: -kv[1])
+    ]
 
     diseases = sorted(n for n in reached if LABELS.get(n, ("", ""))[0] == "Disease")
     exams = sorted(n for n in reached if LABELS.get(n, ("", ""))[0] == "Exam")
@@ -216,12 +243,20 @@ def run(in_path: Path, out_path: Path, db_path: Path) -> dict:
         return sorted(set(acc))
 
     top = depts[0]["id"] if depts else None
-    steps.append({
-        "step": 5, "op": "conclude",
-        "detail": "科室=" + (depts[0]["label"] if depts else "无")
-                  + " 疾病=" + str(len(diseases)) + " 检查=" + str(len(exams)),
-        "evidence": ev([top] if top else []), "ref": "CONCLUDE",
-    })
+    steps.append(
+        {
+            "step": 5,
+            "op": "conclude",
+            "detail": "科室="
+            + (depts[0]["label"] if depts else "无")
+            + " 疾病="
+            + str(len(diseases))
+            + " 检查="
+            + str(len(exams)),
+            "evidence": ev([top] if top else []),
+            "ref": "CONCLUDE",
+        }
+    )
 
     for s in steps:
         s["evidence"] = sorted(set(s["evidence"]))
@@ -262,17 +297,24 @@ def run(in_path: Path, out_path: Path, db_path: Path) -> dict:
 def main(argv=None) -> int:
     root = Path(__file__).resolve().parent.parent
     ap = argparse.ArgumentParser(description="Walking Skeleton：一条命令跑完赛题3 最小主线")
-    ap.add_argument("--in", dest="inp",
-                    default=str(root / "agent/data/samples/pathway_k27.md"))
+    ap.add_argument("--in", dest="inp", default=str(root / "agent/data/samples/pathway_k27.md"))
     ap.add_argument("--out", dest="out", default=str(root / "tmp/trace.json"))
     ap.add_argument("--db", dest="db", default=str(root / "tmp/skeleton.db"))
     a = ap.parse_args(argv)
 
     t = run(Path(a.inp), Path(a.out), Path(a.db))
-    print("OK  " + str(len(t["steps"])) + " steps | 科室=" + str(t["conclusion"]["department"])
-          + " | 疾病=" + str(len(t["conclusion"]["diseases"]))
-          + " | 检查=" + str(len(t["conclusion"]["exams"]))
-          + " | 溯源完整率=" + str(t["trace_completeness"]))
+    print(
+        "OK  "
+        + str(len(t["steps"]))
+        + " steps | 科室="
+        + str(t["conclusion"]["department"])
+        + " | 疾病="
+        + str(len(t["conclusion"]["diseases"]))
+        + " | 检查="
+        + str(len(t["conclusion"]["exams"]))
+        + " | 溯源完整率="
+        + str(t["trace_completeness"])
+    )
     print("->  " + str(Path(a.out)))
     if t["unresolved"]:
         print("WARN 断链 " + str(len(t["unresolved"])) + " 条: " + ", ".join(t["unresolved"]))

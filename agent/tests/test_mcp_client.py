@@ -2,7 +2,11 @@
 
 运行：python tests/test_mcp_client.py
 """
-import asyncio, json, os, sys
+
+import asyncio
+import json
+import os
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -10,18 +14,27 @@ ROOT = HERE.parent
 SERVER = ROOT / "mcp-server" / "server.py"
 os.environ.setdefault("PYTHONIOENCODING", "utf-8")
 
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
+from mcp import ClientSession, StdioServerParameters  # noqa: E402
+from mcp.client.stdio import stdio_client  # noqa: E402
 
 EXPECTED = [
-    "ingest_asset", "get_asset_card", "kg_query", "onto_propose", "onto_commit",
-    "std_align", "trace_write", "skill_export", "kb_search", "health",
+    "ingest_asset",
+    "get_asset_card",
+    "kg_query",
+    "onto_propose",
+    "onto_commit",
+    "std_align",
+    "trace_write",
+    "skill_export",
+    "kb_search",
+    "health",
 ]
 
 
 async def main():
     params = StdioServerParameters(
-        command=sys.executable, args=[str(SERVER)],
+        command=sys.executable,
+        args=[str(SERVER)],
         env={**os.environ, "MCP_TRANSPORT": "stdio"},
     )
     async with stdio_client(params) as (r, w):
@@ -47,7 +60,11 @@ async def main():
             res = await s.call_tool("std_align", {"entity_text": "上腹部痛"})
             payload = json.loads(res.content[0].text)
             print("std_align:", payload.get("scheme"), payload.get("code"), payload.get("match"))
-            assert payload.get("ok") and payload.get("code") == "R10.1" and payload.get("scheme") == "ICD-10"
+            assert (
+                payload.get("ok")
+                and payload.get("code") == "R10.1"
+                and payload.get("scheme") == "ICD-10"
+            )
     print("MCP CLIENT OK")
 
 

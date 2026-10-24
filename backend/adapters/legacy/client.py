@@ -18,6 +18,7 @@ W2 的用法：
     except LegacyUnavailable:
         spots = []   # 或读 fixtures/legacy/check_items.json
 """
+
 from __future__ import annotations
 
 import json

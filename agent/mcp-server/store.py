@@ -2,6 +2,7 @@
 
 单文件、无外部依赖，可脱离 Nexent 单独 pytest。
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -116,10 +117,14 @@ def _row2card(row):
 
 # ---------- 资产 ----------
 
+
 def upsert_asset(conn, card):
-    aid = card.get("asset_id") or ("AST-" + datetime.now(CST).strftime("%Y") + "-" + uuid.uuid4().hex[:6])
+    aid = card.get("asset_id") or (
+        "AST-" + datetime.now(CST).strftime("%Y") + "-" + uuid.uuid4().hex[:6]
+    )
     conn.execute(
-        "INSERT OR REPLACE INTO asset (asset_id,title,modality,source_json,version_json,sensitivity,"
+        "INSERT OR REPLACE INTO asset "
+        "(asset_id,title,modality,source_json,version_json,sensitivity,"
         "structure_json,anchors_json,entities_json,kb_status,ingested_by,created_at) "
         "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
         (
@@ -162,9 +167,11 @@ def get_asset(conn, asset_id):
 
 # ---------- 三元组与版本 ----------
 
+
 def add_triple(conn, t, version="v0.9"):
     dup = conn.execute(
-        "SELECT triple_id, confidence FROM triple WHERE head_id=? AND rel=? AND tail_id=? AND status='active'",
+        "SELECT triple_id, confidence FROM triple "
+        "WHERE head_id=? AND rel=? AND tail_id=? AND status='active'",
         (t["head"]["id"], t["rel"], t["tail"]["id"]),
     ).fetchone()
     if dup:
@@ -177,15 +184,25 @@ def add_triple(conn, t, version="v0.9"):
     tid = t.get("triple_id") or ("T-" + uuid.uuid4().hex[:8])
     prov = t.get("provenance", {})
     conn.execute(
-        "INSERT INTO triple (triple_id,head_id,head_type,head_label,rel,tail_id,tail_type,tail_label,"
+        "INSERT INTO triple "
+        "(triple_id,head_id,head_type,head_label,rel,tail_id,tail_type,tail_label,"
         "confidence,asset_id,anchor_id,standard_json,status,version_added,version_removed) "
         "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL)",
         (
             tid,
-            t["head"]["id"], t["head"]["type"], t["head"]["label"], t["rel"],
-            t["tail"]["id"], t["tail"]["type"], t["tail"]["label"],
-            float(t.get("confidence", 0.8)), prov.get("asset_id"), prov.get("anchor_id"),
-            json.dumps(t.get("standard", {}), ensure_ascii=False), "active", version,
+            t["head"]["id"],
+            t["head"]["type"],
+            t["head"]["label"],
+            t["rel"],
+            t["tail"]["id"],
+            t["tail"]["type"],
+            t["tail"]["label"],
+            float(t.get("confidence", 0.8)),
+            prov.get("asset_id"),
+            prov.get("anchor_id"),
+            json.dumps(t.get("standard", {}), ensure_ascii=False),
+            "active",
+            version,
         ),
     )
     conn.commit()
@@ -210,7 +227,11 @@ def neighbors(conn, node_ids, rel_filter=None):
         return []
     marks = ",".join("?" * len(node_ids))
     sql = (
-        "SELECT * FROM triple WHERE status='active' AND (head_id IN (" + marks + ") OR tail_id IN (" + marks + "))"
+        "SELECT * FROM triple WHERE status='active' AND (head_id IN ("
+        + marks
+        + ") OR tail_id IN ("
+        + marks
+        + "))"
     )
     args = list(node_ids) + list(node_ids)
     if rel_filter:
@@ -230,12 +251,14 @@ def kg_query(conn, seeds, max_hops=2, rel_filter=None, limit=20):
         # 头部命中不了就试尾部，否则「消化内科」这类只出现在尾端的节点永远召不回。
         code = resolve_entity(conn, s) or s
         hit = conn.execute(
-            "SELECT head_id FROM triple WHERE status='active' AND (head_id=? OR head_label=?) LIMIT 1",
+            "SELECT head_id FROM triple WHERE status='active' "
+            "AND (head_id=? OR head_label=?) LIMIT 1",
             (code, s),
         ).fetchone()
         if not hit:
             hit = conn.execute(
-                "SELECT tail_id FROM triple WHERE status='active' AND (tail_id=? OR tail_label=?) LIMIT 1",
+                "SELECT tail_id FROM triple WHERE status='active' "
+                "AND (tail_id=? OR tail_label=?) LIMIT 1",
                 (code, s),
             ).fetchone()
         if hit:
@@ -277,23 +300,38 @@ def kg_query(conn, seeds, max_hops=2, rel_filter=None, limit=20):
                         if r:
                             # 下游（评测、Skill、报告）要直接读 rel / 两端，这里一次给全，
                             # 免得再按 edge 字符串反解析。
-                            steps.append({
-                                "triple_id": r["triple_id"],
-                                "edge": r["head_label"] + " -[" + r["rel"] + "]-> " + r["tail_label"],
-                                "rel": r["rel"],
-                                "head_id": r["head_id"], "head_label": r["head_label"], "head_type": r["head_type"],
-                                "tail_id": r["tail_id"], "tail_label": r["tail_label"], "tail_type": r["tail_type"],
-                                "provenance": {"asset_id": r["asset_id"], "anchor_id": r["anchor_id"]},
-                                "confidence": r["confidence"],
-                            })
+                            steps.append(
+                                {
+                                    "triple_id": r["triple_id"],
+                                    "edge": r["head_label"]
+                                    + " -["
+                                    + r["rel"]
+                                    + "]-> "
+                                    + r["tail_label"],
+                                    "rel": r["rel"],
+                                    "head_id": r["head_id"],
+                                    "head_label": r["head_label"],
+                                    "head_type": r["head_type"],
+                                    "tail_id": r["tail_id"],
+                                    "tail_label": r["tail_label"],
+                                    "tail_type": r["tail_type"],
+                                    "provenance": {
+                                        "asset_id": r["asset_id"],
+                                        "anchor_id": r["anchor_id"],
+                                    },
+                                    "confidence": r["confidence"],
+                                }
+                            )
                     score = round(sum(s["confidence"] for s in steps) / max(1, len(steps)), 3)
-                    paths.append({
-                        "nodes": new_path,
-                        "hops": len(new_path) - 1,
-                        "steps": steps,
-                        "provenance": [s["provenance"] for s in steps],
-                        "score": score,
-                    })
+                    paths.append(
+                        {
+                            "nodes": new_path,
+                            "hops": len(new_path) - 1,
+                            "steps": steps,
+                            "provenance": [s["provenance"] for s in steps],
+                            "score": score,
+                        }
+                    )
             frontier = nxt
             if not frontier:
                 break
@@ -315,13 +353,22 @@ def snapshot(conn, version, note=""):
         "WHERE status='active' ORDER BY triple_id"
     ).fetchall()
     payload = "\n".join(
-        r["triple_id"] + "|" + r["head_id"] + "|" + r["rel"] + "|" + r["tail_id"] + "|" + "%.3f" % r["confidence"]
+        r["triple_id"]
+        + "|"
+        + r["head_id"]
+        + "|"
+        + r["rel"]
+        + "|"
+        + r["tail_id"]
+        + "|"
+        + "%.3f" % r["confidence"]
         for r in rows
     )
     digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
     conn.execute("UPDATE version SET is_current = 0")
     conn.execute(
-        "INSERT OR REPLACE INTO version (version,created_at,triple_count,manifest_hash,note,is_current) "
+        "INSERT OR REPLACE INTO version "
+        "(version,created_at,triple_count,manifest_hash,note,is_current) "
         "VALUES (?,?,?,?,?,1)",
         (version, now(), len(rows), digest, note),
     )
@@ -365,13 +412,17 @@ def diff_versions(conn, old, new):
         if a[k][:3] != b[k][:3] or abs(a[k][3] - b[k][3]) > 1e-6
     ]
     return {
-        "old": old, "new": new,
-        "added": added, "removed": removed, "modified": modified,
+        "old": old,
+        "new": new,
+        "added": added,
+        "removed": removed,
+        "modified": modified,
         "counts": {"added": len(added), "removed": len(removed), "modified": len(modified)},
     }
 
 
 # ---------- 对齐 ----------
+
 
 def align(conn, text):
     t = (text or "").strip()
@@ -381,21 +432,33 @@ def align(conn, text):
     how = "exact"
     if not row:
         row = conn.execute(
-            "SELECT * FROM alias WHERE ? LIKE '%' || surface || '%' ORDER BY LENGTH(surface) DESC LIMIT 1", (t,)
+            "SELECT * FROM alias WHERE ? LIKE '%' || surface || '%' "
+            "ORDER BY LENGTH(surface) DESC LIMIT 1",
+            (t,),
         ).fetchone()
         how = "contains"
     if not row:
-        return {"ok": False, "reason": "unmapped", "input": t,
-                "hint": "加入待对齐队列，人工补 alias_map 后重跑"}
+        return {
+            "ok": False,
+            "reason": "unmapped",
+            "input": t,
+            "hint": "加入待对齐队列，人工补 alias_map 后重跑",
+        }
     return {
-        "ok": True, "input": t, "match": how,
-        "scheme": row["scheme"], "code": row["code"],
-        "entity_type": row["entity_type"], "confidence": row["confidence"],
+        "ok": True,
+        "input": t,
+        "match": how,
+        "scheme": row["scheme"],
+        "code": row["code"],
+        "entity_type": row["entity_type"],
+        "confidence": row["confidence"],
     }
 
 
 def resolve_entity(conn, text):
-    hit = conn.execute("SELECT head_id FROM triple WHERE head_label = ? LIMIT 1", (text,)).fetchone()
+    hit = conn.execute(
+        "SELECT head_id FROM triple WHERE head_label = ? LIMIT 1", (text,)
+    ).fetchone()
     if hit:
         return hit["head_id"]
     a = align(conn, text)
@@ -404,10 +467,13 @@ def resolve_entity(conn, text):
 
 # ---------- 决策链 ----------
 
+
 def _evidence_exists(conn, ref):
     ref = str(ref)
     if ref.startswith("T-"):
-        return conn.execute("SELECT 1 FROM triple WHERE triple_id = ?", (ref,)).fetchone() is not None
+        return (
+            conn.execute("SELECT 1 FROM triple WHERE triple_id = ?", (ref,)).fetchone() is not None
+        )
     if "#" in ref:
         aid = ref.split("#")[0]
         row = conn.execute("SELECT anchors_json FROM asset WHERE asset_id = ?", (aid,)).fetchone()
@@ -425,8 +491,11 @@ def _ref_str(e):
         if e.get("triple_id"):
             return str(e["triple_id"])
         if e.get("anchor_id"):
-            return str(e["anchor_id"]) if not e.get("asset_id") else "%s#%s" % (
-                e["asset_id"], str(e["anchor_id"]).split("#")[-1])
+            return (
+                str(e["anchor_id"])
+                if not e.get("asset_id")
+                else "%s#%s" % (e["asset_id"], str(e["anchor_id"]).split("#")[-1])
+            )
         return str(e)
     return str(e)
 
@@ -436,10 +505,20 @@ def write_trace(conn, question, steps, agent_version="v1.0", elapsed_ms=0, gaps=
     cur = current_version(conn)
     onto = cur["version"] if cur else "v0.9"
     conn.execute(
-        "INSERT INTO trace (trace_id,question,agent_version,ontology_version,steps_json,gaps_json,elapsed_ms,created_at) "
+        "INSERT INTO trace "
+        "(trace_id,question,agent_version,ontology_version,steps_json,gaps_json,"
+        "elapsed_ms,created_at) "
         "VALUES (?,?,?,?,?,?,?,?)",
-        (tid, question, agent_version, onto, json.dumps(steps, ensure_ascii=False),
-         json.dumps(gaps or [], ensure_ascii=False), int(elapsed_ms), now()),
+        (
+            tid,
+            question,
+            agent_version,
+            onto,
+            json.dumps(steps, ensure_ascii=False),
+            json.dumps(gaps or [], ensure_ascii=False),
+            int(elapsed_ms),
+            now(),
+        ),
     )
     conn.commit()
 
@@ -457,21 +536,30 @@ def write_trace(conn, question, steps, agent_version="v1.0", elapsed_ms=0, gaps=
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     report = REPORT_DIR / (tid + ".md")
     lines = [
-        "# 决策链报告 " + tid, "",
+        "# 决策链报告 " + tid,
+        "",
         "- 问题：" + question,
         "- 智能体版本：" + agent_version,
         "- 本体版本：" + onto,
         "- 生成时间：" + now(),
         "- 证据数：" + str(len(cited)) + ("（无引用，拒答类结论）" if not cited else ""),
-        "- 溯源完整率：" + str(completeness), "",
-        "## 决策链", "",
+        "- 溯源完整率：" + str(completeness),
+        "",
+        "## 决策链",
+        "",
         "| # | 操作 | 输入 | 输出 | 证据 |",
         "| --- | --- | --- | --- | --- |",
     ]
     for s in steps:
-        lines.append("| {} | {} | {} | {} | {} |".format(
-            s.get("i"), s.get("op"), str(s.get("in", "")), str(s.get("out", "")),
-            ", ".join(_ref_str(e) for e in (s.get("evidence", []) or [])) or "—"))
+        lines.append(
+            "| {} | {} | {} | {} | {} |".format(
+                s.get("i"),
+                s.get("op"),
+                str(s.get("in", "")),
+                str(s.get("out", "")),
+                ", ".join(_ref_str(e) for e in (s.get("evidence", []) or [])) or "—",
+            )
+        )
     lines += ["", "## 证据清单", ""]
     for e in cited:
         lines.append("- " + e + (" ✅" if e not in unresolved else " ❌ 未找到"))
@@ -480,8 +568,12 @@ def write_trace(conn, question, steps, agent_version="v1.0", elapsed_ms=0, gaps=
     report.write_text("\n".join(lines), encoding="utf-8")
 
     return {
-        "ok": True, "trace_id": tid, "version": onto, "report_path": str(report),
-        "evidence_count": len(cited), "trace_completeness": completeness,
+        "ok": True,
+        "trace_id": tid,
+        "version": onto,
+        "report_path": str(report),
+        "evidence_count": len(cited),
+        "trace_completeness": completeness,
         "unresolved": unresolved,
     }
 
@@ -491,8 +583,12 @@ def get_trace(conn, trace_id):
     if not row:
         return None
     return {
-        "trace_id": row["trace_id"], "question": row["question"],
-        "agent_version": row["agent_version"], "ontology_version": row["ontology_version"],
-        "steps": json.loads(row["steps_json"]), "gaps": json.loads(row["gaps_json"]),
-        "elapsed_ms": row["elapsed_ms"], "created_at": row["created_at"],
+        "trace_id": row["trace_id"],
+        "question": row["question"],
+        "agent_version": row["agent_version"],
+        "ontology_version": row["ontology_version"],
+        "steps": json.loads(row["steps_json"]),
+        "gaps": json.loads(row["gaps_json"]),
+        "elapsed_ms": row["elapsed_ms"],
+        "created_at": row["created_at"],
     }

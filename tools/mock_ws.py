@@ -20,6 +20,7 @@
     {"type":"touch.event","session":"s_001","target":"primary","action":"tap"}
     {"type":"ping"}
 """
+
 import argparse
 import asyncio
 import json

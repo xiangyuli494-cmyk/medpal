@@ -6,6 +6,7 @@
     python tools/mock_api.py
     python tools/mock_api.py --port 18000
 """
+
 import argparse
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer

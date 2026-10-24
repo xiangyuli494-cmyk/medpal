@@ -2,6 +2,7 @@
 
 这些用例在 W2 之后仍然保留，它们是「仓库没散架」的最低证明。
 """
+
 from __future__ import annotations
 
 from pathlib import Path

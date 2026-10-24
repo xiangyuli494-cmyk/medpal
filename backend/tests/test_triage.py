@@ -1,4 +1,5 @@
 """纯分诊算法测试：不联网、不读 MySQL、不调 LLM。"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -85,9 +86,7 @@ def test_pediatric_age_boundary(repo: MemoryGraphRepository) -> None:
 def test_not_pediatric_pattern_wins(repo: MemoryGraphRepository) -> None:
     result = traverse(["symptom:怀不上"], repo, age=30)
 
-    assert [item.department for item in result.suggestions] == [
-        "生殖健康与不孕门诊(试管婴儿)"
-    ]
+    assert [item.department for item in result.suggestions] == ["生殖健康与不孕门诊(试管婴儿)"]
     assert result.filtered_pediatric == ()
 
 

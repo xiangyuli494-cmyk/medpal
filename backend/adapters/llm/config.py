@@ -1,4 +1,5 @@
 """LLM 配置：从环境变量或 .env 读取，不引入额外依赖。"""
+
 from __future__ import annotations
 
 import os
@@ -10,9 +11,7 @@ DEFAULT_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 DEFAULT_MODEL = "qwen-flash"
 
 
-def load_env_file(
-    path: str | Path, env: MutableMapping[str, str] | None = None
-) -> dict[str, str]:
+def load_env_file(path: str | Path, env: MutableMapping[str, str] | None = None) -> dict[str, str]:
     """把简单的 KEY=VALUE .env 文件读进 env；已存在的键不覆盖。"""
     target = env if env is not None else os.environ
     file_path = Path(path)
@@ -100,9 +99,7 @@ class LlmConfig:
             api_key = None
 
         base_url = (
-            _env(source, "LLM_BASE_URL")
-            or _env(source, "DASHSCOPE_API_BASE")
-            or DEFAULT_BASE_URL
+            _env(source, "LLM_BASE_URL") or _env(source, "DASHSCOPE_API_BASE") or DEFAULT_BASE_URL
         ).rstrip("/")
         model = (
             _env(source, "LLM_MODEL_FAST")

@@ -1,4 +1,5 @@
 """假实现：测试与本地开发默认使用，零网络、零费用、结果稳定。"""
+
 from __future__ import annotations
 
 from .base import AsrResult, OcrResult

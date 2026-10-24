@@ -1,4 +1,5 @@
 """LLM 适配器：配置、OpenAI-compatible 实现与测试假实现。"""
+
 from .base import (
     LlmClient,
     LlmConfigError,

@@ -10,6 +10,7 @@ R3 由「以 MCP 形式暴露给 Nexent + 三个 Skill 包编排」承载。
   python server.py                     # stdio（本地调试 / MCP Inspector）
   MCP_TRANSPORT=streamable-http python server.py   # HTTP，Nexent 远程链接用
 """
+
 from __future__ import annotations
 
 import json
@@ -19,10 +20,9 @@ import time
 import uuid
 from pathlib import Path
 
-from mcp.server.fastmcp import FastMCP
-
 import parsers
 import store
+from mcp.server.fastmcp import FastMCP
 
 SERVER_VERSION = "0.1.0"
 mcp = FastMCP(
@@ -55,9 +55,15 @@ def _err(reason, hint="", **kw):
 
 # ---------------- R1 资产 ----------------
 
+
 @mcp.tool()
-def ingest_asset(path: str, modality: str = "", title: str = "",
-                 source_type: str = "public_standard", ingested_by: str = "") -> dict:
+def ingest_asset(
+    path: str,
+    modality: str = "",
+    title: str = "",
+    source_type: str = "public_standard",
+    ingested_by: str = "",
+) -> dict:
     """解析一份文件，生成 Asset Card 与可引用锚点，登记入台账。
 
     返回 asset_id、anchors（每条都可被决策链引用）、解析出的块数与实体。
@@ -96,18 +102,29 @@ def ingest_asset(path: str, modality: str = "", title: str = "",
     card["asset_id"] = asset_id
     store.upsert_asset(conn, card)
     conn.close()
-    return _ok(asset_id=asset_id, modality=card["modality"], anchors=card["anchors"],
-               entity_hint=entities, blocks=len(doc.blocks))
+    return _ok(
+        asset_id=asset_id,
+        modality=card["modality"],
+        anchors=card["anchors"],
+        entity_hint=entities,
+        blocks=len(doc.blocks),
+    )
 
 
 @mcp.tool()
-def get_asset_card(asset_id: str = "", modality: str = "", entity: str = "", limit: int = 20) -> dict:
+def get_asset_card(
+    asset_id: str = "", modality: str = "", entity: str = "", limit: int = 20
+) -> dict:
     """按 asset_id / 模态 / 实体查资产卡片。三个条件都为空时返回最近入库的资产。"""
     conn = _conn()
     try:
         if asset_id:
             card = store.get_asset(conn, asset_id)
-            return _ok(cards=[card]) if card else _err("asset_not_found", "先跑 ingest_asset", asset_id=asset_id)
+            return (
+                _ok(cards=[card])
+                if card
+                else _err("asset_not_found", "先跑 ingest_asset", asset_id=asset_id)
+            )
         cards = store.list_assets(conn, modality or None, entity or None, limit)
         return _ok(count=len(cards), cards=cards)
     finally:
@@ -116,9 +133,11 @@ def get_asset_card(asset_id: str = "", modality: str = "", entity: str = "", lim
 
 # ---------------- R2 本体 ----------------
 
+
 @mcp.tool()
-def kg_query(seed_entities: list[str], max_hops: int = 2,
-             rel_filter: list[str] = None, limit: int = 20) -> dict:
+def kg_query(
+    seed_entities: list[str], max_hops: int = 2, rel_filter: list[str] = None, limit: int = 20
+) -> dict:
     """从种子实体出发做多跳本体查询，返回路径与每条边的 provenance。
 
     路径按「跳数多优先、置信度高优先」排序；未解析的种子会出现在 unresolved 里。
@@ -132,10 +151,25 @@ def kg_query(seed_entities: list[str], max_hops: int = 2,
 
 # 只允许这三种句式，且头尾必须能被 alias_map 解析成节点——这是「约束输出空间」的落地。
 PATTERNS = [
-    (re.compile(r"(?P<head>[\u4e00-\u9fa5]{2,8}?)(?:患者)?(?:需要做|需要|应做|建议做|须做|需做)"
-                r"(?P<tail>[\u4e00-\u9fa5]{2,10}?)(?:检查|检测|试验)"), "requires_exam"),
-    (re.compile(r"(?P<head>[\u4e00-\u9fa5]{2,8}?)(?:可导致|可引起|会导致|可致)(?P<tail>[\u4e00-\u9fa5]{2,12})"), "may_cause"),
-    (re.compile(r"(?P<head>[\u4e00-\u9fa5]{2,8}?)(?:禁用|慎用于|禁忌于)(?P<tail>[\u4e00-\u9fa5]{2,8})"), "contraindicated_for"),
+    (
+        re.compile(
+            r"(?P<head>[\u4e00-\u9fa5]{2,8}?)(?:患者)?(?:需要做|需要|应做|建议做|须做|需做)"
+            r"(?P<tail>[\u4e00-\u9fa5]{2,10}?)(?:检查|检测|试验)"
+        ),
+        "requires_exam",
+    ),
+    (
+        re.compile(
+            r"(?P<head>[\u4e00-\u9fa5]{2,8}?)(?:可导致|可引起|会导致|可致)(?P<tail>[\u4e00-\u9fa5]{2,12})"
+        ),
+        "may_cause",
+    ),
+    (
+        re.compile(
+            r"(?P<head>[\u4e00-\u9fa5]{2,8}?)(?:禁用|慎用于|禁忌于)(?P<tail>[\u4e00-\u9fa5]{2,8})"
+        ),
+        "contraindicated_for",
+    ),
 ]
 TAIL_SUFFIX = re.compile(r"(等|药物|药品|治疗)$")
 ROLE_SUFFIX = re.compile(r"(患者|病人|人群|者|等|药物|药品|治疗|疾病|症状)$")
@@ -195,13 +229,19 @@ def onto_propose(asset_ids: list[str], scope: str = "") -> dict:
                         if not head or not tail or head == tail or tail in head or head in tail:
                             continue
                         hit = True
-                        cands.append({
-                            "head": {"id": "", "type": "Disease", "label": head},
-                            "rel": rel,
-                            "tail": {"id": "", "type": "Exam" if rel == "requires_exam" else "Disease", "label": tail},
-                            "confidence": 0.72,
-                            "provenance": {"asset_id": aid, "anchor_id": a["anchor_id"]},
-                        })
+                        cands.append(
+                            {
+                                "head": {"id": "", "type": "Disease", "label": head},
+                                "rel": rel,
+                                "tail": {
+                                    "id": "",
+                                    "type": "Exam" if rel == "requires_exam" else "Disease",
+                                    "label": tail,
+                                },
+                                "confidence": 0.72,
+                                "provenance": {"asset_id": aid, "anchor_id": a["anchor_id"]},
+                            }
+                        )
                 if not hit:
                     rejected.append({"anchor_id": a["anchor_id"], "reason": "no_pattern_match"})
 
@@ -210,8 +250,16 @@ def onto_propose(asset_ids: list[str], scope: str = "") -> dict:
             h = store.resolve_entity(conn, c["head"]["label"])
             t = store.resolve_entity(conn, c["tail"]["label"])
             if not h or not t:
-                rejected.append({"candidate": c["head"]["label"] + "-" + c["rel"] + "->" + c["tail"]["label"],
-                                 "reason": "entity_unresolved"})
+                rejected.append(
+                    {
+                        "candidate": c["head"]["label"]
+                        + "-"
+                        + c["rel"]
+                        + "->"
+                        + c["tail"]["label"],
+                        "reason": "entity_unresolved",
+                    }
+                )
                 continue
             # 反向表述也视为同一条知识：「疾病患者禁用某药」与「某药禁用于某疾病」
             reverse = 1 if c["rel"] in REVERSE_TOLERANT else 0
@@ -221,25 +269,45 @@ def onto_propose(asset_ids: list[str], scope: str = "") -> dict:
                 (c["rel"], h, t, reverse, t, h),
             ).fetchone()
             if dup:
-                rejected.append({"candidate": c["head"]["label"] + "-" + c["rel"] + "->" + c["tail"]["label"],
-                                 "reason": "duplicate"})
+                rejected.append(
+                    {
+                        "candidate": c["head"]["label"]
+                        + "-"
+                        + c["rel"]
+                        + "->"
+                        + c["tail"]["label"],
+                        "reason": "duplicate",
+                    }
+                )
                 continue
             c["head"]["id"], c["tail"]["id"] = h, t
             kept.append(c)
 
         diff_id = "DF-" + uuid.uuid4().hex[:8]
-        conn.execute("INSERT INTO pending_diff (diff_id,status,payload,created_at) VALUES (?,?,?,?)",
-                     (diff_id, "pending", json.dumps(kept, ensure_ascii=False), store.now()))
+        conn.execute(
+            "INSERT INTO pending_diff (diff_id,status,payload,created_at) VALUES (?,?,?,?)",
+            (diff_id, "pending", json.dumps(kept, ensure_ascii=False), store.now()),
+        )
         conn.commit()
-        return _ok(diff_id=diff_id, scope=scope, candidates=kept, rejected=rejected,
-                   counts={"candidates": len(kept), "rejected": len(rejected)})
+        return _ok(
+            diff_id=diff_id,
+            scope=scope,
+            candidates=kept,
+            rejected=rejected,
+            counts={"candidates": len(kept), "rejected": len(rejected)},
+        )
     finally:
         conn.close()
 
 
 @mcp.tool()
-def onto_commit(diff_id: str, approve_all: bool = True, approve_ids: list[str] = None,
-                version: str = "", note: str = "") -> dict:
+def onto_commit(
+    diff_id: str,
+    approve_all: bool = True,
+    approve_ids: list[str] = None,
+    version: str = "",
+    note: str = "",
+) -> dict:
     """确认待审 diff 并发布新本体版本（生成快照 + manifest hash）。"""
     conn = _conn()
     try:
@@ -259,8 +327,13 @@ def onto_commit(diff_id: str, approve_all: bool = True, approve_ids: list[str] =
         snap = store.snapshot(conn, new_ver, note or ("from " + diff_id))
         conn.execute("UPDATE pending_diff SET status='committed' WHERE diff_id = ?", (diff_id,))
         conn.commit()
-        return _ok(diff_id=diff_id, version=new_ver, added=added, snapshot=snap,
-                   previous=cur["version"] if cur else None)
+        return _ok(
+            diff_id=diff_id,
+            version=new_ver,
+            added=added,
+            snapshot=snap,
+            previous=cur["version"] if cur else None,
+        )
     finally:
         conn.close()
 
@@ -294,20 +367,33 @@ def std_align(entity_text: str = "", triple_id: str = "") -> dict:
         res = store.align(conn, entity_text)
         if not res.get("ok"):
             return _err(res.get("reason", "unmapped"), res.get("hint", ""), input=entity_text)
-        return _ok(input=entity_text, aligned=True, scheme=res["scheme"], code=res["code"],
-                   match=res["match"], confidence=res["confidence"])
+        return _ok(
+            input=entity_text,
+            aligned=True,
+            scheme=res["scheme"],
+            code=res["code"],
+            match=res["match"],
+            confidence=res["confidence"],
+        )
     finally:
         conn.close()
 
 
 # ---------------- R4 溯源 ----------------
 
+
 @mcp.tool()
-def trace_write(question: str, steps: list[dict], agent_version: str = "v1.0",
-                elapsed_ms: int = 0, gaps: list[str] = None) -> dict:
+def trace_write(
+    question: str,
+    steps: list[dict],
+    agent_version: str = "v1.0",
+    elapsed_ms: int = 0,
+    gaps: list[str] = None,
+) -> dict:
     """写入一次决策链并生成 Markdown 报告，同时计算溯源完整率。
 
-    steps 每项形如 {"i":1,"op":"kg_query","in":[..],"out":[..],"evidence":["T-xxx","AST-...#p3.t1.r2"]}。
+    steps 每项形如 {"i":1,"op":"kg_query","in":[..],"out":[..],
+    "evidence":["T-xxx","AST-...#p3.t1.r2"]}。
     """
     if not steps:
         return _err("empty_steps", "至少一步")
@@ -329,12 +415,20 @@ def skill_export(trace_id: str, name: str = "") -> dict:
         tools_used = []
         for s in t["steps"]:
             op = s.get("op")
-            if op and op not in tools_used and op not in {"entity_extract", "conclude", "conflict_check"}:
+            if (
+                op
+                and op not in tools_used
+                and op not in {"entity_extract", "conclude", "conflict_check"}
+            ):
                 tools_used.append(op)
         body = [
             "---",
             "name: " + (name or ("auto-" + trace_id.lower())),
-            "description: 由 trace " + trace_id + " 自动导出，覆盖步骤 " + str(len(t["steps"])) + " 步",
+            "description: 由 trace "
+            + trace_id
+            + " 自动导出，覆盖步骤 "
+            + str(len(t["steps"]))
+            + " 步",
             "allowed-tools: [" + ", ".join(tools_used) + "]",
             "tags: [auto-exported, medical]",
             "---",
@@ -357,9 +451,14 @@ def kb_search(query: str, top_k: int = 5, mode: str = "hybrid") -> dict:
     """透传 Nexent 知识库检索（未配置 KB_ENDPOINT 时返回配置提示）。"""
     endpoint = os.environ.get("KB_ENDPOINT", "")
     if not endpoint:
-        return _err("kb_not_configured", "设置 KB_ENDPOINT 后由 Nexent 混合检索承担；否则直接用平台 search-knowledge-base 技能",
-                    query=query)
-    return _ok(query=query, mode=mode, top_k=top_k, results=[], note="stub：接入 Nexent /knowledge 接口")
+        return _err(
+            "kb_not_configured",
+            "设置 KB_ENDPOINT 后由 Nexent 混合检索承担；否则直接用平台 search-knowledge-base 技能",
+            query=query,
+        )
+    return _ok(
+        query=query, mode=mode, top_k=top_k, results=[], note="stub：接入 Nexent /knowledge 接口"
+    )
 
 
 @mcp.tool()
@@ -370,9 +469,13 @@ def health() -> dict:
         n = conn.execute("SELECT COUNT(*) c FROM triple WHERE status='active'").fetchone()["c"]
         a = conn.execute("SELECT COUNT(*) c FROM asset").fetchone()["c"]
         cur = store.current_version(conn)
-        return _ok(server_version=SERVER_VERSION, triples=n, assets=a,
-                   ontology_version=cur["version"] if cur else None,
-                   db=str(store.DB_PATH))
+        return _ok(
+            server_version=SERVER_VERSION,
+            triples=n,
+            assets=a,
+            ontology_version=cur["version"] if cur else None,
+            db=str(store.DB_PATH),
+        )
     finally:
         conn.close()
 

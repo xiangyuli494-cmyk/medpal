@@ -1,4 +1,5 @@
 """OpenAI-compatible chat completions 适配器（DashScope/MaaS 等）。"""
+
 from __future__ import annotations
 
 import httpx
@@ -48,9 +49,7 @@ class OpenAICompatibleLlm:
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
             detail = exc.response.text.strip()[:500]
-            raise LlmError(
-                f"LLM 请求失败: HTTP {exc.response.status_code}: {detail}"
-            ) from exc
+            raise LlmError(f"LLM 请求失败: HTTP {exc.response.status_code}: {detail}") from exc
         except httpx.HTTPError as exc:
             raise LlmError(f"LLM 请求失败: {exc}") from exc
 
