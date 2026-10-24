@@ -157,13 +157,13 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <div class="arrow">▲　可选硬件挂在这里，不改变上面任何一块　▲</div>
 
   <div class="ch opt" style="margin-top:6px">
-    <span class="badge o">条件交付</span>
+    <span class="badge o">C4 已到货</span>
     <span class="cico">🔌</span>
-    <div class="cname">触摸屏整机（C3 / C4）</div>
-    <div class="cwhat">7 寸 1024×600 触摸屏 + 五个实体键 + 一个震动马达。点一下 = 网页收到触摸事件；按实体键 = 本地处理，震动 = 网页发一个指令。
-      屏幕和逻辑全都在上面那个「设备端网页」里，硬件<b>只负责按和震</b></div>
-    <div class="ctech">7 寸 1024×600 触摸屏 · 树莓派 4B</div>
-    <div class="cmeta"><span>硬件 W1 下单，W6 前到货才做</span><b>T2 · W6</b></div>
+    <div class="cname">触摸屏整机（C4）</div>
+    <div class="cwhat">树莓派 4B + 7 寸 1024×600 触摸屏 + 亚克力风扇外壳 + Type-C 开关电源。<b>不设实体键、不带电池、无读卡器、不使用蓝牙信标</b>。点一下 = 网页收到触摸事件；麦克风与扬声器型号未选定。
+      屏幕和逻辑全都在上面那个「设备端网页」里，硬件<b>只负责显示与触摸</b></div>
+    <div class="ctech">7 寸 1024×600 触摸屏 · 树莓派 4B 4GB</div>
+    <div class="cmeta"><span>W1 已到货，开机即可用</span><b>T2 · W1</b></div>
   </div>
 </div>
 
@@ -209,8 +209,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr><td><b>家属端</b></td><td>H5 网页 + 推送</td><td><code>Vue3</code> <code>Vant</code></td><td>T3</td><td>W4 – W6</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>AI 适配器</b></td><td>服务端调用</td><td>DashScope ASR/TTS/OCR</td><td>T5</td><td>W5</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>测试与 CI</b></td><td>流水线 + 测试集</td><td><code>pytest</code> <code>Playwright</code> <code>GitHub Actions</code></td><td>T6</td><td>W1 – W8</td><td><span class="tag m">必交</span></td></tr>
-    <tr><td>触摸屏整机</td><td>触摸屏 + 马达</td><td>7 寸 1024×600 触摸屏 · 树莓派 4B</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C3</span></td></tr>
-    <tr><td>树莓派整机</td><td>树莓派 + 外壳</td><td>Raspberry Pi OS + Chromium</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C4</span></td></tr>
+    <tr><td>触摸屏整机</td><td>树莓派 + 7 寸屏</td><td>7 寸 1024×600 触摸屏 · 树莓派 4B 4GB</td><td>T2</td><td>W1</td><td><span class="tag m">已到货 C4</span></td></tr>
     <tr><td>医保解释器</td><td>后端模块</td><td><code>Python</code> 模板</td><td>T1</td><td>W6</td><td><span class="tag o">条件 C5</span></td></tr>
     <tr><td>知识图谱分诊</td><td>后端模块</td><td>复用成员 A 模块</td><td>T5</td><td>W6</td><td><span class="tag o">条件 C2</span></td></tr>
     <tr><td>微信小程序</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="tag n">不做</span></td></tr>
@@ -225,7 +224,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <ol style="margin-bottom:0">
     <li><b>微信小程序上架</b> —— 需企业主体与审核周期，改 H5 + 测试号</li>
     <li><b>原生 App（Android / iOS）</b> —— 用 H5 替代</li>
-    <li><b>嵌入式驱动 / LVGL 界面 / 自研 PCB</b> —— 设备端是网页，硬件只做显示、触摸与震动</li>
+    <li><b>嵌入式驱动 / LVGL 界面 / 自研 PCB</b> —— 设备端是网页，硬件只做显示与触摸</li>
     <li><b>医院 HIS 系统对接</b> —— 本期不接，号源走自建号源中心</li>
     <li><b>多医院覆盖</b> —— 只做一个场景做深</li>
     <li><b>端侧大模型</b> —— 平板跑不动，全部走服务端 API</li>
@@ -241,10 +240,9 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <tbody>
     <tr><td>平板（可复用现有的）</td><td>1</td><td>跑设备端网页，主演示载体</td><td><span class="tag m">必须</span></td></tr>
     <tr><td>笔记本（成员自带）</td><td>2</td><td>开发 + 演示备份机</td><td><span class="tag m">必须</span></td></tr>
-    <tr><td>7 寸 1024×600 触摸屏</td><td>1</td><td>交互面（C3/C4）</td><td><span class="tag o">可选</span></td></tr>
-    <tr><td>震动马达 + 杜邦线</td><td>2 套</td><td>震动反馈（C3）</td><td><span class="tag o">可选</span></td></tr>
-    <tr><td>树莓派 4B + 7 寸 1024×600 触摸屏</td><td>1 套</td><td>整机（C4）</td><td><span class="tag o">可选</span></td></tr>
-    <tr><td>3D 打印外壳</td><td>1</td><td>外观（C6）</td><td><span class="tag o">可选</span></td></tr>
+    <tr><td>7 寸 1024×600 触摸屏</td><td>1</td><td>交互面（C4）</td><td><span class="tag m">已到货</span></td></tr>
+    <tr><td>树莓派 4B（4GB）+ 亚克力风扇外壳 + TF 卡 + 电源 + 线材 + 散热片</td><td>1 套</td><td>整机（C4）</td><td><span class="tag m">已到货</span></td></tr>
+    <tr><td>麦克风 + 扬声器</td><td>各 1</td><td>语音输入与播报</td><td><span class="tag o">型号未选定</span></td></tr>
   </tbody>
 </table>
 

@@ -57,7 +57,7 @@ class EpisodeStatus(StrEnum):
 
 | # | 状态 | 进入条件 | 出口条件 | 可被打断 | 时间轴写入 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | `ARRIVED` | 设备刷身份证建档或扫号票绑定，`Episode` 创建 | 用户确认到院 → `BRIEFING` | 是 | 到院时刻、确认方式 |
+| 1 | `ARRIVED` | 服务台登记（报姓名与年龄段）并绑定设备编号，`Episode` 创建（**无读卡器，不刷证件**，ADR-019） | 用户确认到院 → `BRIEFING` | 是 | 到院时刻、确认方式 |
 | 2 | `BRIEFING` | `ARRIVED` 出口 | 当日行程播报完毕 → `REGISTER` | 是 | 播报文本、是否被打断重播 |
 | 3 | `REGISTER` | `BRIEFING` 出口 | 取号成功（号票号写入 `Task`） → `WAITING` | 是 | 科室、号序、排队人数 |
 | 4 | `WAITING` | `REGISTER` 出口 | 叫号（剩余 ≤ 3 位时提醒） → `IN_ROOM` | 是 | 每次叫号提醒、当前号序 |

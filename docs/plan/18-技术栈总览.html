@@ -233,7 +233,6 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <div class="row"><span>实时</span><span>原生 WebSocket</span></div>
     <div class="row"><span>语音</span><span>MediaRecorder</span></div>
     <div class="row"><span>朗读</span><span>Web Speech API</span></div>
-    <div class="row"><span>震动</span><span>navigator.vibrate</span></div>
   </div>
   <div class="card">
     <h4>📐 前端工程化</h4>
@@ -324,19 +323,20 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
   </tbody>
 </table>
 
-<h2><span class="num">07</span>硬件技术栈（条件交付）</h2>
+<h2><span class="num">07</span>硬件技术栈（C4 已到货）</h2>
 
 <div class="box warn">
-  <b>硬件不承载主流程演示。</b>主演示载体是平板或笔记本浏览器；树莓派 4B 与 7 寸 1024×600 触摸屏为 C4 条件交付（ADR-014、ADR-018）。硬件只负责显示、触摸与震动，不承担任何业务判断与端侧模型（ADR-003）。
+  <b>硬件不承载主流程演示。</b>主演示载体是平板或笔记本浏览器；树莓派 4B 与 7 寸 1024×600 触摸屏作为 C4 已到货（ADR-014、ADR-019），W1 可开机验证。硬件只负责显示与触摸，不承担任何业务判断与端侧模型（ADR-003）；<b>不设实体键、不带电池、无读卡器、不使用蓝牙信标</b>。
 </div>
 
 <table>
   <thead><tr><th>件</th><th>型号 / 技术</th><th>职责</th><th>状态</th></tr></thead>
   <tbody>
-    <tr><td class="k">主控</td><td class="p">树莓派 4B + 7 寸 1024×600 触摸屏</td><td>跑 Chromium 全屏，开机直达网页</td><td><span class="tag c">条件 C4</span></td></tr>
-    <tr><td class="k">触摸</td><td class="p">7 寸电容触摸屏（1024×600 横屏）</td><td>主要交互面：顶栏 + 主操作 + 选项；机身另有五个实体键</td><td><span class="tag c">条件 C3</span></td></tr>
-    <tr><td class="k">反馈</td><td class="p">震动马达 + 驱动板</td><td>确认短震两下 / 出错长震一下</td><td><span class="tag c">条件 C3</span></td></tr>
-    <tr><td class="k">外壳</td><td>3D 打印</td><td>整机外观</td><td><span class="tag c">条件 C6</span></td></tr>
+    <tr><td class="k">主控</td><td class="p">树莓派 4B（4GB）+ 7 寸 1024×600 触摸屏</td><td>跑 Chromium 全屏，开机直达网页</td><td><span class="tag m">已到货 C4</span></td></tr>
+    <tr><td class="k">触摸</td><td class="p">7 寸 IPS 电容触摸屏（1024×600 横屏）</td><td>唯一交互面：顶栏 + 主操作 + 选项；<b>机身不设实体键</b>，音量语速在设置页</td><td><span class="tag m">已到货 C4</span></td></tr>
+    <tr><td class="k">音频</td><td class="p">麦克风 + 扬声器</td><td>语音输入与播报；型号未选定，W2 前定接口</td><td><span class="tag c">待选型</span></td></tr>
+    <tr><td class="k">外壳</td><td>亚克力风扇外壳（套件自带）</td><td>整机结构与散热，不带电池</td><td><span class="tag m">已到货 C4</span></td></tr>
+    <tr><td class="k">电源</td><td class="p">Type-C 开关电源 5V/3A</td><td>整机不带电池，取电走开关电源</td><td><span class="tag m">已到货 C4</span></td></tr>
     <tr><td class="k">系统</td><td class="p">Raspberry Pi OS + Chromium</td><td>Chromium 全屏启动参数</td><td><span class="tag c">条件 C4</span></td></tr>
   </tbody>
 </table>
