@@ -6,9 +6,14 @@
 
 用法：python eval/run_eval.py [--dataset eval/dataset/v0.jsonl] [--out eval/reports] [--reset-db]
 """
+
 from __future__ import annotations
 
-import argparse, json, subprocess, sys, time
+import argparse
+import json
+import subprocess
+import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -25,7 +30,7 @@ def extract_entities(text: str) -> list[str]:
     hits, spans = [], []
     for m in ENTITY_HINTS.finditer(text):
         s, e = m.span()
-        if any(s < b and e > a for a, b in spans):   # 已被更长的实体覆盖
+        if any(s < b and e > a for a, b in spans):  # 已被更长的实体覆盖
             continue
         spans.append((s, e))
         hits.append(SYNONYMS.get(m.group(0), m.group(0)))
@@ -71,9 +76,17 @@ def answer(conn, question: str, max_hops: int = 2):
     steps.append({"i": 2, "op": "std_align", "out": sorted(resolved), "evidence": []})
 
     q = store.kg_query(conn, ents, max_hops=max_hops, limit=40)
-    steps.append({"i": 3, "op": "kg_query", "in": ents,
-                  "out": sorted({n for p in q.get("paths", []) for n in p["nodes"]}),
-                  "evidence": [store._ref_str(t) for p in q.get("paths", []) for t in p.get("provenance", [])]})
+    steps.append(
+        {
+            "i": 3,
+            "op": "kg_query",
+            "in": ents,
+            "out": sorted({n for p in q.get("paths", []) for n in p["nodes"]}),
+            "evidence": [
+                store._ref_str(t) for p in q.get("paths", []) for t in p.get("provenance", [])
+            ],
+        }
+    )
 
     # 先定「焦点疾病」：问题里提到的症状所指向的疾病。结论只从这个焦点往上长，
     # 否则会把本体里所有疾病的所有检查项一起倒给患者——那是清单不是决策。
@@ -106,7 +119,9 @@ def answer(conn, question: str, max_hops: int = 2):
                 if not _is_disease(other):
                     continue
                 d = nodes.index(other) if other in nodes else 2
-                score[other] = score.get(other, 0.0) + 0.3 * float(st.get("confidence") or 0.5) / (1 + d)
+                score[other] = score.get(other, 0.0) + 0.3 * float(st.get("confidence") or 0.5) / (
+                    1 + d
+                )
     direct = {code for _, code in seed_types.get("Disease", [])}
     primary = max(score, key=lambda k: (k in direct, score[k])) if score else None
     focus_diseases = {primary} if primary else set()
@@ -127,10 +142,13 @@ def answer(conn, question: str, max_hops: int = 2):
     for p in q.get("paths", []):
         path_nodes = set(p.get("nodes", []))
         for st in p.get("steps", []):
-            rel, tail = st.get("rel"), st.get("to")
-            # 路径是无向遍历，rel 的方向要按 head/tail 归一，否则 belongs_to_dept 可能被反向读成科室->疾病
+            rel = st.get("rel")
+            # 路径是无向遍历，rel 的方向要按 head/tail 归一，
+            # 否则 belongs_to_dept 可能被反向读成「科室 -> 疾病」
             a, b = st.get("head_id"), st.get("tail_id")
-            to_id, to_label = (b, st.get("tail_label")) if a in path_nodes else (a, st.get("head_label"))
+            to_id, to_label = (
+                (b, st.get("tail_label")) if a in path_nodes else (a, st.get("head_label"))
+            )
             # 焦点判定看的是这条边「疾病那一端」在不在焦点里，不能拿远端（检查项/科室）去比
             ends = (st.get("head_id"), st.get("tail_id"))
             disease_end = next((x for x in ends if x in focus_diseases), None)
@@ -159,9 +177,14 @@ def answer(conn, question: str, max_hops: int = 2):
     # 科室不能只看第一跳：多跳路径里同一个科室会重复出现，取出现次数最多的那个
     dept = max(set(depts), key=depts.count) if depts else ""
     conf = min(0.9, 0.4 + 0.1 * len(q.get("paths", [])))
-    steps.append({"i": 5, "op": "conclude",
-                  "out": {"dept": dept, "conf": round(conf, 2), "exams": sorted(set(exams))},
-                  "evidence": sorted(set(ev))})
+    steps.append(
+        {
+            "i": 5,
+            "op": "conclude",
+            "out": {"dept": dept, "conf": round(conf, 2), "exams": sorted(set(exams))},
+            "evidence": sorted(set(ev)),
+        }
+    )
 
     gaps = []
     if not ents or not resolved:
@@ -169,19 +192,37 @@ def answer(conn, question: str, max_hops: int = 2):
     if dept and len(set(ev)) < 2:
         gaps.append("证据少于 2 条，置信度低")
 
-    tr = store.write_trace(conn, question, steps, agent_version="offline-baseline",
-                          elapsed_ms=int((time.time() - t0) * 1000), gaps=gaps)
-    return {"dept": dept, "exams": sorted(set(exams)), "conflicts": sorted(set(conflicts)),
-            "evidence": sorted(set(ev)), "out_of_scope": not dept,
-            "trace_id": tr["trace_id"], "trace_completeness": tr["trace_completeness"],
-            "elapsed_ms": int((time.time() - t0) * 1000)}
+    tr = store.write_trace(
+        conn,
+        question,
+        steps,
+        agent_version="offline-baseline",
+        elapsed_ms=int((time.time() - t0) * 1000),
+        gaps=gaps,
+    )
+    return {
+        "dept": dept,
+        "exams": sorted(set(exams)),
+        "conflicts": sorted(set(conflicts)),
+        "evidence": sorted(set(ev)),
+        "out_of_scope": not dept,
+        "trace_id": tr["trace_id"],
+        "trace_completeness": tr["trace_completeness"],
+        "elapsed_ms": int((time.time() - t0) * 1000),
+    }
 
 
 def score_one(gold: dict, got: dict) -> dict:
     if gold.get("out_of_scope"):
         ok = got["dept"] == ""
-        return {"dept": 1.0 if ok else 0.0, "exams": 1.0 if ok else 0.0, "exams_full": 1.0 if ok else 0.0,
-                "conflict": 1.0 if ok else 0.0, "evidence": 1.0, "trace": got["trace_completeness"]}
+        return {
+            "dept": 1.0 if ok else 0.0,
+            "exams": 1.0 if ok else 0.0,
+            "exams_full": 1.0 if ok else 0.0,
+            "conflict": 1.0 if ok else 0.0,
+            "evidence": 1.0,
+            "trace": got["trace_completeness"],
+        }
     dept = 1.0 if gold["dept"] and got["dept"] == gold["dept"] else 0.0
     # 检查项按 Jaccard 计分：多召回同样扣分。宁缺毋滥是 S3 的硬约束，
     # 若只算召回率，把整个本体的检查项全倒出来也能拿满分，指标就失真了。
@@ -197,8 +238,14 @@ def score_one(gold: dict, got: dict) -> dict:
     conflict = 1.0 if not g_cf else (1.0 if g_cf <= p_cf else 0.0)
     g_ev = set(gold.get("gold_evidence", []))
     ev = 1.0 if not g_ev else len(g_ev & set(got["evidence"])) / len(g_ev)
-    return {"dept": dept, "exams": exams, "exams_full": exams_full,
-            "conflict": conflict, "evidence": ev, "trace": got["trace_completeness"]}
+    return {
+        "dept": dept,
+        "exams": exams,
+        "exams_full": exams_full,
+        "conflict": conflict,
+        "evidence": ev,
+        "trace": got["trace_completeness"],
+    }
 
 
 def main() -> int:
@@ -209,54 +256,95 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.reset_db:
-        subprocess.run([sys.executable, str(ROOT / "mcp-server" / "seed.py"), "--reset"],
-                       check=True, stdout=subprocess.DEVNULL)
+        subprocess.run(
+            [sys.executable, str(ROOT / "mcp-server" / "seed.py"), "--reset"],
+            check=True,
+            stdout=subprocess.DEVNULL,
+        )
 
-    rows = [json.loads(l) for l in Path(args.dataset).read_text(encoding="utf-8").splitlines() if l.strip()]
+    rows = [
+        json.loads(line)
+        for line in Path(args.dataset).read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
     conn = store.connect()
-    details, agg = [], {"dept": [], "exams": [], "exams_full": [], "conflict": [],
-                        "evidence": [], "trace": [], "ms": []}
+    details, agg = (
+        [],
+        {
+            "dept": [],
+            "exams": [],
+            "exams_full": [],
+            "conflict": [],
+            "evidence": [],
+            "trace": [],
+            "ms": [],
+        },
+    )
     for row in rows:
         got = answer(conn, row["question"])
         sc = score_one(row["gold"], got)
         for k in sc:
             agg[k].append(sc[k])
         agg["ms"].append(got["elapsed_ms"])
-        details.append({"id": row["id"], "question": row["question"],
-                        "gold_dept": row["gold"]["dept"], "got_dept": got["dept"],
-                        "gold_exams": row["gold"]["exams"], "got_exams": got["exams"],
-                        "gold_conflicts": row["gold"]["conflicts"], "got_conflicts": got["conflicts"],
-                        "evidence_hit": sc["evidence"], "trace_id": got["trace_id"],
-                        "trace_completeness": got["trace_completeness"]})
+        details.append(
+            {
+                "id": row["id"],
+                "question": row["question"],
+                "gold_dept": row["gold"]["dept"],
+                "got_dept": got["dept"],
+                "gold_exams": row["gold"]["exams"],
+                "got_exams": got["exams"],
+                "gold_conflicts": row["gold"]["conflicts"],
+                "got_conflicts": got["conflicts"],
+                "evidence_hit": sc["evidence"],
+                "trace_id": got["trace_id"],
+                "trace_completeness": got["trace_completeness"],
+            }
+        )
     conn.close()
 
     n = len(rows)
     m = {k: (sum(v) / len(v) if v else 0.0) for k, v in agg.items()}
-    report = {"dataset": Path(args.dataset).name, "n": n,
-              "accuracy_dept": round(m["dept"], 3), "accuracy_exam": round(m["exams"], 3),
-              "exams_strict": round(m["exams_full"], 3),
-              "conflict_recall": round(m["conflict"], 3), "evidence_recall": round(m["evidence"], 3),
-              "trace_completeness": round(m["trace"], 3), "avg_latency_ms": round(m["ms"], 1),
-              "details": details}
+    report = {
+        "dataset": Path(args.dataset).name,
+        "n": n,
+        "accuracy_dept": round(m["dept"], 3),
+        "accuracy_exam": round(m["exams"], 3),
+        "exams_strict": round(m["exams_full"], 3),
+        "conflict_recall": round(m["conflict"], 3),
+        "evidence_recall": round(m["evidence"], 3),
+        "trace_completeness": round(m["trace"], 3),
+        "avg_latency_ms": round(m["ms"], 1),
+        "details": details,
+    }
 
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     tag = time.strftime("%Y%m%d-%H%M%S")
-    (out_dir / f"eval-{tag}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    lines = [f"# 离线评测 {tag}", "",
-             f"- 数据集：{report['dataset']}（{n} 条）",
-             f"- 科室准确率：{report['accuracy_dept']:.0%}",
-             f"- 检查项准确率（Jaccard）：{report['accuracy_exam']:.0%}",
-             f"- 检查项完全一致率：{report['exams_strict']:.0%}",
-             f"- 冲突召回：{report['conflict_recall']:.0%}",
-             f"- 证据召回：{report['evidence_recall']:.0%}",
-             f"- 溯源完整率：{report['trace_completeness']:.0%}",
-             f"- 平均时延：{report['avg_latency_ms']} ms", "",
-             "| 题号 | 金标准科室 | 输出科室 | 一致 | 证据命中 |",
-             "| --- | --- | --- | --- | --- |"]
+    (out_dir / f"eval-{tag}.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    lines = [
+        f"# 离线评测 {tag}",
+        "",
+        f"- 数据集：{report['dataset']}（{n} 条）",
+        f"- 科室准确率：{report['accuracy_dept']:.0%}",
+        f"- 检查项准确率（Jaccard）：{report['accuracy_exam']:.0%}",
+        f"- 检查项完全一致率：{report['exams_strict']:.0%}",
+        f"- 冲突召回：{report['conflict_recall']:.0%}",
+        f"- 证据召回：{report['evidence_recall']:.0%}",
+        f"- 溯源完整率：{report['trace_completeness']:.0%}",
+        f"- 平均时延：{report['avg_latency_ms']} ms",
+        "",
+        "| 题号 | 金标准科室 | 输出科室 | 一致 | 证据命中 |",
+        "| --- | --- | --- | --- | --- |",
+    ]
     for d in details:
         ok = "是" if d["gold_dept"] == d["got_dept"] else "否"
-        lines.append(f"| {d['id']} | {d['gold_dept'] or '(应拒答)'} | {d['got_dept'] or '(拒答)'} | {ok} | {d['evidence_hit']:.0%} |")
+        lines.append(
+            f"| {d['id']} | {d['gold_dept'] or '(应拒答)'} "
+            f"| {d['got_dept'] or '(拒答)'} | {ok} | {d['evidence_hit']:.0%} |"
+        )
     md = out_dir / f"eval-{tag}.md"
     md.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

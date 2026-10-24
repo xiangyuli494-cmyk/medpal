@@ -5,6 +5,7 @@
   R2 kg_query / std_align / onto_propose / onto_commit
   R4 trace_write / skill_export
 """
+
 from __future__ import annotations
 
 import os
@@ -34,7 +35,11 @@ fails = []
 
 
 def check(name, cond, detail=""):
-    print(("  ok   " if cond else "  FAIL ") + name + ("  " + str(detail) if detail and not cond else ""))
+    print(
+        ("  ok   " if cond else "  FAIL ")
+        + name
+        + ("  " + str(detail) if detail and not cond else "")
+    )
     if not cond:
         fails.append(name)
 
@@ -61,7 +66,13 @@ check("多跳查询有路径", r["ok"] and len(r["paths"]) > 0, r.get("reason"))
 check("路径带 provenance", any(p["provenance"] for p in r["paths"]))
 check("命中消化性溃疡", any("K27" in p["nodes"] for p in r["paths"]))
 r = server.kg_query(["幽门螺杆菌"], max_hops=1, rel_filter=["requires_exam"])
-check("关系过滤生效", all("requires_exam" in [s["edge"].split("-[")[1].split("]")[0] for s in p["steps"]] for p in r["paths"]))
+check(
+    "关系过滤生效",
+    all(
+        "requires_exam" in [s["edge"].split("-[")[1].split("]")[0] for s in p["steps"]]
+        for p in r["paths"]
+    ),
+)
 r = server.kg_query([])
 check("空种子显式报错", r["ok"] is False and r["reason"] == "no_seed")
 
@@ -75,9 +86,11 @@ print("[R2] 本体进化：抽取 -> 校验 -> 确认 -> 版本")
 r = server.onto_propose([asset_id])
 check("重复知识被拦下", r["ok"] and r["counts"]["candidates"] == 0, r.get("counts"))
 check("被拒条目带原因", all("reason" in x for x in r["rejected"]), r["rejected"][:2])
-check("本体现有的知识不产生候选（全是 duplicate/no_pattern）",
-      all(x["reason"] in ("duplicate", "no_pattern_match", "too_short") for x in r["rejected"]),
-      [x["reason"] for x in r["rejected"]])
+check(
+    "本体现有的知识不产生候选（全是 duplicate/no_pattern）",
+    all(x["reason"] in ("duplicate", "no_pattern_match", "too_short") for x in r["rejected"]),
+    [x["reason"] for x in r["rejected"]],
+)
 
 # 第二份资产带来新知识 -> 应产出候选并推动版本前进
 # 刻意写成「种子里没有的新知识 + 一个本体现无的实体」两份内容：
@@ -92,9 +105,11 @@ r2 = server.ingest_asset(str(addendum), title="慢性胃炎诊疗补充说明", 
 check("第二份资产入库", r2["ok"], r2)
 r = server.onto_propose([r2["asset_id"]])
 check("新知识产出候选三元组", r["ok"] and r["counts"]["candidates"] >= 1, r.get("counts"))
-check("未解析实体进待建节点队列（胃蛋白酶原不在本体里）",
-      any(x.get("reason") == "entity_unresolved" for x in r["rejected"]),
-      [x.get("reason") for x in r["rejected"]])
+check(
+    "未解析实体进待建节点队列（胃蛋白酶原不在本体里）",
+    any(x.get("reason") == "entity_unresolved" for x in r["rejected"]),
+    [x.get("reason") for x in r["rejected"]],
+)
 cand = r["candidates"][0] if r["candidates"] else {}
 check("候选带 provenance 锚点", bool(cand.get("provenance", {}).get("anchor_id")), cand)
 diff_id = r["diff_id"]
@@ -114,10 +129,13 @@ triple_ok = conn.execute("SELECT triple_id FROM triple WHERE head_id='K27' LIMIT
 conn.close()
 steps = [
     {"i": 1, "op": "entity_extract", "out": ["上腹隐痛", "布洛芬"], "evidence": []},
-    {"i": 2, "op": "kg_query", "in": ["上腹隐痛"], "out": ["K27"],
-     "evidence": [triple_ok]},
-    {"i": 3, "op": "conclude", "out": {"dept": "消化内科", "conf": 0.74},
-     "evidence": [asset_id + "#p1.s1"]},
+    {"i": 2, "op": "kg_query", "in": ["上腹隐痛"], "out": ["K27"], "evidence": [triple_ok]},
+    {
+        "i": 3,
+        "op": "conclude",
+        "out": {"dept": "消化内科", "conf": 0.74},
+        "evidence": [asset_id + "#p1.s1"],
+    },
 ]
 r = server.trace_write("反复上腹隐痛3个月，夜间加重，进食后缓解，近两周服用布洛芬", steps)
 check("写入 trace", r["ok"] and r["trace_id"].startswith("TR-"), r)
