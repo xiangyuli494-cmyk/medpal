@@ -2,7 +2,7 @@
 
 | 项 | 内容 |
 | --- | --- |
-| 交接人 | zincumyu |
+| 交接人 | zincumyu（T2） |
 | 日期 | 2026-10-19 |
 | 周次 | W2 |
 | 分支 | feat/zincumyu-kg-triage |
@@ -53,4 +53,5 @@ flowchart LR
 - 旧 store.search_nodes 的剥口语填充词、长句切词、alias_stripped 尚未迁入，规则层目前只认别名/名称精确匹配；
 - LLM 真实调用依赖外部 MaaS 网关，CI 只用 FakeLlm；.env 与 Key 不入库；
 - OpenCMKG 数据仅限学术研究，后续接全量数据时需补署名与许可说明；
-- 该能力按 ADR-011 只作为 C2 可选能力，不进入陪诊主状态机。
+- 该能力按 ADR-011 只作为 C2 可选能力，不进入陪诊主状态机；
+- 本模块是 C2 知识图谱协作；T2 的 W1/W2 主任务仍是设备端空壳与演示载体。
