@@ -1,0 +1,14 @@
+{"id":"Q001","question":"反复上腹隐痛3个月，夜间加重，进食后缓解，近两周服用布洛芬","gold":{"dept":"消化内科","exams":["幽门螺杆菌呼气试验","胃镜"],"conflicts":["布洛芬"]},"gold_evidence":["AST-2026-000137#p2.s3","AST-2026-000137#p3.s5","AST-2026-000137#p4.s7"],"hops":3,"difficulty":"easy"}
+{"id":"Q002","question":"上腹部痛伴反酸烧心半年，饭后加重","gold":{"dept":"消化内科","exams":["胃镜"],"conflicts":[]},"gold_evidence":["AST-2026-000137#p2.s3"],"hops":2,"difficulty":"easy"}
+{"id":"Q003","question":"胃溃疡病史，最近关节痛自行服用布洛芬","gold":{"dept":"消化内科","exams":["幽门螺杆菌呼气试验"],"conflicts":["布洛芬"]},"gold_evidence":["AST-2026-000137#p4.s7"],"hops":3,"difficulty":"medium"}
+{"id":"Q004","question":"消化性溃疡确诊后需要做哪些检查","gold":{"dept":"消化内科","exams":["幽门螺杆菌呼气试验","胃镜"],"conflicts":[]},"gold_evidence":["AST-2026-000137#p3.s5"],"hops":2,"difficulty":"easy"}
+{"id":"Q005","question":"胃炎患者需要排查幽门螺杆菌吗","gold":{"dept":"消化内科","exams":["幽门螺杆菌呼气试验"],"conflicts":[]},"gold_evidence":[],"hops":2,"difficulty":"medium"}
+{"id":"Q006","question":"孩子发烧39度两天了怎么办","gold":{"dept":"","exams":[],"conflicts":[],"out_of_scope":true},"gold_evidence":[],"hops":0,"difficulty":"negative"}
+{"id":"Q007","question":"长期服用止痛药会不会伤胃","gold":{"dept":"消化内科","exams":[],"conflicts":["布洛芬"]},"gold_evidence":["AST-2026-000137#p4.s7"],"hops":2,"difficulty":"medium"}
+{"id":"Q008","question":"上腹痛需要马上做胃镜吗","gold":{"dept":"消化内科","exams":["胃镜"],"conflicts":[]},"gold_evidence":["AST-2026-000137#p3.s5"],"hops":2,"difficulty":"medium"}
+{"id":"Q009","question":"最近体重下降明显，上腹不适，需要看什么科","gold":{"dept":"消化内科","exams":["胃镜"],"conflicts":[]},"gold_evidence":["AST-2026-000137#p3.s5"],"hops":2,"difficulty":"hard"}
+{"id":"Q010","question":"心电图ST段抬高怎么处理","gold":{"dept":"","exams":[],"conflicts":[],"out_of_scope":true},"gold_evidence":[],"hops":0,"difficulty":"negative"}
+{"id":"H001","question":"反酸烧心三个月，躺下后加重，需要做什么检查","gold":{"dept":"消化内科","exams":["胃镜"],"conflicts":[]},"gold_evidence":[],"hops":2,"difficulty":"holdout"}
+{"id":"H002","question":"体重下降伴黑便，上腹不适两周","gold":{"dept":"消化内科","exams":["胃镜"],"conflicts":[]},"gold_evidence":[],"hops":2,"difficulty":"holdout"}
+{"id":"H003","question":"胃炎需要做哪些检查","gold":{"dept":"消化内科","exams":["幽门螺杆菌呼气试验","胃镜"],"conflicts":[]},"gold_evidence":[],"hops":2,"difficulty":"holdout"}
+{"id":"H004","question":"拉肚子三天还发烧，肚子痛","gold":{"dept":"","exams":[],"conflicts":[],"out_of_scope":true},"gold_evidence":[],"hops":0,"difficulty":"holdout-negative"}
