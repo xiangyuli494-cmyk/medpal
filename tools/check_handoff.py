@@ -16,6 +16,7 @@
 
 退出码：0 通过；1 不合格；2 无法检查
 """
+
 from __future__ import annotations
 
 import subprocess
@@ -36,9 +37,7 @@ MIN_CHARS = 20
 
 
 def git(*args: str) -> str:
-    # core.quotepath=false：让 git diff 输出原始 UTF-8 文件名。
-    # 否则中文交接单名会被转义成 "docs/handoff/W2-...-\347..."，
-    # is_handoff() 认不出 docs/handoff/，CI 会误报“没有交交接单”。
+    # core.quotepath=false：否则中文/空格路径会被转义成 \345\210... 形式，匹配不到 docs/handoff/
     return subprocess.run(
         ["git", "-c", "core.quotepath=false", *args],
         check=True,
@@ -49,7 +48,11 @@ def git(*args: str) -> str:
 
 
 def changed_files(base: str) -> list[str]:
-    out = git("diff", "--name-only", f"{base}...HEAD")
+    try:
+        out = git("diff", "--name-only", f"{base}...HEAD")
+    except subprocess.CalledProcessError:
+        # 浅克隆或缺少 merge-base 时退化为两点 diff，避免整条检查失效
+        out = git("diff", "--name-only", f"{base}..HEAD")
     return [line.strip() for line in out.splitlines() if line.strip()]
 
 
@@ -85,9 +88,7 @@ def check_one(path: Path) -> list[str]:
     name = path.name
     stem_parts = name[:-3].split("-") if name.endswith(".md") else []
     name_ok = (
-        len(stem_parts) >= 3
-        and stem_parts[0].startswith("W")
-        and stem_parts[1].startswith("T")
+        len(stem_parts) >= 3 and stem_parts[0].startswith("W") and stem_parts[1].startswith("T")
     )
     if not name_ok:
         problems.append(f"{name}: 文件名应为 W周-T工号-模块.md")

@@ -13,5 +13,5 @@
 | app | 负责 | 起始周 |
 | --- | --- | --- |
 | session | 会话编排、WS consumer | W3 |
-| api | 用户端 / 家属端 / 工作台的 HTTP 接口 | W3 |
-| admin-config | 运营配置（先用 Django Admin） | W4 |
+| api | 用户端 / 家属端的 HTTP 接口 | W3 |
+| admin-config | 院内配置：账号、设备、点位、号源字典（先用 Django Admin） | W4 |

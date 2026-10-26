@@ -1,0 +1,5 @@
+# S2 运行参数
+auto_approve: false
+min_candidates_to_publish: 1
+align_required: false
+default_note: 由 S2 本体进化技能发布

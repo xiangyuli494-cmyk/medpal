@@ -1,4 +1,4 @@
-"""W1 临时 mock 接口：给四端空壳一个能请求的 8000。
+"""W1 临时 mock 接口：给三端空壳一个能请求的 8000。
 
 零依赖，只用标准库。W3 由 Django 接管 8000 后删除本文件。
 
@@ -6,13 +6,14 @@
     python tools/mock_api.py
     python tools/mock_api.py --port 18000
 """
+
 import argparse
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 BODIES = {
     "/api/v1/health": {"ok": True, "version": "w1"},
-    "/api/v1/episodes/ep_001": {"id": "ep_001", "status": "ARRIVED", "companions": ["cp_01"]},
+    "/api/v1/episodes/ep_001": {"id": "ep_001", "status": "ARRIVED", "staff_contact": "stf_01"},
 }
 
 
@@ -26,7 +27,7 @@ class Handler(BaseHTTPRequestHandler):
         data = json.dumps(body, ensure_ascii=False).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/json; charset=utf-8")
-        # 四个前端跑在 5173-5176，缺这一行浏览器会拦掉跨端口请求
+        # 三个前端跑在 5173 / 5174 / 5176，缺这一行浏览器会拦掉跨端口请求
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()

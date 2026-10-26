@@ -15,6 +15,7 @@
     fixtures/legacy/departments.json    一级科室字典（含排班数量）
     fixtures/legacy/schedule_samples.json  排班样例（医生姓名已脱敏）
 """
+
 from __future__ import annotations
 
 import argparse
@@ -23,12 +24,34 @@ import json
 from pathlib import Path
 
 CHECK_ITEM_COLS = [
-    "id", "jcflmc", "flxh", "jcxmxh", "jcxmmc",
-    "bwmc", "wzsm", "wzid", "zysx", "create_time",
+    "id",
+    "jcflmc",
+    "flxh",
+    "jcxmxh",
+    "jcxmmc",
+    "bwmc",
+    "wzsm",
+    "wzid",
+    "zysx",
+    "create_time",
 ]
 SCHEDULE_COLS = [
-    "id", "yjksmc", "ejksmc", "sjksmc", "ysdm", "ysmc", "zcmc", "rq",
-    "rs", "fybz", "dateindex", "create_time", "yjksdm", "yjpybm", "yspybm", "zcdm",
+    "id",
+    "yjksmc",
+    "ejksmc",
+    "sjksmc",
+    "ysdm",
+    "ysmc",
+    "zcmc",
+    "rq",
+    "rs",
+    "fybz",
+    "dateindex",
+    "create_time",
+    "yjksdm",
+    "yjpybm",
+    "yspybm",
+    "zcdm",
 ]
 
 
@@ -92,7 +115,7 @@ def load_table(data: str, table: str, cols: list[str]) -> list[dict]:
         idx = data.find(marker)
     if idx == -1:
         return []
-    segment = data[idx + len(marker):]
+    segment = data[idx + len(marker) :]
     end = segment.find(";\n")
     if end != -1:
         segment = segment[:end]

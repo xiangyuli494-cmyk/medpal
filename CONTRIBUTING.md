@@ -62,11 +62,13 @@ docs(adr): ADR-015 访问控制模型
 ~~~
 
 type 只能是：feat fix docs style refactor perf test build ci chore revert
-scope 只能用：domain api device user family console firmware hardware test docs
+scope 只能用：domain api device device-ui legacy user family firmware hardware test docs
 
 一次提交只做一件事。混进无关的格式化改动，评审直接退回。
 
 ## 五、PR 与合并
+
+完整规则见 [docs/合并规则.md](合并规则.md)：机器查什么、人要做什么、被拦了怎么查。下面是摘要。
 
 一个 PR 只做一件事，并且**必须交一份模块交接单**：
 

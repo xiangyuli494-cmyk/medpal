@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>一图看懂 · 小暖陪诊到底要做什么</title>
+<title>一图看懂 · 院内智慧陪诊终端到底要做什么</title>
 <style>
 :root{--bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
 --accent:#ff8a3d;--ok:#34d399;--warn:#fbbf24;--danger:#f87171;--blue:#60a5fa;--purple:#a78bfa;
@@ -88,7 +88,7 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
 
 <header>
   <div class="wrap">
-    <h1>一图看懂 · 小暖陪诊到底要做什么</h1>
+    <h1>一图看懂 · 院内智慧陪诊终端到底要做什么</h1>
     <div class="sub">面向就医困难人群的陪诊服务系统 · 六人团队 · 8 周 · 口径依据 <code>00-项目工期与范围基线</code></div>
   </div>
 </header>
@@ -96,24 +96,24 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 
 <div class="verdict">
-  <div class="big">你们<b>不是</b>要做 4 个产品。<br>是 <b>1 个后端</b> + <b>4 个网页</b> + <b>1 个可选硬件</b>。</div>
+  <div class="big">你们<b>不是</b>要做 4 个产品。<br>是 <b>1 个后端</b> + <b>3 个网页</b> + <b>1 个可选硬件</b>。</div>
   <div class="note">
-    所谓「设备端」「用户端」「家属端」「工作台」，全部是<b>浏览器里跑的网页</b>，共用同一个后端。<br>
-    <s>嵌入式系统</s> → 本期只是一个可选按键器 &nbsp;·&nbsp; <s>小程序</s> → 本期不做 &nbsp;·&nbsp; <s>原生 App</s> → 本期不做
+    所谓「设备端」「用户端」「家属端」，全部是<b>浏览器里跑的网页</b>，共用同一个后端。其中设备端是本项目的<b>产品本体</b>。<br>
+    <s>嵌入式系统</s> → 本期只是一块可选触摸屏 &nbsp;·&nbsp; <s>小程序</s> → 本期不做 &nbsp;·&nbsp; <s>原生 App</s> → 本期不做
   </div>
 </div>
 
 <h2>一、系统全景（5 个块，一目了然）</h2>
 
 <div class="map">
-  <div class="tier-label">通道层 · 4 个网页</div>
+  <div class="tier-label">通道层 · 3 个网页（设备端是本体）</div>
   <div class="channels">
 
     <div class="ch must">
       <span class="badge m">必交</span>
       <span class="cico">📟</span>
       <div class="cname">设备端</div>
-      <div class="cwhat">老人 / 视障 / 听障三种模式。全屏大字、语音优先、实体按键</div>
+      <div class="cwhat">老人 / 视障 / 听障三种模式。全屏大字、语音优先、触摸操作</div>
       <div class="ctech">Vue3 + Vite</div>
       <div class="cmeta"><span>跑在平板/笔记本全屏</span><b>T2 · W2→W6</b></div>
     </div>
@@ -136,14 +136,6 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
       <div class="cmeta"><span>微信里点开 H5</span><b>T3 · W2→W6</b></div>
     </div>
 
-    <div class="ch must">
-      <span class="badge m">必交</span>
-      <span class="cico">👩‍⚕️</span>
-      <div class="cname">陪诊师工作台</div>
-      <div class="cwhat">同时管 3 个老人：队列、置信度校对、交接双签</div>
-      <div class="ctech">Vue3 + Element Plus</div>
-      <div class="cmeta"><span>电脑浏览器</span><b>T4 · W2→W6</b></div>
-    </div>
   </div>
 
   <div class="arrow">▼　全部调用同一套接口　▼</div>
@@ -165,13 +157,13 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <div class="arrow">▲　可选硬件挂在这里，不改变上面任何一块　▲</div>
 
   <div class="ch opt" style="margin-top:6px">
-    <span class="badge o">条件交付</span>
+    <span class="badge o">C4 已到货</span>
     <span class="cico">🔌</span>
-    <div class="cname">物理按键器（C3 / C4）</div>
-    <div class="cwhat">ESP32 一颗按键 + 一个震动马达。按一下 = 网页收到"按下"事件；震动 = 网页发一个指令。
-      屏幕和逻辑全都在上面那个「设备端网页」里，硬件<b>只负责按和震</b></div>
-    <div class="ctech">ESP32-C3 · MicroPython</div>
-    <div class="cmeta"><span>硬件 W1 下单，W6 前到货才做</span><b>T2 · W6</b></div>
+    <div class="cname">触摸屏整机（C4）</div>
+    <div class="cwhat">树莓派 4B + 7 寸 1024×600 触摸屏 + 亚克力风扇外壳 + Type-C 开关电源。<b>不设实体键、不带电池、无读卡器、不使用蓝牙信标</b>。点一下 = 网页收到触摸事件；麦克风与扬声器型号未选定。
+      屏幕和逻辑全都在上面那个「设备端网页」里，硬件<b>只负责显示与触摸</b></div>
+    <div class="ctech">7 寸 1024×600 触摸屏 · 树莓派 4B 4GB</div>
+    <div class="cmeta"><span>W1 已到货，开机即可用</span><b>T2 · W1</b></div>
   </div>
 </div>
 
@@ -215,11 +207,9 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
     <tr><td><b>设备端网页</b></td><td>全屏网页</td><td><code>Vue3</code> <code>Vite</code></td><td>T2</td><td>W2 – W6</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>用户端</b></td><td>H5 网页</td><td><code>uni-app</code> <code>Vue3</code></td><td>T3</td><td>W2 – W6</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>家属端</b></td><td>H5 网页 + 推送</td><td><code>Vue3</code> <code>Vant</code></td><td>T3</td><td>W4 – W6</td><td><span class="tag m">必交</span></td></tr>
-    <tr><td><b>陪诊师工作台</b></td><td>PC 网页</td><td><code>Vue3</code> <code>Element Plus</code></td><td>T4</td><td>W2 – W6</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>AI 适配器</b></td><td>服务端调用</td><td>DashScope ASR/TTS/OCR</td><td>T5</td><td>W5</td><td><span class="tag m">必交</span></td></tr>
     <tr><td><b>测试与 CI</b></td><td>流水线 + 测试集</td><td><code>pytest</code> <code>Playwright</code> <code>GitHub Actions</code></td><td>T6</td><td>W1 – W8</td><td><span class="tag m">必交</span></td></tr>
-    <tr><td>物理按键器</td><td>一颗按键 + 马达</td><td>ESP32-C3 · MicroPython</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C3</span></td></tr>
-    <tr><td>树莓派整机</td><td>树莓派 + 外壳</td><td>Raspberry Pi OS + Chromium</td><td>T2</td><td>W6</td><td><span class="tag o">条件 C4</span></td></tr>
+    <tr><td>触摸屏整机</td><td>树莓派 + 7 寸屏</td><td>7 寸 1024×600 触摸屏 · 树莓派 4B 4GB</td><td>T2</td><td>W1</td><td><span class="tag m">已到货 C4</span></td></tr>
     <tr><td>医保解释器</td><td>后端模块</td><td><code>Python</code> 模板</td><td>T1</td><td>W6</td><td><span class="tag o">条件 C5</span></td></tr>
     <tr><td>知识图谱分诊</td><td>后端模块</td><td>复用成员 A 模块</td><td>T5</td><td>W6</td><td><span class="tag o">条件 C2</span></td></tr>
     <tr><td>微信小程序</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="tag n">不做</span></td></tr>
@@ -230,14 +220,16 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
 <h2>四、明确不做的清单（把话说死，省掉纠结）</h2>
 
 <div class="warnbox">
-  <p><b>以下六项已从范围中排除，不要在讨论里反复出现：</b></p>
+  <p><b>以下八项已从范围中排除，不要在讨论里反复出现：</b></p>
   <ol style="margin-bottom:0">
     <li><b>微信小程序上架</b> —— 需企业主体与审核周期，改 H5 + 测试号</li>
     <li><b>原生 App（Android / iOS）</b> —— 用 H5 替代</li>
-    <li><b>嵌入式驱动 / LVGL 界面 / 自研 PCB</b> —— 设备端是网页，硬件只做按键与震动</li>
-    <li><b>医院 HIS 系统对接</b> —— 拿不到授权</li>
+    <li><b>嵌入式驱动 / LVGL 界面 / 自研 PCB</b> —— 设备端是网页，硬件只做显示与触摸</li>
+    <li><b>医院 HIS 系统对接</b> —— 本期不接，号源走自建号源中心</li>
     <li><b>多医院覆盖</b> —— 只做一个场景做深</li>
     <li><b>端侧大模型</b> —— 平板跑不动，全部走服务端 API</li>
+    <li><b>院内管理数据分析看板</b> —— 非核心链路，且与公益定位无关</li>
+    <li><b>院内人员（医生 / 护士）前端界面</b> —— 医院自有 HIS 承担</li>
   </ol>
 </div>
 
@@ -248,16 +240,15 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <tbody>
     <tr><td>平板（可复用现有的）</td><td>1</td><td>跑设备端网页，主演示载体</td><td><span class="tag m">必须</span></td></tr>
     <tr><td>笔记本（成员自带）</td><td>2</td><td>开发 + 演示备份机</td><td><span class="tag m">必须</span></td></tr>
-    <tr><td>ESP32-C3 开发板</td><td>2</td><td>物理按键（C3）</td><td><span class="tag o">可选</span></td></tr>
-    <tr><td>震动马达 + 杜邦线</td><td>2 套</td><td>震动反馈（C3）</td><td><span class="tag o">可选</span></td></tr>
-    <tr><td>树莓派 Zero 2W + 4 寸屏</td><td>1 套</td><td>整机（C4）</td><td><span class="tag o">可选</span></td></tr>
-    <tr><td>3D 打印外壳</td><td>1</td><td>外观（C6）</td><td><span class="tag o">可选</span></td></tr>
+    <tr><td>7 寸 1024×600 触摸屏</td><td>1</td><td>交互面（C4）</td><td><span class="tag m">已到货</span></td></tr>
+    <tr><td>树莓派 4B（4GB）+ 亚克力风扇外壳 + TF 卡 + 电源 + 线材 + 散热片</td><td>1 套</td><td>整机（C4）</td><td><span class="tag m">已到货</span></td></tr>
+    <tr><td>麦克风 + 扬声器</td><td>各 1</td><td>语音输入与播报</td><td><span class="tag o">型号未选定</span></td></tr>
   </tbody>
 </table>
 
 <div class="okbox">
-  <b>关键判断</b>：平板方案就是最终演示方案。只要平板能跑通，项目就能验收。
-  树莓派和 ESP32 是<b>锦上添花</b>——到货就做，不到货不影响答辩。
+  <b>关键判断</b>：平板方案就是最终演示方案。只要平板能跑通，项目就能验收；验收后在整机上复现，不改交互。
+  树莓派和触摸屏整机是<b>锦上添花</b>——到货就做，不到货不影响答辩。
 </div>
 
 <h2>六、8 周之后，每个人手上有什么</h2>
@@ -266,9 +257,9 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
   <thead><tr><th>人</th><th>交付物</th></tr></thead>
   <tbody>
     <tr><td><b>T1</b></td><td>领域层代码（状态机 / 规划引擎 / 话术模板 / 红线校验）· 接口文档 · 14 篇 ADR</td></tr>
-    <tr><td><b>T2</b></td><td>设备端网页（三模式）· 平板演示包 · 可选：按键器固件</td></tr>
+    <tr><td><b>T2</b></td><td>设备端网页（三模式）· 触摸屏演示包 · 可选：触觉反馈模块</td></tr>
     <tr><td><b>T3</b></td><td>用户端 H5 · 家属端 H5 · 推送模板 · 视觉规范</td></tr>
-    <tr><td><b>T4</b></td><td>陪诊师工作台（队列 / 校对 / 双签 / 升级 四屏）</td></tr>
+    <tr><td><b>T4</b></td><td>设备端逐屏界面（11 节点 + 触摸屏 + 全屏启动）</td></tr>
     <tr><td><b>T5</b></td><td>ASR/TTS/OCR 适配器 · 无障碍验收标准 · AI 评测集 200 条</td></tr>
     <tr><td><b>T6</b></td><td>CI 流水线 · 240 条自动化测试 · 周报与验收报告 · 可用性测试报告</td></tr>
   </tbody>
@@ -276,16 +267,16 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-si
 
 <div class="verdict" style="margin-top:26px">
   <div class="big" style="font-size:18px">记这一句就够了：<br>
-  <b>一个后端，四个网页，硬件可选。</b></div>
+  <b>一个后端，三个网页，硬件可选。</b></div>
   <div class="note">
-    四个网页共用一套接口、一套状态、一个陪诊单（Episode）。<br>
-    所以"改一次流程，四端同时生效"——这也是答辩最值钱的一句话。
+    三个网页共用一套接口、一套状态、一个陪诊单（Episode）。<br>
+    所以「改一次流程，三端同时生效」——这也是答辩最值钱的一句话。
   </div>
 </div>
 
 <footer>
-  口径依据：<code>medpal-plan-v2/00-项目工期与范围基线.md</code>（3.1 必须交付 12 项 · 3.2 条件交付 6 项 · 3.3 明确不做 6 项）<br>
-  详细任务分解见 <code>medpal-plan-v2/14-项目实施计划.md</code> 第 5 章周级实施计划
+  口径依据：<code>docs/plan/00-项目工期与范围基线.md</code>（3.1 必须交付 12 项 · 3.2 条件交付 6 项 · 3.3 明确不做 8 项）<br>
+  详细任务分解见 <code>docs/plan/14-项目实施计划.md</code> 第 5 章周级实施计划
 </footer>
 
 </div>

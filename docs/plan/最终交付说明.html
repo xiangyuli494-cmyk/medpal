@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>小暖陪诊 · 最终交付说明</title>
+<title>院内智慧陪诊终端 · 最终交付说明</title>
 <style>
 :root{
   --bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
@@ -116,15 +116,15 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 <div class="hero">
   <div class="wrap">
     <div class="tag">FINAL DELIVERY · 最终交付说明</div>
-    <h1>小暖陪诊<br><b>让「一个人看病」从不可承受，变成可承受</b></h1>
+    <h1>院内智慧陪诊终端<br><b>让「一个人看病」也能走完整个流程</b></h1>
     <div class="lead">
-      面向就医困难人群的陪诊服务系统。六人团队，8 周工期，交付 1 个后端内核、4 个前端通道、1 套工程规范与 1 个可现场演示的融合版 Demo。
+      医院采购的院内智慧陪诊系统。六人团队，8 周工期，交付 1 个后端内核、3 个前端（设备端为本体）、1 套工程规范与 2 个可现场演示的单文件 Demo。
     </div>
     <div class="stats">
       <div class="st"><div class="v">8</div><div class="l">周交付周期</div></div>
-      <div class="st"><div class="v">4</div><div class="l">前端通道</div></div>
-      <div class="st"><div class="v">9</div><div class="l">状态节点闭环</div></div>
-      <div class="st"><div class="v">13</div><div class="l">规划文档</div></div>
+      <div class="st"><div class="v">3</div><div class="l">前端（设备为本体）</div></div>
+      <div class="st"><div class="v">11</div><div class="l">状态节点闭环</div></div>
+      <div class="st"><div class="v">18</div><div class="l">规划文档</div></div>
       <div class="st"><div class="v">240</div><div class="l">目标测试用例</div></div>
       <div class="st"><div class="v">0</div><div class="l">越界话术放行</div></div>
     </div>
@@ -134,45 +134,38 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 
 <h2><span class="num">01</span>交付总览</h2>
-<div class="chap-note">全部产物共 5 类，其中 4 类为本次新建，1 类为沿用素材。</div>
+<div class="chap-note">全部产物共 3 类：两个纯前端演示、一套规划文档、一套前置规范。</div>
 
 <table>
   <thead><tr><th>类别</th><th>产物</th><th>位置</th><th>规模</th><th>用途</th></tr></thead>
   <tbody>
     <tr>
-      <td class="k">演示程序</td>
+      <td class="k">设备端原型</td>
+      <td><code>device-prototype.html</code></td>
+      <td class="n">demo/</td>
+      <td class="n">81 KB / 17 屏</td>
+      <td>产品本体：触摸屏 + 语音 + 点位讲解 + 情绪陪伴</td>
+    </tr>
+    <tr>
+      <td class="k">全链路演示</td>
       <td><code>v4.html</code></td>
-      <td class="n">medpal-demo/</td>
-      <td class="n">148 KB / 2472 行</td>
-      <td>答辩主推。单文件零依赖，离线可跑</td>
+      <td class="n">demo/</td>
+      <td class="n">141 KB / 28 屏</td>
+      <td>答辩主推：多视角 + 架构 + 故障注入</td>
     </tr>
     <tr>
       <td class="k">规划文档集</td>
-      <td>00 / 01 / 02 / 10 – 16 共 11 份 + 2 份 HTML</td>
-      <td class="n">medpal-plan-v2/</td>
-      <td class="n">13 个文件 / 380 KB</td>
-      <td>基线、组织、技术、规范、计划、质量、工具链</td>
+      <td>00 / 01 / 02 / 10 – 19 共 13 份 Markdown + 5 份 HTML 单页，合计 18 份</td>
+      <td class="n">docs/plan/</td>
+      <td class="n">18 个文件 / 556 KB</td>
+      <td>基线、组织、技术、规范、计划、质量、工具链、周任务包、逐人手册</td>
     </tr>
     <tr>
-      <td class="k">截图素材</td>
-      <td>8 张关键界面</td>
-      <td class="n">medpal-demo/shots-final/</td>
-      <td class="n">2.2 MB</td>
-      <td>1680×1050，可直接进 PPT</td>
-    </tr>
-    <tr>
-      <td class="k">代码仓库</td>
-      <td>Git 仓库（5 次提交）</td>
-      <td class="n">medpal/</td>
-      <td class="n">40 个文件</td>
-      <td>CI 骨架、模板、协议、脚本、文档副本</td>
-    </tr>
-    <tr>
-      <td class="k">沿用素材</td>
-      <td>四份成员原始原型</td>
-      <td class="n">member-demos/ · medpal-demo/</td>
-      <td class="n">—</td>
-      <td>融合依据；不属于本次产出</td>
+      <td class="k">前置规范</td>
+      <td>访问控制 / 设备端 IA / 数据留存 / NFR / 毕设复用 / 领域模型 / 会话协议</td>
+      <td class="n">docs/specs/ · docs/api/</td>
+      <td class="n">7 份</td>
+      <td>W1 冻结的契约，后续开发按此实现</td>
     </tr>
   </tbody>
 </table>
@@ -186,14 +179,19 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <tr><td class="n">01</td><td class="k">演示原型评估与融合方案</td><td>四份成员原型的评估结论、融合原则与来源对照</td><td>全员</td></tr>
     <tr><td class="n">02</td><td class="k">系统设计规格说明书</td><td>演示版规格、三栏架构、对话管线、AI 边界、无障碍契约</td><td>全员</td></tr>
     <tr><td class="n">10</td><td class="k">项目组织与职责矩阵</td><td>T1–T6 角色、RACI 矩阵、权限与制衡、职责边界、会议机制</td><td>全员</td></tr>
-    <tr><td class="n">11</td><td class="k">技术方案与接口契约</td><td>技术选型、ADR-001–014、接口冻结、会话协议 v0.1、依赖清单</td><td>T1 / T5 主读</td></tr>
+    <tr><td class="n">11</td><td class="k">技术方案与接口契约</td><td>技术选型、ADR-001–017、接口冻结、会话协议 v0.1、依赖清单</td><td>T1 / T5 主读</td></tr>
     <tr><td class="n">12</td><td class="k">开发规范与测试规范</td><td>编码规范、八层测试体系、质量门禁 G1–G7、失效模式</td><td>T6 主读</td></tr>
     <tr><td class="n">13</td><td class="k">配置管理与汇报机制</td><td>仓库与分支模型、配置项清单、汇报体系 R1–R6、度量指标</td><td>全员 / T6 重点</td></tr>
     <tr><td class="n">14</td><td class="k">项目实施计划</td><td><b>W1–W8 逐周任务</b>、M1–M4 验收标准、风险台账、四份汇报模板</td><td>全员</td></tr>
     <tr><td class="n">15</td><td class="k">质量保证与风险管理</td><td>31 项量化质量目标、缺陷分级、RK-01–12 风险、变更控制</td><td>全员 / T6 重点</td></tr>
     <tr><td class="n">16</td><td class="k">工具链与协作平台配置指南</td><td>GitHub Skills 学习路径、MCP 服务器选型、仓库初始化</td><td>T6 主读</td></tr>
+    <tr><td class="n">17</td><td class="k">开工前技术准备清单</td><td>六人各自的开工具备项与自检判据</td><td>全员</td></tr>
+    <tr><td class="n">18</td><td class="k">W1 周任务包</td><td>W1 出口物、21 项任务共 40 人时、裁决表</td><td>全员</td></tr>
+    <tr><td class="n">19</td><td class="k">W1 逐人操作手册</td><td>六人各自的 W1 操作步骤与验收命令</td><td>全员</td></tr>
+    <tr><td class="n">—</td><td class="k">18-技术栈总览.html</td><td><b>选型速查</b>：后端 / 前端 / AI / 工程与测试四层</td><td>全员</td></tr>
+    <tr><td class="n">—</td><td class="k">最终交付说明.html</td><td><b>本页</b>：交付总览、技术栈、里程碑、团队分工</td><td>全员</td></tr>
     <tr><td class="n">—</td><td class="k">文档评审包.html</td><td><b>发群评审用</b>：一页看全 + 评审意见回填表</td><td>全员</td></tr>
-    <tr><td class="n">—</td><td class="k">一图看懂-要做什么.html</td><td><b>范围澄清用</b>：1 后端 + 4 网页 + 1 可选硬件</td><td>全员</td></tr>
+    <tr><td class="n">—</td><td class="k">一图看懂-要做什么.html</td><td><b>范围澄清用</b>：1 后端 + 3 网页 + 1 可选硬件</td><td>全员</td></tr>
   </tbody>
 </table>
 
@@ -213,14 +211,13 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
   </div>
 
   <div class="card">
-    <h4>🎨 前端（4 个网页）</h4>
+    <h4>🎨 前端（3 个网页）</h4>
     <div class="row"><span>设备端</span><span>Vue 3 + Vite</span></div>
     <div class="row"><span>用户端</span><span>uni-app → H5</span></div>
     <div class="row"><span>家属端</span><span>Vue 3 + Vant</span></div>
-    <div class="row"><span>陪诊师台</span><span>Vue 3 + Element Plus</span></div>
     <div class="row"><span>状态管理</span><span>pinia</span></div>
     <div class="row"><span>请求层</span><span>axios 统一封装</span></div>
-    <div class="row"><span>设备载体</span><span>Chromium Kiosk</span></div>
+    <div class="row"><span>设备载体</span><span>Chromium 全屏（7 寸 1024×600 横屏）</span></div>
   </div>
 
   <div class="card">
@@ -247,8 +244,8 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 </div>
 
 <div class="box">
-  <b>硬件（条件交付，不影响验收）</b>：树莓派 Zero 2W + 4 寸屏 + Chromium Kiosk + ESP32-C3（MicroPython）。
-  主演示载体是<b>平板浏览器</b>，硬件仅作加分项，只负责按键与震动。
+  <b>硬件（C4 已到货，不影响验收）</b>：树莓派 4B + 7 寸 1024×600 触摸屏 + 亚克力风扇外壳 + Type-C 开关电源 + Chromium 全屏；不设实体键、不带电池、无读卡器、不使用蓝牙信标（ADR-019）。
+  主演示载体是<b>平板浏览器</b>，硬件只负责显示与触摸（不设实体键、不带电池、无读卡器、无信标，ADR-019）。
 </div>
 
 <h2><span class="num">03</span>八周实施计划</h2>
@@ -257,15 +254,15 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 <div class="stages">
   <div class="stg"><div class="w">W1</div><div class="t">立项与契约冻结</div>
     <div class="d">仓库 / CI / 会话协议 / 领域模型 / 术语表</div></div>
-  <div class="stg ms"><span class="m">M1</span><div class="w">W2</div><div class="t">领域内核与四端骨架</div>
-    <div class="d">状态机 / 话术引擎 / 四端脚手架 / 测试 ≥ 40</div></div>
+  <div class="stg ms"><span class="m">M1</span><div class="w">W2</div><div class="t">领域内核与三端骨架</div>
+    <div class="d">状态机 / 话术引擎 / 三端脚手架 / 测试 ≥ 40</div></div>
   <div class="stg"><div class="w">W3</div><div class="t">主线打通</div>
     <div class="d">五个假适配器 / 编排器 / 规划引擎 / 无障碍</div></div>
   <div class="stg ms"><span class="m">M2</span><div class="w">W4</div><div class="t">主线集成</div>
-    <div class="d">9 节点全通 / E2E ≥ 8 / 范围冻结 / 测试 ≥ 120</div></div>
+    <div class="d">11 节点全通 / E2E ≥ 8 / 范围冻结 / 测试 ≥ 120</div></div>
   <div class="stg"><div class="w">W5</div><div class="t">真实 AI 接入</div>
     <div class="d">真 ASR/TTS/OCR / 剂量零错误 / 评测集 ≥ 120</div></div>
-  <div class="stg ms"><span class="m">M3</span><div class="w">W6</div><div class="t">四端成型</div>
+  <div class="stg ms"><span class="m">M3</span><div class="w">W6</div><div class="t">三端成型</div>
     <div class="d">双机演示包 / 无障碍走查 / 测试 ≥ 180</div></div>
   <div class="stg"><div class="w">W7</div><div class="t">用户测试</div>
     <div class="d">10 人可用性测试 / 安全走查 / 排练</div></div>
@@ -281,7 +278,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <tr><td class="k">T1</td><td>项目经理 / 架构师 / 领域工程</td><td>领域层、接口契约、14 篇 ADR、进度管理</td><td>—</td></tr>
     <tr><td class="k">T2</td><td>设备端与嵌入式</td><td>设备端三模式网页、演示载体、可选固件</td><td>交互可用性（与 T5 共有）</td></tr>
     <tr><td class="k">T3</td><td>用户端与家属端前端</td><td>用户端 H5、家属端 H5、推送模板、视觉规范</td><td>—</td></tr>
-    <tr><td class="k">T4</td><td>陪诊师工作台与中后台</td><td>工作台四屏：队列 / 校对 / 双签 / 升级</td><td>工作台并发可用性</td></tr>
+    <tr><td class="k">T4</td><td>毕设底座接入与设备端交互</td><td>旧系统 fixtures 与只读适配器、字段映射、号源中心；设备端 11 节点逐屏、触摸屏交互、全屏启动、双机备份</td><td>设备端可用性建议优先权</td></tr>
     <tr><td class="k">T5</td><td>AI 集成与无障碍</td><td>七类适配器、无障碍验收标准、评测集 200 条</td><td>无障碍达标性（与 T2 共有）</td></tr>
     <tr><td class="k">T6</td><td>质量保证</td><td>CI 流水线、240 条测试、全部测试报告</td><td><b>合并否决权（对全员生效，含 T1）</b></td></tr>
   </tbody>
@@ -295,7 +292,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
     <ol>
       <li>医学相关表述须以医生原话为来源，不得表述为系统判断</li>
       <li>识别不确定时须标记并求证，不得推断，<b>剂量字段尤须遵守</b></li>
-      <li>重要医疗材料须电子化留存并完成交接双签</li>
+      <li>重要医疗材料须电子化留存，交接有留痕、可追溯</li>
     </ol>
   </div>
   <div class="box ok" style="margin:0">
@@ -311,14 +308,16 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
 </div>
 
 <div class="box warn">
-  <b>明确不做的六项（已从范围排除）</b>
+  <b>明确不做的八项（已从范围排除）</b>
   <ol>
     <li>微信小程序上架 —— 需企业主体与审核周期，改用 H5 + 测试号</li>
     <li>原生 App（Android / iOS）—— 用 H5 替代</li>
-    <li>嵌入式驱动 / LVGL 界面 / 自研 PCB —— 设备端是网页，硬件只做按键与震动</li>
-    <li>医院 HIS 系统对接 —— 无法获得授权</li>
+    <li>嵌入式驱动 / LVGL 界面 / 自研 PCB —— 设备端是网页，硬件只做显示与触摸</li>
+    <li>医院 HIS 系统对接 —— 本项目不接 HIS，挂号与号源走自建号源中心</li>
     <li>多医院覆盖 —— 只做一个场景做深</li>
     <li>端侧大模型 —— 平板跑不动，全部走服务端 API</li>
+    <li>院内管理数据分析看板 —— 非核心链路</li>
+    <li>院内人员（医生 / 护士）前端界面 —— 医院自有 HIS 承担</li>
   </ol>
 </div>
 
@@ -362,7 +361,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-si
   <thead><tr><th>项</th><th>状态</th><th>说明</th></tr></thead>
   <tbody>
     <tr><td>演示程序</td><td><span class="tag m">已完成</span></td><td>语法校验通过；32 视图 / 32 屏幕定义完整；渲染零错误</td></tr>
-    <tr><td>规划文档集</td><td><span class="tag m">已完成</span></td><td>13 份；跨文档口径一致性已审计</td></tr>
+    <tr><td>规划文档集</td><td><span class="tag m">已完成</span></td><td>18 份（13 Markdown + 5 HTML）；跨文档口径一致性已审计</td></tr>
     <tr><td>截图素材</td><td><span class="tag m">已完成</span></td><td>8 张，1680×1050</td></tr>
     <tr><td>代码仓库</td><td><span class="tag m">已完成</span></td><td>初始化并提交 5 次；CI 骨架、PR / Issue 模板、红线检查脚本就绪</td></tr>
     <tr><td>推送 GitHub</td><td><span class="tag n">待执行</span></td><td>需本机授权一次，见下方命令</td></tr>
@@ -378,7 +377,7 @@ git push -u origin main</code></pre>
 </div>
 
 <footer>
-  <b>小暖陪诊 · 最终交付说明</b>　|　编制：项目经理（T1）　|　口径依据：<code>00-项目工期与范围基线.md</code><br>
+  <b>院内智慧陪诊终端 · 最终交付说明</b>　|　编制：项目经理（T1）　|　口径依据：<code>00-项目工期与范围基线.md</code><br>
   文档效力：文档之间口径冲突时，以 00 号基线为准；基线与 14 号实施计划冲突时，以 00 号为准。<br>
   合规声明：仓库内不得存放真实患者数据、真实身份证号或真实医疗单据原图；所有测试数据须为脱敏或自建样例。
 </footer>

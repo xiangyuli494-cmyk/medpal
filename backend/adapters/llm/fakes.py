@@ -1,4 +1,5 @@
 """测试用假 LLM：按脚本返回 assistant message，零网络、零费用。"""
+
 from __future__ import annotations
 
 from collections.abc import Iterable

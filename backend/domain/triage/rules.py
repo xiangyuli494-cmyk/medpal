@@ -1,4 +1,5 @@
 """分诊规则：儿科过滤、置信度阈值与用户可见的理由。"""
+
 from __future__ import annotations
 
 from .models import TriageResult

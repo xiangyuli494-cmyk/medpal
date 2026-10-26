@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>院内智慧陪诊终端 · 技术栈总览</title>
+<style>
+:root{
+  --bg:#0e1622;--panel:#152131;--panel2:#1b2942;--line:#26374f;--txt:#e8eef7;--dim:#93a7c2;
+  --accent:#ff8a3d;--ok:#34d399;--warn:#fbbf24;--danger:#f87171;--blue:#60a5fa;--purple:#a78bfa;--cyan:#22d3ee;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:14px;line-height:1.7;padding:0 0 70px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+.hero{background:
+    radial-gradient(780px 440px at 16% -14%, rgba(255,138,61,.16), transparent 60%),
+    radial-gradient(640px 400px at 92% 6%, rgba(96,165,250,.13), transparent 62%),
+    linear-gradient(168deg,#131f31,#0d1622 62%);
+  border-bottom:1px solid var(--line);padding:50px 0 42px;margin-bottom:10px}
+.hero .tag{display:inline-block;font-size:11px;letter-spacing:.16em;color:var(--accent);
+  border:1px solid #6b4520;background:rgba(255,138,61,.09);border-radius:20px;padding:4px 13px;margin-bottom:16px}
+.hero h1{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:12px}
+.hero .lead{font-size:14.5px;color:#bccddf;max-width:720px}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font-size:11.5px;font-family:var(--mono);padding:4px 11px;border-radius:16px;
+  border:1px solid var(--line);background:rgba(27,41,66,.8);color:#9fd3ff}
+.chip.k{color:var(--accent);border-color:#6b4520;background:rgba(255,138,61,.09)}
+
+h2{font-size:18px;margin:42px 0 6px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.4}
+h2 .num{color:var(--dim);font-family:var(--mono);font-size:13px;font-weight:400;margin-right:7px}
+.chap-note{font-size:12px;color:var(--dim);margin:0 0 15px 12px}
+h3{font-size:14px;margin:24px 0 10px;color:#cfe0f5;display:flex;align-items:center;gap:8px}
+h3::after{content:"";flex:1;height:1px;background:var(--line)}
+p{color:#c9d8ec;margin-bottom:10px}
+code{font-family:var(--mono);font-size:11.5px;background:#0a121d;padding:1.5px 6px;border-radius:5px;color:#9fd3ff}
+
+table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#182741;color:var(--dim);font-weight:700;font-size:11.5px;white-space:nowrap}
+tbody tr:nth-child(even){background:#121d2c}
+td.k{font-weight:700;color:#dfe9f5}
+td.p{font-family:var(--mono);font-size:11.5px;color:#9fd3ff;white-space:nowrap}
+td.adr{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap}
+td.v{font-family:var(--mono);font-size:11.5px;color:var(--warn);white-space:nowrap}
+.tag{display:inline-block;font-size:10.5px;padding:1.5px 7px;border-radius:5px;font-weight:700;white-space:nowrap}
+.tag.m{background:#16311f;color:var(--ok)}
+.tag.c{background:#3d3116;color:var(--warn)}
+.tag.n{background:#3c1f22;color:#ff9f9f}
+.tag.w{background:#1e3a5f;color:#8ec5ff}
+
+/* 架构图 */
+.arch{margin:16px 0 8px}
+.layer{border:1px solid var(--line);border-radius:13px;padding:14px 16px;background:var(--panel);margin-bottom:9px}
+.layer .lh{font-size:11.5px;color:var(--dim);font-weight:700;letter-spacing:.06em;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:center}
+.layer .lh small{font-weight:400;font-family:var(--mono);font-size:10.5px;color:#6f8299}
+.boxrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}
+.bx{background:var(--panel2);border:1px solid #2d405c;border-radius:9px;padding:9px 11px}
+.bx .n{font-size:12.5px;font-weight:700;margin-bottom:3px}
+.bx .d{font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.bx.acc{border-color:#6b4520;background:#2a1f18}
+.bx.acc .n{color:var(--accent)}
+.bx.blu{border-color:#2b4f78;background:#16283c}
+.bx.blu .n{color:#8ec5ff}
+.bx.grn{border-color:#245c39;background:#13261d}
+.bx.grn .n{color:var(--ok)}
+.bx.pur{border-color:#4a3b78;background:#231d38}
+.bx.pur .n{color:var(--purple)}
+.arrow{text-align:center;color:#3d5372;font-size:12px;margin:2px 0 6px;font-family:var(--mono)}
+
+/* 卡片 */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:12px;margin:14px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
+.card h4{font-size:13px;margin-bottom:9px;color:#cfe0f5;display:flex;align-items:center;gap:7px}
+.card .row{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:4px 0;border-bottom:1px dashed #1f2f47}
+.card .row:last-child{border-bottom:none}
+.card .row span:first-child{color:var(--dim)}
+.card .row span:last-child{font-family:var(--mono);color:#9fd3ff;font-size:11.5px;text-align:right}
+
+.box{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px;margin:14px 0}
+.box.ok{background:#13261d;border-color:#245c39}
+.box.warn{background:#2a1f18;border-color:#6b4520}
+.box.danger{background:#2a1a1c;border-color:#6b2f36}
+.box b{color:#dfe9f5}
+.box.ok b{color:var(--ok)}
+.box.warn b{color:var(--warn)}
+.box.danger b{color:#ff9f9f}
+.box ul,.box ol{margin-bottom:0;padding-left:20px;color:#c9d8ec}
+.box li{margin-bottom:5px}
+
+pre{background:#0a121d;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+  overflow-x:auto;margin:10px 0 16px}
+pre code{background:none;padding:0;font-size:12px;line-height:1.85;color:#9fd3ff;display:block;white-space:pre}
+pre .c{color:#5c7189}
+
+footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim);line-height:1.9}
+
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt}
+  .hero{background:#fff;border-bottom:2px solid #000}
+  .hero h1,.hero .lead,.hero .tag{color:#000}
+  .layer,.bx,.card,.box,.chip{background:#fff;border-color:#999}
+  th{background:#eee;color:#000}
+  tbody tr:nth-child(even){background:#fafafa}
+  h2{border-left-color:#000}
+  code,pre,pre code{background:#f4f4f4;color:#000;border-color:#ccc}
+  .bx .n,.bx.acc .n,.bx.blu .n,.bx.grn .n,.bx.pur .n{color:#000}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="tag">TECH STACK · 技术栈总览</div>
+    <h1>本项目需要用到的技术栈</h1>
+    <div class="lead">
+      一个后端内核 + 三个网页端 + 一套 AI 适配层 + 一套测试工程体系。全部选型已冻结为 ADR-001 – ADR-017，变更须走 ADR 流程。
+    </div>
+    <div class="chips">
+      <span class="chip k">Python 3.12</span>
+      <span class="chip k">Django 5 + DRF</span>
+      <span class="chip k">Channels + Redis</span>
+      <span class="chip k">Vue 3</span>
+      <span class="chip">Vite</span><span class="chip">uni-app</span>
+      <span class="chip">Vant</span>
+      <span class="chip">DashScope</span><span class="chip">MySQL 8</span>
+      <span class="chip">pytest</span><span class="chip">Playwright</span>
+      <span class="chip">Locust</span><span class="chip">GitHub Actions</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<h2><span class="num">01</span>分层架构</h2>
+<div class="chap-note">这张图就是全部技术栈的骨架。上三层是网页，下面两层是同一个后端。</div>
+
+<div class="arch">
+  <div class="layer">
+    <div class="lh"><span>通道层 · 三个网页（全部运行在浏览器里）</span><small>前端 / Vue 3 生态</small></div>
+    <div class="boxrow">
+      <div class="bx acc"><div class="n">设备端</div><div class="d">Vue3 + Vite</div></div>
+      <div class="bx acc"><div class="n">用户端</div><div class="d">uni-app → H5</div></div>
+      <div class="bx acc"><div class="n">家属端</div><div class="d">Vue3 + Vant</div></div>
+    </div>
+  </div>
+  <div class="arrow">▼ 全部走同一套 REST + WebSocket ▲</div>
+
+  <div class="layer">
+    <div class="lh"><span>接口层</span><small>Django Channels / DRF</small></div>
+    <div class="boxrow">
+      <div class="bx blu"><div class="n">REST API</div><div class="d">DRF + spectacular</div></div>
+      <div class="bx blu"><div class="n">WebSocket</div><div class="d">Channels + channels-redis</div></div>
+      <div class="bx blu"><div class="n">鉴权</div><div class="d">Session / Token</div></div>
+      <div class="bx blu"><div class="n">限流</div><div class="d">DRF Throttle</div></div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="lh"><span>领域层 · 纯 Python 零框架依赖（覆盖率必须 100%）</span><small>本项目技术含量最高的一层</small></div>
+    <div class="boxrow">
+      <div class="bx grn"><div class="n">状态机</div><div class="d">11 节点 + 8 跨切面</div></div>
+      <div class="bx grn"><div class="n">话术引擎</div><div class="d">模板 → LLM → 红线</div></div>
+      <div class="bx grn"><div class="n">规划引擎</div><div class="d">约束打分排序</div></div>
+      <div class="bx grn"><div class="n">禁忌校验</div><div class="d">剂量 / 过敏 / 重复</div></div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="lh"><span>适配层 · 七类能力，全部走适配器接口</span><small>业务代码不得直接调供应商 SDK</small></div>
+    <div class="boxrow">
+      <div class="bx pur"><div class="n">ASR</div><div class="d">qwen3-asr-flash</div></div>
+      <div class="bx pur"><div class="n">TTS</div><div class="d">qwen3-tts-flash</div></div>
+      <div class="bx pur"><div class="n">OCR 识单</div><div class="d">多模态模型</div></div>
+      <div class="bx pur"><div class="n">LLM 润色</div><div class="d">qwen</div></div>
+      <div class="bx pur"><div class="n">推送</div><div class="d">短信 / 微信测试号</div></div>
+      <div class="bx pur"><div class="n">图谱</div><div class="d">条件 C2</div></div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="lh"><span>数据层</span><small>开发 SQLite / 生产 MySQL</small></div>
+    <div class="boxrow">
+      <div class="bx"><div class="n">MySQL 8</div><div class="d">业务数据</div></div>
+      <div class="bx"><div class="n">Redis</div><div class="d">会话状态 / 频道层</div></div>
+      <div class="bx"><div class="n">SQLite</div><div class="d">本地开发与测试</div></div>
+      <div class="bx"><div class="n">文件存储</div><div class="d">单据图片（脱敏）</div></div>
+    </div>
+  </div>
+</div>
+
+<h2><span class="num">02</span>后端技术栈</h2>
+<div class="chap-note">单体部署，不分微服务。六人八周不具备拆分后的联调成本（ADR-009）。</div>
+
+<table>
+  <thead><tr><th>技术</th><th>版本</th><th>包 / 组件</th><th>用来做什么</th><th>为什么选它</th><th>ADR</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Python</td><td class="v">3.12</td><td class="p">—</td><td>全后端语言</td><td>AI 生态与既有代码一致</td><td class="adr">—</td></tr>
+    <tr><td class="k">Django</td><td class="v">5.x</td><td class="p">django</td><td>Web 框架、ORM、后台</td><td>既有排班 / 挂号 / 检查项数据资产可直接复用；重写为 FastAPI 在八周内没有回归窗口</td><td class="adr">ADR-001</td></tr>
+    <tr><td class="k">DRF</td><td class="v">3.x</td><td class="p">djangorestframework</td><td>REST 接口、序列化、权限</td><td>与 Django 原生集成，权限体系现成</td><td class="adr">ADR-001</td></tr>
+    <tr><td class="k">Channels</td><td class="v">4.x</td><td class="p">channels</td><td>WebSocket 实时推送</td><td>状态机每步都要推给四个端，轮询成本高</td><td class="adr">ADR-006</td></tr>
+    <tr><td class="k">channels-redis</td><td class="v">4.x</td><td class="p">channels-redis</td><td>频道层后端</td><td>多 worker 下广播需要共享频道层</td><td class="adr">ADR-008</td></tr>
+    <tr><td class="k">Redis</td><td class="v">7.x</td><td class="p">redis</td><td>会话状态、频道层、缓存</td><td>会话状态须低延迟读写，且不应依赖 Celery 离线队列</td><td class="adr">ADR-008</td></tr>
+    <tr><td class="k">MySQL</td><td class="v">8.0</td><td class="p">mysqlclient</td><td>生产数据库</td><td>与既有库一致；生产用 SQLite 已否决</td><td class="adr">ADR-007</td></tr>
+    <tr><td class="k">Pydantic</td><td class="v">2.x</td><td class="p">pydantic</td><td>领域模型与配置校验</td><td>领域层要能脱离 Django 单测，必须有独立的数据校验</td><td class="adr">ADR-009</td></tr>
+    <tr><td class="k">drf-spectacular</td><td class="v">0.27+</td><td class="p">drf-spectacular</td><td>自动生成 OpenAPI 3</td><td>契约测试（schemathesis）依赖它作为输入</td><td class="adr">ADR-013</td></tr>
+    <tr><td class="k">Celery</td><td class="v">5.x</td><td class="p">celery</td><td>异步任务（推送、清理）</td><td>条件项：仅在推送与定时任务需要时启用</td><td class="adr">—</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">03</span>前端技术栈</h2>
+<div class="chap-note">三个网页是三个独立工程，共用一套 API 契约与设计令牌，但不共用代码仓库目录。设备端是产品本体，用户端与家属端是它的两个远程延伸。</div>
+
+<table>
+  <thead><tr><th>通道</th><th>框架</th><th>UI 库</th><th>构建</th><th>关键差异</th><th>ADR</th></tr></thead>
+  <tbody>
+    <tr><td class="k">设备端</td><td>Vue 3 + Composition API</td><td>自研大字号组件</td><td class="p">Vite</td><td>全屏模式，无地址栏无滚动条；三模式（老人 / 视障 / 听障）</td><td class="adr">ADR-002</td></tr>
+    <tr><td class="k">用户端</td><td>uni-app（Vue 3 语法）</td><td>uni-ui</td><td class="p">uni-app CLI</td><td>编译为 H5；既有代码库即此形态，迁移成本高于收益</td><td class="adr">ADR-004</td></tr>
+    <tr><td class="k">家属端</td><td>Vue 3</td><td>Vant 4</td><td class="p">Vite</td><td>移动端 H5，微信内打开；不做独立 App</td><td class="adr">ADR-005</td></tr>
+  </tbody>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>🔧 公共前端依赖</h4>
+    <div class="row"><span>路由</span><span>vue-router 4</span></div>
+    <div class="row"><span>状态</span><span>pinia</span></div>
+    <div class="row"><span>请求</span><span>axios（统一封装）</span></div>
+    <div class="row"><span>实时</span><span>原生 WebSocket</span></div>
+    <div class="row"><span>语音</span><span>MediaRecorder</span></div>
+    <div class="row"><span>朗读</span><span>Web Speech API</span></div>
+  </div>
+  <div class="card">
+    <h4>📐 前端工程化</h4>
+    <div class="row"><span>规范</span><span>eslint + prettier</span></div>
+    <div class="row"><span>提交前</span><span>husky + lint-staged</span></div>
+    <div class="row"><span>单测</span><span>vitest</span></div>
+    <div class="row"><span>组件测试</span><span>@testing-library/vue</span></div>
+    <div class="row"><span>契约</span><span>统一 api.js 生成</span></div>
+    <div class="row"><span>设计令牌</span><span>CSS 变量</span></div>
+    <div class="row"><span>无障碍</span><span>axe-core 扫描</span></div>
+  </div>
+</div>
+
+<h2><span class="num">04</span>AI 与语音技术栈</h2>
+<div class="chap-note">全部经适配器接口调用。业务代码里不允许出现供应商 SDK 的名字（ADR-010），这是能回退假实现的前提。</div>
+
+<table>
+  <thead><tr><th>能力</th><th>供应商 / 模型</th><th>调用方式</th><th>用在哪</th><th>降级链</th></tr></thead>
+  <tbody>
+    <tr><td class="k">语音识别 ASR</td><td class="p">DashScope qwen3-asr-flash</td><td>HTTP + 流式</td><td>设备端语音输入、老人对话</td><td>云 ASR → 浏览器原生 → 仅字幕</td></tr>
+    <tr><td class="k">语音合成 TTS</td><td class="p">DashScope qwen3-tts-flash</td><td>HTTP</td><td>全通道朗读、视障导航播报</td><td>云 TTS → 浏览器 speechSynthesis → 仅字幕</td></tr>
+    <tr><td class="k">识单 OCR</td><td class="p">DashScope 多模态模型</td><td>HTTP 图像输入</td><td>检查单、处方单字段提取</td><td>模型 → 正则兜底 → 低置信度当场追问</td></tr>
+    <tr><td class="k">话术润色 LLM</td><td class="p">qwen 系列</td><td>HTTP</td><td>只做措辞润色，不做医学判断</td><td>LLM 失败直接回退模板</td></tr>
+    <tr><td class="k">知识图谱</td><td class="p">Neo4j（条件 C2）</td><td>Bolt</td><td>症状 → 科室映射，条件交付</td><td>不启用时走规则表</td></tr>
+  </tbody>
+</table>
+
+<div class="box danger">
+  <b>三层话术管线（技术栈层面的硬约束）</b>
+  <ol>
+    <li><b>模板层</b>：固定文案，占位符填空，零 token 成本，覆盖全部主干场景</li>
+    <li><b>LLM 润色层</b>：可选，只改措辞不改事实</li>
+    <li><b>红线校验层</b>：禁用词正则拦截，命中即回退模板层并记审计日志</li>
+  </ol>
+  全量台词交给 LLM 生成已被否决（ADR-012）：无法 100% 单元测试，禁用词无法规则化拦截，成本不可控。
+</div>
+
+<h2><span class="num">05</span>测试技术栈</h2>
+<div class="chap-note">八层测试体系 → 工具映射。L1–L4 必做，L5 自 W5 起必做，L6–L8 为条件项。</div>
+
+<table>
+  <thead><tr><th>层</th><th>测什么</th><th>工具</th><th>门槛</th></tr></thead>
+  <tbody>
+    <tr><td class="n">L1</td><td class="k">领域单元测试</td><td class="p">pytest + pytest-cov</td><td>领域层覆盖率 <b>100%</b></td></tr>
+    <tr><td class="n">L2</td><td class="k">接口测试</td><td class="p">pytest-django + DRF APIClient</td><td>全部接口有用例</td></tr>
+    <tr><td class="n">L3</td><td class="k">契约测试</td><td class="p">schemathesis</td><td>OpenAPI 全覆盖</td></tr>
+    <tr><td class="n">L4</td><td class="k">端到端测试</td><td class="p">@playwright/test</td><td>W4 ≥ 8 条，W8 ≥ 15 条</td></tr>
+    <tr><td class="n">L5</td><td class="k">红线专项</td><td class="p">pytest + 禁用词表 + 剂量样例集</td><td>禁用词 <b>0</b>，剂量错误 <b>0</b></td></tr>
+    <tr><td class="n">L6</td><td class="k">无障碍测试</td><td class="p">@axe-core/playwright</td><td>三个网页全过（条件项）</td></tr>
+    <tr><td class="n">L7</td><td class="k">可用性测试</td><td>人工：10 人（视障 3 / 听障 2 / 老人 5）</td><td>W7 单场执行</td></tr>
+    <tr><td class="n">L8</td><td class="k">性能测试</td><td class="p">locust</td><td>条件项</td></tr>
+  </tbody>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>🧰 测试辅助</h4>
+    <div class="row"><span>假数据</span><span>factory_boy</span></div>
+    <div class="row"><span>HTTP 打桩</span><span>responses</span></div>
+    <div class="row"><span>异步测试</span><span>pytest-asyncio</span></div>
+    <div class="row"><span>前端单测</span><span>vitest</span></div>
+    <div class="row"><span>组件测试</span><span>@testing-library/vue</span></div>
+    <div class="row"><span>AI 评测集</span><span>YAML 用例 + pytest</span></div>
+  </div>
+  <div class="card">
+    <h4>⚙️ 代码质量</h4>
+    <div class="row"><span>Python lint</span><span>ruff</span></div>
+    <div class="row"><span>提交前挂钩</span><span>pre-commit</span></div>
+    <div class="row"><span>前端 lint</span><span>eslint + prettier</span></div>
+    <div class="row"><span>类型标注</span><span>typing / dataclass</span></div>
+    <div class="row"><span>红线脚本</span><span>check_guard_words.py</span></div>
+    <div class="row"><span>任务入口</span><span>Makefile</span></div>
+  </div>
+</div>
+
+<h2><span class="num">06</span>工程与协作工具</h2>
+
+<table>
+  <thead><tr><th>用途</th><th>工具</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td class="k">版本控制</td><td class="p">Git + GitHub</td><td>Monorepo，主干保护，PR 必须过 CI</td></tr>
+    <tr><td class="k">持续集成</td><td class="p">GitHub Actions</td><td>10 步流水线：lint → 单测 → 覆盖率 → 契约 → E2E → 红线 → 打包</td></tr>
+    <tr><td class="k">任务管理</td><td class="p">GitHub Issues + Projects</td><td>每个周任务包对应一个 Issue，含验收标准与预估工时</td></tr>
+    <tr><td class="k">文档协作</td><td class="p">Markdown in repo</td><td>文档与代码同仓库，随 PR 一起评审</td></tr>
+    <tr><td class="k">接口文档</td><td class="p">drf-spectacular</td><td>自动生成，兼作契约测试输入</td></tr>
+    <tr><td class="k">沟通</td><td class="p">微信群 + 线上会议</td><td>仅三类固定会议：周计划会、双周评审会、里程碑评审会</td></tr>
+    <tr><td class="k">AI 辅助</td><td class="p">Playwright MCP / GitHub MCP / Context7</td><td>浏览器自动验证、仓库操作、拉取最新框架文档</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">07</span>硬件技术栈（C4 已到货）</h2>
+
+<div class="box warn">
+  <b>硬件不承载主流程演示。</b>主演示载体是平板或笔记本浏览器；树莓派 4B 与 7 寸 1024×600 触摸屏作为 C4 已到货（ADR-014、ADR-019），W1 可开机验证。硬件只负责显示与触摸，不承担任何业务判断与端侧模型（ADR-003）；<b>不设实体键、不带电池、无读卡器、不使用蓝牙信标</b>。
+</div>
+
+<table>
+  <thead><tr><th>件</th><th>型号 / 技术</th><th>职责</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td class="k">主控</td><td class="p">树莓派 4B（4GB）+ 7 寸 1024×600 触摸屏</td><td>跑 Chromium 全屏，开机直达网页</td><td><span class="tag m">已到货 C4</span></td></tr>
+    <tr><td class="k">触摸</td><td class="p">7 寸 IPS 电容触摸屏（1024×600 横屏）</td><td>唯一交互面：顶栏 + 主操作 + 选项；<b>机身不设实体键</b>，音量语速在设置页</td><td><span class="tag m">已到货 C4</span></td></tr>
+    <tr><td class="k">音频</td><td class="p">麦克风 + 扬声器</td><td>语音输入与播报；型号未选定，W2 前定接口</td><td><span class="tag c">待选型</span></td></tr>
+    <tr><td class="k">外壳</td><td>亚克力风扇外壳（套件自带）</td><td>整机结构与散热，不带电池</td><td><span class="tag m">已到货 C4</span></td></tr>
+    <tr><td class="k">电源</td><td class="p">Type-C 开关电源 5V/3A</td><td>整机不带电池，取电走开关电源</td><td><span class="tag m">已到货 C4</span></td></tr>
+    <tr><td class="k">系统</td><td class="p">Raspberry Pi OS + Chromium</td><td>Chromium 全屏启动参数</td><td><span class="tag c">条件 C4</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">08</span>已否决的技术方案</h2>
+<div class="chap-note">答辩时最容易被问「为什么不用 X」，这张表就是答案。共 15 项，全部有 ADR 记录。</div>
+
+<table>
+  <thead><tr><th>被否决的方案</th><th>否决理由</th><th>ADR</th></tr></thead>
+  <tbody>
+    <tr><td class="k">全部重写为 FastAPI</td><td>既有排班、挂号、检查项数据资产无法复用；八周内无重写与回归窗口</td><td class="adr">ADR-001</td></tr>
+    <tr><td class="k">Django 与 FastAPI 混合</td><td>两套框架并行维护，六人团队不具备对应维护与联调能力</td><td class="adr">ADR-001</td></tr>
+    <tr><td class="k">设备端原生 Android 应用</td><td>须另维护一套代码；硬件更换时须重写</td><td class="adr">ADR-002</td></tr>
+    <tr><td class="k">设备端承载业务判断与端侧模型</td><td>设备端算力不用于模型推理；硬件到货前无法验证；智能分散后无法统一灰度与回滚</td><td class="adr">ADR-003</td></tr>
+    <tr><td class="k">用户端原生应用或纯小程序</td><td>现有代码库即 uni-app Vue 3，迁移成本高于收益</td><td class="adr">ADR-004</td></tr>
+    <tr><td class="k">家属端独立 App</td><td>功能仅为推送与时间轴，独立安装形态增加使用门槛</td><td class="adr">ADR-005</td></tr>
+    <tr><td class="k">WebRTC 音频通道</td><td>实现与联调复杂度高于本期需求；首字延迟 1.5 秒内 WebSocket 已可满足</td><td class="adr">ADR-006</td></tr>
+    <tr><td class="k">生产环境用 SQLite</td><td>与既有 MySQL 8 不一致，并发写入不可靠</td><td class="adr">ADR-007</td></tr>
+    <tr><td class="k">会话状态存数据库或 Celery</td><td>会话须低延迟读写，不应依赖离线任务队列</td><td class="adr">ADR-008</td></tr>
+    <tr><td class="k">服务拆分微服务</td><td>六人八周单次部署的规模撑不起拆分后的联调成本</td><td class="adr">ADR-009</td></tr>
+    <tr><td class="k">业务代码直接调供应商 SDK</td><td>供应商不可替换；测试无法注入故障与降级场景</td><td class="adr">ADR-010</td></tr>
+    <tr><td class="k">向量库 / 知识图谱承载主链路</td><td>Milvus、Neo4j、Chroma 均为容器依赖且未安装；陪诊主流程是结构化问题</td><td class="adr">ADR-011</td></tr>
+    <tr><td class="k">全量台词由 LLM 生成</td><td>无法 100% 单测；禁用词无法规则化拦截；成本不可控</td><td class="adr">ADR-012</td></tr>
+    <tr><td class="k">演示版与正式系统分别实现</td><td>集成阶段演示功能失效，返工成本高</td><td class="adr">ADR-013</td></tr>
+    <tr><td class="k">物理硬件承载主流程演示</td><td>采购、镜像、音频通路与电源无法与软件主线并行；到货时间不受团队控制</td><td class="adr">ADR-014</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">09</span>环境安装</h2>
+<div class="chap-note">实测环境：Node v24.15.0 · Python 3.12.6 · Git 2.54.0.windows.1 · Edge 155.0.4283.45</div>
+
+<h3>后端</h3>
+<pre><code><span class="c"># 建虚拟环境（Windows）</span>
+python -m venv .venv
+.venv\Scripts\activate
+
+<span class="c"># 装依赖</span>
+pip install django djangorestframework channels channels-redis \
+            mysqlclient redis pydantic drf-spectacular \
+            pytest pytest-django pytest-asyncio pytest-cov factory_boy responses \
+            schemathesis locust ruff pre-commit
+
+<span class="c"># 验证</span>
+python -c "import django; print(django.get_version())"
+pytest --version</code></pre>
+
+<h3>前端</h3>
+<pre><code><span class="c"># 三个网页工程分别装</span>
+npm create vite@latest device-web -- --template vue
+npm install vue-router pinia axios
+npm install -D vitest @testing-library/vue @playwright/test @axe-core/playwright \
+               eslint prettier
+
+<span class="c"># 用户端（uni-app）</span>
+npx degit dcloudio/uni-preset-vue#vite user-web
+<span class="c"># 家属端</span>
+npm install vant
+
+<span class="c"># 浏览器内核（E2E 用）</span>
+npx playwright install chromium</code></pre>
+
+<h3>本地起服务</h3>
+<pre><code><span class="c"># 后端（默认 8000）</span>
+python manage.py migrate
+python manage.py runserver
+
+<span class="c"># 前端开发服务器（Vite 默认 5173 起，四个工程各占一个端口）</span>
+npm run dev
+
+<span class="c"># 一键跑全部测试</span>
+make test</code></pre>
+
+<h2><span class="num">10</span>版本与变更策略</h2>
+
+<div class="grid">
+  <div class="box ok" style="margin:0">
+    <b>锁定策略</b>
+    <ul>
+      <li>后端依赖写入 <code>requirements.txt</code> 并锁定次版本号</li>
+      <li>前端依赖提交 <code>package-lock.json</code></li>
+      <li>CI 只装锁定版本，禁止 <code>latest</code></li>
+      <li>依赖升级须单独 PR，不得混在功能 PR 里</li>
+    </ul>
+  </div>
+  <div class="box warn" style="margin:0">
+    <b>选型变更流程</b>
+    <ul>
+      <li>以 ADR 草案提出，由 T1 组织全员评审</li>
+      <li>有异议时异议方做不超过 2 小时的验证实验，以数据裁决</li>
+      <li>已冻结选型的变更须同时评估接口契约、测试用例与排期影响</li>
+      <li>AI 供应商变更由 T5 提出，T6 依据评测数据判定</li>
+      <li>跨周未闭环的变更按 W4 范围冻结机制转入条件交付清单</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <b>院内智慧陪诊终端 · 技术栈总览</b>　|　口径依据：<code>00-项目工期与范围基线.md</code>、<code>11-技术方案与接口契约.md</code><br>
+  完整选型理由见 11 号文件 2.1 选型总表（20 行）与 ADR-001 – ADR-017；已否决方案见 11 号文件 2.2 节。<br>
+  与本页冲突时，以 11 号文件为准。
+</footer>
+
+</div>
+</body>
+</html>

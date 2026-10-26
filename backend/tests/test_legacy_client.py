@@ -2,6 +2,7 @@
 
 原则：测试不联网。适配器的 transport 可注入，fixtures 是仓库内的文件。
 """
+
 from __future__ import annotations
 
 import json

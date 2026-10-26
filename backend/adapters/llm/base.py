@@ -1,4 +1,5 @@
 """LLM 适配器的接口与异常。"""
+
 from __future__ import annotations
 
 from typing import Protocol

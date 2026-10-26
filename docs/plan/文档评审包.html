@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>小暖陪诊 · 项目规划评审包（八周版 v3.0）</title>
+<title>院内智慧陪诊终端 · 项目规划评审包（八周版 v3.1）</title>
 <style>
 :root{
   --bg:#0e1622; --panel:#152131; --panel2:#1b2942; --line:#26374f;
@@ -71,7 +71,7 @@ a{color:var(--blue)}
 
 <header>
   <div class="wrap">
-    <h1>小暖陪诊 · 项目规划评审包</h1>
+    <h1>院内智慧陪诊终端 · 项目规划评审包</h1>
     <div class="sub">面向就医困难人群的陪诊服务系统 · 六人团队 · 八周工期</div>
     <div class="meta">
       <span class="chip hot">v3.0 八周版</span>
@@ -87,7 +87,7 @@ a{color:var(--blue)}
 <div class="card warn">
   <h3 style="margin-top:0">评审须知</h3>
   <ol>
-    <li><b>评审对象</b>：本页面 + <code>medpal-plan-v2/</code> 下 00、01、02、10、11、12、13、14、15、16 共 10 份文档。</li>
+    <li><b>评审对象</b>：本页面 + <code>docs/plan/</code> 下 00、01、02、10 – 19 共 13 份 Markdown 文档。</li>
     <li><b>评审重点</b>：① 八周范围是否可完成 ② 每周任务包工作量与 4–8 小时投入是否匹配 ③ 角色分工是否均衡 ④ 里程碑验收标准是否过严或过松 ⑤ 有无遗漏的必须交付项。</li>
     <li><b>提交方式</b>：在项目群内以「文档编号 + 章节 + 意见」格式提出；或提 GitHub Issue 并标注 <code>review</code> 标签。</li>
     <li><b>截止时间</b>：项目启动会前一个晚上 22:00。逾期未提视为无异议。</li>
@@ -108,9 +108,9 @@ a{color:var(--blue)}
   <thead><tr><th>原 24 周内容</th><th>八周处置</th><th>依据</th></tr></thead>
   <tbody>
     <tr><td>领域层（状态机 / 规划引擎 / 话术 / 红线）</td><td><b>保留</b>，压缩至 W2–W3</td><td>系统内核，删则项目不成立</td></tr>
-    <tr><td>四端前端</td><td><b>保留</b>，W2 搭骨架、W6 成型</td><td>「一内核四通道」是核心论点</td></tr>
+    <tr><td>三端前端</td><td><b>保留</b>，W2 搭骨架、W6 成型</td><td>「一内核三通道」是核心论点</td></tr>
     <tr><td>真 ASR / TTS / OCR</td><td><b>保留</b>，集中在 W5</td><td>演示可信度依赖真实识别</td></tr>
-    <tr><td>树莓派整机 + ESP32 按键 + 3D 外壳</td><td><b>降级为条件交付 C3 / C4</b></td><td>采购与调试不可控，且不承担主演示</td></tr>
+    <tr><td>树莓派 4B 整机 + 7 寸 1024×600 触摸屏 + 3D 打印外壳</td><td><b>降级为条件交付 C3 / C4</b></td><td>采购与调试不可控，且不承担主演示</td></tr>
     <tr><td>LLM + RAG 对话</td><td><b>降级为条件交付 C1</b></td><td>模板话术已可覆盖 90% 场景</td></tr>
     <tr><td>知识图谱分诊</td><td><b>降级为条件交付 C2</b></td><td>成员 A 模块可直接接，但非主链路</td></tr>
     <tr><td>医保报销解释器</td><td><b>降级为条件交付 C5</b></td><td>加分项，不影响主线闭环</td></tr>
@@ -130,22 +130,22 @@ a{color:var(--blue)}
 <div class="tl">
   <div class="wk">
     <div class="wh"><span class="wn">W1</span><span class="wt">立项与契约冻结</span><span class="owner">T1 主导</span></div>
-    <div class="wb">建仓库与分支保护 · CI 骨架 · 会话协议 v0.1 冻结 · 领域模型最小可用字段集冻结 · 四端工程骨架 · AI 选型与账号 · 演示载体方案 · 术语表 · 全员完成 3 门 GitHub Skills</div>
+    <div class="wb">建仓库与分支保护 · CI 骨架 · 会话协议 v0.1 冻结 · 领域模型最小可用字段集冻结 · 三端工程骨架 · AI 选型与账号 · 演示载体方案 · 术语表 · 全员完成 3 门 GitHub Skills</div>
     <div class="wb" style="color:var(--dim);margin-top:4px">出口条件：协议与模型冻结；CI 可执行；全员可克隆并跑通测试</div>
   </div>
   <div class="wk ms">
-    <div class="wh"><span class="wn">W2</span><span class="wt">领域内核与四端骨架</span><span class="wm">M1</span><span class="owner">T1 瓶颈</span></div>
-    <div class="wb">状态机 + 事件总线 + 记忆库接口 · 话术模板引擎 + 红线校验器 v0.1 · 设备端骨架 · 用户端骨架 · 家属端骨架 · 工作台骨架 · 测试框架落地 · 统一请求层 · 互备演练①</div>
-    <div class="wb" style="color:var(--ok);margin-top:4px">M1：四端骨架可启动｜领域层覆盖率 100%｜测试 ≥ 40｜CI 全绿</div>
+    <div class="wh"><span class="wn">W2</span><span class="wt">领域内核与三端骨架</span><span class="wm">M1</span><span class="owner">T1 瓶颈</span></div>
+    <div class="wb">状态机 + 事件总线 + 记忆库接口 · 话术模板引擎 + 红线校验器 v0.1 · 设备端骨架 · 用户端骨架 · 家属端骨架 · 设备端逐屏骨架 · 测试框架落地 · 统一请求层 · 互备演练①</div>
+    <div class="wb" style="color:var(--ok);margin-top:4px">M1：三端骨架可启动｜领域层覆盖率 100%｜测试 ≥ 40｜CI 全绿</div>
   </div>
   <div class="wk">
     <div class="wh"><span class="wn">W3</span><span class="wt">主线打通（假适配器）</span><span class="owner">T5 瓶颈</span></div>
-    <div class="wb">五个假适配器 · 会话编排器 · 设备端会话客户端 · 状态机补全 · 检查规划引擎 · 设备端无障碍 · 用户端主流程 · 工作台多患者 · 红线校验接入 CI · AI 代码审计会①</div>
+    <div class="wb">五个假适配器 · 会话编排器 · 设备端会话客户端 · 状态机补全 · 检查规划引擎 · 设备端无障碍 · 用户端主流程 · 设备端三通道渲染 · 红线校验接入 CI · AI 代码审计会①</div>
   </div>
   <div class="wk ms">
     <div class="wh"><span class="wn">W4</span><span class="wt">主线集成</span><span class="wm">M2</span><span class="owner">全员瓶颈</span></div>
-    <div class="wb">9 节点全通联调 · 家属端推送与时间轴 · 工作台校对与双签 · 识单流程 · E2E ≥ 8 条 · 演示载体验证 · <b>范围冻结评审</b></div>
-    <div class="wb" style="color:var(--ok);margin-top:4px">M2：9 节点闭环｜视障零点击｜听障旁白静音｜测试 ≥ 120｜全流程录像</div>
+    <div class="wb">11 节点全通联调 · 家属端推送与时间轴 · 设备端 11 节点全走通 · 识单流程 · E2E ≥ 8 条 · 演示载体验证 · <b>范围冻结评审</b></div>
+    <div class="wb" style="color:var(--ok);margin-top:4px">M2：11 节点闭环｜视障零点击｜听障旁白静音｜测试 ≥ 120｜全流程录像</div>
   </div>
   <div class="wk">
     <div class="wh"><span class="wn">W5</span><span class="wt">真实 AI 接入</span><span class="owner">T5 瓶颈</span></div>
@@ -153,9 +153,9 @@ a{color:var(--blue)}
     <div class="note" style="border-color:var(--warn)">纪律：本周最多替换 2 个假适配器，每换一个即执行完整回归</div>
   </div>
   <div class="wk ms">
-    <div class="wh"><span class="wn">W6</span><span class="wt">四端成型与演示定型</span><span class="wm">M3</span><span class="owner">T3/T4 瓶颈</span></div>
-    <div class="wb">用户端无障碍完善 · 家属端隐私开关 · 工作台升级工单 · 医保解释器（若 C5）· 图谱分诊（若 C2）· 演示载体双机定型 · 无障碍专项走查 · 可用性测试脚本 · 测试 ≥ 180</div>
-    <div class="wb" style="color:var(--ok);margin-top:4px">M3：真语音可用｜真识单可用｜四端有真实数据流｜双机就绪｜P95 &lt; 800ms</div>
+    <div class="wh"><span class="wn">W6</span><span class="wt">三端成型与演示定型</span><span class="wm">M3</span><span class="owner">T3/T4 瓶颈</span></div>
+    <div class="wb">用户端无障碍完善 · 家属端隐私开关 · 设备端点位讲解与情绪陪伴 · 医保解释器（若 C5）· 图谱分诊（若 C2）· 演示载体双机定型 · 无障碍专项走查 · 可用性测试脚本 · 测试 ≥ 180</div>
+    <div class="wb" style="color:var(--ok);margin-top:4px">M3：真语音可用｜真识单可用｜三端有真实数据流｜双机就绪｜P95 &lt; 800ms</div>
   </div>
   <div class="wk">
     <div class="wh"><span class="wn">W7</span><span class="wt">用户测试与缺陷清扫</span><span class="owner">T6 瓶颈</span></div>
@@ -174,9 +174,9 @@ a{color:var(--blue)}
   <thead><tr><th>代号</th><th>角色</th><th>核心职责</th><th>否决权</th></tr></thead>
   <tbody>
     <tr><td><b>T1</b></td><td>项目经理 / 架构师 / 领域工程</td><td>领域层、接口契约、架构决策、进度管理、对外沟通</td><td>—（范围与选型最终裁决权）</td></tr>
-    <tr><td><b>T2</b></td><td>设备端与嵌入式</td><td>设备端前端、演示载体、固件与按键、硬件集成</td><td>交互可用性（与 T5 共有）</td></tr>
+    <tr><td><b>T2</b></td><td>设备端与嵌入式</td><td>设备端前端、演示载体、触觉反馈固件、硬件集成</td><td>交互可用性（与 T5 共有）</td></tr>
     <tr><td><b>T3</b></td><td>用户端与家属端前端</td><td>用户端、家属端 H5、推送模板、视觉规范</td><td>—</td></tr>
-    <tr><td><b>T4</b></td><td>陪诊师工作台与中后台</td><td>工作台、置信度校对、交接双签、运营后台</td><td>工作台并发可用性</td></tr>
+    <tr><td><b>T4</b></td><td>毕设底座接入与设备端交互</td><td>设备端逐屏界面、触摸控件、全屏启动</td><td>设备端可用性建议优先权</td></tr>
     <tr><td><b>T5</b></td><td>AI 集成与无障碍</td><td>七类适配器、音频链路、识单置信度、无障碍验收</td><td>无障碍达标性（与 T2 共有）</td></tr>
     <tr><td><b>T6</b></td><td>质量保证</td><td>测试体系、CI/CD、缺陷管理、发布验收、测试报告</td><td><b>合并否决权（对全员生效，含 T1）</b></td></tr>
   </tbody>
@@ -191,7 +191,7 @@ a{color:var(--blue)}
     <tr><td>W3</td><td>高</td><td>T5</td><td>五个假适配器拆分，T6 同步写夹具</td></tr>
     <tr><td>W4</td><td>极高</td><td>全员</td><td>PR 集中在评审会前提交，T6 于交付截止前值守合并窗口</td></tr>
     <tr><td>W5</td><td>高</td><td>T5</td><td>换一个验一个，回滚预案先行</td></tr>
-    <tr><td>W6</td><td>极高</td><td>T3 / T4</td><td>四端分两条线并行；载体 W5 末即定</td></tr>
+    <tr><td>W6</td><td>极高</td><td>T3 / T4</td><td>三端分两条线并行；载体 W5 末即定</td></tr>
     <tr><td>W7</td><td>中</td><td>T6</td><td>测试脚本 W6 完成，W7 只执行与修复</td></tr>
     <tr><td>W8</td><td>高</td><td>T1</td><td>PPT 与视频 W7 已启动</td></tr>
   </tbody>
@@ -203,14 +203,14 @@ a{color:var(--blue)}
 <table>
   <thead><tr><th>#</th><th>交付项</th><th>责任人</th><th>完成周次</th></tr></thead>
   <tbody>
-    <tr><td>1</td><td><span class="tag req">必交</span>陪诊状态机（9 节点 + 兜底子状态机）</td><td>T1</td><td>W4</td></tr>
+    <tr><td>1</td><td><span class="tag req">必交</span>陪诊状态机（11 节点 + 兜底子状态机）</td><td>T1</td><td>W4</td></tr>
     <tr><td>2</td><td><span class="tag req">必交</span>话术模板引擎 + 红线校验器（禁用词 0）</td><td>T1</td><td>W3</td></tr>
     <tr><td>3</td><td><span class="tag req">必交</span>检查规划引擎（约束打分 + 理由输出）</td><td>T1</td><td>W3</td></tr>
     <tr><td>4</td><td><span class="tag req">必交</span>会话协议 + 会话编排器</td><td>T1</td><td>W3</td></tr>
     <tr><td>5</td><td><span class="tag req">必交</span>设备端（浏览器形态，平板/笔记本可跑）</td><td>T2</td><td>W6</td></tr>
     <tr><td>6</td><td><span class="tag req">必交</span>用户端（老人版 / 标准版）</td><td>T3</td><td>W6</td></tr>
     <tr><td>7</td><td><span class="tag req">必交</span>家属端（推送 + 时间轴 + 隐私开关）</td><td>T3</td><td>W6</td></tr>
-    <tr><td>8</td><td><span class="tag req">必交</span>陪诊师工作台（队列 + 置信度校对 + 双签）</td><td>T4</td><td>W6</td></tr>
+    <tr><td>8</td><td><span class="tag req">必交</span>毕设底座接入（fixtures + 只读适配器 + 字段映射 + 号源中心）与设备端逐屏交互（11 屏 + 触摸控件 + 全屏启动）</td><td>T4</td><td>W6</td></tr>
     <tr><td>9</td><td><span class="tag req">必交</span>真实 ASR / TTS / OCR 三类适配器</td><td>T5</td><td>W5</td></tr>
     <tr><td>10</td><td><span class="tag req">必交</span>无障碍三通道（视障零点击 / 听障替我说 / 老人大字）</td><td>T5 + T2</td><td>W6</td></tr>
     <tr><td>11</td><td><span class="tag req">必交</span>CI 流水线 + 测试 L1–L4</td><td>T6</td><td>W4</td></tr>
@@ -224,20 +224,22 @@ a{color:var(--blue)}
   <tbody>
     <tr><td>C1</td><td><span class="tag cond">条件</span>LLM + RAG 对话（医院知识库）</td><td>W4 结束时 M2 提前完成</td></tr>
     <tr><td>C2</td><td><span class="tag cond">条件</span>知识图谱分诊（成员 A 模块接入）</td><td>W3 结束时后端空余算力</td></tr>
-    <tr><td>C3</td><td><span class="tag cond">条件</span>ESP32 物理按键 + 震动马达</td><td>硬件 W1 下单且 W6 前到货</td></tr>
-    <tr><td>C4</td><td><span class="tag cond">条件</span>树莓派 Kiosk 整机</td><td>平板方案已在 W6 验证通过</td></tr>
+    <tr><td>C3</td><td><span class="tag no">取消</span>~~震动触觉反馈模块~~ 无震动马达（ADR-019）</td><td>—</td></tr>
+    <tr><td>C4</td><td><span class="tag req">已到货</span>树莓派 4B + 7 寸 1024×600 触摸屏整机（无实体键、不带电池、无读卡器）</td><td>W1 可开机验证</td></tr>
     <tr><td>C5</td><td><span class="tag cond">条件</span>医保报销解释器</td><td>W5 结束时前端无阻塞</td></tr>
     <tr><td>C6</td><td><span class="tag cond">条件</span>3D 打印外壳</td><td>不占用软件组工时</td></tr>
   </tbody>
 </table>
 
-<h3>明确不做（6 项）</h3>
+<h3>明确不做（8 项）</h3>
 <p>
 <span class="tag no">排除</span>微信小程序上架（需企业主体）
-<span class="tag no">排除</span>医院 HIS 对接（无授权）
+<span class="tag no">排除</span>医院 HIS 对接（本期不接，号源自建）
 <span class="tag no">排除</span>多医院覆盖
 <span class="tag no">排除</span>端侧大模型（硬件不足）
-<span class="tag no">排除</span>后台运营数据分析
+<span class="tag no">排除</span>院内管理数据分析看板
+<span class="tag no">排除</span>院内人员（医生 / 护士）前端界面（HIS 承担）
+<span class="tag no">排除</span>材料交接签署模块（设备端只做「已交付」确认）
 <span class="tag no">排除</span>自研 PCB / 注塑外壳
 </p>
 
@@ -271,7 +273,7 @@ a{color:var(--blue)}
   <tbody>
     <tr><td>RK-01</td><td>八周工期导致范围失控</td><td>高</td><td>高</td><td>W4 范围冻结；放弃全部条件交付项</td></tr>
     <tr><td>RK-02</td><td>真实 AI 接入超期</td><td>中</td><td>高</td><td>未接入项回退假实现，保留演示效果</td></tr>
-    <tr><td>RK-03</td><td>四端集成冲突集中爆发</td><td>高</td><td>中</td><td>合并窗口固定，T6 现场值守</td></tr>
+    <tr><td>RK-03</td><td>三端集成冲突集中爆发</td><td>高</td><td>中</td><td>合并窗口固定，T6 现场值守</td></tr>
     <tr><td>RK-04</td><td>演示载体不稳定</td><td>中</td><td>高</td><td>双机备份（平板 + 笔记本）</td></tr>
     <tr><td>RK-05</td><td>成员连续两周未完成计划</td><td>中</td><td>高</td><td>一对一沟通 + 任务降级为条件交付</td></tr>
     <tr><td>RK-06</td><td>数据合规问题</td><td>低</td><td>极高</td><td>Secret Scanning + pre-commit 拦截</td></tr>
@@ -286,8 +288,8 @@ a{color:var(--blue)}
 <table>
   <thead><tr><th>条件</th><th>应对措施</th></tr></thead>
   <tbody>
-    <tr><td>W2 未达成 M1</td><td>暂缓 C2、C5；四端骨架降级为仅设备端 + 工作台</td></tr>
-    <tr><td>W4 未达成 M2</td><td>启用范围冻结；放弃 C1–C6；工作台降级为只读列表</td></tr>
+    <tr><td>W2 未达成 M1</td><td>暂缓 C2、C5；三端骨架降级为仅设备端</td></tr>
+    <tr><td>W4 未达成 M2</td><td>启用范围冻结；放弃 C1–C6；设备端只保留主流程 11 节点</td></tr>
     <tr><td>W6 未达成 M3</td><td>未接入 AI 回退假实现；可用性测试缩减至 6 人</td></tr>
     <tr><td>W7 缺陷未清零</td><td>只修 P0；P1 记入已知问题清单，答辩时主动说明</td></tr>
   </tbody>
@@ -327,7 +329,7 @@ a{color:var(--blue)}
     <thead><tr><th>编号</th><th>待决事项</th><th>默认方案</th><th>决策人</th></tr></thead>
     <tbody>
       <tr><td>P-01</td><td>演示载体是平板还是笔记本为主</td><td>平板为主、笔记本备份</td><td>T2</td></tr>
-      <tr><td>P-02</td><td>是否采购树莓派与 ESP32（C3/C4）</td><td>采购，但仅作加分项</td><td>T1 + T2</td></tr>
+      <tr><td>P-02</td><td>是否采购树莓派与触摸屏（C3/C4）</td><td>采购，但仅作加分项</td><td>T1 + T2</td></tr>
       <tr><td>P-03</td><td>ASR / TTS / OCR 供应商</td><td>沿用现有 DashScope 账号</td><td>T5</td></tr>
       <tr><td>P-04</td><td>家属端是否做小程序版本</td><td>不做，仅 H5 + 测试号</td><td>T3</td></tr>
       <tr><td>P-05</td><td>成员 A 的知识图谱模块是否接入（C2）</td><td>W3 结束时评估</td><td>T1</td></tr>
@@ -349,8 +351,8 @@ a{color:var(--blue)}
 </table>
 
 <footer>
-  <b>小暖陪诊 · 项目规划评审包 v3.0（八周版）</b><br>
-  口径基准：<code>00-项目工期与范围基线</code>｜完整文档：<code>medpal-plan-v2/</code>（共 11 份）｜演示程序：<code>medpal-demo/v4.html</code><br>
+  <b>院内智慧陪诊终端 · 项目规划评审包 v3.0（八周版）</b><br>
+  口径基准：<code>00-项目工期与范围基线</code>｜完整文档：<code>docs/plan/</code>（共 18 份：13 Markdown + 5 HTML）｜设备端原型：<code>demo/device-prototype.html</code><br>
   文档效力：文档之间口径冲突时，以 00 号基线文件为准；基线与 14 号实施计划冲突时，以 00 号为准。
 </footer>
 

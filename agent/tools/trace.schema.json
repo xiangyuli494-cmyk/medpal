@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medpal.local/schemas/trace.schema.json",
+  "title": "medpal-trace/1",
+  "description": "MedPal-Cog 决策链（trace.json）v1 契约。冻结口径见 agent/docs/trace-schema.md。字段名与 agent/mcp-server/store.py 的 write_trace/get_trace 一致，不自造同义词。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "trace_id", "question", "agent_version", "ontology_version", "steps", "gaps", "trace_completeness"],
+  "properties": {
+    "schema": {
+      "const": "medpal-trace/1",
+      "description": "版本标识。walking-skeleton/1 是骨架期方言，用 tools/validate_trace.py migrate 转换。"
+    },
+    "trace_id": {
+      "type": "string",
+      "pattern": "^TR-[0-9]{8}-[0-9A-F]{4}$",
+      "description": "TR-YYYYMMDD-XXXX，后四位大写十六进制。store.py:504 生成。"
+    },
+    "question": { "type": "string", "minLength": 1 },
+    "agent_version": { "type": "string", "minLength": 1 },
+    "ontology_version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+$",
+      "description": "写入时由 current_version(conn) 决定，不手填。"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "带 +08:00 的 ISO8601。get_trace 会带出，报告头部用。"
+    },
+    "elapsed_ms": { "type": "integer", "minimum": 0 },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "description": "按 i 严格递增排列。write_trace 不排序，所以顺序由生产者保证。",
+      "items": { "$ref": "#/$defs/step" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^AST-[A-Za-z0-9][A-Za-z0-9-]*$" },
+      "description": "本条 trace 引用到的来源资产集合，后端从 evidence 反推派生，不接受手填。见 docs §5.3。"
+    },
+    "conclusion": {
+      "type": "object",
+      "description": "可选。顶层结论摘要，字段随业务走；骨架期方言里的 conclusion 对象可直接搬进来。",
+      "additionalProperties": true
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "缺口清单，人话。空的也要给空数组，不要 null。"
+    },
+    "trace_completeness": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "溯源完整率 = 1 - len(unresolved)/len(cited)，cited 为空时记 1.0（store.py:534）。"
+    },
+    "unresolved": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "cited 里查不到落点的引用，原样列出，给 T6 做自动检查用。"
+    }
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["i", "op", "evidence"],
+      "properties": {
+        "i": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "步序，从 1 起严格递增。报告表格第一列。"
+        },
+        "op": {
+          "type": "string",
+          "enum": [
+            "ingest",
+            "parse",
+            "entity_extract",
+            "align_evidence",
+            "std_align",
+            "kg_query",
+            "reason_2hop",
+            "retrieve",
+            "conflict_check",
+            "conclude",
+            "skill_export"
+          ],
+          "description": "操作名。reason_2hop 是骨架期遗留名，v1 起用 kg_query。新增值必须升 schema 次版本。"
+        },
+        "in": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "本步输入。字符串数组，不是 JSON 字符串——传成字符串会被逐字符遍历，见 docs §6.1。"
+        },
+        "out": {
+          "description": "本步输出。数组、对象、字符串都合法（conclude 一般是对象）。",
+          "type": ["array", "object", "string", "null"]
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 3 },
+          "description": "证据引用数组，元素只能是 T-<8hex> 三元组 id 或 <asset_id>#<anchor_id>。空数组表示本步不引用证据（如 entity_extract）。",
+          "examples": [["T-d331cf32", "AST-2026-000137#s2.p1.c3"]]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "本步置信度。缺口项：write_trace 只存不渲染，报告里看不到。见 docs §5.2。"
+        },
+        "ref": {
+          "type": "string",
+          "enum": ["PARSE", "EVIDENCE", "STORE", "TRAVERSE", "CONCLUDE"],
+          "description": "粗粒度层标签，与 op 有映射表（docs §3.3）。骨架期必填，v1 起可省略，省则由 op 推导。"
+        },
+        "detail": {
+          "type": "string",
+          "description": "人话补充，进报告「操作」列的后缀。骨架期方言用 detail 承载摘要。"
+        }
+      }
+    }
+  }
+}
