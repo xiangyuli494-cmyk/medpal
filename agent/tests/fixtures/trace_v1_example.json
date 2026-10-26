@@ -1,0 +1,86 @@
+{
+  "schema": "medpal-trace/1",
+  "trace_id": "TR-20261026-043F",
+  "question": "反复上腹隐痛3个月，夜间加重，进食后缓解，近两周服用布洛芬",
+  "agent_version": "offline-baseline",
+  "ontology_version": "v0.9",
+  "created_at": "2026-10-26T00:05:31+08:00",
+  "elapsed_ms": 13,
+  "steps": [
+    {
+      "i": 1,
+      "op": "entity_extract",
+      "out": [
+        "上腹隐痛",
+        "布洛芬"
+      ],
+      "evidence": []
+    },
+    {
+      "i": 2,
+      "op": "std_align",
+      "out": [
+        "DRUG-IBU",
+        "SYM-EPI"
+      ],
+      "evidence": []
+    },
+    {
+      "i": 3,
+      "op": "kg_query",
+      "in": [
+        "上腹隐痛",
+        "布洛芬"
+      ],
+      "out": [
+        "K27",
+        "ICD10-K27",
+        "EX-HP-BT",
+        "DEP-GI"
+      ],
+      "evidence": [
+        "T-d331cf32",
+        "T-b5d99245",
+        "AST-2026-000137#s2.p1.c3",
+        "AST-2026-000137#s3.p1.c1"
+      ],
+      "confidence": 0.89
+    },
+    {
+      "i": 4,
+      "op": "conflict_check",
+      "in": [
+        "布洛芬",
+        "K27"
+      ],
+      "out": [
+        "布洛芬"
+      ],
+      "evidence": []
+    },
+    {
+      "i": 5,
+      "op": "conclude",
+      "out": {
+        "dept": "消化内科",
+        "conf": 0.9,
+        "exams": [
+          "幽门螺杆菌呼气试验",
+          "胃镜检查"
+        ]
+      },
+      "evidence": [
+        "AST-2026-000137#s1.h",
+        "AST-2026-000137#s2.p1.c2",
+        "AST-2026-000137#s3.p1.c2"
+      ],
+      "ref": "CONCLUDE"
+    }
+  ],
+  "gaps": [],
+  "trace_completeness": 1.0,
+  "unresolved": [],
+  "sources": [
+    "AST-2026-000137"
+  ]
+}
