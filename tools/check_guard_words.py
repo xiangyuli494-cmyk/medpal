@@ -11,6 +11,7 @@
 
 退出码：0 通过；1 命中；2 扫描异常（词表缺失或文件无法解码）
 """
+
 from __future__ import annotations
 
 import sys

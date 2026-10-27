@@ -1,0 +1,17 @@
+{"triple_id": "T-1238d7cd", "head_id": "K21", "rel": "aligned_to_standard", "tail_id": "ICD10-K21", "confidence": 0.99, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s1.h"}
+{"triple_id": "T-1d0795a0", "head_id": "K27", "rel": "requires_exam", "tail_id": "EX-HP-BT", "confidence": 0.92, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s3.p1.c1"}
+{"triple_id": "T-2094a0b8", "head_id": "DRUG-IBU", "rel": "contraindicated_for", "tail_id": "K27", "confidence": 0.88, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s4.p1.c2"}
+{"triple_id": "T-2e3c99cd", "head_id": "SYM-EPI", "rel": "belongs_to_dept", "tail_id": "DEP-GI", "confidence": 0.8, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s2.p1.c2"}
+{"triple_id": "T-2e5f38f5", "head_id": "K29", "rel": "requires_exam", "tail_id": "EX-HP-BT", "confidence": 0.84, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s3.p1.c1"}
+{"triple_id": "T-3776171a", "head_id": "K21", "rel": "requires_exam", "tail_id": "EX-GASTRO", "confidence": 0.8, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s2.p1.c3"}
+{"triple_id": "T-438eb8eb", "head_id": "K29", "rel": "has_symptom", "tail_id": "SYM-EPI", "confidence": 0.7, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s2.p1.c2"}
+{"triple_id": "T-4b3edfde", "head_id": "K21", "rel": "has_symptom", "tail_id": "SYM-HEART", "confidence": 0.85, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s1.h"}
+{"triple_id": "T-50de429b", "head_id": "K29", "rel": "aligned_to_standard", "tail_id": "ICD10-K29", "confidence": 0.99, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s1.h"}
+{"triple_id": "T-625ec0e7", "head_id": "K21", "rel": "belongs_to_dept", "tail_id": "DEP-GI", "confidence": 0.88, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s1.h"}
+{"triple_id": "T-6393a7ab", "head_id": "K27", "rel": "requires_exam", "tail_id": "EX-GASTRO", "confidence": 0.9, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s3.p1.c2"}
+{"triple_id": "T-7cb45dbd", "head_id": "K29", "rel": "requires_exam", "tail_id": "EX-GASTRO", "confidence": 0.86, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s2.p1.c3"}
+{"triple_id": "T-aa6bc490", "head_id": "SYM-EPI", "rel": "diagnosed_by", "tail_id": "K27", "confidence": 0.78, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s2.p1.c3"}
+{"triple_id": "T-ae476631", "head_id": "K27", "rel": "aligned_to_standard", "tail_id": "ICD10-K27", "confidence": 0.99, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s1.h"}
+{"triple_id": "T-b1b35644", "head_id": "R10.1", "rel": "has_symptom", "tail_id": "SYM-EPI", "confidence": 0.9, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s2.p1.c2"}
+{"triple_id": "T-d7300c31", "head_id": "K29", "rel": "belongs_to_dept", "tail_id": "DEP-GI", "confidence": 0.9, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s1.h"}
+{"triple_id": "T-ebd720ff", "head_id": "K27", "rel": "belongs_to_dept", "tail_id": "DEP-GI", "confidence": 0.95, "asset_id": "AST-2026-000137", "anchor_id": "AST-2026-000137#s1.h"}

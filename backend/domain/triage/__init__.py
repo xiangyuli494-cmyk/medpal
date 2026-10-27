@@ -3,6 +3,7 @@
 只做「文本节点 -> 候选科室」的图遍历；
 文本抽取、LLM 选节点和数据库访问都在 adapters 层。
 """
+
 from .graph import GraphRepository
 from .models import DepartmentSuggestion, NodeMatch, TriageResult
 from .rules import (

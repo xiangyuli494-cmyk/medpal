@@ -5,6 +5,7 @@
 只比业务字段，忽略易变字段。有差异就打印前 20 处并以退出码 1 结束——
 CI 红灯就是从这里亮起的。
 """
+
 from __future__ import annotations
 
 import json
@@ -42,8 +43,13 @@ def walk(a, b, path, out):
         for i in range(min(len(a), len(b))):
             walk(a[i], b[i], path + "[" + str(i) + "]", out)
     elif a != b:
-        out.append(path + ": " + json.dumps(a, ensure_ascii=False)
-                   + " vs " + json.dumps(b, ensure_ascii=False))
+        out.append(
+            path
+            + ": "
+            + json.dumps(a, ensure_ascii=False)
+            + " vs "
+            + json.dumps(b, ensure_ascii=False)
+        )
 
 
 def main() -> int:

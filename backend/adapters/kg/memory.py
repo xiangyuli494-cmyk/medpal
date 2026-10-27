@@ -1,4 +1,5 @@
 """内存图谱仓库：零数据库、零网络，供测试和 W2 演示使用。"""
+
 from __future__ import annotations
 
 import json

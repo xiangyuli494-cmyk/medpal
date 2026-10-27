@@ -1,0 +1,31 @@
+type: object
+properties:
+  max_hops:
+    type: integer
+    title: 本体最大跳数
+    default: 2
+    minimum: 1
+    maximum: 3
+  max_rounds:
+    type: integer
+    title: 检索-推理最大轮数
+    default: 4
+    minimum: 1
+    maximum: 6
+  min_evidence_per_claim:
+    type: integer
+    title: 每条结论的最少证据数
+    default: 2
+    minimum: 1
+  low_confidence_threshold:
+    type: number
+    title: 低置信阈值
+    default: 0.5
+    minimum: 0
+    maximum: 1
+  default_department_whitelist:
+    type: array
+    title: 科室白名单
+    items:
+      type: string
+required: []

@@ -16,6 +16,7 @@
 
 退出码：0 通过；1 不合格；2 无法检查
 """
+
 from __future__ import annotations
 
 import subprocess
@@ -87,9 +88,7 @@ def check_one(path: Path) -> list[str]:
     name = path.name
     stem_parts = name[:-3].split("-") if name.endswith(".md") else []
     name_ok = (
-        len(stem_parts) >= 3
-        and stem_parts[0].startswith("W")
-        and stem_parts[1].startswith("T")
+        len(stem_parts) >= 3 and stem_parts[0].startswith("W") and stem_parts[1].startswith("T")
     )
     if not name_ok:
         problems.append(f"{name}: 文件名应为 W周-T工号-模块.md")

@@ -2,6 +2,7 @@
 
 domain 只依赖这个 Protocol；MySQL / 内存图 / 测试假图都实现它。
 """
+
 from __future__ import annotations
 
 from typing import Protocol
@@ -21,9 +22,7 @@ class GraphRepository(Protocol):
     def node_exists(self, node_key: str) -> bool:
         """判断节点是否存在，用于校验 LLM 编造的 key。"""
 
-    def search_nodes(
-        self, keyword: str, node_type: str | None, limit: int
-    ) -> list[NodeMatch]:
+    def search_nodes(self, keyword: str, node_type: str | None, limit: int) -> list[NodeMatch]:
         """按关键词检索候选节点；供规则层与 LLM 工具使用。"""
 
     def in_neighbors(self, node_key: str, relation: str, limit: int) -> list[str]:

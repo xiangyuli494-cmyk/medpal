@@ -1,0 +1,8 @@
+# MedPal-Cog MCP Server —— 固定版本，避免联调时依赖漂移
+mcp==1.27.2
+pydantic>=2.7,<3
+uvicorn>=0.30
+starlette>=0.37
+# 可选：PDF 解析（不装则 PdfParser 自动降级，仅文本/表格可用）
+pymupdf>=1.24 ; python_version < "3.13"
+openpyxl>=3.1

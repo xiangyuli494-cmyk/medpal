@@ -67,16 +67,17 @@ offset 8..    payload    pcm_s16le
 
 ### 3.2 触摸控件到协议消息的映射
 
-设备端是手持借出式陪诊机，7 寸 1024×600 横屏（`docs/specs/device-ia.md` §2、ADR-018）。屏内控件与机身五个实体键的标识符与 `touch.event.target` 的取值逐一对应，两侧不再各写一套。
+设备端是手持借出式陪诊机，7 寸 1024×600 横屏（`docs/specs/device-ia.md` §2、ADR-018）。**机身不设实体按键（ADR-019）**，所有交互都在触摸屏上，顶栏与屏内控件的标识符与 `touch.event.target` 的取值逐一对应，两侧不再各写一套。
 
-**机身实体键（不看屏也能用）**
+**屏内语音与求助（ADR-019 后从机身移回屏幕）**
 
 | 控件 | `target` | 上行 | 说明 |
 | --- | --- | --- | --- |
-| 电源 | — | 不上行 | 借还时开关机，不产生任何消息 |
-| 音量－ / 音量＋ | — | 不上行 | 只改扬声器音量，属渲染参数 |
-| 按住说话 | `mic` | `audio.start` / `audio.end` | 按下发 `audio.start`，松开发 `audio.end`，**不产生 `touch.event`** |
-| 一键求助 | `sos` | `touch.event { target: "sos", action: "long_press" }` | 长按 1.5 秒触发；单击两次（3 秒内）等价，发 `action: "tap"` |
+| 语音入口 | `mic` | `audio.start` / `audio.end` | 点一下发 `audio.start`，再点一下发 `audio.end`，**不产生 `touch.event`**；麦克风选型前由文本输入代替 |
+| 一键求助 | `sos` | `touch.event { target: "sos", action: "tap" }` | 单击即触发，不再要求长按 1.5 秒与进度环 |
+| 点位选择 | `spot` | `touch.event { target: "spot", action: "tap" }` | **不使用蓝牙信标（ADR-019）**，老人在屏上自己选点位，或由服务台在借出时设好起点 |
+
+电源用 Type-C 开关电源上的物理开关，音量与语速在设置面板里调，两者都不上行。
 
 **顶栏与屏内控件**
 
@@ -88,7 +89,7 @@ offset 8..    payload    pcm_s16le
 | 选项胶囊 | `option:<slot_id>` | `touch.event { target: "option:<slot_id>", action: "tap" }` | `slot_id` 由服务端在 `dialog.reply.slots` 下发，设备端只回传 |
 | 设置面板 | — | 不上行 | 音量、语速、方言、高对比、助听器、陪伴开关全部本地生效 |
 
-**只有 4 类操作产生上行消息**：`mic` 走音频帧，`primary` 与 `option:*` 走 `touch.event`，`sos` 走 `touch.event` 的 `long_press`。`back` / `menu`、设置面板与电源、音量四键是纯本地交互，**不得**上行 —— 换屏与调音量都不改 `EpisodeStatus`，上行只会让服务端多一批无意义帧。
+**只有 3 类操作产生上行消息**：`mic` 走音频帧，`primary`、`option:*`、`sos` 与 `spot` 走 `touch.event`。`back` / `menu`、设置面板与电源是纯本地交互，**不得**上行 —— 换屏与调音量都不改 `EpisodeStatus`，上行只会让服务端多一批无意义帧。
 
 `primary` 的语义为什么不由设备端自己定：同一个按钮在 `BRIEFING` 是「我听明白了」，在 `REGISTER` 是「确认挂号」，在 `RECAP` 是「对，记住了」。设备端若自己映射，等于把状态机搬进了客户端，违反 §10 第 1 条。按钮的**文案由服务端下发**（`dialog.reply.primary_label`），设备端只负责画与回传 `target`。
 
@@ -300,7 +301,7 @@ offset 8..    payload    pcm_s16le
 | `ack` 消息 | 11 号 §4.4.3 未列 | §7.1 送达确认需要 |
 | `resend` / `resend.failed` | 11 号 §4.4.3 未列 | §7.2 补帧需要 |
 | `error.code` 增 `E_` 前缀 | 11 号 §4.4.5 | 统一 wire 格式 |
-| `touch.event` 的 `target` 取值集合 | 11 号 §4.4.3 未列 | 设备端为 7 寸触摸屏 + 机身五键（ADR-018），控件标识符需在 wire 上可判别 |
+| `touch.event` 的 `target` 取值集合 | 11 号 §4.4.3 未列 | 设备端为 7 寸触摸屏，**无实体按键**（ADR-019），控件标识符需在 wire 上可判别 |
 | `dialog.reply.primary_label` | 11 号 §4.4.4 未列 | 屏内主操作的文案由服务端按状态节点下发，设备端不自行映射 |
 
 ---
