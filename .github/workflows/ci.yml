@@ -51,3 +51,15 @@ jobs:
         run: python -m pytest backend/tests -q --cov=backend/domain --cov-report=term-missing
         # 覆盖率门槛 W1 先不设：领域层还是空的，设了必然红。
         # W2 领域层开始写的第一天，加 --cov-fail-under=100
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 用户端纯函数测试（协议 / 9 步换算 / 文案红线）
+        # 只跑 node --test，不 npm install：测试只依赖标准库，省 2 分钟装包时间。
+        # 页面与构建验证见 frontend/user-app/README.md，由 T3 手工执行。
+        run: |
+          if [ -d frontend/user-app/tests ]; then
+            node --test frontend/user-app/tests/*.test.js
+          fi

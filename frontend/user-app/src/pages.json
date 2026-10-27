@@ -1,0 +1,39 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "小暖陪诊"
+      }
+    },
+    {
+      "path": "pages/session/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "问小暖"
+      }
+    },
+    {
+      "path": "pages/journey/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "陪诊进度"
+      }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "小暖陪诊",
+    "backgroundColor": "#f6f1e7",
+    "backgroundTextStyle": "dark"
+  }
+}
