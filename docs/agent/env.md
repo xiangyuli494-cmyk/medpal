@@ -1,6 +1,18 @@
 # 环境踩坑与环境清单（WSL2 + Docker Desktop）
 > 适用：WSL2 + Docker Desktop 环境踩坑记录
 
+## 0. 环境清单
+| 项 | 值 | 采集命令 | 采集人 |
+| ---- | ---- | ---- | ---- |
+| WSL版本 |  | wsl --version |  |
+| 内核版本 |  | uname -r |  |
+| Windows版本 |  | winver |  |
+| Docker版本 |  | docker --version |  |
+| docker compose版本 |  | docker compose version |  |
+| Storage Driver | TODO | docker info |  |
+| Docker Root Dir | TODO | docker info |  |
+| 可用磁盘 |  | df -h |  |
+
 ## 1. 代理拦截回环地址问题
 ### 现象
 WSL2 内部配置全局代理后，访问 `127.0.0.1` / `localhost` 回环地址被代理转发，请求超时、连接失败，Docker 容器本地互通、本地控制台访问异常。
