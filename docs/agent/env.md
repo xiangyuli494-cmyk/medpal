@@ -1,5 +1,5 @@
-# env.md 环境踩坑文档（WSL2 + Docker Desktop）
-> 适用：T6 W1 任务，WSL2 + Docker Desktop 部署 Nexent 环境踩坑记录
+# 环境踩坑与环境清单（WSL2 + Docker Desktop）
+> 适用：WSL2 + Docker Desktop 环境踩坑记录
 
 ## 1. 代理拦截回环地址问题
 ### 现象
