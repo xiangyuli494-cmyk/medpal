@@ -7,4 +7,5 @@ pytest-django~=4.9
 websockets~=15.0
 httpx
 mcp<2
-
+# R1 解析层（agent/parse/pdf.py）需要；扫描件仍走 5.7 的 ocr.py
+pymupdf>=1.24 ; python_version < "3.13"
