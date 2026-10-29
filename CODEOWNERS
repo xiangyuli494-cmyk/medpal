@@ -1,25 +1,47 @@
 # CODEOWNERS —— 谁改谁审
 # 语法：路径 @GitHub账号
 # 生效条件：账号必须是仓库 Collaborator，否则该规则被忽略
+# 生效顺序：最后匹配的一条优先（GitHub 规则），所以「例外」写在「兜底」前面
 
 # 默认：T1 兜底
 *                                   @xiangyuli494-cmyk
 
-# 赛题3 主线
-/agent/ontology/                    @zincumyu
-/agent/parse/                       @suyouZJF
+# ---------- 赛题3 主线 ----------
+# ontology/ 是两个人的地盘，按文件拆：T2 管内核与推理，T4 管差分/对齐/校验
+/agent/ontology/graph.py            @zincumyu
+/agent/ontology/extract.py          @zincumyu
+/agent/ontology/traverse.py         @zincumyu
+/agent/ontology/version.py          @zincumyu
+/agent/ontology/__init__.py         @zincumyu
+/agent/ontology/align.py            @Hcp1111
+/agent/ontology/diff.py             @Hcp1111
+/agent/ontology/audit.py            @Hcp1111
+/agent/ontology/                    @zincumyu @Hcp1111
+
+# 解析器目录是 parsers/（复数），对齐 agent/mcp-server/parsers.py 的命名
+/agent/parsers/                     @suyouZJF
 /agent/retrieve/                    @suyouZJF
 /agent/web/                         @xy-Z5
 /agent/eval/                        @suyouZJF
+
+# tools/ 主要放门禁与校验器（T6），但 probe_llm.py 是 T5 的模型通道探针
+/agent/tools/probe_llm.py           @suyouZJF
 /agent/tools/                       @Dewqian
+
+# docs/ 里各角色的专属文档先写例外，再落 T1 兜底
+/agent/docs/env.md                  @Dewqian
+/agent/docs/cards.md                @xy-Z5
+/agent/docs/ontology-log.md         @Hcp1111
 /agent/docs/                        @xiangyuli494-cmyk
 
-# 门禁与工程
+/agent/mcp-server/                  @xiangyuli494-cmyk
+
+# ---------- 门禁与工程 ----------
 /.github/                           @Dewqian
 /tools/diff_json.py                 @Dewqian
 /agent/skeleton.py                  @xiangyuli494-cmyk
-/fixtures/golden_trace.json         @Dewqian
+/agent/tests/fixtures/              @Dewqian
 
-# 已冻结区：改动须 T1 批准
-/docs/                             @xiangyuli494-cmyk
+# ---------- 已冻结区：改动须 T1 批准 ----------
+/docs/                              @xiangyuli494-cmyk
 /backend/                           @xiangyuli494-cmyk
