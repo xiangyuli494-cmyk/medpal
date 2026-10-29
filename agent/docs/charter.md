@@ -48,10 +48,10 @@
 
 | 赛题要求 | 我们的实现 | 证据在哪 |
 | --- | --- | --- |
-| 多模态异构数据统一识别与资产标识 | 解析器插件 + Asset Card | `agent/parse/`、`agent/docs/asset-card.md` |
+| 多模态异构数据统一识别与资产标识 | 解析器插件 + Asset Card | `agent/parsers/`、`agent/docs/mcp-contract.md` |
 | 低资源本体半自动构建 + 动态更新 | 规则+LLM 混合抽取 + 版本差分 | `agent/ontology/` |
 | 与行业规范标准对齐 | ICD-10 / 临床路径映射 | `agent/ontology/align.py` |
-| 深度集成 MCP 与 Skills | 7 个 MCP 工具 + 3 个 Skill 包 | `agent/mcp/`、`agent/skills/` |
+| 深度集成 MCP 与 Skills | 7 个 MCP 工具 + 3 个 Skill 包 | `agent/mcp-server/`、`agent/skills/` |
 | 检索-推理双驱动执行流 | 检索召回 + 图谱多跳 + 融合排序 | `agent/retrieve/` + `agent/ontology/traverse.py` |
 | 跨文档多跳推理 + 决策链可溯源 | `trace.json` 五步链 + evidence 原文锚点 | `agent/skeleton.py` 输出 |
 | 基于 Nexent 可运行 | 部署配置 + 演示录屏 | `agent/docs/deploy.md` |
