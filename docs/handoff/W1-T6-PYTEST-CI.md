@@ -1,13 +1,15 @@
-# W1-T6-PYTEST-CI 交接单
-## 任务简述
-新增 GitHub Actions pytest CI 流水线，发起PR或者推代码到feat分支时自动运行pytest单元测试。
+# 模块：pytest CI流水线
+## 一句话说清它干什么
+新增pytest CI工作流，PR和push时自动执行单元测试，失败会阻断合并。
 
-## 修改内容
-1. 新增文件：.github/workflows/pytest.yml
-2. 配置：触发后自动拉取代码、安装依赖、执行 make test
+## 数据流
+PR提交 / 代码push → 触发GitHub Actions → 拉取代码 → 安装依赖 → 执行make test → 回传测试结果，失败标记CI不通过。
 
-## 验证方式
-手工核对yml语法正确；提交分支后，触发CI，观察pytest任务正常拉起。
+## 我改了什么（人工修改点）
+1. 在 .github/workflows 新增 pytest.yml，配置pull_request、push触发
+2. 编写本交接单，用于handoff校验
 
-## 风险
-仅新增CI配置，不改动业务代码；CI测试失败会阻断PR合并。
+## 怎么验证的
+1. 检查yml语法无报错
+2. 提交分支后可以正常触发CI任务
+3. 等待CI自动运行pytest测试
