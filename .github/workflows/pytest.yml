@@ -25,4 +25,4 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest agent/tests/ --ignore=agent/tests/test_trace_schema.py
+          pytest agent/tests/ --ignore=agent/tests/fixtures --ignore-file=agent/tests/test_trace_schema.py
