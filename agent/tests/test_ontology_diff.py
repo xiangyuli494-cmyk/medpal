@@ -13,6 +13,7 @@ from pathlib import Path
 import pytest
 
 from agent.ontology.diff import (
+    DiffVersionInvalid,
     DiffVersionNotFound,
     diff_versions,
     render_report,
@@ -137,10 +138,107 @@ def test_standard_change_is_modified(tmp_path: Path) -> None:
 
 
 def test_compared_fields_follow_snapshot_columns(versions: tuple[Path, Path]) -> None:
-    """快照只有 7 列，没有 standard —— 本次就只比 confidence 和 anchor_id。"""
+    """快照只有 7 列，没有 standard —— 本次就比 confidence、anchor_id 与三个内容列。"""
     diff = diff_versions(*versions)
 
-    assert diff["compared_fields"] == ["confidence", "anchor_id"]
+    assert diff["compared_fields"] == [
+        "confidence",
+        "anchor_id",
+        "head_id",
+        "rel",
+        "tail_id",
+    ]
+
+
+def test_identity_is_triple_id(versions: tuple[Path, Path]) -> None:
+    """身份以 schema §4.1 的主键为准，结果里写明用的是哪个键。"""
+    diff = diff_versions(*versions)
+
+    assert diff["identity"] == "triple_id"
+
+
+def test_renumbered_knowledge_is_drift_not_add_remove(tmp_path: Path) -> None:
+    """整库重新编号：三条知识内容一模一样，只是 id 全换，不能报成 3 删 3 加。"""
+    old = write_jsonl(
+        tmp_path / "a.jsonl",
+        [
+            triple("K27", "requires_exam", "EX-GASTRO", 0.90, "A#p1", "T-aaa00001"),
+            triple("K21", "belongs_to_dept", "DEP-GI", 0.88, "A#p2", "T-aaa00002"),
+            triple("K29", "has_symptom", "SYM-EPI", 0.70, "A#p3", "T-aaa00003"),
+        ],
+    )
+    new = write_jsonl(
+        tmp_path / "b.jsonl",
+        [
+            triple("K27", "requires_exam", "EX-GASTRO", 0.90, "A#p1", "T-bbb00001"),
+            triple("K21", "belongs_to_dept", "DEP-GI", 0.88, "A#p2", "T-bbb00002"),
+            triple("K29", "has_symptom", "SYM-EPI", 0.70, "A#p3", "T-bbb00003"),
+        ],
+    )
+
+    diff = diff_versions(old, new)
+
+    assert diff["counts"] == {"added": 0, "removed": 0, "modified": 0}
+    assert len(diff["id_drift"]) == 3
+
+
+def test_renumbered_pair_still_reports_field_change(tmp_path: Path) -> None:
+    """编号换了、置信度也改了：漂移要留痕，改动也不能被吞掉。"""
+    old = write_jsonl(
+        tmp_path / "a.jsonl",
+        [triple("K27", "requires_exam", "EX-GASTRO", 0.90, "A#p1", "T-aaa00001")],
+    )
+    new = write_jsonl(
+        tmp_path / "b.jsonl",
+        [triple("K27", "requires_exam", "EX-GASTRO", 0.95, "A#p1", "T-bbb00001")],
+    )
+
+    diff = diff_versions(old, new)
+
+    assert diff["counts"] == {"added": 0, "removed": 0, "modified": 1}
+    assert len(diff["id_drift"]) == 1
+    assert diff["modified"][0]["changed_fields"] == ["confidence"]
+    assert diff["modified"][0]["triple_id_old"] == "T-aaa00001"
+    assert diff["modified"][0]["triple_id_new"] == "T-bbb00001"
+
+
+def test_same_id_different_signature_is_modified(tmp_path: Path) -> None:
+    """id 没变但头/关系/尾变了：属于语义变更，不能因为 id 相同就当没改。"""
+    old = write_jsonl(tmp_path / "a.jsonl", [triple("K27", "requires_exam", "EX-GASTRO", 0.90)])
+    new = write_jsonl(tmp_path / "b.jsonl", [triple("K29", "requires_exam", "EX-GASTRO", 0.90)])
+
+    diff = diff_versions(old, new)
+
+    assert diff["counts"] == {"added": 0, "removed": 0, "modified": 1}
+    assert diff["modified"][0]["changed_fields"] == ["head_id"]
+
+
+def test_missing_triple_id_raises(tmp_path: Path) -> None:
+    """快照缺主键说明文件坏了，报错要指出是哪一行。"""
+    broken = triple("K27", "rel", "EX-1")
+    del broken["triple_id"]
+    path = write_jsonl(tmp_path / "a.jsonl", [broken])
+
+    with pytest.raises(DiffVersionInvalid) as exc:
+        diff_versions(path, path)
+
+    assert "第 1 行" in str(exc.value)
+
+
+def test_duplicated_triple_id_raises(tmp_path: Path) -> None:
+    """主键重复等于快照损坏，不许静默丢一行。"""
+    path = write_jsonl(
+        tmp_path / "a.jsonl",
+        [
+            triple("K27", "requires_exam", "EX-GASTRO", triple_id="T-same"),
+            triple("K21", "belongs_to_dept", "DEP-GI", triple_id="T-same"),
+        ],
+    )
+
+    with pytest.raises(DiffVersionInvalid) as exc:
+        diff_versions(path, path)
+
+    assert "T-same" in str(exc.value)
 
 
 def test_absent_standard_does_not_fake_modified(tmp_path: Path) -> None:
