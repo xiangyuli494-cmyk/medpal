@@ -39,7 +39,7 @@
    缺的键不输出、不臆造（字段名仍集中在 to_record()）。
    结果里额外给 identity 与 compared_fields：身份用的是什么、本次实际比了
    哪几个字段，报告末尾也写一行，避免「报无变化」被误读成「所有字段都没变」。
-   schema v0（2026-10-29 冻结，已随 PR #32 合入 main）未定义「差分报告」一节，
+   schema v0（2026-10-29 冻结）未定义「差分报告」一节，
    本格式由 T4 先定，待 schema v1 增补（候选 §4.4）。
    注意两处输入缺口，均不属本模块能修：
    - removed 依赖 status='deprecated' 落库，而 snapshot() 只导 status='active'
@@ -51,8 +51,6 @@
 边界
 ────────────────────────────────────────────────────────────────
 - 不修改 agent/mcp-server/store.py（T2 的内核，只读不写）。
-- 不 import store.diff_versions()：其判等键与快照摘要有已知缺陷，
-  独立实现避免被绑定，同时用对照测试暴露两套结果的差异。
 """
 
 from __future__ import annotations
