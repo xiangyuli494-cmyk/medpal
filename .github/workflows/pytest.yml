@@ -24,5 +24,4 @@ jobs:
         run: ls -la agent/tests/
 
       - name: Test with pytest
-        run: |
-          pytest agent/tests/test_http_client.py agent/tests/test_mcp_client.py agent/tests/test_smoke.py --ignore=agent/tests/fixtures
+        run: pytest agent/tests/ --ignore=agent/tests/fixtures
