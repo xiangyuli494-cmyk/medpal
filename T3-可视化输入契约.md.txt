@@ -1,0 +1,152 @@
+# T3 可视化输入契约（读侧）
+
+> 给 T3（xy-Z5）做 3.1 单页可视化 / 3.2 断链红标时用。
+> 生产侧口径在 [`trace-schema.md`](trace-schema.md)；本文只讲**你该读哪个文件、怎么判红**，不重复 schema 全文。
+> 状态：v1 冻结（2026-10-28）。
+
+---
+
+## 1 你只有三种输入，别自己编第四种
+
+| 文件 | 是什么 | 用途 |
+| --- | --- | --- |
+| `agent/tests/fixtures/trace_v1_example.json` | 全绿样例：5 步、`trace_completeness=1.0`、`unresolved=[]` | 3.1 画正常态 |
+| `agent/tests/fixtures/trace_v1_broken.json` | 断链样例：5 步、`trace_completeness=0.667`、`unresolved` 两条 | 3.2 画红标态 |
+| `agent/tests/fixtures/trace_walking_skeleton_example.json` | 骨架期旧方言 `walking-skeleton/1`，**不是**目标格式 | 只用来验证你的页面能吃旧数据（可选） |
+
+两份 `medpal-trace/1` 都是**真跑出来的**，不是手抄：`agent/tools/build_trace_fixture.py` 与 `store.write_trace()` 生成，再用 `agent/tools/validate_trace.py` 校验通过。
+
+要更多样例（比如换起点、换科室），用真实库批量导：
+
+```bash
+python -B agent/tools/validate_trace.py --db agent/mcp-server/data/medpal.db --limit 20
+```
+
+想把旧方言转成新格式：
+
+```bash
+python -B agent/tools/validate_trace.py agent/tests/fixtures/trace_walking_skeleton_example.json --migrate
+```
+
+---
+
+## 2 消费侧只关心这些字段
+
+（下表 7 行、共 9 个字段名——两行各并列两个：`trace_id`/`question` 与 `agent_version`/`ontology_version`。）
+
+顶层：
+
+| 字段 | 类型 | 你拿它干什么 |
+| --- | --- | --- |
+| `schema` | `"medpal-trace/1"` | 版本闸门。不是这个值就走 `--migrate`，别硬渲染 |
+| `trace_id` / `question` | string | 页头 |
+| `agent_version` / `ontology_version` | string | 页脚标注（本体版本要跟演化视图对齐） |
+| `steps[]` | array | 决策链主体，见下 |
+| `unresolved` | string[] | **断链的唯一来源**，见 §3 |
+| `trace_completeness` | number 0–1 | 顶栏大数字 |
+| `sources` | string[] | 证据出处（一般 1 个资产，跨文档时 ≥2） |
+
+`steps[]` 每一项：
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `i` | int，严格递增 | 第几步，**不要**用数组下标代替 |
+| `op` | 枚举 | 做了什么：`entity_extract` / `std_align` / `kg_query` / `conflict_check` / `conclude` |
+| `in` / `out` | 数组或对象 | 输入/输出，`out` 常是实体 id 数组，`conclude` 是对象 |
+| `evidence` | string[] | 证据引用，可能为空数组 |
+| `confidence` | number，可选 | 有就显示，**没有不要补 0** |
+| `detail` | string，可选 | 进"操作"列的人话 |
+
+`additionalProperties: true`——遇到没见过的字段忽略即可，不要报错。
+
+---
+
+## 3 断链红标怎么判（3.2 的全部难点在这里）
+
+**文件里没有「这条证据是否有效」的标记。** 只有两个聚合字段：
+
+- `unresolved`：查不到的引用，**原字符串**，与 `evidence` 里的写法完全一致
+- `trace_completeness`：`1 - len(unresolved)/len(cited)`，`cited` 为空时记 `1.0`
+
+所以红标的判据是**字符串精确比对**：
+
+```js
+const bad = new Set(trace.unresolved || []);
+step.evidence.forEach(ref => {
+  const broken = bad.has(ref);   // 精确匹配，不要模糊、不要 indexOf
+  // broken === true → 这条标红
+});
+```
+
+实测（`trace_v1_broken.json`）：`unresolved = ["T-ffffffff", "AST-2026-000137#s9.p9.c9"]`，两条都原样出现在 `steps[2].evidence` 与 `steps[4].evidence` 里，比对即可命中。
+
+三条容易踩的：
+
+1. **`completeness === 1.0` 不代表每步都有证据**。拒答类结论 `evidence: []` 也记 1.0（分母为 0）。空证据的步要单独标「无引用」，不是标红。
+2. **`unresolved` 非空 ≠ 整个 trace 不可信**。它表示"引用了但找不到"，渲染时要写清"哪一步、哪一条"，不要给整页打红。
+3. **`gaps` 是给人看的话，不是判据**。它是 `string[]`，写的是缺口说明；判红只认 `unresolved`。且 `store.write_trace` 的 `gaps` 渲染要求**字符串**——传 dict 会直接 `TypeError`（实测冲突过一次）。
+
+---
+
+## 4 两代格式差异（别按旧样例写死字段）
+
+| `walking-skeleton/1` | `medpal-trace/1` | 说明 |
+| --- | --- | --- |
+| `step` | `i` | 改名 |
+| `op: reason_2hop` | `op: kg_query` | 改名 |
+| `ref: "PARSE"…` | 省略 | v1 由 `op` 推导 |
+| `asset` / `ontology` / `query` | 无 | 骨架期统计块，v1 顶层 `additionalProperties: false` 放不下 |
+| `conclusion` | `steps[]` 里 `op: conclude` 的 `out` | v1 没有单独顶层结论字段 |
+| evidence 前缀 `pathway_k27#p1` | `AST-2026-000137#p1` | 迁移只改前缀；锚点是否存在交给 `unresolved` |
+
+**结论：3.1 只按 `medpal-trace/1` 写。** 旧样例只当兼容性测试，不要拿它当字段依据。
+
+---
+
+## 5 3.6 环境实测：原依赖缺位，先这么顶
+
+任务卡写「照 T6 的 `env-setup.md` 从零装一遍」。现状：
+
+- 仓库里**没有** `env-setup.md`；T6（Dewqian）交的是 `docs/agent/env.md`，内容 15 行、代码块未闭合，PR #27 待改（未合）
+- 环境实测的可用素材是 [`W0-01-沙箱版本号与脚本限制核实.md`](W0-01-沙箱版本号与脚本限制核实.md) §1 的 8 条可复现命令，以及下面这段冷启动流程
+
+冷启动（实测可用，约 90 秒）：
+
+```powershell
+Start-Process 'E:\docker\DockerDesktop\Docker Desktop.exe'
+# 轮询到 3000 返回 307 再动手，别一到点就开浏览器
+while ((curl.exe -s -o NUL -w "%{http_code}" http://127.0.0.1:3000/) -ne "307") { Start-Sleep -Seconds 5 }
+```
+
+已知会卡的四处（都是实测撞过的，直接记进你的 3.6 反馈）：
+
+| 现象 | 原因 | 处置 |
+| --- | --- | --- |
+| `docker` 报 `dockerDesktopLinuxEngine` 连不上 | Docker Desktop GUI 进程退了，`docker-desktop` 发行版 Stopped | 重开 Desktop，等 3000 回 307 |
+| 浏览器打不开但 curl 通 | 容器只绑 `127.0.0.1`，`localhost` 解析成 `::1` | 地址写 `127.0.0.1` |
+| 控制台页脚显示 `v1.0.0` | 未登录是前端静态常量 | 登录后才是 `v2.7.0` |
+| 想改 `NEXENT_SANDBOX_*` 改了不生效 | `docker restart` 不重读 `.env` | 用 `up -d --force-recreate` 重建容器 |
+
+---
+
+## 6 验收自检（3.1 的硬要求：任意一份都能画对）
+
+```bash
+python -B agent/tools/validate_trace.py agent/tests/fixtures/trace_v1_example.json
+python -B agent/tools/validate_trace.py agent/tests/fixtures/trace_v1_broken.json
+# 两条都应输出 ✅ 与「1/1 合格」
+```
+
+页面侧自检三条：
+
+1. 把 `trace_v1_example.json` 换成 `trace_v1_broken.json`，**不发版、不改代码**，页面能自动标红 2 条
+2. 步骤数从 5 变成别的值（用 `--db --limit` 换一份），布局不塌
+3. `confidence` 缺失的步不显示 0，显示「—」
+
+---
+
+## 7 这份契约不解决的问题
+
+- 真实 trace 由 T2 的推理链路产出，时间点 10-29；在那之前用上面两份 fixture
+- `agent/web/` 目录目前不存在（你的 3.1 位置），首次提交自己建
+- 报告侧（`agent/mcp-server/reports/*.md`）与页面是两条渲染路径，字段一致但排版不同，不要互相抄样式

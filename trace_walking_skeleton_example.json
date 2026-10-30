@@ -1,0 +1,92 @@
+{
+  "schema": "walking-skeleton/1",
+  "asset": {
+    "asset_id": "AST-2026-000137",
+    "title": "消化性溃疡临床路径（2023 版）摘要",
+    "modality": "text/markdown",
+    "blocks": 4,
+    "anchors": 4
+  },
+  "ontology": {
+    "entities": 9,
+    "triples": 12
+  },
+  "query": {
+    "start": "SYM-EPI",
+    "depth": 2
+  },
+  "steps": [
+    {
+      "step": 1,
+      "op": "parse",
+      "detail": "text/markdown -> 4 blocks",
+      "evidence": [
+        "pathway_k27#p1"
+      ],
+      "ref": "PARSE"
+    },
+    {
+      "step": 2,
+      "op": "align_evidence",
+      "detail": "12 triples, 3 断链",
+      "evidence": [
+        "pathway_k27#p1",
+        "pathway_k27#p2",
+        "pathway_k27#p3"
+      ],
+      "ref": "EVIDENCE"
+    },
+    {
+      "step": 3,
+      "op": "ingest",
+      "detail": "asset AST-2026-000137 + 12 triples -> skeleton.db",
+      "evidence": [
+        "AST-2026-000137"
+      ],
+      "ref": "STORE"
+    },
+    {
+      "step": 4,
+      "op": "reason_2hop",
+      "detail": "从 SYM-EPI 出发两跳，到达 7 个实体",
+      "evidence": [
+        "pathway_k27#p1"
+      ],
+      "ref": "TRAVERSE"
+    },
+    {
+      "step": 5,
+      "op": "conclude",
+      "detail": "科室=消化内科 疾病=3 检查=2",
+      "evidence": [
+        "pathway_k27#p1",
+        "pathway_k27#p2"
+      ],
+      "ref": "CONCLUDE"
+    }
+  ],
+  "conclusion": {
+    "department": "消化内科",
+    "department_id": "DEP-GI",
+    "department_score": 0.8,
+    "diseases": [
+      "K21",
+      "K27",
+      "K29"
+    ],
+    "exams": [
+      "EX-GASTRO",
+      "EX-HP-BT"
+    ],
+    "evidence": [
+      "pathway_k27#p1",
+      "pathway_k27#p2"
+    ]
+  },
+  "unresolved": [
+    "K21 -belongs_to_dept-> DEP-GI",
+    "K21 -has_symptom-> SYM-HEART",
+    "K29 -belongs_to_dept-> DEP-GI"
+  ],
+  "trace_completeness": 0.75
+}
