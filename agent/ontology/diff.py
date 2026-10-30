@@ -16,19 +16,28 @@
         （seed --reset / 换机重灌 / 重新抽取）后同一知识会拿到新 id。
         若以 id 判等，会把「没变」误报成「删一条 + 加一条」。
 
-3. 「改」的判定：业务键相同，比较三个字段
-   confidence（差值 > 1e-6）、anchor_id、standard。
+3. 「改」的判定：业务键相同，逐字段比对，只比「两侧快照都带」的字段
+   候选字段 = confidence（差值 > 1e-6）、anchor_id、standard。
    只比 confidence 是不够的：只换证据句就查不出来。
+   【输入受限】store.snapshot() 只导出 7 列
+   （triple_id/head_id/rel/tail_id/confidence/asset_id/anchor_id），
+   所以 standard 目前两侧都没有，自动不参与比对（见 §5）。
 
 4. id 漂移：不算「改」，但要留痕（进 id_drift，不放进 modified）
 
 5. 输出：结构与 store.diff_versions() 同形（added/removed/modified + counts）。
    字段按 ontology-schema.md §4.2 输出：head/tail 嵌套、锚点在 provenance 下。
-   快照只有 id 级信息，schema 里的 type/label/standard/version_added 拿不到，
+   快照只有 id 级信息，schema 里的 type/label/version_added 拿不到，
    缺的键不输出、不臆造（字段名仍集中在 to_record()）。
-   schema v0 未定义「差分报告」一节，本格式由 T4 先定，已提请 T1 并入（候选 §4.4）。
-   注意：removed 的可信度依赖 status='deprecated' 的落库实现——在 T2 实现
-   废弃标记之前，正常流程下 removed 恒为空（见交接单「已知风险」）。
+   结果里额外给 compared_fields：本次实际比了哪几个字段，报告末尾也写一行，
+   避免「报无变化」被误读成「所有字段都没变」。
+   schema v0（2026-10-29 冻结，已随 PR #32 合入 main）未定义「差分报告」一节，
+   本格式由 T4 先定，待 schema v1 增补（候选 §4.4）。
+   注意两处输入缺口，均不属本模块能修：
+   - removed 依赖 status='deprecated' 落库，而 snapshot() 只导 status='active'
+     的行——T2 补废弃实现之前，正常流程下 removed 恒为空。
+   - standard / status / version_removed 不在快照里，schema §10 要求 T4 读它们，
+     实际读不到；已记入交接单「已知风险」，待快照补列。
 
 ────────────────────────────────────────────────────────────────
 边界
@@ -46,7 +55,7 @@ import sys
 from pathlib import Path
 
 CONFIDENCE_EPS = 1e-6
-CHANGED_FIELDS = ("confidence", "anchor_id", "standard")
+CANDIDATE_FIELDS = ("confidence", "anchor_id", "standard")
 
 
 class DiffVersionNotFound(FileNotFoundError):
@@ -117,19 +126,36 @@ def load_version(path: str | Path) -> dict[tuple[str, str, str], dict]:
     return rows
 
 
-def changed_fields(old: dict, new: dict) -> list[str]:
+def comparable_fields(
+    old_rows: dict[tuple[str, str, str], dict],
+    new_rows: dict[tuple[str, str, str], dict],
+) -> list[str]:
+    """两侧快照都带、且至少有一行出现过的候选字段。
+
+    快照格式是外部给的（store.snapshot() 只导 7 列），不比不存在的字段，
+    免得留下「永远不触发」的死判据——那比不检测更危险。
+    """
+    seen: set[str] = set()
+    for rows in (old_rows, new_rows):
+        for row in rows.values():
+            seen.update(row.keys())
+    return [f for f in CANDIDATE_FIELDS if f in seen]
+
+
+def changed_fields(old: dict, new: dict, fields: list[str] | None = None) -> list[str]:
     """同一条知识，哪些字段变了。空列表表示真的没变。"""
     changed: list[str] = []
-    try:
-        delta = abs(float(old.get("confidence", 0)) - float(new.get("confidence", 0)))
-    except (TypeError, ValueError):
-        delta = 1.0
-    if delta > CONFIDENCE_EPS:
-        changed.append("confidence")
-    if old.get("anchor_id") != new.get("anchor_id"):
-        changed.append("anchor_id")
-    if old.get("standard") != new.get("standard"):
-        changed.append("standard")
+    for field in CANDIDATE_FIELDS if fields is None else fields:
+        if field == "confidence":
+            try:
+                delta = abs(float(old.get("confidence", 0)) - float(new.get("confidence", 0)))
+            except (TypeError, ValueError):
+                delta = 1.0
+            if delta > CONFIDENCE_EPS:
+                changed.append("confidence")
+            continue
+        if old.get(field) != new.get(field):
+            changed.append(field)
     return changed
 
 
@@ -137,6 +163,7 @@ def diff_versions(old_path: str | Path, new_path: str | Path) -> dict:
     """比较两版快照，返回增/删/改三类结果。"""
     old_rows = load_version(old_path)
     new_rows = load_version(new_path)
+    cmp_fields = comparable_fields(old_rows, new_rows)
 
     added = [to_record(new_rows[k]) for k in sorted(new_rows.keys() - old_rows.keys())]
     removed = [to_record(old_rows[k]) for k in sorted(old_rows.keys() - new_rows.keys())]
@@ -145,14 +172,14 @@ def diff_versions(old_path: str | Path, new_path: str | Path) -> dict:
     id_drift: list[dict] = []
     for key in sorted(old_rows.keys() & new_rows.keys()):
         before, after = old_rows[key], new_rows[key]
-        fields = changed_fields(before, after)
-        if fields:
+        changed = changed_fields(before, after, cmp_fields)
+        if changed:
             modified.append(
                 {
                     "head": {"id": key[0]},
                     "rel": key[1],
                     "tail": {"id": key[2]},
-                    "changed_fields": fields,
+                    "changed_fields": changed,
                     "old": to_record(before),
                     "new": to_record(after),
                     "triple_id_old": before.get("triple_id"),
@@ -181,6 +208,7 @@ def diff_versions(old_path: str | Path, new_path: str | Path) -> dict:
         "added": added,
         "removed": removed,
         "modified": modified,
+        "compared_fields": cmp_fields,
         "id_drift": id_drift,
     }
 
@@ -198,14 +226,26 @@ def _change_text(record: dict) -> str:
     return "；".join(parts)
 
 
+def _scope_note(fields: list[str]) -> str:
+    """报告末尾的诚实声明：本次到底比了什么、什么没比。"""
+    if not fields:
+        return ""
+    missing = [f for f in CANDIDATE_FIELDS if f not in fields]
+    note = "（比对字段：" + "、".join(fields)
+    if missing:
+        note += "；" + "、".join(missing) + " 不在快照中，本次未比对"
+    return "\n\n" + note + "）"
+
+
 def render_report(diff: dict) -> str:
     """把结果渲染成人能读的中文报告（答辩 / 周报 / 交接单都能直接用）。"""
     counts = diff["counts"]
     total = counts["added"] + counts["removed"] + counts["modified"]
     head = diff["old"] + " → " + diff["new"] + "："
+    scope = _scope_note(diff.get("compared_fields") or [])
 
     if total == 0 and not diff["id_drift"]:
-        return head + "无变化（新增 0、删除 0、修改 0）"
+        return head + "无变化（新增 0、删除 0、修改 0）" + scope
 
     lines = [
         head
@@ -262,7 +302,7 @@ def render_report(diff: dict) -> str:
             )
         lines.append("")
 
-    return "\n".join(lines).rstrip()
+    return "\n".join(lines).rstrip() + scope
 
 
 def main(argv: list[str] | None = None) -> int:

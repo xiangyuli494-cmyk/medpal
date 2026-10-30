@@ -136,6 +136,32 @@ def test_standard_change_is_modified(tmp_path: Path) -> None:
     assert diff["modified"][0]["changed_fields"] == ["standard"]
 
 
+def test_compared_fields_follow_snapshot_columns(versions: tuple[Path, Path]) -> None:
+    """快照只有 7 列，没有 standard —— 本次就只比 confidence 和 anchor_id。"""
+    diff = diff_versions(*versions)
+
+    assert diff["compared_fields"] == ["confidence", "anchor_id"]
+
+
+def test_absent_standard_does_not_fake_modified(tmp_path: Path) -> None:
+    """两侧快照都不带 standard，不能因为「都没有」就算改过。"""
+    old = write_jsonl(tmp_path / "a.jsonl", [triple("K27", "rel", "EX-1")])
+    new = write_jsonl(tmp_path / "b.jsonl", [triple("K27", "rel", "EX-1", triple_id="T-2")])
+
+    diff = diff_versions(old, new)
+
+    assert diff["counts"] == {"added": 0, "removed": 0, "modified": 0}
+
+
+def test_report_states_what_was_compared(versions: tuple[Path, Path]) -> None:
+    """报告要说清哪个字段没比，别让「无变化」被读成「全都一样」。"""
+    old, _ = versions
+    text = render_report(diff_versions(old, old))
+
+    assert "比对字段" in text
+    assert "standard" in text and "未比对" in text
+
+
 def test_missing_version_raises(tmp_path: Path) -> None:
     """文件不存在必须报错，不许静默返回空结果。"""
     old = write_jsonl(tmp_path / "a.jsonl", [triple("K27", "rel", "EX-1")])
