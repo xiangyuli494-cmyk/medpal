@@ -6,4 +6,5 @@ pytest-cov~=5.0
 pytest-django~=4.9
 websockets~=15.0
 httpx
-mcp
+mcp<2
+
