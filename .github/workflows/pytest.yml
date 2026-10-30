@@ -22,4 +22,4 @@ jobs:
       - name: Test with pytest
         working-directory: agent
         run: |
-          pytest tests/ -k "not test_trace_schema"
+          pytest tests/ --ignore=tests/test_trace_schema.py
