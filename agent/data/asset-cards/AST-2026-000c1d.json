@@ -1,0 +1,35 @@
+{
+  "asset_id": "AST-2026-000c1d",
+  "title": "门诊记录（合成 1）",
+  "modality": "table",
+  "source": {
+    "type": "synthetic",
+    "publisher": "本项目生成",
+    "url": ""
+  },
+  "version": {
+    "value": "v1",
+    "captured_at": "2026-10-31",
+    "supersedes": null
+  },
+  "sensitivity": "public",
+  "structure": {
+    "tables": 1,
+    "rows": 1
+  },
+  "anchors": [
+    {
+      "anchor_id": "AST-2026-000c1d#t1.r2",
+      "kind": "table_row",
+      "text": "高血压病 门诊记录"
+    }
+  ],
+  "entities": [],
+  "kb": {
+    "base": "med-text",
+    "doc_id": "",
+    "status": "pending"
+  },
+  "ingested_by": "T5",
+  "created_at": "2026-10-31T08:10:01"
+}
