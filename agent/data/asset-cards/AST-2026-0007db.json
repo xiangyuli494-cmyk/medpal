@@ -1,0 +1,39 @@
+{
+  "asset_id": "AST-2026-0007db",
+  "title": "高血压病临床路径摘要（合成 11）",
+  "modality": "text",
+  "source": {
+    "type": "synthetic",
+    "publisher": "本项目生成",
+    "url": ""
+  },
+  "version": {
+    "value": "v1",
+    "captured_at": "2026-10-31",
+    "supersedes": null
+  },
+  "sensitivity": "public",
+  "structure": {
+    "sections": 3
+  },
+  "anchors": [
+    {
+      "anchor_id": "AST-2026-0007db#s2",
+      "kind": "section",
+      "text": "检查项目"
+    },
+    {
+      "anchor_id": "AST-2026-0007db#s3",
+      "kind": "section",
+      "text": "治疗原则"
+    }
+  ],
+  "entities": [],
+  "kb": {
+    "base": "med-text",
+    "doc_id": "",
+    "status": "pending"
+  },
+  "ingested_by": "T5",
+  "created_at": "2026-10-31T08:10:00"
+}
