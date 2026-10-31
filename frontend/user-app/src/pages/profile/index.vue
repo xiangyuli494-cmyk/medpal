@@ -45,7 +45,7 @@ function resetAll() {
 </script>
 
 <template>
-  <view class="page" :style="{ '--scale': store.scaleValue }">
+  <view class="page" :class="store.scaleClass">
     <AppHeader title="我的" subtitle="设置只在本机生效" show-back />
 
     <view class="card stack">

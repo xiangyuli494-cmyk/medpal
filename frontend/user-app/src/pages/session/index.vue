@@ -47,7 +47,7 @@ function sendDraft() {
 </script>
 
 <template>
-  <view class="page" :style="{ '--scale': store.scaleValue }">
+  <view class="page" :class="store.scaleClass">
     <AppHeader
       title="问小暖"
       :subtitle="connectionText"

@@ -15,13 +15,18 @@ const props = defineProps({
 
 const percent = computed(() => {
   const total = Math.max(props.total, 1);
-  const index = Math.min(Math.max(props.index, 1), total);
-  return Math.round((index / total) * 100);
+  if (props.done) return 100;
+  // 进度条表示「已走完几步」，而不是当前站在第几步：
+  // 否则刚到第 9 步（缴费取药）就显示 100%，和「当前」标签打架。
+  const completed = Math.min(Math.max(props.index - 1, 0), total);
+  return Math.round((completed / total) * 100);
 });
 
-const caption = computed(() =>
-  props.done ? `已完成 · 共 ${props.total} 步` : `第 ${props.index} / ${props.total} 步 · ${props.label}`,
-);
+const caption = computed(() => {
+  if (props.done) return `已完成 · 共 ${props.total} 步`;
+  const base = `第 ${props.index} / ${props.total} 步`;
+  return props.label ? `${base} · ${props.label}` : base;
+});
 </script>
 
 <template>

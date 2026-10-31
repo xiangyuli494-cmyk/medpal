@@ -86,7 +86,7 @@ flowchart LR
 | 收到轮次 | `ack { turn }` | — | 服务端据此决定重连补发 |
 | 保活 | `ping` | `pong` | 15 秒一次，静默 |
 
-`turn_result` 的 `flow.total` 恒为 11；用户端按 `docs/specs/domain-model.md` §2.3 换算成 9 步展示，换算函数在 `constants/status.js`，有单测覆盖。
+`turn_result` 的 `flow.total` 恒为 11；用户端按 `docs/specs/domain-model.md` §2.3 换算成 9 步展示，换算函数在 `constants/status.js`，有单测覆盖。前 8 个节点以 `flow.step` 为准推算步序，`step_index` 只给未知节点兜底；`PAY_AND_PICKUP` 与 `REPORT` 合并为第 9 步，两状态共用「缴费取药 · 看报告」这一展示名。
 
 ## 7 演示模式
 
@@ -125,7 +125,7 @@ flowchart LR
 
 ```powershell
 cd frontend/user-app
-npm test          # 39 条，零依赖
+npm test          # 41 条，零依赖
 npm run build:h5
 npm run build:mp-weixin
 ```

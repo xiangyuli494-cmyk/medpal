@@ -135,7 +135,7 @@ cd frontend/user-app
 npm install
 npm run dev:h5              # H5，http://127.0.0.1:5173
 npm run dev:mp-weixin       # 微信小程序，用开发者工具打开 dist/dev/mp-weixin
-npm test                    # 39 条纯函数测试，不需要装依赖
+npm test                    # 41 条纯函数测试，不需要装依赖
 ~~~
 
 默认 `VITE_DEMO_MODE=1`，走本地脚本会话，不连后端、不连数据库。说明见
