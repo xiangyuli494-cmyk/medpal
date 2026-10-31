@@ -14,6 +14,7 @@ import {
   STATUS_ORDER,
   statusLabel,
   toPublicStep,
+  toWireIndex,
 } from '../src/constants/status.js';
 
 test('状态机共 11 个节点，对外共 9 步', () => {
@@ -33,11 +34,14 @@ test('前 8 个节点步序与 step_index 一致', () => {
   });
 });
 
-test('缴费取药与看报告合并为第 9 步', () => {
+test('缴费取药与看报告合并为第 9 步，共用同一个展示名', () => {
+  const expected = PUBLIC_STEPS[PUBLIC_TOTAL - 1].label;
   const pay = toPublicStep({ step: 'PAY_AND_PICKUP', step_index: 9, total: 11 });
   const report = toPublicStep({ step: 'REPORT', step_index: 10, total: 11 });
   assert.equal(pay.index, 9);
   assert.equal(report.index, 9);
+  assert.equal(pay.label, expected);
+  assert.equal(report.label, expected);
   assert.equal(pay.done, false);
   assert.equal(report.done, false);
 });
@@ -54,10 +58,25 @@ test('flow 缺 step_index 时按节点顺序推算', () => {
   assert.equal(result.index, 8);
 });
 
-test('step_index 越界时夹在 1–9', () => {
-  assert.equal(toPublicStep({ step: 'ARRIVED', step_index: 0 }).index, 1);
-  assert.equal(toPublicStep({ step: 'ARRIVED', step_index: 99 }).index, 9);
-  assert.equal(toPublicStep({ step: 'ARRIVED', step_index: 'abc' }).index, 1);
+test('step 与 step_index 不一致时以 step 为准', () => {
+  assert.equal(toPublicStep({ step: 'ARRIVED', step_index: 99 }).index, 1);
+  assert.equal(toPublicStep({ step: 'NAVIGATE', step_index: 1 }).index, 8);
+  assert.equal(toPublicStep({ step: 'REPORT', step_index: 2 }).index, 9);
+});
+
+test('未知节点按 step_index 兜底，并夹在 1–9', () => {
+  assert.equal(toPublicStep({ step: 'FALLBACK', step_index: 0 }).index, 1);
+  assert.equal(toPublicStep({ step: 'FALLBACK', step_index: 99 }).index, 9);
+  assert.equal(toPublicStep({ step: 'FALLBACK', step_index: 'abc' }).index, 1);
+  assert.equal(toPublicStep({ step: 'FALLBACK', step_index: 5 }).label, '陪诊中');
+});
+
+test('toWireIndex 返回 11 节点序号，未知节点为 null', () => {
+  assert.equal(toWireIndex('ARRIVED'), 1);
+  assert.equal(toWireIndex('PAY_AND_PICKUP'), 9);
+  assert.equal(toWireIndex('REPORT'), 10);
+  assert.equal(toWireIndex('HOME'), 11);
+  assert.equal(toWireIndex('FALLBACK'), null);
 });
 
 test('flow 为空时不抛错', () => {

@@ -36,7 +36,7 @@ function openProfile() {
 </script>
 
 <template>
-  <view class="page" :style="{ '--scale': store.scaleValue }">
+  <view class="page" :class="store.scaleClass">
     <AppHeader title="小暖陪诊" :subtitle="DEMO_MODE ? '演示模式' : '在线'" :tone="DEMO_MODE ? 'mock' : 'idle'" />
 
     <view class="hero">
