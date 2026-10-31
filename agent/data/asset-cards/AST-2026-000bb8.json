@@ -1,0 +1,50 @@
+{
+  "asset_id": "AST-2026-000bb8",
+  "title": "检验参考区间（合成）",
+  "modality": "table",
+  "source": {
+    "type": "synthetic",
+    "publisher": "本项目生成",
+    "url": ""
+  },
+  "version": {
+    "value": "v1",
+    "captured_at": "2026-10-31",
+    "supersedes": null
+  },
+  "sensitivity": "public",
+  "structure": {
+    "tables": 1,
+    "rows": 4
+  },
+  "anchors": [
+    {
+      "anchor_id": "AST-2026-000bb8#t1.r1",
+      "kind": "table_row",
+      "text": "白细胞计数 参考区间"
+    },
+    {
+      "anchor_id": "AST-2026-000bb8#t1.r2",
+      "kind": "table_row",
+      "text": "红细胞计数 参考区间"
+    },
+    {
+      "anchor_id": "AST-2026-000bb8#t1.r3",
+      "kind": "table_row",
+      "text": "血红蛋白 参考区间"
+    },
+    {
+      "anchor_id": "AST-2026-000bb8#t1.r4",
+      "kind": "table_row",
+      "text": "血小板计数 参考区间"
+    }
+  ],
+  "entities": [],
+  "kb": {
+    "base": "med-text",
+    "doc_id": "",
+    "status": "pending"
+  },
+  "ingested_by": "T5",
+  "created_at": "2026-10-31T08:10:01"
+}
