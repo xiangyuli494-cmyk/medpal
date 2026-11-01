@@ -121,7 +121,7 @@ MCP_TRANSPORT=streamable-http python server.py
 
 `source_type` 三值锁死「这条知识该由谁背书」：`icd10` / `pathway` / `drug_label`。
 
-> **v1 落地现状（写清楚，别让下游猜）**：`onto_propose` 的规则抽取器（`server.py:153-173`）目前只识别 3 类句式 → `requires_exam` / `may_cause` / `contraindicated_for`。种子库 `v0.9` 实际含 6 类关系，缺 `treated_by` / `subclass_of`。这是**已知缺口**，不是契约缺失：schema 允许 8 类，抽取器覆盖 3 类，其余走 LLM few-shot（T4 负责）。
+> **v1 落地现状（写清楚，别让下游猜）**：`onto_propose` 的规则抽取器（`server.py:153-173`）目前只识别 3 类句式 → `requires_exam` / `contraindicated_for` / `may_cause`。其中前两类在词表内，`may_cause` **不在** 8 类里——2026-10-29 已裁定把它加为第 9 类，随 schema v1 在 W3 与 `v1.0` 快照一起落地（见 `agent/docs/ontology-schema.md` §9 第 3 条），在此之前它只能作为 `pending` 候选、不入库。种子库 `v0.9` 实际含 6 类关系，缺 `treated_by` / `subclass_of`。这是**已知缺口**，不是契约缺失：schema 允许 8 类，抽取器覆盖 2 类有效关系，其余走 LLM few-shot（T4 负责）。
 
 ### 1.5 幂等与副作用
 
@@ -431,7 +431,7 @@ onto_propose(asset_ids: list[str], scope: str = "") -> dict
 | reason | 触发行 | 含义 |
 | --- | --- | --- |
 | `asset_not_found` | `server.py:216` | 资产号不存在 |
-| `too_short` | `server.py:221` | 锚点文本 < 12 字（方案里写的是 30 字，实现放宽到 12，**待裁决**） |
+| `too_short` | `server.py:221` | 锚点文本 < 12 字（方案原写 30 字，2026-10-29 裁定**以 12 为准**，见 `agent/docs/ontology-schema.md` §7） |
 | `no_pattern_match` | `server.py:246` | 锚点没有任何句式命中 |
 | `entity_unresolved` | `server.py:260` | 头或尾落不到已有节点 |
 | `duplicate` | `server.py:279` | `(head, rel, tail)` 已有 active 记录（`contraindicated_for` 反向也算重复） |
@@ -563,11 +563,12 @@ std_align(entity_text: str = "", triple_id: str = "") -> dict
 | --- | --- | --- |
 | `ok` | bool | |
 | `input` | str | 回显（走 `triple_id` 分支时可能缺省） |
-| `aligned` | bool | 给了 `triple_id` 才出现 |
+| `aligned` | bool | 成功恒为 `true`；走 `triple_id` 且有已存 `standard_json` 时改出 `standard` + `source:"stored"` |
 | `scheme` | str | `ICD-10` |
 | `code` | str | 编码，如 `R10.1` |
-| `match` | str | `exact` \| `alias` \| `fuzzy` |
-| `confidence` | float | |
+| `match` | str | `exact`（`alias.surface` 完全相等）\| `contains`（`? LIKE '%surface%'` 命中，取最长 surface）——**只有这两个值**，无 `alias` / `fuzzy` |
+| `confidence` | float | 取自 `alias` 表该行 |
+| `entity_type` | str | `Disease` \| `Symptom` \| `Exam` \| `Drug` \| `Finding` \| `Department` |
 
 **真实请求 / 响应**
 
@@ -575,14 +576,20 @@ std_align(entity_text: str = "", triple_id: str = "") -> dict
 // 请求
 {"entity_text": "上腹部痛"}
 // 响应
-{"input": "上腹部痛", "aligned": true, "scheme": "ICD-10", "code": "R10.1",
- "match": "exact", "confidence": 0.95, "ok": true}
+{"ok": true, "input": "上腹部痛", "aligned": true, "scheme": "ICD-10",
+ "code": "R10.1", "match": "exact", "entity_type": "Symptom", "confidence": 0.95}
+// contains 分支（自由文本里含已知 surface）
+{"ok": true, "input": "上腹部痛三天", "aligned": true, "scheme": "ICD-10",
+ "code": "R10.1", "match": "contains", "entity_type": "Symptom", "confidence": 0.95}
+// triple_id 分支且已存 standard_json
+{"ok": true, "triple_id": "T-d2e6d769", "aligned": true,
+ "standard": {"scheme": "ICD-10", "code": "R10.1"}, "source": "stored"}
 ```
 
 **错误**
 
 ```json
-{"ok": false, "reason": "unmapped", "hint": "加入待对齐队列，人工补 alias_map 后重跑", "input": "张三的偏方"}
+{"ok": false, "reason": "unmapped", "hint": "加入待对齐队列，人工补 alias 表后重跑", "input": "张三的偏方"}
 {"ok": false, "reason": "empty_input", "hint": "传入 entity_text 或 triple_id"}
 {"ok": false, "reason": "triple_not_found", "hint": "检查 triple_id"}
 ```
