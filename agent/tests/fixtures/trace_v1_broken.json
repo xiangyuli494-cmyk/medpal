@@ -1,0 +1,83 @@
+{
+  "schema": "medpal-trace/1",
+  "trace_id": "TR-20261028-4CEA",
+  "question": "反复上腹隐痛3个月，夜间加重，进食后缓解，近两周服用布洛芬",
+  "agent_version": "offline-baseline",
+  "ontology_version": "v0.9",
+  "created_at": "2026-10-28T15:18:38+08:00",
+  "elapsed_ms": 17,
+  "steps": [
+    {
+      "i": 1,
+      "op": "entity_extract",
+      "out": [
+        "上腹隐痛",
+        "布洛芬"
+      ],
+      "evidence": []
+    },
+    {
+      "i": 2,
+      "op": "std_align",
+      "out": [
+        "SYM-EPI",
+        "DRUG-IBU"
+      ],
+      "evidence": []
+    },
+    {
+      "i": 3,
+      "op": "kg_query",
+      "in": [
+        "上腹隐痛"
+      ],
+      "out": [
+        "K27",
+        "DEP-GI"
+      ],
+      "confidence": 0.89,
+      "evidence": [
+        "T-d331cf32",
+        "T-b5d99245",
+        "T-ffffffff",
+        "AST-2026-000137#s2.p1.c3"
+      ]
+    },
+    {
+      "i": 4,
+      "op": "conflict_check",
+      "in": [
+        "布洛芬",
+        "K27"
+      ],
+      "out": [
+        "布洛芬"
+      ],
+      "evidence": []
+    },
+    {
+      "i": 5,
+      "op": "conclude",
+      "ref": "CONCLUDE",
+      "out": {
+        "dept": "消化内科",
+        "conf": 0.9
+      },
+      "evidence": [
+        "AST-2026-000137#s1.h",
+        "AST-2026-000137#s9.p9.c9"
+      ]
+    }
+  ],
+  "gaps": [
+    "T-ffffffff 不在本库，该三元组缺失（missing_evidence）"
+  ],
+  "trace_completeness": 0.667,
+  "unresolved": [
+    "T-ffffffff",
+    "AST-2026-000137#s9.p9.c9"
+  ],
+  "sources": [
+    "AST-2026-000137"
+  ]
+}
