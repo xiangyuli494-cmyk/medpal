@@ -1,0 +1,16 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".venv", "node_modules", "dist", "frontend", "device", "demo"]
+
+[tool.ruff.lint]
+# W1 只开三组，别一次开全量，不然第一周全在改格式
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["backend/domain"]
