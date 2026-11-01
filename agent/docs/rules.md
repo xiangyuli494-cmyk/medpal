@@ -73,6 +73,6 @@ PR 描述模板：
 ## 7. 不许做
 
 - 直接向 `main` 推送（含强推）
-- 修改别人的模块文件（`agent/ontology/`、`agent/parse/` 等按人划分，见 `CODEOWNERS`）
+- 修改别人的模块文件（`agent/ontology/`、`agent/parsers/` 等按人划分，见 `CODEOWNERS`）
 - 在 PR 里顺手重构无关代码
 - 用 AI 生成后直接提交且不说明（交接单「人工修改点」必填）
