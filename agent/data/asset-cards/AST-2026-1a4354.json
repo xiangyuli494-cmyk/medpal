@@ -1,0 +1,115 @@
+{
+  "asset_id": "AST-2026-1a4354",
+  "title": "消化性溃疡临床路径（2023 版）摘要",
+  "modality": "text",
+  "source": {
+    "type": "synthetic",
+    "publisher": "",
+    "path": "agent\\data\\samples\\pathway_k27.md"
+  },
+  "version": {
+    "value": "v1",
+    "captured_at": "2026-11-01T17:44:41+08:00",
+    "supersedes": null
+  },
+  "sensitivity": "synthetic",
+  "structure": {
+    "blocks": 9,
+    "anchors": 15,
+    "kinds": [
+      "heading",
+      "paragraph"
+    ]
+  },
+  "anchors": [
+    {
+      "anchor_id": "AST-2026-1a4354#s1.h",
+      "kind": "section",
+      "text": "消化性溃疡临床路径（2023 版）摘要"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s2.h",
+      "kind": "section",
+      "text": "诊断依据"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s2.p1.c1",
+      "kind": "sentence",
+      "text": "患者以上腹部痛为主要表现，疼痛多位于上腹中部偏右"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s2.p1.c2",
+      "kind": "sentence",
+      "text": "上腹隐痛常于夜间加重，进食后可暂时缓解"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s2.p1.c3",
+      "kind": "sentence",
+      "text": "确诊依赖胃镜检查与病理"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s3.h",
+      "kind": "section",
+      "text": "检查项目"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s3.p1.c1",
+      "kind": "sentence",
+      "text": "消化性溃疡患者需要做幽门螺杆菌呼气试验，阳性者行根除治疗"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s3.p1.c2",
+      "kind": "sentence",
+      "text": "消化性溃疡需要做胃镜检查以明确部位与分期"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s3.p1.c3",
+      "kind": "sentence",
+      "text": "幽门螺杆菌检测为必查项"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s4.h",
+      "kind": "section",
+      "text": "用药注意"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s4.p1.c1",
+      "kind": "sentence",
+      "text": "布洛芬可导致胃黏膜损伤"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s4.p1.c2",
+      "kind": "sentence",
+      "text": "消化性溃疡患者禁用布洛芬等 NSAIDs 药物"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s4.p1.c3",
+      "kind": "sentence",
+      "text": "长期自行服用止痛药者应在医师指导下评估"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s5.h",
+      "kind": "section",
+      "text": "转诊标准"
+    },
+    {
+      "anchor_id": "AST-2026-1a4354#s5.p1.c1",
+      "kind": "sentence",
+      "text": "出现呕血、黑便或体重明显下降者，应及时转诊至上级医院进一步评估"
+    }
+  ],
+  "entities": [
+    "消化性溃疡",
+    "上腹隐痛",
+    "胃镜",
+    "幽门螺杆菌",
+    "布洛芬"
+  ],
+  "kb": {
+    "base": "med-text",
+    "doc_id": "",
+    "status": "ready"
+  },
+  "ingested_by": "T5",
+  "created_at": "2026-11-01T17:44:41+08:00"
+}

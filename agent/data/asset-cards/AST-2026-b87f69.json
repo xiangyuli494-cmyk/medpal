@@ -1,0 +1,74 @@
+{
+  "asset_id": "AST-2026-b87f69",
+  "title": "消化性溃疡临床路径摘要（合成样例 5）",
+  "modality": "text",
+  "source": {
+    "type": "synthetic",
+    "publisher": "",
+    "path": "agent\\data\\samples\\text\\pathway_05.md"
+  },
+  "version": {
+    "value": "v1",
+    "captured_at": "2026-11-01T17:44:42+08:00",
+    "supersedes": null
+  },
+  "sensitivity": "synthetic",
+  "structure": {
+    "blocks": 7,
+    "anchors": 7,
+    "kinds": [
+      "heading",
+      "paragraph"
+    ]
+  },
+  "anchors": [
+    {
+      "anchor_id": "AST-2026-b87f69#s1.h",
+      "kind": "section",
+      "text": "消化性溃疡临床路径摘要（合成样例 5）"
+    },
+    {
+      "anchor_id": "AST-2026-b87f69#s2.h",
+      "kind": "section",
+      "text": "诊断依据"
+    },
+    {
+      "anchor_id": "AST-2026-b87f69#s2.p1.c1",
+      "kind": "sentence",
+      "text": "主诉与检查支持 消化性溃疡（ICD-10 K27），就诊科室 消化内科"
+    },
+    {
+      "anchor_id": "AST-2026-b87f69#s3.h",
+      "kind": "section",
+      "text": "检查项目"
+    },
+    {
+      "anchor_id": "AST-2026-b87f69#s3.p1.c1",
+      "kind": "sentence",
+      "text": "胃镜、幽门螺杆菌检测、血常规"
+    },
+    {
+      "anchor_id": "AST-2026-b87f69#s4.h",
+      "kind": "section",
+      "text": "治疗原则"
+    },
+    {
+      "anchor_id": "AST-2026-b87f69#s4.p1.c1",
+      "kind": "sentence",
+      "text": "按临床路径执行，用药与随访见下方 anchors 指向的小节"
+    }
+  ],
+  "entities": [
+    "消化性溃疡",
+    "消化内科",
+    "胃镜",
+    "幽门螺杆菌"
+  ],
+  "kb": {
+    "base": "med-text",
+    "doc_id": "",
+    "status": "ready"
+  },
+  "ingested_by": "T5",
+  "created_at": "2026-11-01T17:44:42+08:00"
+}

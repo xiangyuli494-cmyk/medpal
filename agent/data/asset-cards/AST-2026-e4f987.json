@@ -1,0 +1,42 @@
+{
+  "asset_id": "AST-2026-e4f987",
+  "title": "门诊记录 15",
+  "modality": "table",
+  "source": {
+    "type": "synthetic",
+    "publisher": "",
+    "path": "agent\\data\\samples\\table\\menzhen_15.csv"
+  },
+  "version": {
+    "value": "v1",
+    "captured_at": "2026-11-01T17:44:41+08:00",
+    "supersedes": null
+  },
+  "sensitivity": "synthetic",
+  "structure": {
+    "blocks": 1,
+    "anchors": 1,
+    "kinds": [
+      "table_row"
+    ]
+  },
+  "anchors": [
+    {
+      "anchor_id": "AST-2026-e4f987#t1.r2",
+      "kind": "table_row",
+      "text": "MZ015 | 74 | 男 | 乏力与腹部不适 | 消化性溃疡 | 消化内科 | 胃镜 | 2026-10-16"
+    }
+  ],
+  "entities": [
+    "消化性溃疡",
+    "消化内科",
+    "胃镜"
+  ],
+  "kb": {
+    "base": "med-text",
+    "doc_id": "",
+    "status": "ready"
+  },
+  "ingested_by": "T5",
+  "created_at": "2026-11-01T17:44:41+08:00"
+}
