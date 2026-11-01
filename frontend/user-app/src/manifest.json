@@ -1,0 +1,44 @@
+{
+  "name": "小暖陪诊",
+  "appid": "__UNI__MEDPAL",
+  "description": "院内智慧陪诊终端的用户端小程序骨架",
+  "versionName": "0.1.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "vueVersion": "3",
+  "app-plus": {
+    "usingComponents": true,
+    "nvueStyleCompiler": "uni-app",
+    "compilerVersion": 3,
+    "splashscreen": {
+      "alwaysShowBeforeRender": true,
+      "waiting": true,
+      "autoclose": true,
+      "delay": 0
+    }
+  },
+  "h5": {
+    "title": "小暖陪诊",
+    "router": {
+      "mode": "hash"
+    }
+  },
+  "mp-weixin": {
+    "appid": "touristappid",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "postcss": true,
+      "minified": true
+    },
+    "usingComponents": true,
+    "permission": {}
+  },
+  "uniStatistics": {
+    "enable": false
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000
+  }
+}
