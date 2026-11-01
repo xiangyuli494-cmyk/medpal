@@ -18,8 +18,11 @@
 > 第 11、12 行的意义：`Storage Driver=overlayfs` + `Docker Root Dir=/var/lib/docker` 说明数据落在 WSL 发行版自己的 ext4 上，**不在**跨 VHDX 的 9p/virtiofs 挂载点上。这两个值只要变成 `9p` 或 `/mnt/wsl/...`，就会命中 §1.3 的故障。判定命令：
 >
 > ```bash
-> stat -f -c 'fstype=%T' /var/lib/docker/volumes
+> docker run --rm --privileged --pid=host --entrypoint /bin/sh \
+>   ccr.ccs.tencentyun.com/nexent-hub/nexent-ubuntu-terminal:v2.7.0 \
+>   -c 'nsenter -t 1 -m -u -n -i stat -f -c "fstype=%T" /var/lib/docker/volumes'
 > # 期望 ext2/ext3/ext4；出现 9p 或 virtiofs 即命中 §1.3
+> # 直接 wsl -d docker-desktop 进去 stat 会报 No such file or directory，原因见 §1.3
 > ```
 
 ## 1 失败路径：装不起来时踩的坑
@@ -117,10 +120,17 @@ bbolt 在 Linux 上靠 `flock(2)` 加锁。当 `/var/lib/docker` 落在**跨 VHD
 **判定命令**
 
 ```bash
-wsl -d docker-desktop -e sh -c "findmnt -T /var/lib/docker -o TARGET,SOURCE,FSTYPE; stat -f -c 'fstype=%T' /var/lib/docker/volumes"
+# ✗ 不这样查：`wsl -d docker-desktop` 的 shell 与 dockerd 不在同一 mount namespace，
+#   那里 /var/lib 下只有 misc，读 /var/lib/docker/volumes 会报 No such file or directory。
+# ✓ 从容器里 nsenter 进 1 号进程（dockerd）的 namespace 再查：
+docker run --rm --privileged --pid=host --entrypoint /bin/sh \
+  ccr.ccs.tencentyun.com/nexent-hub/nexent-ubuntu-terminal:v2.7.0 \
+  -c 'nsenter -t 1 -m -u -n -i sh -c "findmnt -T /var/lib/docker -o TARGET,SOURCE,FSTYPE; stat -f -c \"fstype=%T\" /var/lib/docker/volumes"'
 ```
 
-输出里 FSTYPE 出现 `9p` 或 `virtiofs` 即坐实。
+输出里 FSTYPE 出现 `9p` 或 `virtiofs` 即坐实。本机实测为 `/var/lib /dev/sdd[/data] ext4`，未命中本故障。
+
+> 两个读法上的坑：`stat -f` 对 ext4 报 `ext2/ext3` 是 coreutils 的既定行为，一律以 `findmnt` 的 FSTYPE 列为准；Git Bash 下路径会被 MSYS 改写，命令前加 `MSYS_NO_PATHCONV=1`。
 
 **解决方案（按代价从低到高）**
 
@@ -198,7 +208,7 @@ Error response from daemon: Get "https://docker.mirrors.ustc.edu.cn/v2/": contex
 | 磁盘 | E: 14 GB 可用（**真实瓶颈**） | 最低 40 GiB，推荐 100 GiB |
 | 虚拟化 | BIOS 里 VT-x 已开启 | 必需 |
 
-> 磁盘这一行要正视：本机只剩 14 GB，而官方最低要 40 GiB。当前 13 个容器 + 镜像已占约 13 GB（`nexent-data-process` 单个 6.77 GB）。**再装东西之前先清盘**，否则 ES 会因磁盘水位触发只读（`ES_DISK_WATERMARK_FLOOD_STAGE=95%`）。
+> 磁盘这一行要正视：本机只剩 14 GB，而官方最低要 40 GiB。当前 13 个容器 + 13 个镜像共占 **17.37 GB**（`docker system df` 实测：镜像 17.37 GB，其中可回收 2.387 GB；容器 581.6 MB；卷 15.99 kB。`nexent-data-process` 单个 6.77 GB）。**再装东西之前先清盘**，否则 ES 会因磁盘水位触发只读（`ES_DISK_WATERMARK_FLOOD_STAGE=95%`）。
 
 ### 2.2 启动命令（唯一正确写法）
 
@@ -271,7 +281,7 @@ docker compose --env-file ../env/.env -p nexent -f ./compose/docker-compose.yml 
 
    本机实测：`{"cluster_name":"docker-cluster","status":"green","number_of_nodes":1,"active_primary_shards":3,...}`
 
-4. **数据目录不在 9p 上**：`stat -f -c 'fstype=%T' /var/lib/docker/volumes` → `ext2/ext3/ext4`
+4. **数据目录不在 9p 上**：容器内 `nsenter -t 1` 之后执行 `stat -f -c 'fstype=%T' /var/lib/docker/volumes`（完整命令见 §1.3）→ `ext2/ext3/ext4`
 
 ### 2.6 本机遗留问题（已知，不阻塞）
 
@@ -297,7 +307,7 @@ docker compose --env-file ../env/.env -p nexent -f ./compose/docker-compose.yml 
 | --- | --- | --- |
 | 访问 127.0.0.1 超时 | `curl -I http://127.0.0.1:3000` | 代理未添加回环豁免 / NO_PROXY 缺少 host.docker.internal |
 | 中文问号方块乱码 | `echo $LANG` | 字符集不是 C.UTF-8 |
-| Docker daemon 起不来，报 volume metadata 超时 | `stat -f -c 'fstype=%T' /var/lib/docker/volumes` | 数据目录在 9p/virtiofs 上，flock 超 1 秒 → 见 §1.3 |
+| Docker daemon 起不来，报 volume metadata 超时 | 容器内 `nsenter -t 1` 后 `stat -f -c 'fstype=%T' /var/lib/docker/volumes`（见 §1.3） | 数据目录在 9p/virtiofs 上，flock 超 1 秒 → 见 §1.3 |
 | `docker compose ps` 报 invalid compose project | `ls deploy/docker/.env.generated` | 没 source 生成的变量文件 → 见 §2.3 |
 | docker pull 卡住超时 | `curl -o /dev/null -w '%{http_code}' https://<源>/v2/` | 401=通，timeout=源挂了 → 换源，见 §1.4 |
 | 控制台 3000 返回 000 | `docker ps -a --format '{{.Names}}\t{{.Status}}'` | 容器没起；先 `bash deploy.sh --defaults` |
