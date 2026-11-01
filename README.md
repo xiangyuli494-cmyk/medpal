@@ -111,7 +111,7 @@ medpal/
 ├── demo/             device-prototype.html 设备端原型、v4.html 全链路
 ├── device/           设备端（浏览器形态，7 寸 1024×600 横屏手持机，产品本体）
 ├── frontend/
-│   ├── user-app/     用户端（老人版 / 标准版）
+│   ├── user-app/     用户端 uni-app（H5 + 微信小程序预览）
 │   └── family/       家属端 H5
 └── firmware/ hardware/  条件交付 C3/C4
 ~~~
@@ -122,13 +122,27 @@ medpal/
 
 ~~~powershell
 pip install -r requirements-dev.txt
-python -m pytest backend/tests -q          # 12 条测试
+python -m pytest backend/tests -q          # 后端测试
 powershell -ExecutionPolicy Bypass -File tools/dev.ps1   # 起 mock 接口(8000)与 mock 会话(8090)
 python tools/check_guard_words.py          # 红线扫描
 python tools/check_handoff.py              # 交接单检查
 ~~~
 
-后端服务与前端页面还没有，W1 末补齐空壳。
+用户端（uni-app，H5 + 微信小程序）已经有可编译的骨架：
+
+~~~powershell
+cd frontend/user-app
+npm install
+npm run dev:h5              # H5，http://127.0.0.1:5173
+npm run dev:mp-weixin       # 微信小程序，用开发者工具打开 dist/dev/mp-weixin
+npm test                    # 39 条纯函数测试，不需要装依赖
+~~~
+
+默认 `VITE_DEMO_MODE=1`，走本地脚本会话，不连后端、不连数据库。说明见
+[`frontend/user-app/README.md`](frontend/user-app/README.md) 与
+[`docs/specs/mini-program.md`](docs/specs/mini-program.md)。
+
+后端服务与家属端页面还没有，W1 – W3 补齐。
 
 ---
 
