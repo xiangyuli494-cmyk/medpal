@@ -1,0 +1,8 @@
+node_modules/
+dist/
+unpackage/
+*.log
+
+# 微信开发者工具生成，含真实 AppID，不进仓库
+project.private.config.json
+project.config.json
