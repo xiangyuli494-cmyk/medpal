@@ -17,7 +17,7 @@ import {
   normalizeTurnResult,
   parseMessage,
 } from '../services/protocol.js';
-import { buildStepList, statusLabel, toPublicStep } from '../constants/status.js';
+import { buildStepList, statusLabel, toPublicStep, toWireIndex } from '../constants/status.js';
 import { loadSettings, saveSettings } from '../utils/storage.js';
 import { formatTime } from '../utils/time.js';
 
@@ -54,7 +54,17 @@ export const useSessionStore = defineStore('session', {
   }),
 
   getters: {
-    scaleValue: (state) => state.settings.scale,
+    /**
+     * 页面根节点的字号档位 class。
+     * 不把倍率写成内联 CSS 变量：小程序对行内自定义属性的支持随基础库而变，
+     * 而且变量声明在祖先、字体令牌声明在 .page 时，calc() 会在祖先上算死。
+     */
+    scaleClass: (state) => {
+      const scale = Number(state.settings.scale) || 1;
+      if (scale >= 1.25) return 'page--scale-xlarge';
+      if (scale >= 1.1) return 'page--scale-large';
+      return '';
+    },
   },
 
   actions: {
@@ -272,11 +282,14 @@ export const useSessionStore = defineStore('session', {
     },
 
     applyStep(step) {
-      const publicStep = toPublicStep({ step });
+      const wireIndex = toWireIndex(step);
+      const publicStep = toPublicStep({ step, step_index: wireIndex });
       this.flow = {
         ...this.flow,
         step,
-        stepIndex: publicStep.index,
+        // flow.stepIndex 是 11 节点线上的序号，不能写对外 9 步序号：
+        // REPORT 是第 10 节点、HOME 是第 11 节点，写 9 会把两者混成一步。
+        stepIndex: wireIndex ?? this.flow.stepIndex,
         why: this.flow.why,
       };
       this.publicStep = publicStep;

@@ -59,31 +59,59 @@ export function statusLabel(step) {
 }
 
 /**
+ * 节点在 11 节点线上的 1-based 序号；未知节点返回 null。
+ * flow.stepIndex 与对外 9 步序号是两套编号，不能混用。
+ */
+export function toWireIndex(step) {
+  const position = STATUS_ORDER.indexOf(step);
+  return position >= 0 ? position + 1 : null;
+}
+
+/**
  * 把服务端 flow 换算出对外步序。
+ *
+ * 前 8 个节点以 step 为准推算（step_index 只给未知节点兜底）：
+ * step 是枚举校验过的语义字段，两者万一不一致，序号应跟着 step 走，
+ * 否则会出现「第 9 步 · 抵达确认」这种序号和标签打架的界面。
  *
  * @param {{step?: string, step_index?: number, total?: number}} flow
  * @returns {{index: number, total: number, label: string, done: boolean}}
  */
 export function toPublicStep(flow) {
   const step = flow?.step;
-  const rawIndex = Number(flow?.step_index);
 
   if (step === 'HOME') {
     return { index: PUBLIC_TOTAL, total: PUBLIC_TOTAL, label: '已完成', done: true };
   }
 
   if (MERGED_INTO_LAST.has(step)) {
-    return { index: PUBLIC_TOTAL, total: PUBLIC_TOTAL, label: statusLabel(step), done: false };
+    // 缴费取药与看报告共用第 9 步，展示名也必须是同一个，
+    // 否则进度条会从「缴费取药」跳到「看报告」，和下面的步骤列表对不上。
+    return {
+      index: PUBLIC_TOTAL,
+      total: PUBLIC_TOTAL,
+      label: PUBLIC_STEPS[PUBLIC_TOTAL - 1].label,
+      done: false,
+    };
   }
 
-  const fallbackIndex = STATUS_ORDER.indexOf(step) + 1;
-  const index = Number.isFinite(rawIndex) && rawIndex >= 1 ? rawIndex : fallbackIndex;
-  const safeIndex = Math.min(Math.max(index, 1), PUBLIC_TOTAL);
+  const wireIndex = toWireIndex(step);
+  if (wireIndex !== null) {
+    return {
+      index: wireIndex,
+      total: PUBLIC_TOTAL,
+      label: statusLabel(step),
+      done: false,
+    };
+  }
 
+  // 未知节点（如兜底子状态不在 11 节点枚举里）：按 step_index 兜底，越界夹到 1–9
+  const rawIndex = Number(flow?.step_index);
+  const fallback = Number.isFinite(rawIndex) && rawIndex >= 1 ? Math.trunc(rawIndex) : 1;
   return {
-    index: safeIndex,
+    index: Math.min(Math.max(fallback, 1), PUBLIC_TOTAL),
     total: PUBLIC_TOTAL,
-    label: statusLabel(STATUS_ORDER[safeIndex - 1]),
+    label: '陪诊中',
     done: false,
   };
 }

@@ -3,7 +3,7 @@
  * 主操作按钮。
  *
  * 触控区不小于 56px 高（docs/specs/device-ia.md §2.5 的设备端口径是 88px，
- * 手机端按 56px 起步，老人通道靠 --scale 放大）。
+ * 手机端按 56px 起步，老人通道靠 .page 的字号档位放大）。
  * 按压反馈用 CSS active，不依赖震动。
  */
 defineProps({
