@@ -1,0 +1,40 @@
+{
+  "asset_id": "AST-2026-03190b",
+  "title": "门诊记录 17",
+  "modality": "table",
+  "source": {
+    "type": "synthetic",
+    "publisher": "",
+    "path": "agent\\data\\samples\\table\\menzhen_17.csv"
+  },
+  "version": {
+    "value": "v1",
+    "captured_at": "2026-11-01T17:44:41+08:00",
+    "supersedes": null
+  },
+  "sensitivity": "synthetic",
+  "structure": {
+    "blocks": 1,
+    "anchors": 1,
+    "kinds": [
+      "table_row"
+    ]
+  },
+  "anchors": [
+    {
+      "anchor_id": "AST-2026-03190b#t1.r2",
+      "kind": "table_row",
+      "text": "MZ017 | 74 | 男 | 乏力与腹部不适 | 2型糖尿病 | 内分泌科 | 空腹血糖 | 2026-10-18"
+    }
+  ],
+  "entities": [
+    "糖尿病"
+  ],
+  "kb": {
+    "base": "med-text",
+    "doc_id": "",
+    "status": "ready"
+  },
+  "ingested_by": "T5",
+  "created_at": "2026-11-01T17:44:41+08:00"
+}
