@@ -9,7 +9,7 @@ trace.html 静态页面，实现trace推理链路可视化渲染，按schema契�
 ## 我改了什么（人工修改点）
 1. 开发 trace.html，对齐 trace-schema v1 契约，支持三份官方fixture渲染；
 2. 实现unresolved标红、gaps和detail字段渲染、XSS防护；
-3. 本次调整：将交接单从 `agent/docs/handoff/W1-T3-trace.md` 迁移至 `docs/handoff/W1-T3-trace.md`，适配自动化检查器路径。
+3. 本次调整：将交接单从 `agent/docs/handoff/W1-T3-trace.md` 迁移至 `docs/handoff/W1-T3-trace.md`，遵循rules.md中交接单路径及命名要求，适配自动化检查器路径。
 
 ## 怎么验证的
 1. 本地浏览器加载三份fixture样例，核对渲染、标红、警告行为；
@@ -27,7 +27,7 @@ trace.html 静态页面，实现trace推理链路可视化渲染，按schema契�
 实现T3任务3.1单页可视化、3.2断链标红能力，静态单HTML页面，**无需后端服务**，双击直接在浏览器打开。
 遵循契约:
 - trace-schema.md v1
-- T3-可视化输入契约.md.txt
+- T3-可视化输入契约.md
 
 ## 2. 文件路径
 agent

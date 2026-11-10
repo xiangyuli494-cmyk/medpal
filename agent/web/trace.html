@@ -133,7 +133,7 @@
 <div class="container">
     <h1>Trace 推理链路查看器</h1>
     <div class="upload-area">
-        加载Trace JSON文件：
+        加载Trace JSON文件:
         <input type="file" id="fileInput" accept=".json">
     </div>
     <div id="renderRoot"></div>
@@ -146,9 +146,15 @@ const fileInput = document.getElementById('fileInput');
 fileInput.onchange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    try {
     const txt = await file.text();
     const data = JSON.parse(txt);
     render(data);
+  } catch (err) {
+    // 红色错误提示
+    root.innerHTML = `<div style="color:red; font-weight:bold;">文件不是合法 JSON,请重新上传</div>`;
+    console.error("JSON parse error:", err);
+  }
 }
 
 function escapeHtml(str){
@@ -166,20 +172,18 @@ function render(data) {
     let warnHtml = '';
 
     if (schema === 'walking-skeleton/1') {
-        warnHtml = `
-        <div class="warning-box">
-            ⚠️ 旧方言 walking‑skeleton/1，该格式无 unresolved 字段，不会执行断链红标。
-            需要完整溯源字段请执行：<code>python tools/validate_trace.py xxx.json --migrate</code>迁移为 medpal‑trace/1
-        </div>
-        `
+        warnHtml = `<div class="warning-box">⚠️ 旧方言 walking-skeleton/1：该格式无 unresolved 字段，不会执行断链红标，需要完整溯源字段请执行：<code>python tools/validate_trace.py xxx_json</code></div>`
+    } else if (schema !== 'medpal-trace/1') {
+        warnHtml = `<div class="warning-box" style="background:#fff2cc; padding:8px; border-radius:4px;">⚠️ 未识别的 schema：${escapeHtml(schema)}，按旧格式尽力渲染，结果可能不完整</div>`
     }
     root.innerHTML += warnHtml;
+
 
     if (schema === 'medpal-trace/1') {
         const comp = data.trace_completeness ?? '-';
         const sources = Array.isArray(data.sources) ? data.sources : [];
         const gapsArr = Array.isArray(data.gaps) ? data.gaps : [];
-
+        
         root.innerHTML += `
         <div class="summary-card">
             <h2>Trace 概要信息</h2>
@@ -189,8 +193,8 @@ function render(data) {
             <div class="summary-item">ontology_version: ${escapeHtml(data.ontology_version ?? '')}</div>
             <div class="summary-item">溯源完整率 trace_completeness: ${escapeHtml(comp)}</div>
             <div class="summary-item">sources: ${sources.length>0 ? sources.map(s=>escapeHtml(s)).join('、') : '无'}</div>
-            <div class="summary-item">gaps: ${gapsArr.length>0 ? gapsArr.map(g=>escapeHtml(g)).join('；') : '无'}</div>
-            <div class="summary-item" style="color:#666;font-size:13px;">提示: trace_completeness仅为汇总统计展示，不作为断链判定依据。</div>
+            <div class="summary-item">gaps: ${gapsArr.length>0 ? gapsArr.map(g=>escapeHtml(g)).join(';') : '无'}</div>
+            <div class="summary-item" style="color:#666;font-size:13px;">提示: trace_completeness仅为汇总统计展示,不作为断链判定依据。</div>
         </div>
         `;
 
@@ -202,9 +206,9 @@ function render(data) {
             <div class="unresolved-list">${unresolvedText}</div>
             <div class="desc-list">
                 说明：<br>
-                1. trace_completeness=1.0 不代表每一步都带证据，拒答场景允许evidence为空数组；<br>
-                2. unresolved非空≠整条推理不可信，仅命中的单条证据文字标红；<br>
-                3. gaps仅为阅读文本，不参与任何断链判断。
+                1. trace_completeness=1.0 不代表每一步都带证据,拒答场景允许evidence为空数组；<br>
+                2. unresolved非空≠整条推理不可信,仅命中的单条证据文字标红；<br>
+                3. gaps仅为阅读文本,不参与任何断链判断。
             </div>
         </div>
         `
@@ -221,24 +225,29 @@ function render(data) {
 
     const steps = Array.isArray(data.steps) ? data.steps : [];
     const unresolvedSet = new Set(Array.isArray(data.unresolved) ? data.unresolved : []);
-
+    const htmlParts = [];
+    
     steps.forEach((step) => {
-        let stepNo;
-        if(schema === "medpal-trace/1"){
-            stepNo = escapeHtml(step.i);
-        }else{
-            stepNo = escapeHtml(step.step);
+        let stepLabel;
+        if (schema === "medpal-trace/1") {
+            const val = escapeHtml(step.i);
+            stepLabel = `Step ${val} (i=${val})`;
+        } 
+        else {
+            const val = escapeHtml(step.step);
+            stepLabel = `Step ${val} (step=${val})`;
         }
+
         const op = escapeHtml(step.op ?? '');
         const inVal = escapeHtml(JSON.stringify(step.in ?? [], null, 2));
         const outVal = escapeHtml(JSON.stringify(step.out ?? [], null, 2));
-        const conf = step.confidence !== undefined ? Number(step.confidence).toFixed(3) : "—";
+        const conf = step.confidence !== undefined ? Number(step.confidence).toFixed(2) : '';
         const detailText = escapeHtml(step.detail ?? '');
 
         let evHtml = '';
         const evArr = Array.isArray(step.evidence) ? step.evidence : [];
         if (evArr.length === 0) {
-            evHtml = `<span class="evi-empty">[无引用]</span>`;
+        evHtml = `<span class="evi-empty">无引用</span>`;
         } else {
             evHtml = evArr.map(item => {
                 const safeItem = escapeHtml(item);
@@ -246,42 +255,38 @@ function render(data) {
                     return `<span class="evi-bad">${safeItem}</span>`;
                 }
                 return `<span class="evi-item">${safeItem}</span>`;
-            }).join(' &nbsp;|&nbsp; ');
+            }).join('&nbsp;&nbsp;');
         }
-
-        root.innerHTML += `
-        <div class="step-card">
-            <div class="step-title">Step ${stepNo}｜${op}</div>
-
-            <div class="step-section">
-                <div class="step-label">输入 in：</div>
-                <pre class="step-json">${inVal}</pre>
-            </div>
-
-            <div class="step-section">
-                <div class="step-label">输出 out：</div>
-                <pre class="step-json">${outVal}</pre>
-            </div>
-
-            ${detailText ? `
-            <div class="step-row">
-                <span class="step-label">detail：</span>
-                <span class="step-value">${detailText}</span>
-            </div>
-            ` : ''}
-
-            <div class="step-row">
-                <span class="step-label">confidence：</span>
-                <span class="step-value">${escapeHtml(conf)}</span>
-            </div>
-
-            <div class="step-row">
-                <span class="step-label">evidence：</span>
-                <span class="step-value">${evHtml}</span>
-            </div>
-        </div>
-        `;
-    })
+        
+        htmlParts.push(`
+         <div class="step-card">
+             <div class="step-title">${stepLabel}</div>
+             <div class="step-section">
+                 <div class="step-label">输入 in</div>
+                 <pre class="step-json">${inVal}</pre>
+             </div>
+             <div class="step-section">
+                 <div class="step-label">输出 out</div>
+                 <pre class="step-json">${outVal}</pre>
+             </div>
+             ${detailText ? `
+             <div class="step-row">
+                 <span class="step-label">detail</span>
+                 <span class="step-value">${detailText}</span>
+             </div>
+             ` : ''}
+             <div class="step-row">
+                 <span class="step-label">confidence</span>
+                 <span class="step-value">${escapeHtml(conf)}</span>
+             </div>
+             <div class="step-row">
+                 <span class="step-label">evidence</span>
+                 <span class="step-value">${evHtml}</span>
+             </div>
+         </div>
+         `);
+     })
+     root.innerHTML += htmlParts.join('');
 }
 </script>
 </body>
